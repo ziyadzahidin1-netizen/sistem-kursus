@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Syarikat & Portal Kursus</title>
+    
+    <!-- Pautan ke Fail CSS Asing -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- FontAwesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Bar Navigasi (Navbar) -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="logo.png" alt="Logo Portal Kursus" class="logo-img">
+            <span>Portal kursus</span>
+        </div>
+        <nav class="nav-links">
+            <a href="sistem kursus.html" class="nav-btn active"><i class="fa-solid fa-house"></i> Utama</a>
+            <a href="iklan.html" class="nav-btn"><i class="fa-solid fa-bullhorn"></i> Jenis & Iklan Kursus</a>
+            <a href="takwim.html" class="nav-btn"><i class="fa-solid fa-calendar-days"></i> Takwim Kursus</a>
+            <a href="mohon.html" class="nav-btn btn-apply"><i class="fa-solid fa-paper-plane"></i> Mohon Kursus</a>
+        </nav>
+    </header>
+
+    <!-- ================= BAHAGIAN 1: BANNER SKRIN PENUH (HERO SCREEN) ================= -->
+    <section id="hero-section" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <span class="hero-badge">Selamat Datang Ke Portal Kursus MOSTI</span>
+            <h1>Selamat Datang Ke Portal Kursus MOSTI</h1>
+            <p>Tingkatkan kemahiran anda menerusi program dan latihan terkini kami.</p>
+            
+            <div class="hero-buttons">
+                <a href="#about-section" class="btn-primary">Ketahui Mengenai MOSTI <i class="fa-solid fa-arrow-down"></i></a>
+                <a href="iklan.html" class="btn-secondary">Lihat Kursus Terkini</a>
+            </div>
+        </div>
+
+        <!-- Indikator Tatalan (Scroll Indicator) -->
+        <a href="#about-section" class="scroll-down-indicator">
+            <span>Tatal Ke Bawah Untuk Profil Syarikat</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </a>
+    </section>
+
+    <!-- ================= BAHAGIAN 2: KETERANGAN SYARIKAT (ABOUT US) ================= -->
+    <section id="about-section" class="content-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Mengenai Syarikat Kami</h2>
+            </div>
+
+            <div class="about-grid">
+                <div class="about-text">
+                    <h3>Kementerian Sains Teknologi dan Inovasi (MOSTI)</h3>
+                    <p>
+                        Kementerian Sains, Teknologi dan Inovasi (MOSTI) ialah kementerian di bawah Kerajaan Malaysia yang bertanggungjawab menerajui pembangunan sains, teknologi, inovasi (STI) dan ekonomi (STIE)
+                    <p>
+                        Memperkasa ekosistem syarikat pemula (startup), bioteknologi, keselamatan siber, nanoteknologi, dan teknologi angkasa
+
+                    <!-- Statistik Syarikat -->
+                    <div class="stats-mini-grid">
+                        <div class="stat-box">
+                            <div>
+                                <h4>1,500+</h4>
+                                <p>Peserta Kursus</p>
+                            </div>
+                        </div>
+                        <div class="stat-box">
+                            <div>
+                                <h4>98%</h4>
+                                <p>Kadar Kelulusan</p>
+                            </div>
+                        </div>
+                        <div class="stat-box">
+                            <div>
+                                <h4>15+</h4>
+                                <p>Anugerah Industri</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-card-box">
+                    <div class="card-info">
+                        <h4>Visi Kami</h4>
+                        <p>Negara Berteknologi Tinggi Melalui STIE.</p>
+                    </div>
+
+                    <div class="card-info highlight">
+                        <h4>Misi Kami</h4>
+                        <p>Menerajui STIE untuk cabaran negara, kesejahteraan masyarakat, dan pembangunan mampan.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= BAHAGIAN 3: RINGKASAN PERKHIDMATAN & KURSUS ================= -->
+    <section id="services-section" class="content-section bg-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>Program & Kursus Utama</h2>
+                <p>Ketahui kursus kemahiran terkini yang ditawarkan oleh syarikat kami.</p>
+            </div>
+
+            <div class="cards-grid">
+                <div class="card service-card">
+                    <h3>KURSUS A</h3>
+                    <p>Selamat datang di Kursus A.</p>
+                    <a href="iklan.html" class="btn-primary-sm">Maklumat Lanjut</a>
+                </div>
+
+                <div class="card service-card">
+                    <h3>KURSUS B</h3>
+                    <p>Selamat datang di Kursus B</p>
+                    <a href="iklan.html" class="btn-primary-sm">Maklumat Lanjut</a>
+                </div>
+
+                <div class="card service-card">
+                    <h3>KURSUS C</h3>
+                    <p>Selamat datang di Kursus C</p>
+                    <a href="iklan.html" class="btn-primary-sm">Maklumat Lanjut</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Syarikat Digital Sdn. Bhd. Hak Cipta Terpelihara.</p>
+    </footer>
+
+</body>
+</html>

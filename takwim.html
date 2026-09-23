@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Takwim / Kalendar Kursus</title>
+    
+    
+    <!-- Link CSS Utamakan -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- FullCalendar Library (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+</head>
+<body>
+
+    <!-- Header Navbar -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="logo.png" alt="Logo Portal Kursus" class="logo-img">
+            <span>Portal kursus</span>
+        </div>
+        <nav class="nav-links">
+            <a href="sistem kursus.html" class="nav-btn active"><i class="fa-solid fa-house"></i> Utama</a>
+            <a href="iklan.html" class="nav-btn"><i class="fa-solid fa-bullhorn"></i> Jenis & Iklan Kursus</a>
+            <a href="takwim.html" class="nav-btn"><i class="fa-solid fa-calendar-days"></i> Takwim Kursus</a>
+            <a href="mohon.html" class="nav-btn btn-apply"><i class="fa-solid fa-paper-plane"></i> Mohon Kursus</a>
+        </nav>
+    </header>
+        <nav class="nav-links">
+            <a href="iklan.html" class="nav-btn-outline">Iklan Kursus</a>
+            <a href="takwim.php" class="nav-btn-outline active">Takwim Kursus</a>
+            <a href="mohon.html" class="nav-btn-yellow">+ Tambah Kursus</a>
+        </nav>
+    </header>
+
+    <!-- Content Container -->
+    <div class="main-container">
+        <h1 class="page-title">Takwim / Kalendar Kursus</h1>
+
+        <!-- Kalendar Card Wrapper -->
+        <div class="calendar-card">
+            <div id="calendar"></div>
+        </div>
+    </div>
+
+    <!-- Script Inisialisasi Kalendar 2026 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                initialDate: '2026-01-01', // Bermula dari Januari 2026
+                locale: 'ms', // Bahasa Melayu
+                headerToolbar: {
+                    left: 'title',
+                    center: '',
+                    right: 'today prev,next'
+                },
+                buttonText: {
+                    today: 'today'
+                },
+                dayHeaderFormat: { weekday: 'short' }, // Ahd, Isn, Sel...
+                
+                // Senarai Kursus sepanjang tahun 2026
+                events: [
+                    { title: 'Kursus Aplikasi Asas Generative AI MOSTI TAHUN 2026', start: '2026-08-20',  end: '2026-08-22', url: 'mohon.html', color: '#64748b' },
+                    { title: 'Majlis Sambutan Maulidur Rasul SAW Peringkat Kebangsaan Tahun 1448H/2026M.', start: '2026-08-25', url: 'mohon.html', color: '#64748b' },
+                    { title: 'Bengkel Pemerkasaan Ibadah solat dan Kemahiran Tilawah : Ngaji Smooth, Solat Approved!', start: '2026-05-25', url: 'mohon.html', color: '#64748b' },
+                    { title: 'Kursus Pembangunan dan Pemantapan Skim Perkhidmatan Penolong Pegawai Sains, Penolong Pegawai Penyelidik, Pembantu Makmal dan Pembantu Penyelidik MOSTI Tahun 2026', start: '2026-05-14',end: '2026-05-16', url: 'mohon.html', color: '#64748b' },
+                    { title: 'PROGRAM LATIHAN DAN PEMBANGUNAN ANJURAN INTAN', start: '', url: 'mohon.html', color: '#64748b' },
+                    { title: 'Program Bicara Eksekutif bertajuk “Kuasa Dunia: Implikasi Ekonomi dan Politik Masa Kini Terhadap Malaysia”', start: '2026-10-06', url: 'mohon.html', color: '#64748b' },
+                    { title: 'MS Excel Lanjutan', start: '2026-07-13', url: 'mohon.html', color: '#64748b' },
+                    
+                ]
+            });
+
+            calendar.render();
+        });
+    </script>
+
+</body>
+</html>

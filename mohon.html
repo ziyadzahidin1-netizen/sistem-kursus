@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Borang Permohonan Kursus</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">
+            <img src="logo.png" alt="Logo Portal Kursus" class="logo-img">
+            <span>Portal kursus</span>
+        </div>
+        <nav class="nav-links">
+            <a href="sistem kursus.html" class="nav-btn active"><i class="fa-solid fa-house"></i> Utama</a>
+            <a href="iklan.html" class="nav-btn"><i class="fa-solid fa-bullhorn"></i> Jenis & Iklan Kursus</a>
+            <a href="takwim.html" class="nav-btn"><i class="fa-solid fa-calendar-days"></i> Takwim Kursus</a>
+            <a href="mohon.html" class="nav-btn btn-apply"><i class="fa-solid fa-paper-plane"></i> Mohon Kursus</a>
+        </nav>
+    </header>
+
+    <div class="container page-wrapper">
+        <div class="section-title">
+            <h2>Borang Permohonan Kursus</h2>
+            <p>Sila isi maklumat penuh anda di bawah untuk tindakan selanjutnya.</p>
+        </div>
+
+        <div class="contact-box">
+            <form onsubmit="event.preventDefault(); alert('Permohonan anda telah berjaya dihantar!');">
+                <div class="form-group">
+                    <label>Nama Penuh</label>
+                    <input type="text" placeholder="Masukkan nama penuh anda" required>
+                </div>
+                <div class="form-group">
+                    <label>E-mel</label>
+                    <input type="email" placeholder="contoh@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Nombor Telefon / WhatsApp</label>
+                    <input type="tel" placeholder="012-3456789" required>
+                </div>
+                <div class="form-group">
+                    <label>Pilih Kursus</label>
+                    <select required>
+                        <option value="">-- Pilih Kursus --</option>
+                        <option value="web">Kursus Aplikasi Asas Generative AI MOSTI TAHUN 2026</option>
+                        <option value="python">Majlis Sambutan Maulidur Rasul SAW Peringkat Kebangsaan Tahun 1448H/2026M.</option>
+                        <option value="marketing">Bengkel Pemerkasaan Ibadah solat dan Kemahiran Tilawah : Ngaji Smooth, Solat Approved!</option>
+                        <option value="marketing">Kursus Pembangunan dan Pemantapan Skim Perkhidmatan Penolong Pegawai Sains, Penolong Pegawai Penyelidik, Pembantu Makmal dan Pembantu Penyelidik MOSTI Tahun 2026</option>
+                        <option value="marketing">PROGRAM LATIHAN DAN PEMBANGUNAN ANJURAN INTAN</option>
+                        <option value="marketing">Program Bicara Eksekutif bertajuk “Kuasa Dunia: Implikasi Ekonomi dan Politik Masa Kini Terhadap Malaysia”</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary full-width">Hantar Permohonan</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2026 Syarikat Digital Sdn. Bhd. Hak Cipta Terpelihara.</p>
+    </footer>
+
+</body>
+</html>
