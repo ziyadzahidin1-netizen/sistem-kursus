@@ -326,69 +326,6 @@ body {
     color: #2c3e50;
 }
 
-/* Jadual Takwim */
-/* Reset Basic */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-body {
-    background-color: #f8fafc;
-    color: #333;
-}
-
-/* Navbar */
-.navbar {
-    background-color: #10213a;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 30px;
-}
-
-.logo span {
-    color: #ffffff;
-    font-size: 1.25rem;
-    font-weight: 500;
-}
-
-.nav-links {
-    display: flex;
-    gap: 10px;
-}
-
-.nav-btn-outline {
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    padding: 6px 16px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: all 0.2s;
-}
-
-.nav-btn-outline:hover, .nav-btn-outline.active {
-    background-color: rgba(255, 255, 255, 0.2);
-    border-color: #ffffff;
-}
-
-.nav-btn-yellow {
-    background-color: #ffcc00;
-    color: #000000;
-    padding: 6px 16px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 0.9rem;
-}
-
-.nav-btn-yellow:hover {
-    background-color: #e6b800;
-}
-
 /* Main Layout */
 .main-container {
     max-width: 1200px;
@@ -472,6 +409,7 @@ body {
     border-radius: 3px;
     font-size: 0.8rem;
 }
+
 /* Borang */
 .contact-box {
     max-width: 600px;
@@ -586,4 +524,179 @@ body {
     .stats-mini-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* ==========================================================================
+   STYLE TAMBAHAN KHAS UNTUK PAGE LOGIN & REGISTER
+   ========================================================================== */
+
+.auth-wrapper {
+    min-height: calc(100vh - 180px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+
+.auth-card {
+    background: #ffffff;
+    width: 100%;
+    max-width: 450px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    padding: 35px 30px;
+    border: 1px solid #e2e8f0;
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.auth-header h2 {
+    color: #2c3e50;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.auth-header p {
+    color: #157076;
+    font-size: 0.95rem;
+}
+
+.auth-tabs {
+    display: flex;
+    background: #f1f5f9;
+    padding: 5px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+
+.auth-tab {
+    flex: 1;
+    text-align: center;
+    padding: 10px 0;
+    text-decoration: none;
+    color: #64748b;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.auth-tab.active {
+    background: #ffffff;
+    color: #3498db;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.auth-form .form-group {
+    margin-bottom: 20px;
+}
+
+.auth-form label {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 6px;
+}
+
+.input-icon-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon-wrapper i {
+    position: absolute;
+    left: 14px;
+    color: #94a3b8;
+    font-size: 1rem;
+}
+
+.input-icon-wrapper input {
+    width: 100%;
+    padding: 12px 14px 12px 42px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: all 0.2s ease;
+    background: #f8fafc;
+}
+
+.input-icon-wrapper input:focus {
+    border-color: #3498db;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+    font-size: 0.85rem;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #64748b;
+    cursor: pointer;
+}
+
+.remember-me input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #3498db;
+    cursor: pointer;
+}
+
+.forgot-pass {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.forgot-pass:hover {
+    text-decoration: underline;
+}
+
+.btn-auth {
+    width: 100%;
+    background: #3498db;
+    color: #ffffff;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.btn-auth:hover {
+    background: #2980b9;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+.auth-footer a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
 }

@@ -3,65 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Borang Permohonan Kursus</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Permohonan Kursus - Portal MOSTI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header class="navbar">
         <div class="logo">
             <img src="logo.png" alt="Logo Portal Kursus" class="logo-img">
-            <span>Portal kursus</span>
+            <span>Portal Kursus</span>
         </div>
-        <nav class="nav-links">
-            <a href="index.html" class="nav-btn active"><i class="fa-solid fa-house"></i> Utama</a>
-            <a href="iklan.html" class="nav-btn"><i class="fa-solid fa-bullhorn"></i> Jenis & Iklan Kursus</a>
-            <a href="takwim.html" class="nav-btn"><i class="fa-solid fa-calendar-days"></i> Takwim Kursus</a>
-            <a href="mohon.html" class="nav-btn btn-apply"><i class="fa-solid fa-paper-plane"></i> Mohon Kursus</a>
-        </nav>
+        <ul class="nav-links">
+            <li><a href="index.html"><i class="fa-solid fa-house"></i> Utama</a></li>
+            <li><button onclick="handleLogout()" class="btn-nav-login" style="background:#dc3545; color:white; border:none; padding:8px 16px; border-radius:4px; cursor:pointer;">Log Keluar</button></li>
+        </ul>
     </header>
 
-    <div class="container page-wrapper">
-        <div class="section-title">
-            <h2>Borang Permohonan Kursus</h2>
-            <p>Sila isi maklumat penuh anda di bawah untuk tindakan selanjutnya.</p>
-        </div>
+    <main class="auth-wrapper" style="padding: 20px 0;">
+        <div class="auth-card" style="max-width: 650px;">
+            <div class="auth-header">
+                <h2>Borang Permohonan Kursus</h2>
+                <p>Maklumat anda diisi secara automatik berdasarkan akaun anda</p>
+            </div>
 
-        <div class="contact-box">
-            <form onsubmit="event.preventDefault(); alert('Permohonan anda telah berjaya dihantar!');">
+            <form id="courseForm" onsubmit="handleApply(event)">
+                <!-- Maklumat Diri (Autofill & Readonly) -->
                 <div class="form-group">
                     <label>Nama Penuh</label>
-                    <input type="text" placeholder="Masukkan nama penuh anda" required>
+                    <div class="input-container">
+                        <i class="fa-regular fa-user field-icon"></i>
+                        <input type="text" id="app-name" readonly style="background-color: #f0f0f0;">
+                    </div>
                 </div>
+
                 <div class="form-group">
-                    <label>E-mel</label>
-                    <input type="email" placeholder="contoh@email.com" required>
+                    <label>Nombor MyKad</label>
+                    <div class="input-container">
+                        <i class="fa-regular fa-address-card field-icon"></i>
+                        <input type="text" id="app-ic" readonly style="background-color: #f0f0f0;">
+                    </div>
                 </div>
+
                 <div class="form-group">
-                    <label>Nombor Telefon / WhatsApp</label>
-                    <input type="tel" placeholder="012-3456789" required>
+                    <label>Alamat E-mel</label>
+                    <div class="input-container">
+                        <i class="fa-regular fa-envelope field-icon"></i>
+                        <input type="email" id="app-email" readonly style="background-color: #f0f0f0;">
+                    </div>
                 </div>
+
+                <!-- Jawatan -->
                 <div class="form-group">
-                    <label>Pilih Kursus</label>
-                    <select required>
-                        <option value="">-- Pilih Kursus --</option>
-                        <option value="web">Kursus Aplikasi Asas Generative AI MOSTI TAHUN 2026</option>
-                        <option value="python">Majlis Sambutan Maulidur Rasul SAW Peringkat Kebangsaan Tahun 1448H/2026M.</option>
-                        <option value="marketing">Bengkel Pemerkasaan Ibadah solat dan Kemahiran Tilawah : Ngaji Smooth, Solat Approved!</option>
-                        <option value="marketing">Kursus Pembangunan dan Pemantapan Skim Perkhidmatan Penolong Pegawai Sains, Penolong Pegawai Penyelidik, Pembantu Makmal dan Pembantu Penyelidik MOSTI Tahun 2026</option>
-                        <option value="marketing">PROGRAM LATIHAN DAN PEMBANGUNAN ANJURAN INTAN</option>
-                        <option value="marketing">Program Bicara Eksekutif bertajuk “Kuasa Dunia: Implikasi Ekonomi dan Politik Masa Kini Terhadap Malaysia”</option>
-                    </select>
+                    <label for="app-jawatan">Jawatan</label>
+                    <div class="input-container">
+                        <i class="fa-solid fa-briefcase field-icon"></i>
+                        <input type="text" id="app-jawatan" placeholder="Contoh: Pegawai Teknologi Maklumat" required style="width: 100%; padding: 10px 10px 10px 35px; border-radius: 6px; border: 1px solid #ccc;">
+                    </div>
                 </div>
-                <button type="submit" class="btn-primary full-width">Hantar Permohonan</button>
+
+                <!-- Gred Jawatan -->
+                <div class="form-group">
+                    <label for="app-gred">Gred Jawatan</label>
+                    <div class="input-container">
+                        <i class="fa-solid fa-award field-icon"></i>
+                        <input type="text" id="app-gred" placeholder="Contoh: F41 / N19 / DG44" required style="width: 100%; padding: 10px 10px 10px 35px; border-radius: 6px; border: 1px solid #ccc;">
+                    </div>
+                </div>
+
+                <!-- Bahagian / Jabatan / Agensi -->
+                <div class="form-group">
+                    <label for="app-jabatan">Bahagian / Jabatan / Agensi</label>
+                    <div class="input-container">
+                        <i class="fa-solid fa-building field-icon"></i>
+                        <input type="text" id="app-jabatan" placeholder="Contoh: Bahagian Pengurusan Maklumat / MOSTI" required style="width: 100%; padding: 10px 10px 10px 35px; border-radius: 6px; border: 1px solid #ccc;">
+                    </div>
+                </div>
+
+                <!-- Penyakit / Alahan -->
+                <div class="form-group">
+                    <label for="app-penyakit">Sejarah Penyakit / Alahan (Jika Ada)</label>
+                    <div class="input-container">
+                        <i class="fa-solid fa-notes-medical field-icon"></i>
+                        <input type="text" id="app-penyakit" placeholder="Tulis 'Tiada' jika tiada" required style="width: 100%; padding: 10px 10px 10px 35px; border-radius: 6px; border: 1px solid #ccc;">
+                    </div>
+                </div>
+
+                <!-- Pengangkutan -->
+                <div class="form-group">
+                    <label for="app-pengangkutan">Pengangkutan ke Kursus</label>
+                    <div class="input-container">
+                        <i class="fa-solid fa-car field-icon"></i>
+                        <select id="app-pengangkutan" required style="width: 100%; padding: 10px 10px 10px 35px; border-radius: 6px; border: 1px solid #ccc;">
+                            <option value="">-- Sila Pilih Jenis Pengangkutan --</option>
+                            <option value="Kenderaan Sendiri">Kenderaan Sendiri</option>
+                            <option value="Kenderaan Jabatan">Kenderaan Jabatan</option>
+                            <option value="Pengangkutan Awam">Pengangkutan Awam (Bas/Tren/Satelit/Kapal Terbang)</option>
+                            <option value="Lain-lain">Lain-lain</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Pilihan Kursus -->
+                <div class="form-group">
+                    <label for="course-select">Pilih Kursus Permohonan</label>
+                    <div class="input-container">
+                        <i class="fa-solid fa-graduation-cap field-icon"></i>
+                        <select id="course-select" required style="width: 100%; padding: 10px 10px 10px 35px; border-radius: 6px; border: 1px solid #ccc;">
+                            <option value="">-- Sila Pilih Kursus --</option>
+                            <option value="AI & Sains Data">Kursus AI & Sains Data</option>
+                            <option value="Keselamatan Siber">Kursus Keselamatan Siber</option>
+                            <option value="Pembangunan Web Fullstack">Kursus Pembangunan Web Fullstack</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" id="btn-submit" class="btn btn-primary btn-block">Hantar Permohonan <i class="fa-solid fa-paper-plane"></i></button>
             </form>
         </div>
-    </div>
+    </main>
 
-    <footer class="footer">
-        <p>&copy; 2026 Syarikat Digital Sdn. Bhd. Hak Cipta Terpelihara.</p>
-    </footer>
+    <script>
+        // MASUKKAN URL GOOGLE APPS SCRIPT ANDA DI SINI
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz4TB216Zg7ZqmE17Ggv2pzCPsPT4TXANkqFJxe4SoCAjQSlAz-7DQlioFh_oakP6vlmA/exec';
 
+        // Semak dan isi automatik data pengguna
+        document.addEventListener('DOMContentLoaded', () => {
+            const userData = localStorage.getItem('user');
+
+            if (!userData) {
+                alert('Sila log masuk terlebih dahulu.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const user = JSON.parse(userData);
+
+            document.getElementById('app-name').value = user.nama || user.name || '';
+            document.getElementById('app-ic').value = user.ic || '';
+            document.getElementById('app-email').value = user.email || '';
+        });
+
+        async function handleApply(e) {
+            e.preventDefault();
+
+            const btnSubmit = document.getElementById('btn-submit');
+            btnSubmit.disabled = true;
+            btnSubmit.innerText = 'Mengisikan Data...';
+
+            const payload = {
+                nama: document.getElementById('app-name').value,
+                ic: document.getElementById('app-ic').value,
+                email: document.getElementById('app-email').value,
+                jawatan: document.getElementById('app-jawatan').value,
+                gred: document.getElementById('app-gred').value,
+                jabatan: document.getElementById('app-jabatan').value,
+                penyakit: document.getElementById('app-penyakit').value,
+                pengangkutan: document.getElementById('app-pengangkutan').value,
+                kursus: document.getElementById('course-select').value
+            };
+
+            try {
+                // Menghantar data ke Google Sheets
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', // Penting untuk mengelakkan isu CORS dengan Apps Script
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                alert('Permohonan berjaya dihantar dan direkodkan!');
+                document.getElementById('app-jawatan').value = '';
+                document.getElementById('app-gred').value = '';
+                document.getElementById('app-jabatan').value = '';
+                document.getElementById('app-penyakit').value = '';
+                document.getElementById('app-pengangkutan').value = '';
+                document.getElementById('course-select').value = '';
+            } catch (error) {
+                console.error('Ralat:', error);
+                alert('Terdapat ralat semasa menghantar permohonan.');
+            } finally {
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = 'Hantar Permohonan <i class="fa-solid fa-paper-plane"></i>';
+            }
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('user');
+            window.location.href = 'login.html';
+        }
+    </script>
 </body>
 </html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran - Portal Kursus MOSTI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">
+            <img src="logo.png" alt="Logo Portal Kursus" class="logo-img">
+            <span>Portal kursus</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html"><i class="fa-solid fa-house"></i> Utama</a></li>
+            <li><a href="login.html" class="btn-nav-login">Log Masuk</a></li>
+        </ul>
+    </header>
+
+    <main class="auth-wrapper">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-icon">
+                    <i class="fa-solid fa-user-plus"></i>
+                </div>
+                <h2>Daftar Akaun Baru</h2>
+                <p>Isi maklumat di bawah untuk pendaftaran akaun baru</p>
+            </div>
+
+            <form onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label for="reg-name">Nama Penuh (Mengikut MyKad)</label>
+                    <div class="input-container">
+                        <i class="fa-regular fa-user field-icon"></i>
+                        <input type="text" id="reg-name" placeholder="Ahmad Bin Abdullah" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="reg-ic">Nombor MyKad</label>
+                    <div class="input-container">
+                        <i class="fa-regular fa-address-card field-icon"></i>
+                        <input type="text" id="reg-ic" placeholder="900101105555" maxlength="12" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="reg-email">Alamat E-mel</label>
+                    <div class="input-container">
+                        <i class="fa-regular fa-envelope field-icon"></i>
+                        <input type="email" id="reg-email" placeholder="contoh@mosti.gov.my" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="reg-pass">Kata Laluan</label>
+                    <div class="input-container">
+                        <i class="fa-solid fa-lock field-icon"></i>
+                        <input type="password" id="reg-pass" placeholder="••••••••" minlength="8" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="reg-confirm">Sahkan Kata Laluan</label>
+                    <div class="input-container">
+                        <i class="fa-solid fa-shield-halved field-icon"></i>
+                        <input type="password" id="reg-confirm" placeholder="••••••••" minlength="8" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Daftar Sekarang <i class="fa-solid fa-check-to-slot"></i></button>
+            </form>
+
+            <div class="auth-footer">
+                Sudah mempunyai akaun? <a href="login.html">Log Masuk</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function handleRegister(e) {
+    e.preventDefault();
+    
+    const nama = document.getElementById('reg-name').value;
+    const ic = document.getElementById('reg-ic').value;
+    const email = document.getElementById('reg-email').value;
+    const pass = document.getElementById('reg-pass').value;
+    const confirm = document.getElementById('reg-confirm').value;
+
+    if (pass !== confirm) {
+        alert('Kata laluan tidak sepadan!');
+        return;
+    }
+
+    // Simpan data pendaftaran ke localStorage browser
+    const user = { nama, ic, email, password: pass };
+    localStorage.setItem('user', JSON.stringify(user));
+
+    alert('Pendaftaran berjaya! Anda akan dialihkan ke halaman log masuk.');
+    window.location.href = 'login.html';
+}
+        
+    </script>
+</body>
+</html>

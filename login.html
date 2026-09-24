@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log Masuk - Portal Kursus MOSTI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <img src="logo.png" alt="Logo Portal Kursus" class="logo-img">
+            <span>Portal kursus</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-btn active"><i class="fa-solid fa-house"></i> Utama</a></li>
+        </ul>
+    </header>
+
+    <main class="auth-wrapper">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-icon">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <h2>Log Masuk Akaun</h2>
+                <p>Sila masukkan maklumat akaun anda untuk log masuk</p>
+            </div>
+
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="login-email">Alamat E-mel / No. MyKad</label>
+                    <div class="input-container">
+                        <i class="fa-regular fa-envelope field-icon"></i>
+                        <input type="text" id="login-email" placeholder="contoh@mosti.gov.my" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="login-password">Kata Laluan</label>
+                    <div class="input-container">
+                        <i class="fa-solid fa-key field-icon"></i>
+                        <input type="password" id="login-password" placeholder="••••••••" required>
+                        <i class="fa-regular fa-eye toggle-pass" onclick="togglePassword('login-password', this)"></i>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Log Masuk <i class="fa-solid fa-arrow-right"></i></button>
+            </form>
+
+            <div class="auth-footer">
+                Belum mempunyai akaun? <a href="register.html">Daftar Akaun Baru</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function togglePassword(id, icon) {
+            const input = document.getElementById(id);
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
+        function handleLogin(e) {
+    e.preventDefault();
+    
+    const emailOrIc = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+
+    // Ambil data yang tersimpan semasa pendaftaran
+    const savedUser = JSON.parse(localStorage.getItem('user'));
+
+    if (!savedUser) {
+        alert('Pengguna tidak dijumpai. Sila daftar akaun terlebih dahulu.');
+        return;
+    }
+
+    // Semak sama ada e-mel/IC dan kata laluan sepadan
+    if ((savedUser.email === emailOrIc || savedUser.ic === emailOrIc) && savedUser.password === password) {
+        alert('Log masuk berjaya!');
+        window.location.href = 'index.html';
+    } else {
+        alert('E-mel / No. MyKad atau kata laluan tidak sah!');
+    }
+}
+        
+    </script>
+</body>
+</html>

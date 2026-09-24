@@ -1,0 +1,10 @@
+{
+  "name": "portal-kursus-mosti",
+  "version": "1.0.0",
+  "main": "api/server.js",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.22.3",
+    "mongoose": "^8.24.4"
+  }
+}
