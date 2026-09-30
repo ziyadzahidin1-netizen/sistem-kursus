@@ -16,8 +16,8 @@
             <span>Portal kursus</span>
         </div>
         <ul class="nav-links">
-            <li><a href="index.html" class="nav-btn btn-primary"> Utama</a></li>
-            <li><a href="login.html" class="nav-btn btn-apply"> Log Masuk</a></li>
+            <li><a href="index.html"><i class="fa-solid fa-house"></i> Utama</a></li>
+            <li><a href="login.html" class="btn-nav-login">Log Masuk</a></li>
         </ul>
     </header>
 
@@ -35,6 +35,7 @@
                 <div class="form-group">
                     <label for="reg-name">Nama Penuh (Mengikut MyKad)</label>
                     <div class="input-container">
+                        <i class="fa-regular fa-user field-icon"></i>
                         <input type="text" id="reg-name" placeholder="Ahmad Bin Abdullah" required>
                     </div>
                 </div>
@@ -42,6 +43,7 @@
                 <div class="form-group">
                     <label for="reg-ic">Nombor MyKad</label>
                     <div class="input-container">
+                        <i class="fa-regular fa-address-card field-icon"></i>
                         <input type="text" id="reg-ic" placeholder="900101105555" maxlength="12" required>
                     </div>
                 </div>
@@ -49,6 +51,7 @@
                 <div class="form-group">
                     <label for="reg-email">Alamat E-mel</label>
                     <div class="input-container">
+                        <i class="fa-regular fa-envelope field-icon"></i>
                         <input type="email" id="reg-email" placeholder="contoh@mosti.gov.my" required>
                     </div>
                 </div>
@@ -56,6 +59,7 @@
                 <div class="form-group">
                     <label for="reg-pass">Kata Laluan</label>
                     <div class="input-container">
+                        <i class="fa-solid fa-lock field-icon"></i>
                         <input type="password" id="reg-pass" placeholder="••••••••" minlength="8" required>
                     </div>
                 </div>
@@ -63,11 +67,12 @@
                 <div class="form-group">
                     <label for="reg-confirm">Sahkan Kata Laluan</label>
                     <div class="input-container">
+                        <i class="fa-solid fa-shield-halved field-icon"></i>
                         <input type="password" id="reg-confirm" placeholder="••••••••" minlength="8" required>
                     </div>
                 </div>
 
-                <button type="submit" id="btn-submit" class="btn btn-primary btn-block">Daftar Sekarang</button>
+                <button type="submit" class="btn btn-primary btn-block">Daftar Sekarang <i class="fa-solid fa-check-to-slot"></i></button>
             </form>
 
             <div class="auth-footer">
@@ -77,62 +82,28 @@
     </main>
 
     <script>
-        async function handleRegister(e) {
-            e.preventDefault();
-            
-            const submitBtn = document.getElementById('btn-submit');
-            const nama = document.getElementById('reg-name').value.trim();
-            const ic = document.getElementById('reg-ic').value.trim();
-            const email = document.getElementById('reg-email').value.trim();
-            const pass = document.getElementById('reg-pass').value;
-            const confirm = document.getElementById('reg-confirm').value;
+        function handleRegister(e) {
+    e.preventDefault();
+    
+    const nama = document.getElementById('reg-name').value;
+    const ic = document.getElementById('reg-ic').value;
+    const email = document.getElementById('reg-email').value;
+    const pass = document.getElementById('reg-pass').value;
+    const confirm = document.getElementById('reg-confirm').value;
 
-            if (pass !== confirm) {
-                alert('Kata laluan tidak sepadan!');
-                return;
-            }
+    if (pass !== confirm) {
+        alert('Kata laluan tidak sepadan!');
+        return;
+    }
 
-            // Memastikan fail tidak dibuka terus menerusi file://
-            if (window.location.protocol === 'file:') {
-                alert('Amaran: Halaman ini dibuka menggunakan protokol file://. Sila jalankan menggunakan Server Tempatan (Live Server / Node.js) atau Vercel.');
-                return;
-            }
+    // Simpan data pendaftaran ke localStorage browser
+    const user = { nama, ic, email, password: pass };
+    localStorage.setItem('user', JSON.stringify(user));
 
-            try {
-                // Nyahaktifkan butang sementara menghantar data
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Sila tunggu...';
-
-                // Hantar data pendaftaran ke API Server Vercel
-                const response = await fetch('/api/register', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ nama, ic, email, password: pass })
-                });
-
-                // Semak jika maklum balas daripada server bukan JSON (cth: halaman ralat 404/500 HTML)
-                const contentType = response.headers.get("content-type");
-                if (!contentType || !contentType.includes("application/json")) {
-                    throw new Error(`Respons server bukan JSON (Status: ${response.status} ${response.statusText}). Sila pastikan endpoint /api/register wujud.`);
-                }
-
-                const result = await response.json();
-
-                if (response.ok) {
-                    alert(result.message || 'Pendaftaran berjaya!');
-                    window.location.href = 'login.html';
-                } else {
-                    alert(result.error || 'Gagal mendaftar.');
-                }
-            } catch (error) {
-                console.error('Ralat Penuh:', error);
-                alert('Ralat semasa berhubung dengan server API:\n' + error.message);
-            } finally {
-                // Aktifkan semula butang
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Daftar Sekarang';
-            }
-        }
+    alert('Pendaftaran berjaya! Anda akan dialihkan ke halaman log masuk.');
+    window.location.href = 'login.html';
+}
+        
     </script>
 </body>
 </html>
