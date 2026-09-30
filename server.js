@@ -12,7 +12,9 @@ const DB_FILE = isVercel
     : path.join(__dirname, 'users.json');
 
 app.use(express.json());
-app.use(express.static('.'));
+
+// Melayan fail statik (HTML, CSS, JS) dari direktori utama
+app.use(express.static(__dirname));
 
 // Fungsi baca data dari fail users.json
 function getUsers() {
@@ -80,9 +82,14 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
+// Serve fail HTML jika diakses terus melalui path root (Contoh: localhost:5000)
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 // Jalankan app.listen jika run di localhost, atau eksport app jika di Vercel
 if (!isVercel) {
-    const PORT = 5000;
+    const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => console.log(`Server berjalan di http://localhost:${PORT}`));
 }
 
