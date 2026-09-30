@@ -1,5 +1,4 @@
 /* Tetapan Asas Halaman */
-/* Tetapan Asas Halaman */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -17,7 +16,7 @@ body {
     line-height: 1.6;
 }
 
-/* Styles Navigasi (Navbar Sticky) */
+/* Styles Navigasi (Navbar Sticky) - DIBAIKI */
 .navbar {
     position: fixed;
     top: 0;
@@ -28,7 +27,7 @@ body {
     align-items: center;
     background-color: rgba(44, 62, 80, 0.98);
     backdrop-filter: blur(8px);
-    padding: 15px 40px;
+    padding: 15px 20px;
     color: #fff;
     box-shadow: 0 2px 10px rgba(0,0,0,0.2);
     z-index: 1000;
@@ -41,6 +40,7 @@ body {
     align-items: center;
     gap: 10px;
     color: #eff4f8;
+    white-space: nowrap;
 }
 
 .logo-img {
@@ -55,19 +55,22 @@ body {
 
 .nav-links {
     display: flex;
-    gap: 15px;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
 .nav-btn {
     text-decoration: none;
     color: #ecf0f1;
-    padding: 8px 16px;
+    padding: 8px 12px;
     border-radius: 6px;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
+    white-space: nowrap;
 }
 
 .nav-btn:hover, .nav-btn.active {
@@ -511,32 +514,6 @@ body {
     font-size: 0.9rem;
 }
 
-/* Responsif Mobile */
-@media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-        gap: 10px;
-        padding: 15px;
-    }
-
-    .nav-links {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    
-    .hero-content h1 {
-        font-size: 2rem;
-    }
-
-    .about-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .stats-mini-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
 /* ==========================================================================
    STYLE TAMBAHAN KHAS UNTUK PAGE LOGIN & REGISTER
    ========================================================================== */
@@ -548,7 +525,6 @@ body {
     align-items: center;
     padding: 100px 80px;
 }
-
 
 .auth-card {
     background: #ffffff;
@@ -710,4 +686,166 @@ body {
 
 .auth-footer a:hover {
     text-decoration: underline;
+}
+
+/* ==========================================================================
+   PENYESUAIAN LAYOUT RESPONSIF (DESKTOP KECIL, IPAD, TABLET & MOBILE)
+   ========================================================================== */
+
+/* --- Laptop / Desktop Kecil (hingga 1200px) --- */
+@media screen and (max-width: 1200px) {
+    .navbar {
+        padding: 12px 15px;
+    }
+
+    .nav-links {
+        gap: 6px;
+    }
+
+    .nav-btn {
+        padding: 6px 10px;
+        font-size: 0.85rem;
+    }
+}
+
+/* --- Tablet / iPad (769px hingga 1024px) --- */
+@media screen and (max-width: 1024px) {
+    .navbar {
+        padding: 12px 20px;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-content p {
+        font-size: 1.1rem;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .stats-mini-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .auth-wrapper {
+        padding: 80px 40px;
+    }
+}
+
+/* --- Mobile & Small Tablet (768px dan ke bawah) --- */
+@media screen and (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 12px;
+        padding: 15px;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .nav-btn {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+    }
+
+    .hero {
+        padding: 0 15px;
+    }
+
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .hero-content p {
+        font-size: 1rem;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .hero-buttons .btn-primary,
+    .hero-buttons .btn-secondary {
+        width: 100%;
+        text-align: center;
+    }
+
+    .content-section {
+        padding: 50px 0;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-mini-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .calendar-card {
+        padding: 15px;
+    }
+
+    .fc .fc-toolbar {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .fc .fc-toolbar-title {
+        font-size: 1.3rem;
+    }
+
+    .contact-box {
+        padding: 20px;
+    }
+
+    .auth-wrapper {
+        padding: 60px 20px;
+    }
+
+    .auth-card {
+        padding: 25px 20px;
+    }
+
+    .form-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}
+
+/* --- Mobile Skrin Kecil (480px dan ke bawah) --- */
+@media screen and (max-width: 480px) {
+    .logo {
+        font-size: 1.2rem;
+    }
+
+    .logo-img {
+        height: 32px;
+    }
+
+    .hero-content h1 {
+        font-size: 1.6rem;
+    }
+
+    .section-title h2 {
+        font-size: 1.8rem;
+    }
 }
