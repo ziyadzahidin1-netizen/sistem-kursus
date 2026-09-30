@@ -1,4 +1,5 @@
 /* Tetapan Asas Halaman */
+/* Tetapan Asas Halaman */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -72,6 +73,16 @@ body {
 .nav-btn:hover, .nav-btn.active {
     background-color: #34495e;
     color: #3498db;
+}
+
+.nav-links .btn-primary {
+    background-color: #3498db !important;
+    color: #ffffff !important;
+    font-weight: bold;
+}
+
+.nav-links .btn-primary:hover {
+    background-color: #2980b9 !important;
 }
 
 .btn-apply {
@@ -535,7 +546,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 40px 20px;
+    padding: 100px 80px;
 }
 
 
@@ -669,7 +680,7 @@ body {
 
 .btn-auth {
     width: 100%;
-    background: #3498db;
+    background: #27ae60;
     color: #ffffff;
     border: none;
     padding: 12px;
@@ -681,7 +692,7 @@ body {
 }
 
 .btn-auth:hover {
-    background: #2980b9;
+    background: #219150;
 }
 
 .auth-footer {

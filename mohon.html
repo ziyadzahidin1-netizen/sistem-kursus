@@ -16,13 +16,13 @@
             <span>Portal Kursus</span>
         </div>
         <ul class="nav-links">
-            <li><a href="index.html"><i class="fa-solid fa-house"></i> Utama</a></li>
+            <li><a href="index.html"><button onclick="handleLogout()" class="btn-nav-login" style="background:#5e71ce; color:rgb(104, 43, 43); border:none; padding:8px 16px; border-radius:4px; cursor:pointer;"></i> Utama</a></li>
             <li><button onclick="handleLogout()" class="btn-nav-login" style="background:#dc3545; color:white; border:none; padding:8px 16px; border-radius:4px; cursor:pointer;">Log Keluar</button></li>
         </ul>
     </header>
 
-    <main class="auth-wrapper" style="padding: 20px 0;">
-        <div class="auth-card" style="max-width: 650px;">
+    <main class="auth-wrapper" style="padding: 50px 80px;">
+        <div class="auth-card" style="max-width: 3000px;">
             <div class="auth-header">
                 <h2>Borang Permohonan Kursus</h2>
                 <p>Maklumat anda diisi secara automatik berdasarkan akaun anda</p>
@@ -31,25 +31,22 @@
             <form id="courseForm" onsubmit="handleApply(event)">
                 <!-- Maklumat Diri (Autofill & Readonly) -->
                 <div class="form-group">
-                    <label>Nama Penuh</label>
+                    <label for="app-name">Nama Penuh</label>
                     <div class="input-container">
-                        <i class="fa-regular fa-user field-icon"></i>
                         <input type="text" id="app-name" readonly style="background-color: #f0f0f0;">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Nombor MyKad</label>
+                    <label for="app-ic">Nombor MyKad</label>
                     <div class="input-container">
-                        <i class="fa-regular fa-address-card field-icon"></i>
                         <input type="text" id="app-ic" readonly style="background-color: #f0f0f0;">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Alamat E-mel</label>
+                    <label for="app-email">Alamat E-mel</label>
                     <div class="input-container">
-                        <i class="fa-regular fa-envelope field-icon"></i>
                         <input type="email" id="app-email" readonly style="background-color: #f0f0f0;">
                     </div>
                 </div>
@@ -58,7 +55,6 @@
                 <div class="form-group">
                     <label for="app-jawatan">Jawatan</label>
                     <div class="input-container">
-                        <i class="fa-solid fa-briefcase field-icon"></i>
                         <input type="text" id="app-jawatan" placeholder="Contoh: Pegawai Teknologi Maklumat" required style="width: 100%; padding: 10px 10px 10px 35px; border-radius: 6px; border: 1px solid #ccc;">
                     </div>
                 </div>
@@ -67,17 +63,60 @@
                 <div class="form-group">
                     <label for="app-gred">Gred Jawatan</label>
                     <div class="input-container">
-                        <i class="fa-solid fa-award field-icon"></i>
-                        <input type="text" id="app-gred" placeholder="Contoh: F41 / N19 / DG44" required style="width: 100%; padding: 10px 10px 10px 35px; border-radius: 6px; border: 1px solid #ccc;">
+                        <select id="app-gred" required style="width: 100%; padding: 10px 10px 10px 35px; border-radius: 6px; border: 1px solid #ccc;">
+                            <option value="">-- Sila Pilih Jenis Gred Jawatan --</option>
+                            <option value="GRED 1 (19)">GRED 1 (19)</option>
+                            <option value="GRED 2 (22)">GRED 2 (22)</option>
+                            <option value="GRED 3 (26)">GRED 3 (26)</option>
+                            <option value="GRED 4 (28)">GRED 4 (28)</option>
+                            <option value="GRED 5 (29)">GRED 5 (29)</option>
+                            <option value="GRED 6 (32)">GRED 6 (32)</option>
+                            <option value="GRED 7 (36)">GRED 7 (36)</option>
+                            <option value="GRED 8 (40)">GRED 8 (40)</option>
+                            <option value="GRED 9 (41)">GRED 9 (41)</option>
+                            <option value="GRED 10 (44)">GRED 10 (44)</option>
+                            <option value="GRED 12 (48)">GRED 12 (48)</option>
+                            <option value="GRED 13 (52)">GRED 13 (52)</option>
+                            <option value="GRED 14 (54)">GRED 14 (54)</option>
+                        </select>
                     </div>
                 </div>
 
                 <!-- Bahagian / Jabatan / Agensi -->
                 <div class="form-group">
-                    <label for="app-jabatan">Bahagian / Jabatan / Agensi</label>
+                    <label for="app-jabatan">Jabatan/Agensi/Bahagian</label>
                     <div class="input-container">
-                        <i class="fa-solid fa-building field-icon"></i>
-                        <input type="text" id="app-jabatan" placeholder="Contoh: Bahagian Pengurusan Maklumat / MOSTI" required style="width: 100%; padding: 10px 10px 10px 35px; border-radius: 6px; border: 1px solid #ccc;">
+                        <select id="app-jabatan" required style="width: 100%; padding: 10px 10px 10px 35px; border-radius: 6px; border: 1px solid #ccc;">
+                            <option value="">-- Sila Pilih Jenis Jabatan/Agensi/Bahagian --</option>
+                            <option value="PEJABAT KSU/TIMBALAN KSU/SUBK(P)">PEJABAT KSU/TIMBALAN KSU/SUBK(P)</option>
+                            <option value="BAHAGIAN ANTARABANGSA">BAHAGIAN ANTARABANGSA</option>
+                            <option value="BAHAGIAN AKAUN">BAHAGIAN AKAUN</option>
+                            <option value="BAHAGIAN DANA">BAHAGIAN DANA</option>
+                            <option value="BAHAGIAN DATA STRATEGIK DAN FORESIGHT TEKNOLOGI">BAHAGIAN DATA STRATEGIK DAN FORESIGHT TEKNOLOGI</option>
+                            <option value="BAHAGIAN KEWANGAN">BAHAGIAN KEWANGAN</option>
+                            <option value="BAHAGIAN PEMBUDAYAAN DAN PERKHIDMATAN STI">BAHAGIAN PEMBUDAYAAN DAN PERKHIDMATAN STI</option>
+                            <option value="BAHAGIAN PEMINDAHAN TEKNOLOGI DAN PENGKOMERSIALAN R & D">BAHAGIAN PEMINDAHAN TEKNOLOGI DAN PENGKOMERSIALAN R & D</option>
+                            <option value="BAHAGIAN PENGUASA ANGKASA">BAHAGIAN PENGUASA ANGKASA</option>
+                            <option value="BAHAGIAN PENGURUSAN SUMBER MANUSIA">BAHAGIAN PENGURUSAN SUMBER MANUSIA</option>
+                            <option value="BAHAGIAN PENGURUSAN TEKNOLOGI MAKLUMAT">BAHAGIAN PENGURUSAN TEKNOLOGI MAKLUMAT</option>
+                            <option value="BAHAGIAN PEMBANGUNAN">BAHAGIAN PEMBANGUNAN</option>
+                            <option value="BAHAGIAN PENTADBIRAN">BAHAGIAN PENTADBIRAN</option>
+                            <option value="BAHAGIAN PERANCANGAN STRATEGIK">BAHAGIAN PERANCANGAN STRATEGIK</option>
+                            <option value="BAHAGIAN TEKNOLOGI STRATEGIK DAN APLIKASI S & T">BAHAGIAN TEKNOLOGI STRATEGIK DAN APLIKASI S & T</option>
+                            <option value="PEJABAT PENGURUSAN PROJEK PEMBANGUNAN VAKSIN MALAYSIA">PEJABAT PENGURUSAN PROJEK PEMBANGUNAN VAKSIN MALAYSIA</option>
+                            <option value="PUSAT MAKLUMAT SAINS DAN TEKNOLGI MALAYSIA (MASTIC)">PUSAT MAKLUMAT SAINS DAN TEKNOLGI MALAYSIA (MASTIC)</option>
+                            <option value="PUSAT NANOTEKNOLOGI KEBANGSAAN">PUSAT NANOTEKNOLOGI KEBANGSAAN</option>
+                            <option value="UNIT INTEGRITI">UNIT INTEGRITI</option>
+                            <option value="UNIT PERUNDANGAN">UNIT PERUNDANGAN</option>
+                            <option value="UNIT KOMUNIKASI KORPORAT">UNIT KOMUNIKASI KORPORAT</option>
+                            <option value="UNIT AUDIT DALAM">UNIT AUDIT DALAM</option>
+                            <option value="AGENSI ANGKASA MALAYSIA">AGENSI ANGKASA MALAYSIA</option>
+                            <option value="AGENSI NUKLEAR MALAYSIA">AGENSI NUKLEAR MALAYSIA</option>
+                            <option value="JABATAN KIMIA MALAYSIA">JABATAN KIMIA MALAYSIA</option>
+                            <option value="JABATAN TENAGA ATOM">JABATAN TENAGA ATOM</option>
+                            <option value="PUSAT SAINS NEGARA">PUSAT SAINS NEGARA</option>
+                            <option value="PLANETARIUM NEGARA">PLANETARIUM NEGARA</option>
+                        </select>
                     </div>
                 </div>
 
@@ -85,7 +124,6 @@
                 <div class="form-group">
                     <label for="app-penyakit">Sejarah Penyakit / Alahan (Jika Ada)</label>
                     <div class="input-container">
-                        <i class="fa-solid fa-notes-medical field-icon"></i>
                         <input type="text" id="app-penyakit" placeholder="Tulis 'Tiada' jika tiada" required style="width: 100%; padding: 10px 10px 10px 35px; border-radius: 6px; border: 1px solid #ccc;">
                     </div>
                 </div>
@@ -94,12 +132,12 @@
                 <div class="form-group">
                     <label for="app-pengangkutan">Pengangkutan ke Kursus</label>
                     <div class="input-container">
-                        <i class="fa-solid fa-car field-icon"></i>
                         <select id="app-pengangkutan" required style="width: 100%; padding: 10px 10px 10px 35px; border-radius: 6px; border: 1px solid #ccc;">
                             <option value="">-- Sila Pilih Jenis Pengangkutan --</option>
                             <option value="Kenderaan Sendiri">Kenderaan Sendiri</option>
                             <option value="Kenderaan Jabatan">Kenderaan Jabatan</option>
-                            <option value="Pengangkutan Awam">Pengangkutan Awam (Bas/Tren/Satelit/Kapal Terbang)</option>
+                            <option value="Bas Mosti">Bas Mosti</option>
+                            <option value="Pengangkutan Awam">Pengangkutan Awam (Bas/MRT)</option>
                             <option value="Lain-lain">Lain-lain</option>
                         </select>
                     </div>
@@ -109,12 +147,16 @@
                 <div class="form-group">
                     <label for="course-select">Pilih Kursus Permohonan</label>
                     <div class="input-container">
-                        <i class="fa-solid fa-graduation-cap field-icon"></i>
                         <select id="course-select" required style="width: 100%; padding: 10px 10px 10px 35px; border-radius: 6px; border: 1px solid #ccc;">
                             <option value="">-- Sila Pilih Kursus --</option>
-                            <option value="AI & Sains Data">Kursus AI & Sains Data</option>
-                            <option value="Keselamatan Siber">Kursus Keselamatan Siber</option>
-                            <option value="Pembangunan Web Fullstack">Kursus Pembangunan Web Fullstack</option>
+                            <option value="Kursus Aplikasi Asas Generative AI MOSTI TAHUN 2026">Kursus Aplikasi Asas Generative AI MOSTI TAHUN 2026</option>
+                            <option value="Majlis Sambutan Maulidur Rasul SAW Peringkat Kebangsaan Tahun 1448H/2026M.">Majlis Sambutan Maulidur Rasul SAW Peringkat Kebangsaan Tahun 1448H/2026M.</option>
+                            <option value="Bengkel Pemerkasaan Ibadah solat dan Kemahiran Tilawah : Ngaji Smooth, Solat Approved!">Bengkel Pemerkasaan Ibadah solat dan Kemahiran Tilawah : Ngaji Smooth, Solat Approved!</option>
+                            <option value="Kursus Pembangunan dan Pemantapan Skim Perkhidmatan Penolong Pegawai Sains, Penolong Pegawai Penyelidik, Pembantu Makmal dan Pembantu Penyelidik MOSTI Tahun 2026">Kursus Pembangunan dan Pemantapan Skim Perkhidmatan Penolong Pegawai Sains, Penolong Pegawai Penyelidik, Pembantu Makmal dan Pembantu Penyelidik MOSTI Tahun 2026</option>
+                            <option value="PROGRAM LATIHAN DAN PEMBANGUNAN ANJURAN INTAN">PROGRAM LATIHAN DAN PEMBANGUNAN ANJURAN INTAN</option>
+                            <option value="Program Bicara Eksekutif bertajuk “Kuasa Dunia: Implikasi Ekonomi dan Politik Masa Kini Terhadap Malaysia”">Program Bicara Eksekutif bertajuk “Kuasa Dunia: Implikasi Ekonomi dan Politik Masa Kini Terhadap Malaysia”</option>
+                            <option value="BENGKEL PENGUKUHAN KERJA BERPASUKAN KENEGARAAN”">BENGKEL PENGUKUHAN KERJA BERPASUKAN KENEGARAAN”</option>
+                            <option value="Basic Occupational First Aid, CPR & AED Training">Basic Occupational First Aid, CPR & AED Training</option>
                         </select>
                     </div>
                 </div>
@@ -125,11 +167,10 @@
     </main>
 
     <script>
-        // MASUKKAN URL GOOGLE APPS SCRIPT ANDA DI SINI
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz4TB216Zg7ZqmE17Ggv2pzCPsPT4TXANkqFJxe4SoCAjQSlAz-7DQlioFh_oakP6vlmA/exec';
 
-        // Semak dan isi automatik data pengguna
-        document.addEventListener('DOMContentLoaded', () => {
+        // Load logged-in user details
+        function loadUserData() {
             const userData = localStorage.getItem('user');
 
             if (!userData) {
@@ -143,51 +184,49 @@
             document.getElementById('app-name').value = user.nama || user.name || '';
             document.getElementById('app-ic').value = user.ic || '';
             document.getElementById('app-email').value = user.email || '';
-        });
+        }
+
+        document.addEventListener('DOMContentLoaded', loadUserData);
 
         async function handleApply(e) {
-            e.preventDefault();
+    e.preventDefault();
 
-            const btnSubmit = document.getElementById('btn-submit');
-            btnSubmit.disabled = true;
-            btnSubmit.innerText = 'Mengisikan Data...';
+    const btnSubmit = document.getElementById('btn-submit');
+    btnSubmit.disabled = true;
+    btnSubmit.innerText = 'Mengisikan Data...';
 
-            const payload = {
-                nama: document.getElementById('app-name').value,
-                ic: document.getElementById('app-ic').value,
-                email: document.getElementById('app-email').value,
-                jawatan: document.getElementById('app-jawatan').value,
-                gred: document.getElementById('app-gred').value,
-                jabatan: document.getElementById('app-jabatan').value,
-                penyakit: document.getElementById('app-penyakit').value,
-                pengangkutan: document.getElementById('app-pengangkutan').value,
-                kursus: document.getElementById('course-select').value
-            };
+    const payload = {
+        nama: document.getElementById('app-name').value,
+        ic: document.getElementById('app-ic').value,
+        email: document.getElementById('app-email').value,
+        jawatan: document.getElementById('app-jawatan').value,
+        gred: document.getElementById('app-gred').value,
+        jabatan: document.getElementById('app-jabatan').value,
+        penyakit: document.getElementById('app-penyakit').value,
+        pengangkutan: document.getElementById('app-pengangkutan').value,
+        kursus: document.getElementById('course-select').value
+    };
 
-            try {
-                // Menghantar data ke Google Sheets
-                await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors', // Penting untuk mengelakkan isu CORS dengan Apps Script
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
+    try {
+        await fetch(SCRIPT_URL, {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        });
 
-                alert('Permohonan berjaya dihantar dan direkodkan!');
-                document.getElementById('app-jawatan').value = '';
-                document.getElementById('app-gred').value = '';
-                document.getElementById('app-jabatan').value = '';
-                document.getElementById('app-penyakit').value = '';
-                document.getElementById('app-pengangkutan').value = '';
-                document.getElementById('course-select').value = '';
-            } catch (error) {
-                console.error('Ralat:', error);
-                alert('Terdapat ralat semasa menghantar permohonan.');
-            } finally {
-                btnSubmit.disabled = false;
-                btnSubmit.innerHTML = 'Hantar Permohonan <i class="fa-solid fa-paper-plane"></i>';
-            }
-        }
+        alert('Permohonan berjaya dihantar dan direkodkan!');
+        
+        // Reset borang
+        document.getElementById('courseForm').reset();
+        loadUserData(); 
+
+    } catch (error) {
+        console.error('Ralat:', error);
+        alert('Terdapat ralat semasa menghantar permohonan.');
+    } finally {
+        btnSubmit.disabled = false;
+        btnSubmit.innerHTML = 'Hantar Permohonan <i class="fa-solid fa-paper-plane"></i>';
+    }
+}
 
         function handleLogout() {
             localStorage.removeItem('user');

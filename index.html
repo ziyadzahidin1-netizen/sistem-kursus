@@ -60,28 +60,36 @@
                 <div class="about-text">
                     <h3>Kementerian Sains Teknologi dan Inovasi (MOSTI)</h3>
                     <p>
-                        Kementerian Sains, Teknologi dan Inovasi (MOSTI) ialah kementerian di bawah Kerajaan Malaysia yang bertanggungjawab menerajui pembangunan sains, teknologi, inovasi (STI) dan ekonomi (STIE)
+                        Kementerian Sains, Teknologi dan Inovasi (MOSTI) ialah kementerian di bawah Kerajaan Malaysia yang bertanggungjawab menerajui pembangunan sains, teknologi, inovasi (STI) dan ekonomi (STIE).
+                    </p>
                     <p>
-                        Memperkasa ekosistem syarikat pemula (startup), bioteknologi, keselamatan siber, nanoteknologi, dan teknologi angkasa
+                        Memperkasa ekosistem syarikat pemula (startup), bioteknologi, keselamatan siber, nanoteknologi, dan teknologi angkasa.
+                    </p>
 
-                    <!-- Statistik Syarikat -->
+                    <!-- Statistik Syarikat (LIVE DATA FROM DATABASE / APPS SCRIPT) -->
                     <div class="stats-mini-grid">
                         <div class="stat-box">
                             <div>
-                                <h4>1,500+</h4>
-                                <p>Peserta Kursus</p>
+                                <h4 id="stat-kursus">...</h4>
+                                <p>Jumlah Kursus</p>
                             </div>
                         </div>
                         <div class="stat-box">
                             <div>
-                                <h4>98%</h4>
-                                <p>Kadar Kelulusan</p>
+                                <h4 id="stat-bidang">...</h4>
+                                <p>Jumlah Bidang</p>
                             </div>
                         </div>
                         <div class="stat-box">
                             <div>
-                                <h4>15+</h4>
-                                <p>Anugerah Industri</p>
+                                <h4 id="stat-peserta">...</h4>
+                                <p>Peserta</p>
+                            </div>
+                        </div>
+                        <div class="stat-box">
+                            <div>
+                                <h4 id="stat-pusat">...</h4>
+                                <p>Pusat Latihan</p>
                             </div>
                         </div>
                     </div>
@@ -102,40 +110,114 @@
         </div>
     </section>
 
-    <!-- ================= BAHAGIAN 3: RINGKASAN PERKHIDMATAN & KURSUS ================= -->
+    <!-- ================= BAHAGIAN 3: ACARA & KURSUS AKAN DATANG (UPCOMING LIVE EVENTS) ================= -->
     <section id="services-section" class="content-section bg-light">
         <div class="container">
             <div class="section-title">
-                <h2>Program & Kursus Utama</h2>
-                <p>Ketahui kursus kemahiran terkini yang ditawarkan oleh syarikat kami.</p>
+                <h2>Kursus Akan Datang</h2>
+                <p>Sertai program latihan, bengkel, dan majlis rasmi terkini yang dianjurkan oleh MOSTI.</p>
             </div>
 
-            <div class="cards-grid">
-                <div class="card service-card">
-                    <h3>KURSUS A</h3>
-                    <p>Selamat datang di Kursus A.</p>
-                    <a href="iklan.html" class="btn-primary-sm">Maklumat Lanjut</a>
+            <div class="cards-grid upcoming-events-grid">
+                
+                <!-- Acara 1: Generative AI -->
+                <div class="card event-card highlight-event">
+                    <div class="event-badge live-badge">
+                        <span class="pulse-dot"></span> AKAN DATANG
+                    </div>
+                    <div class="event-date-box">
+                        <span class="day">20</span>
+                        <span class="month">OGOS</span>
+                    </div>
+                    <div class="event-details">
+                        <div class="event-meta">
+                            <img src="URL_GAMBAR_ANDA.jpg" alt="Python & Sains Data" style="width: 100%; height: 200px; object-fit: cover; display: block;">
+                            <span><i class="fa-regular fa-calendar-days"></i> 20 - 22 Ogos 2026</span>
+                            <span><i class="fa-solid fa-location-dot"></i> FELDA Residence Trolak, Perak</span>
+                        </div>
+                        <h3>Kursus Aplikasi Asas Generative AI MOSTI Tahun 2026</h3>
+                        <p>Pendedahan dan latihan praktikal penggunaan Generative AI dalam meningkatkan produktiviti tugasan harian harian warga MOSTI.</p>
+
+                        <div class="event-status">
+                            <div class="status-bar">
+                                <div class="progress" style="width: 85%;"></div>
+                            </div>
+                            <small><i class="fa-solid fa-fire"></i> Tempat terhad! 85% tempat telah diisi</small>
+                        </div>
+
+                        <div class="event-action">
+                            <a href="mohon.html" class="btn-primary-sm"><i class="fa-solid fa-paper-plane"></i> Mohon Kursus Ini</a>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="card service-card">
-                    <h3>KURSUS B</h3>
-                    <p>Selamat datang di Kursus B</p>
-                    <a href="iklan.html" class="btn-primary-sm">Maklumat Lanjut</a>
+                <!-- Acara 2: Maulidur Rasul -->
+                <div class="card event-card">
+                    <div class="event-badge upcoming-badge">
+                        <span class="pulse-dot"></span> AKAN DATANG
+                    </div>
+                    <div class="event-date-box">
+                        <span class="day">25</span>
+                        <span class="month">OGOS</span>
+                    </div>
+                    <div class="event-details">
+                        <div class="event-meta">
+                            <img src="URL_GAMBAR_ANDA.jpg" alt="Python & Sains Data" style="width: 100%; height: 200px; object-fit: cover; display: block;">
+                            <span><i class="fa-regular fa-clock"></i> 6.00 AM - 12.00 PM</span>
+                            <span><i class="fa-solid fa-location-dot"></i> Akan dimaklumkan</span>
+                        </div>
+                        <h3>Majlis Sambutan Maulidur Rasul SAW Kebangsaan 1448H/2026M</h3>
+                        <p>Sambutan peringkat kebangsaan bagi memperingati kelahiran Baginda Nabi Muhammad SAW anjuran bersama MOSTI.</p>
+
+                        <div class="event-status">
+                            <div class="status-bar">
+                                <div class="progress" style="width: 60%;"></div>
+                            </div>
+                            <small><i class="fa-solid fa-users"></i> Pendaftaran masih dibuka</small>
+                        </div>
+
+                        <div class="event-action">
+                            <a href="mohon.html" class="btn-primary-sm"><i class="fa-solid fa-paper-plane"></i> Mohon Kursus Ini</a>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="card service-card">
-                    <h3>KURSUS C</h3>
-                    <p>Selamat datang di Kursus C</p>
-                    <a href="iklan.html" class="btn-primary-sm">Maklumat Lanjut</a>
+                <!-- Acara 3: Basic First Aid -->
+                <div class="card event-card">
+                    <div class="event-badge upcoming-badge">
+                        <span class="pulse-dot"></span> AKAN DATANG
+                    </div>
+                    <div class="event-date-box">
+                        <span class="day">01</span>
+                        <span class="month">SEP</span>
+                    </div>
+                    <div class="event-details">
+                        <div class="event-meta">
+                            <img src="URL_GAMBAR_ANDA.jpg" alt="Python & Sains Data" style="width: 100%; height: 200px; object-fit: cover; display: block;">
+                            <span><i class="fa-regular fa-calendar-days"></i> 1 & 2 September 2026</span>
+                            <span><i class="fa-solid fa-location-dot"></i> Dewan Perhimpunan MOSTI</span>
+                        </div>
+                        <h3>Basic Occupational First Aid, CPR & AED Training</h3>
+                        <p>Latihan pertolongan cemas, bantuan CPR, dan penggunaan AED di tempat kerja untuk warga penolong keselamatan & pegawai.</p>
+
+                        <div class="event-status">
+                            <div class="status-bar">
+                                <div class="progress" style="width: 40%;"></div>
+                            </div>
+                            <small><i class="fa-solid fa-sparkles"></i> Pendaftaran baharu dibuka</small>
+                        </div>
+
+                        <div class="event-action">
+                            <a href="mohon.html" class="btn-primary-sm"><i class="fa-solid fa-paper-plane"></i> Mohon Kursus Ini</a>
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <p>&copy; 2026 Syarikat Digital Sdn. Bhd. Hak Cipta Terpelihara.</p>
-    </footer>
-
+    <!-- PAUTKAN FAIL SCRIPT.JS DI SINI -->
+    <script src="script.js"></script>
 </body>
 </html>

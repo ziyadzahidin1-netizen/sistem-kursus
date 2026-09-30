@@ -33,7 +33,6 @@
                 <div class="form-group">
                     <label for="login-email">Alamat E-mel / No. MyKad</label>
                     <div class="input-container">
-                        <i class="fa-regular fa-envelope field-icon"></i>
                         <input type="text" id="login-email" placeholder="contoh@mosti.gov.my" required>
                     </div>
                 </div>
@@ -41,7 +40,6 @@
                 <div class="form-group">
                     <label for="login-password">Kata Laluan</label>
                     <div class="input-container">
-                        <i class="fa-solid fa-key field-icon"></i>
                         <input type="password" id="login-password" placeholder="••••••••" required>
                         <i class="fa-regular fa-eye toggle-pass" onclick="togglePassword('login-password', this)"></i>
                     </div>
@@ -68,29 +66,34 @@
             }
         }
 
-        function handleLogin(e) {
-    e.preventDefault();
-    
-    const emailOrIc = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
+        async function handleLogin(e) {
+            e.preventDefault();
+            
+            const emailOrIc = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value;
 
-    // Ambil data yang tersimpan semasa pendaftaran
-    const savedUser = JSON.parse(localStorage.getItem('user'));
+            try {
+                // Semak log masuk melalui API Server
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ emailOrIc, password })
+                });
 
-    if (!savedUser) {
-        alert('Pengguna tidak dijumpai. Sila daftar akaun terlebih dahulu.');
-        return;
-    }
+                const result = await response.json();
 
-    // Semak sama ada e-mel/IC dan kata laluan sepadan
-    if ((savedUser.email === emailOrIc || savedUser.ic === emailOrIc) && savedUser.password === password) {
-        alert('Log masuk berjaya!');
-        window.location.href = 'index.html';
-    } else {
-        alert('E-mel / No. MyKad atau kata laluan tidak sah!');
-    }
-}
-        
+                if (response.ok) {
+                    alert(result.message);
+                    // Simpan sesi pengguna
+                    sessionStorage.setItem('currentUser', JSON.stringify(result.user));
+                    window.location.href = 'index.html';
+                } else {
+                    alert(result.error || 'Log masuk gagal!');
+                }
+            } catch (error) {
+                alert('Gagal berhubung dengan server. Pastikan server.js dimainkan!');
+            }
+        }
     </script>
 </body>
 </html>
