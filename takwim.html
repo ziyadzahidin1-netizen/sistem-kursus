@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <main class="auth-wrapper" style="padding: 20px 80;">
-        <div class="auth-card" style="max-width: 2000px;">
-   <title>Takwim / Kalendar Kursus</title>
-    
+    <title>Takwim / Kalendar Kursus</title>
     
     <!-- Link CSS Utamakan -->
     <link rel="stylesheet" href="style.css">
@@ -23,13 +20,20 @@
             <img src="logo.png" alt="Logo Portal Kursus" class="logo-img">
             <span>Portal kursus</span>
         </div>
-        <nav class="nav-links">
+
+        <!-- Toggle Menu Mobile -->
+        <div class="menu-toggle" id="mobile-menu" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <nav class="nav-links" id="nav-links">
             <a href="index.html" class="nav-btn active"><i class="fa-solid fa-house"></i> Utama</a>
             <a href="iklan.html" class="nav-btn"><i class="fa-solid fa-bullhorn"></i> Jenis & Iklan Kursus</a>
             <a href="takwim.html" class="nav-btn"><i class="fa-solid fa-calendar-days"></i> Takwim Kursus</a>
             <a href="mohon.html" class="nav-btn btn-apply"><i class="fa-solid fa-paper-plane"></i> Mohon Kursus</a>
         </nav>
-    </header>
     </header>
 
     <!-- Content Container -->
@@ -44,6 +48,13 @@
 
     <!-- Script Inisialisasi Kalendar 2026 -->
     <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('nav-links');
+            const menuToggle = document.getElementById('mobile-menu');
+            navLinks.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
 

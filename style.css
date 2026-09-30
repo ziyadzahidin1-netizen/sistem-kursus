@@ -1,4 +1,6 @@
-/* Tetapan Asas Halaman */
+/* ==========================================================================
+   TETAPAN ASAS & RESET
+   ========================================================================== */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -16,7 +18,9 @@ body {
     line-height: 1.6;
 }
 
-/* Styles Navigasi (Navbar Sticky) - DIBAIKI */
+/* ==========================================================================
+   STYLES NAVIGASI (DESKTOP)
+   ========================================================================== */
 .navbar {
     position: fixed;
     top: 0;
@@ -44,8 +48,8 @@ body {
 }
 
 .logo-img {
-    height: 40px; /* Laraskan ketinggian logo mengikut navbar anda */
-    width: auto;  /* Mengembangkan lebar secara automatik mengekalkan nisbah */
+    height: 40px;
+    width: auto;
     object-fit: contain;
 }
 
@@ -56,21 +60,24 @@ body {
 .nav-links {
     display: flex;
     gap: 10px;
-    flex-wrap: wrap;
     align-items: center;
+    list-style: none;
 }
 
 .nav-btn {
     text-decoration: none;
     color: #ecf0f1;
-    padding: 8px 12px;
+    padding: 8px 14px;
     border-radius: 6px;
     font-size: 0.9rem;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 6px;
     white-space: nowrap;
+    border: none;
+    cursor: pointer;
 }
 
 .nav-btn:hover, .nav-btn.active {
@@ -98,7 +105,35 @@ body {
     background-color: #219150 !important;
 }
 
-/* ================= HERO SECTION (Gambar Penuh Desktop) ================= */
+.btn-nav-home {
+    background: #5e71ce !important;
+    color: #ffffff !important;
+}
+
+.btn-logout {
+    background: #dc3545 !important;
+    color: #ffffff !important;
+}
+
+/* Sembunyikan ikon 3 garis pada skrin desktop */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+}
+
+.menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background-color: #ffffff;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+/* ==========================================================================
+   HERO SECTION
+   ========================================================================== */
 .hero {
     position: relative;
     width: 100%;
@@ -159,7 +194,6 @@ body {
     gap: 15px;
 }
 
-/* Scroll Indicator */
 .scroll-down-indicator {
     position: absolute;
     bottom: 25px;
@@ -184,7 +218,9 @@ body {
     60% { transform: translate(-50%, -5px); }
 }
 
-/* ================= KONTEN UTAMA & CONTAINER ================= */
+/* ==========================================================================
+   KONTEN UTAMA & CONTAINER
+   ========================================================================== */
 .container {
     max-width: 1100px;
     margin: 0 auto;
@@ -220,7 +256,7 @@ body {
     font-size: 1.05rem;
 }
 
-/* Layout Keterangan Syarikat (About) */
+/* Layout Keterangan Syarikat */
 .about-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -306,7 +342,7 @@ body {
     color: #2ecc71;
 }
 
-/* Grid Perkhidmatan / Iklan */
+/* Grid Perkhidmatan */
 .cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -354,7 +390,7 @@ body {
     margin-bottom: 20px;
 }
 
-/* Calendar Card Container */
+/* Calendar Container */
 .calendar-card {
     background: #ffffff;
     border-radius: 8px;
@@ -363,14 +399,12 @@ body {
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
-/* Penyesuaian Gaya FullCalendar mengikut gambar */
 .fc .fc-toolbar-title {
     font-size: 1.6rem;
     font-weight: 600;
     color: #1e293b;
 }
 
-/* Butang Today, Next, Prev */
 .fc .fc-button-primary {
     background-color: #2d3748 !important;
     border-color: #2d3748 !important;
@@ -384,7 +418,6 @@ body {
     background-color: #1a202c !important;
 }
 
-/* Header Hari (Ahd, Isn, Sel...) */
 .fc .fc-col-header-cell-cushion {
     color: #112e5b !important;
     text-decoration: underline !important;
@@ -393,7 +426,6 @@ body {
     padding: 8px 0;
 }
 
-/* Nombor Tarikh Dalam Petak */
 .fc .fc-daygrid-day-number {
     color: #0066ff !important;
     text-decoration: underline !important;
@@ -401,12 +433,10 @@ body {
     padding: 8px;
 }
 
-/* Hari dari bulan lain (Kelabu) */
 .fc .fc-day-other .fc-daygrid-day-number {
     color: #a0aec0 !important;
 }
 
-/* Sempadan Petak Kalendar */
 .fc-theme-standard td, .fc-theme-standard th {
     border-color: #edf2f7 !important;
 }
@@ -415,7 +445,6 @@ body {
     min-height: 2em;
 }
 
-/* Gaya Acara/Kursus */
 .fc-event {
     cursor: pointer;
     border: none !important;
@@ -424,7 +453,7 @@ body {
     font-size: 0.8rem;
 }
 
-/* Borang */
+/* Form Styles */
 .contact-box {
     max-width: 600px;
     margin: 0 auto;
@@ -453,7 +482,7 @@ body {
     font-size: 0.95rem;
 }
 
-/* Butang Usability */
+/* Buttons */
 .btn-primary {
     background: #3498db;
     color: white;
@@ -515,9 +544,8 @@ body {
 }
 
 /* ==========================================================================
-   STYLE TAMBAHAN KHAS UNTUK PAGE LOGIN & REGISTER
+   PAGE LOGIN & REGISTER
    ========================================================================== */
-
 .auth-wrapper {
     min-height: calc(100vh - 180px);
     display: flex;
@@ -534,6 +562,10 @@ body {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
     padding: 35px 30px;
     border: 1px solid #e2e8f0;
+}
+
+.permohonan-card {
+    max-width: 900px !important;
 }
 
 .auth-header {
@@ -595,6 +627,7 @@ body {
     position: relative;
     display: flex;
     align-items: center;
+    width: 100%;
 }
 
 .input-icon-wrapper i {
@@ -602,9 +635,11 @@ body {
     left: 14px;
     color: #94a3b8;
     font-size: 1rem;
+    pointer-events: none;
 }
 
-.input-icon-wrapper input {
+.input-icon-wrapper input,
+.input-icon-wrapper select {
     width: 100%;
     padding: 12px 14px 12px 42px;
     border: 1px solid #cbd5e1;
@@ -615,7 +650,14 @@ body {
     background: #f8fafc;
 }
 
-.input-icon-wrapper input:focus {
+.input-icon-wrapper input[readonly] {
+    background-color: #f1f5f9;
+    color: #64748b;
+    cursor: not-allowed;
+}
+
+.input-icon-wrapper input:focus,
+.input-icon-wrapper select:focus {
     border-color: #3498db;
     background: #ffffff;
     box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
@@ -665,10 +707,19 @@ body {
     font-weight: 600;
     cursor: pointer;
     transition: background 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
 }
 
 .btn-auth:hover {
     background: #219150;
+}
+
+.btn-auth:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
 }
 
 .auth-footer {
@@ -688,87 +739,108 @@ body {
     text-decoration: underline;
 }
 
+/* Grid Borang Permohonan */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px 20px;
+}
+
+.form-group.full-width {
+    grid-column: span 2;
+}
+
 /* ==========================================================================
-   PENYESUAIAN LAYOUT RESPONSIF (DESKTOP KECIL, IPAD, TABLET & MOBILE)
+   PENYESUAIAN LAYOUT RESPONSIF (MOBILE WITH HAMBURGER MENU)
    ========================================================================== */
 
 /* --- Laptop / Desktop Kecil (hingga 1200px) --- */
 @media screen and (max-width: 1200px) {
     .navbar {
-        padding: 12px 15px;
+        padding: 12px 20px;
     }
 
     .nav-links {
-        gap: 6px;
+        gap: 8px;
     }
 
     .nav-btn {
         padding: 6px 10px;
         font-size: 0.85rem;
     }
+
+    .container, .main-container {
+        padding: 0 20px;
+    }
+
+    .permohonan-card {
+        max-width: 100% !important;
+    }
 }
 
-/* --- Tablet / iPad (769px hingga 1024px) --- */
-@media screen and (max-width: 1024px) {
+/* --- Mobile & Tablet (768px dan ke bawah) --- */
+@media screen and (max-width: 768px) {
     .navbar {
         padding: 12px 20px;
     }
 
-    .hero-content h1 {
-        font-size: 2.5rem;
+    /* Paparkan Butang 3 Garis */
+    .menu-toggle {
+        display: flex;
     }
 
-    .hero-content p {
-        font-size: 1.1rem;
-    }
-
-    .about-grid {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
-
-    .stats-mini-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    .cards-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .auth-wrapper {
-        padding: 80px 40px;
-    }
-}
-
-/* --- Mobile & Small Tablet (768px dan ke bawah) --- */
-@media screen and (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-        gap: 12px;
-        padding: 15px;
-    }
-
+    /* Sorrokkan Menu Navigasi secara default */
     .nav-links {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 8px;
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: rgba(44, 62, 80, 0.98);
+        padding: 15px 20px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        gap: 10px;
+    }
+
+    /* Paparkan menu apabila class .active ditambah melalui JS */
+    .nav-links.active {
+        display: flex;
     }
 
     .nav-btn {
-        padding: 6px 12px;
-        font-size: 0.85rem;
+        width: 100%;
+        justify-content: flex-start;
+        padding: 12px 15px;
+        font-size: 0.95rem;
     }
 
+    /* Animasi pertukaran ikon 3 garis ke tanda 'X' apabila dibuka */
+    .menu-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 6px);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -6px);
+    }
+
+    /* Pelarasan susunan umum pada mobile */
     .hero {
-        padding: 0 15px;
+        padding: 100px 15px 40px 15px;
+        height: auto;
+        min-height: 100vh;
     }
 
     .hero-content h1 {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
 
     .hero-content p {
-        font-size: 1rem;
+        font-size: 0.95rem;
     }
 
     .hero-buttons {
@@ -777,30 +849,15 @@ body {
         gap: 10px;
     }
 
-    .hero-buttons .btn-primary,
-    .hero-buttons .btn-secondary {
-        width: 100%;
-        text-align: center;
-    }
-
-    .content-section {
-        padding: 50px 0;
-    }
-
-    .about-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .stats-mini-grid {
-        grid-template-columns: 1fr;
-    }
-
+    .about-grid,
+    .stats-mini-grid,
     .cards-grid {
         grid-template-columns: 1fr;
     }
 
     .calendar-card {
         padding: 15px;
+        overflow-x: auto;
     }
 
     .fc .fc-toolbar {
@@ -808,44 +865,32 @@ body {
         gap: 10px;
     }
 
-    .fc .fc-toolbar-title {
-        font-size: 1.3rem;
-    }
-
     .contact-box {
         padding: 20px;
     }
 
+    /* Layout Borang Permohonan Mobile */
     .auth-wrapper {
-        padding: 60px 20px;
+        padding: 90px 15px 30px 15px;
     }
 
     .auth-card {
-        padding: 25px 20px;
+        padding: 20px 15px;
     }
 
-    .form-options {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-}
-
-/* --- Mobile Skrin Kecil (480px dan ke bawah) --- */
-@media screen and (max-width: 480px) {
-    .logo {
-        font-size: 1.2rem;
+    .form-grid {
+        grid-template-columns: 1fr;
     }
 
-    .logo-img {
-        height: 32px;
+    .form-group.full-width {
+        grid-column: span 1;
     }
 
-    .hero-content h1 {
-        font-size: 1.6rem;
+    .auth-header h2 {
+        font-size: 1.4rem;
     }
 
-    .section-title h2 {
-        font-size: 1.8rem;
+    .auth-header p {
+        font-size: 0.85rem;
     }
 }

@@ -87,4 +87,23 @@ function setupAuthForms() {
 document.addEventListener('DOMContentLoaded', () => {
     loadDashboardStats();
     setupAuthForms();
+    const mobileMenu = document.getElementById('mobile-menu');
+    const navLinks = document.getElementById('nav-links');
+
+    if (mobileMenu && navLinks) {
+        // Klik butang 3 garis untuk buka/tutup menu
+        mobileMenu.addEventListener('click', function () {
+            mobileMenu.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Tutup menu secara automatik apabila mana-mana pautan di-klik
+        const buttons = navLinks.querySelectorAll('a');
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+    }
 });

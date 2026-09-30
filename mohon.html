@@ -10,60 +10,78 @@
 </head>
 <body>
 
+    <!-- Header & Navbar -->
     <header class="navbar">
         <div class="logo">
             <img src="logo.png" alt="Logo Portal Kursus" class="logo-img">
             <span>Portal Kursus</span>
         </div>
-        <ul class="nav-links">
-            <li><a href="index.html"><button onclick="handleLogout()" class="btn-nav-login" style="background:#5e71ce; color:rgb(104, 43, 43); border:none; padding:8px 16px; border-radius:4px; cursor:pointer;"></i> Utama</a></li>
-            <li><button onclick="handleLogout()" class="btn-nav-login" style="background:#dc3545; color:white; border:none; padding:8px 16px; border-radius:4px; cursor:pointer;">Log Keluar</button></li>
-        </ul>
+        
+        <!-- Toggle Menu Mobile -->
+        <div class="menu-toggle" id="mobile-menu" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <!-- Nav Tanpa <ul> dan <li> Supaya Reka Bentuk Mobile Kemas -->
+        <nav class="nav-links" id="nav-links">
+            <a href="index.html" class="nav-btn btn-nav-home"><i class="fa-solid fa-house"></i> Utama</a>
+            <a href="iklan.html" class="nav-btn"><i class="fa-solid fa-bullhorn"></i> Jenis & Iklan Kursus</a>
+            <a href="takwim.html" class="nav-btn"><i class="fa-solid fa-calendar-days"></i> Takwim Kursus</a>
+            <button onclick="handleLogout()" class="nav-btn btn-logout"><i class="fa-solid fa-right-from-bracket"></i> Log Keluar</button>
+        </nav>
     </header>
 
-    <main class="auth-wrapper" style="padding: 50px 80px;">
-        <div class="auth-card" style="max-width: 3000px;">
+    <!-- Main Container Permohonan -->
+    <main class="auth-wrapper">
+        <div class="auth-card permohonan-card">
             <div class="auth-header">
                 <h2>Borang Permohonan Kursus</h2>
                 <p>Maklumat anda diisi secara automatik berdasarkan akaun anda</p>
             </div>
 
-            <form id="courseForm" onsubmit="handleApply(event)">
+            <form id="courseForm" onsubmit="handleApply(event)" class="form-grid">
+                
                 <!-- Maklumat Diri (Autofill & Readonly) -->
                 <div class="form-group">
                     <label for="app-name">Nama Penuh</label>
-                    <div class="input-container">
-                        <input type="text" id="app-name" readonly style="background-color: #f0f0f0;">
+                    <div class="input-icon-wrapper">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="app-name" readonly placeholder="Nama Penuh">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="app-ic">Nombor MyKad</label>
-                    <div class="input-container">
-                        <input type="text" id="app-ic" readonly style="background-color: #f0f0f0;">
+                    <div class="input-icon-wrapper">
+                        <i class="fa-solid fa-id-card"></i>
+                        <input type="text" id="app-ic" readonly placeholder="Nombor MyKad">
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group full-width">
                     <label for="app-email">Alamat E-mel</label>
-                    <div class="input-container">
-                        <input type="email" id="app-email" readonly style="background-color: #f0f0f0;">
+                    <div class="input-icon-wrapper">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" id="app-email" readonly placeholder="E-mel">
                     </div>
                 </div>
 
-                <!-- Jawatan -->
+                <!-- Jawatan & Gred -->
                 <div class="form-group">
                     <label for="app-jawatan">Jawatan</label>
-                    <div class="input-container">
-                        <input type="text" id="app-jawatan" placeholder="Contoh: Pegawai Teknologi Maklumat" required style="width: 100%; padding: 10px 10px 10px 35px; border-radius: 6px; border: 1px solid #ccc;">
+                    <div class="input-icon-wrapper">
+                        <i class="fa-solid fa-briefcase"></i>
+                        <input type="text" id="app-jawatan" placeholder="Contoh: Pegawai Teknologi Maklumat" required>
                     </div>
                 </div>
 
-                <!-- Gred Jawatan -->
                 <div class="form-group">
                     <label for="app-gred">Gred Jawatan</label>
-                    <div class="input-container">
-                        <select id="app-gred" required style="width: 100%; padding: 10px 10px 10px 35px; border-radius: 6px; border: 1px solid #ccc;">
+                    <div class="input-icon-wrapper">
+                        <i class="fa-solid fa-layer-group"></i>
+                        <select id="app-gred" required>
                             <option value="">-- Sila Pilih Jenis Gred Jawatan --</option>
                             <option value="GRED 1 (19)">GRED 1 (19)</option>
                             <option value="GRED 2 (22)">GRED 2 (22)</option>
@@ -83,10 +101,11 @@
                 </div>
 
                 <!-- Bahagian / Jabatan / Agensi -->
-                <div class="form-group">
+                <div class="form-group full-width">
                     <label for="app-jabatan">Jabatan/Agensi/Bahagian</label>
-                    <div class="input-container">
-                        <select id="app-jabatan" required style="width: 100%; padding: 10px 10px 10px 35px; border-radius: 6px; border: 1px solid #ccc;">
+                    <div class="input-icon-wrapper">
+                        <i class="fa-solid fa-building"></i>
+                        <select id="app-jabatan" required>
                             <option value="">-- Sila Pilih Jenis Jabatan/Agensi/Bahagian --</option>
                             <option value="PEJABAT KSU/TIMBALAN KSU/SUBK(P)">PEJABAT KSU/TIMBALAN KSU/SUBK(P)</option>
                             <option value="BAHAGIAN ANTARABANGSA">BAHAGIAN ANTARABANGSA</option>
@@ -120,19 +139,20 @@
                     </div>
                 </div>
 
-                <!-- Penyakit / Alahan -->
+                <!-- Penyakit & Pengangkutan -->
                 <div class="form-group">
-                    <label for="app-penyakit">Sejarah Penyakit / Alahan (Jika Ada)</label>
-                    <div class="input-container">
-                        <input type="text" id="app-penyakit" placeholder="Tulis 'Tiada' jika tiada" required style="width: 100%; padding: 10px 10px 10px 35px; border-radius: 6px; border: 1px solid #ccc;">
+                    <label for="app-penyakit">Sejarah Penyakit / Alahan</label>
+                    <div class="input-icon-wrapper">
+                        <i class="fa-solid fa-notes-medical"></i>
+                        <input type="text" id="app-penyakit" placeholder="Tulis 'Tiada' jika tiada" required>
                     </div>
                 </div>
 
-                <!-- Pengangkutan -->
                 <div class="form-group">
                     <label for="app-pengangkutan">Pengangkutan ke Kursus</label>
-                    <div class="input-container">
-                        <select id="app-pengangkutan" required style="width: 100%; padding: 10px 10px 10px 35px; border-radius: 6px; border: 1px solid #ccc;">
+                    <div class="input-icon-wrapper">
+                        <i class="fa-solid fa-car"></i>
+                        <select id="app-pengangkutan" required>
                             <option value="">-- Sila Pilih Jenis Pengangkutan --</option>
                             <option value="Kenderaan Sendiri">Kenderaan Sendiri</option>
                             <option value="Kenderaan Jabatan">Kenderaan Jabatan</option>
@@ -144,10 +164,11 @@
                 </div>
 
                 <!-- Pilihan Kursus -->
-                <div class="form-group">
+                <div class="form-group full-width">
                     <label for="course-select">Pilih Kursus Permohonan</label>
-                    <div class="input-container">
-                        <select id="course-select" required style="width: 100%; padding: 10px 10px 10px 35px; border-radius: 6px; border: 1px solid #ccc;">
+                    <div class="input-icon-wrapper">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                        <select id="course-select" required>
                             <option value="">-- Sila Pilih Kursus --</option>
                             <option value="Kursus Aplikasi Asas Generative AI MOSTI TAHUN 2026">Kursus Aplikasi Asas Generative AI MOSTI TAHUN 2026</option>
                             <option value="Majlis Sambutan Maulidur Rasul SAW Peringkat Kebangsaan Tahun 1448H/2026M.">Majlis Sambutan Maulidur Rasul SAW Peringkat Kebangsaan Tahun 1448H/2026M.</option>
@@ -161,13 +182,24 @@
                     </div>
                 </div>
 
-                <button type="submit" id="btn-submit" class="btn btn-primary btn-block">Hantar Permohonan <i class="fa-solid fa-paper-plane"></i></button>
+                <div class="form-group full-width">
+                    <button type="submit" id="btn-submit" class="btn-auth btn-submit">
+                        Hantar Permohonan <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
             </form>
         </div>
     </main>
 
     <script>
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz4TB216Zg7ZqmE17Ggv2pzCPsPT4TXANkqFJxe4SoCAjQSlAz-7DQlioFh_oakP6vlmA/exec';
+
+        function toggleMenu() {
+            const navLinks = document.getElementById('nav-links');
+            const menuToggle = document.getElementById('mobile-menu');
+            navLinks.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        }
 
         // Load logged-in user details
         function loadUserData() {
@@ -189,44 +221,42 @@
         document.addEventListener('DOMContentLoaded', loadUserData);
 
         async function handleApply(e) {
-    e.preventDefault();
+            e.preventDefault();
 
-    const btnSubmit = document.getElementById('btn-submit');
-    btnSubmit.disabled = true;
-    btnSubmit.innerText = 'Mengisikan Data...';
+            const btnSubmit = document.getElementById('btn-submit');
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = 'Mengisikan Data... <i class="fa-solid fa-spinner fa-spin"></i>';
 
-    const payload = {
-        nama: document.getElementById('app-name').value,
-        ic: document.getElementById('app-ic').value,
-        email: document.getElementById('app-email').value,
-        jawatan: document.getElementById('app-jawatan').value,
-        gred: document.getElementById('app-gred').value,
-        jabatan: document.getElementById('app-jabatan').value,
-        penyakit: document.getElementById('app-penyakit').value,
-        pengangkutan: document.getElementById('app-pengangkutan').value,
-        kursus: document.getElementById('course-select').value
-    };
+            const payload = {
+                nama: document.getElementById('app-name').value,
+                ic: document.getElementById('app-ic').value,
+                email: document.getElementById('app-email').value,
+                jawatan: document.getElementById('app-jawatan').value,
+                gred: document.getElementById('app-gred').value,
+                jabatan: document.getElementById('app-jabatan').value,
+                penyakit: document.getElementById('app-penyakit').value,
+                pengangkutan: document.getElementById('app-pengangkutan').value,
+                kursus: document.getElementById('course-select').value
+            };
 
-    try {
-        await fetch(SCRIPT_URL, {
-            method: 'POST',
-            body: JSON.stringify(payload)
-        });
+            try {
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(payload)
+                });
 
-        alert('Permohonan berjaya dihantar dan direkodkan!');
-        
-        // Reset borang
-        document.getElementById('courseForm').reset();
-        loadUserData(); 
+                alert('Permohonan berjaya dihantar dan direkodkan!');
+                document.getElementById('courseForm').reset();
+                loadUserData(); 
 
-    } catch (error) {
-        console.error('Ralat:', error);
-        alert('Terdapat ralat semasa menghantar permohonan.');
-    } finally {
-        btnSubmit.disabled = false;
-        btnSubmit.innerHTML = 'Hantar Permohonan <i class="fa-solid fa-paper-plane"></i>';
-    }
-}
+            } catch (error) {
+                console.error('Ralat:', error);
+                alert('Terdapat ralat semasa menghantar permohonan.');
+            } finally {
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = 'Hantar Permohonan <i class="fa-solid fa-paper-plane"></i>';
+            }
+        }
 
         function handleLogout() {
             localStorage.removeItem('user');
