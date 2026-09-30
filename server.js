@@ -4,24 +4,36 @@ const path = require('path');
 const bcrypt = require('bcryptjs');
 
 const app = express();
-const PORT = 5000;
-const DB_FILE = path.join(__dirname, 'users.json');
+
+// Di Vercel, kita wajib gunakan folder /tmp untuk simpanan fail sementara
+const isVercel = process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME;
+const DB_FILE = isVercel 
+    ? path.join('/tmp', 'users.json') 
+    : path.join(__dirname, 'users.json');
 
 app.use(express.json());
 app.use(express.static('.'));
 
 // Fungsi baca data dari fail users.json
 function getUsers() {
-    if (!fs.existsSync(DB_FILE)) {
-        fs.writeFileSync(DB_FILE, JSON.stringify([]));
+    try {
+        if (!fs.existsSync(DB_FILE)) {
+            fs.writeFileSync(DB_FILE, JSON.stringify([]));
+        }
+        const data = fs.readFileSync(DB_FILE, 'utf8');
+        return JSON.parse(data);
+    } catch (err) {
+        return [];
     }
-    const data = fs.readFileSync(DB_FILE);
-    return JSON.parse(data);
 }
 
 // Fungsi simpan data ke fail users.json
 function saveUsers(users) {
-    fs.writeFileSync(DB_FILE, JSON.stringify(users, null, 2));
+    try {
+        fs.writeFileSync(DB_FILE, JSON.stringify(users, null, 2));
+    } catch (err) {
+        console.error('Ralat menulis fail:', err);
+    }
 }
 
 // API Register
@@ -68,4 +80,10 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
-app.listen(PORT, () => console.log(`Server berjalan di http://localhost:${PORT}`));
+// Jalankan app.listen jika run di localhost, atau eksport app jika di Vercel
+if (!isVercel) {
+    const PORT = 5000;
+    app.listen(PORT, () => console.log(`Server berjalan di http://localhost:${PORT}`));
+}
+
+module.exports = app;
