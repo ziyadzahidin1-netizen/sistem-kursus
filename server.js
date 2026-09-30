@@ -1,13 +1,18 @@
 const express = require('express');
+const path = require('path');
 const bcrypt = require('bcryptjs');
 
 const app = express();
+
 app.use(express.json());
 
-// Simpan pengguna dalam pembolehubah (In-Memory Array)
+// 1. Melayan fail statik (CSS, JS, Gambar) dari folder utama
+app.use(express.static(__dirname));
+
+// Simpan data dalam memori (In-Memory Array) untuk persekitaran Vercel Serverless
 const users = [];
 
-// API Register
+// 2. API REGISTER
 app.post('/api/register', async (req, res) => {
     try {
         const { nama, ic, email, password } = req.body;
@@ -26,7 +31,7 @@ app.post('/api/register', async (req, res) => {
     }
 });
 
-// API Login
+// 3. API LOGIN
 app.post('/api/login', async (req, res) => {
     try {
         const { emailOrIc, password } = req.body;
@@ -47,7 +52,13 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
-if (process.env.NODE_ENV !== 'production') {
+// 4. Hantar index.html untuk laluan utama (Root)
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// 5. Jalankan app.listen hanya untuk persekitaran tempatan (Localhost)
+if (!process.env.VERCEL) {
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => console.log(`Server berjalan di http://localhost:${PORT}`));
 }
