@@ -41,56 +41,10 @@ function updateElementText(id, value) {
 
 
 // ==========================================
-// 2. PENDAFTARAN & LOG MASUK (API VERCEL)
+// 2. LOG MASUK (LOGIN)
 // ==========================================
 function setupAuthForms() {
-    // Handling Form Pendaftaran (register.html)
-    const registerForm = document.getElementById('registerForm') || document.querySelector('form');
-    const isRegisterPage = window.location.pathname.includes('register.html');
-
-    if (isRegisterPage && registerForm) {
-        registerForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            // Ambil nilai dari borang register
-            const nama = document.getElementById('nama')?.value || document.querySelector('input[placeholder*="Nama"], input[name="nama"]')?.value;
-            const ic = document.getElementById('ic')?.value || document.querySelector('input[placeholder*="MyKad"], input[name="ic"]')?.value;
-            const email = document.getElementById('email')?.value || document.querySelector('input[type="email"]')?.value;
-            
-            // Ambil kata laluan
-            const passwordInputs = registerForm.querySelectorAll('input[type="password"]');
-            const password = passwordInputs[0]?.value;
-            const confirmPassword = passwordInputs[1]?.value;
-
-            if (confirmPassword && password !== confirmPassword) {
-                alert('Kata laluan dan sahkan kata laluan tidak sepadan!');
-                return;
-            }
-
-            try {
-                // Hantar ke endpoint relative /api/register di Vercel
-                const response = await fetch('/api/register', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ nama, ic, email, password })
-                });
-
-                const result = await response.json();
-
-                if (response.ok) {
-                    alert(result.message || 'Pendaftaran berjaya!');
-                    window.location.href = 'login.html';
-                } else {
-                    alert(result.error || 'Pendaftaran gagal.');
-                }
-            } catch (error) {
-                console.error('Ralat Pendaftaran:', error);
-                alert('Gagal berhubung dengan server.');
-            }
-        });
-    }
-
-    // Handling Form Log Masuk (login.html)
+    // Handling Form Log Masuk sahaja (login.html)
     const loginForm = document.getElementById('loginForm');
     const isLoginPage = window.location.pathname.includes('login.html');
 

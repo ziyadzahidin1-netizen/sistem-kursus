@@ -76,6 +76,7 @@
         </div>
     </main>
 
+    <script src="script.js"></script>
     <script>
         async function handleRegister(e) {
             e.preventDefault();
@@ -92,7 +93,7 @@
             }
 
             try {
-                // Hantar data pendaftaran ke API Server
+                // Hantar data pendaftaran ke API Server Vercel
                 const response = await fetch('/api/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -102,13 +103,14 @@
                 const result = await response.json();
 
                 if (response.ok) {
-                    alert(result.message);
+                    alert(result.message || 'Pendaftaran berjaya!');
                     window.location.href = 'login.html';
                 } else {
                     alert(result.error || 'Gagal mendaftar.');
                 }
             } catch (error) {
-                alert('Gagal berhubung dengan server. Pastikan server.js dimainkan!');
+                console.error(error);
+                alert('Ralat semasa berhubung dengan server API.');
             }
         }
     </script>
