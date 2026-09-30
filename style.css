@@ -137,13 +137,13 @@ body {
 .hero {
     position: relative;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     background: url('https://themalaysianreserve.com/wp-content/uploads/2025/10/MOSTI.jpg') center/cover no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 0 20px;
+    padding: 100px 20px 60px 20px;
 }
 
 .hero-overlay {
@@ -161,29 +161,39 @@ body {
     z-index: 2;
     color: white;
     max-width: 850px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
+/* Badge tajuk yang kemas & responsive */
 .hero-badge {
-    background: rgba(52, 152, 219, 0.3);
-    border: 1px solid #3498db;
-    color: #3498db;
-    padding: 6px 16px;
+    display: inline-block;
+    max-width: 90%;
+    background: rgba(52, 152, 219, 0.2);
+    border: 1px solid rgba(52, 152, 219, 0.6);
+    color: #5dade2;
+    padding: 6px 18px;
     border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: bold;
+    font-size: 0.85rem;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
+    margin-bottom: 20px;
+    white-space: normal;
+    word-break: break-word;
+    line-height: 1.4;
 }
 
 .hero-content h1 {
-    font-size: 3rem;
-    margin: 20px 0 15px;
-    line-height: 1.2;
+    font-size: 2.8rem;
+    margin-bottom: 15px;
+    line-height: 1.25;
     font-weight: 800;
 }
 
 .hero-content p {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     color: #e0e6ed;
     margin-bottom: 30px;
 }
@@ -192,11 +202,12 @@ body {
     display: flex;
     justify-content: center;
     gap: 15px;
+    width: 100%;
 }
 
 .scroll-down-indicator {
     position: absolute;
-    bottom: 25px;
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 2;
@@ -205,7 +216,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     font-size: 0.85rem;
     opacity: 0.8;
     transition: opacity 0.3s;
@@ -828,25 +839,41 @@ body {
         transform: rotate(-45deg) translate(5px, -6px);
     }
 
-    /* Pelarasan susunan umum pada mobile */
+    /* Pelarasan Hero Section pada Mobile */
     .hero {
-        padding: 100px 15px 40px 15px;
-        height: auto;
+        padding: 110px 15px 50px 15px;
         min-height: 100vh;
     }
 
+    .hero-badge {
+        font-size: 0.75rem;
+        padding: 5px 12px;
+        margin-bottom: 15px;
+    }
+
     .hero-content h1 {
-        font-size: 1.8rem;
+        font-size: 1.75rem;
+        margin-bottom: 12px;
     }
 
     .hero-content p {
         font-size: 0.95rem;
+        margin-bottom: 25px;
     }
 
     .hero-buttons {
         flex-direction: column;
         width: 100%;
         gap: 10px;
+    }
+
+    .hero-buttons a {
+        width: 100%;
+        text-align: center;
+    }
+
+    .scroll-down-indicator {
+        display: none; /* Sembunyikan petunjuk scroll di mobile supaya tak penuh skrin */
     }
 
     .about-grid,
