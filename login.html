@@ -68,26 +68,30 @@
             }
         }
 
-        function handleLogin(e) {
+        async function handleLogin(e) {
             e.preventDefault();
             
             const emailOrIc = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
 
-            // Ambil data yang tersimpan semasa pendaftaran
-            const savedUser = JSON.parse(localStorage.getItem('user'));
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ emailOrIc, password })
+                });
 
-            if (!savedUser) {
-                alert('Pengguna tidak dijumpai. Sila daftar akaun terlebih dahulu.');
-                return;
-            }
+                const data = await response.json();
 
-            // Semak sama ada e-mel/IC dan kata laluan sepadan
-            if ((savedUser.email === emailOrIc || savedUser.ic === emailOrIc) && savedUser.password === password) {
-                alert('Log masuk berjaya!');
-                window.location.href = 'index.html';
-            } else {
-                alert('E-mel / No. MyKad atau kata laluan tidak sah!');
+                if (response.ok) {
+                    alert(data.message);
+                    sessionStorage.setItem('user', JSON.stringify(data.user));
+                    window.location.href = 'index.html';
+                } else {
+                    alert(data.error);
+                }
+            } catch (error) {
+                alert('Gagal membuat sambungan ke server.');
             }
         }
     </script>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!<!DOCTYPE html>
 <html lang="ms">
 <head>
     <meta charset="UTF-8">
@@ -82,28 +82,39 @@
     </main>
 
     <script>
-        function handleRegister(e) {
-    e.preventDefault();
-    
-    const nama = document.getElementById('reg-name').value;
-    const ic = document.getElementById('reg-ic').value;
-    const email = document.getElementById('reg-email').value;
-    const pass = document.getElementById('reg-pass').value;
-    const confirm = document.getElementById('reg-confirm').value;
+        async function handleRegister(e) {
+            e.preventDefault();
+            
+            const nama = document.getElementById('reg-name').value;
+            const ic = document.getElementById('reg-ic').value;
+            const email = document.getElementById('reg-email').value;
+            const pass = document.getElementById('reg-pass').value;
+            const confirm = document.getElementById('reg-confirm').value;
 
-    if (pass !== confirm) {
-        alert('Kata laluan tidak sepadan!');
-        return;
-    }
+            if (pass !== confirm) {
+                alert('Kata laluan tidak sepadan!');
+                return;
+            }
 
-    // Simpan data pendaftaran ke localStorage browser
-    const user = { nama, ic, email, password: pass };
-    localStorage.setItem('user', JSON.stringify(user));
+            try {
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nama, ic, email, password: pass })
+                });
 
-    alert('Pendaftaran berjaya! Anda akan dialihkan ke halaman log masuk.');
-    window.location.href = 'login.html';
-}
-        
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert(data.message);
+                    window.location.href = 'login.html';
+                } else {
+                    alert(data.error);
+                }
+            } catch (error) {
+                alert('Gagal membuat sambungan ke server.');
+            }
+        }
     </script>
 </body>
 </html>
