@@ -11,12 +11,29 @@ app.use(express.json());
 app.use(express.static(__dirname));
 
 // Load fail JSON
-const serviceAccount = require('./serviceAccountKey.json');
+let serviceAccount;
 
+if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+    serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+} else {
+    try {
+        serviceAccount = require('./serviceAccountKey.json');
+    } catch (err) {
+        console.error('ERROR: Fail serviceAccountKey.json tidak dijumpai!');
+    }
+}
+
+if (serviceAccount) {
+    initializeApp({
+        credential: cert(serviceAccount)
+    });
+}
 // Inisialisasi Firebase Admin
-initializeApp({
-  credential: cert(serviceAccount)
-});
+if (serviceAccount) {
+    initializeApp({
+        credential: cert(serviceAccount)
+    });
+}
 
 const db = getFirestore();
 const usersCollection = db.collection('users');
@@ -30,9 +47,12 @@ app.post('/api/register', async (req, res) => {
             return res.status(400).json({ error: 'Sila lengkapkan semua maklumat!' });
         }
 
+        const icString = String(ic).trim();
+        const emailString = String(email).trim().toLowerCase();
+
         // Semak jika email atau IC sudah wujud dalam Firestore
-        const emailCheck = await usersCollection.where('email', '==', email).get();
-        const icCheck = await usersCollection.where('ic', '==', ic).get();
+        const emailCheck = await usersCollection.where('email', '==', emailString).get();
+        const icCheck = await usersCollection.where('ic', '==', icString).get();
 
         if (!emailCheck.empty || !icCheck.empty) {
             return res.status(400).json({ error: 'E-mel atau No. MyKad telah berdaftar!' });
@@ -42,17 +62,18 @@ app.post('/api/register', async (req, res) => {
 
         // Simpan dokumen baru ke dalam Firestore
         await usersCollection.add({
-            nama,
-            ic,
-            email,
+            nama: nama.trim(),
+            ic: icString,
+            email: emailString,
             password: hashedPassword,
-            createdAt: FieldValue.serverTimestamp() // Dibetulkan di sini
+            createdAt: FieldValue.serverTimestamp()
         });
 
         res.status(201).json({ message: 'Pendaftaran berjaya! Anda boleh log masuk sekarang.' });
     } catch (error) {
-        console.error('Register Error:', error);
-        res.status(500).json({ error: 'Ralat pendaftaran pada server.' });
+        console.error('Register Error Detail:', error);
+        // Menghantar mesej ralat terperinci ke frontend supaya mudah faham puncanya
+        res.status(500).json({ error: 'Ralat Server: ' + (error.message || 'Ralat tidak diketahui') });
     }
 });
 
@@ -65,11 +86,14 @@ app.post('/api/login', async (req, res) => {
             return res.status(400).json({ error: 'Sila isi e-mel/MyKad dan kata laluan!' });
         }
 
-        // Cari pengguna mengikut email atau IC
-        let userSnap = await usersCollection.where('email', '==', emailOrIc).limit(1).get();
+        const inputSearch = String(emailOrIc).trim().toLowerCase();
+
+        // Cari pengguna mengikut email dahulu
+        let userSnap = await usersCollection.where('email', '==', inputSearch).limit(1).get();
         
+        // Jika tidak dijumpai mengikut email, cari mengikut IC
         if (userSnap.empty) {
-            userSnap = await usersCollection.where('ic', '==', emailOrIc).limit(1).get();
+            userSnap = await usersCollection.where('ic', '==', String(emailOrIc).trim()).limit(1).get();
         }
 
         if (userSnap.empty) {
@@ -89,8 +113,8 @@ app.post('/api/login', async (req, res) => {
             user: { nama: user.nama, email: user.email, ic: user.ic }
         });
     } catch (error) {
-        console.error('Login Error:', error);
-        res.status(500).json({ error: 'Ralat log masuk pada server.' });
+        console.error('Login Error Detail:', error);
+        res.status(500).json({ error: 'Ralat Server: ' + (error.message || 'Ralat tidak diketahui') });
     }
 });
 
