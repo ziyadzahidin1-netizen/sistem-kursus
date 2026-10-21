@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log Masuk - Portal Kursus MOSTI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .role-select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <img src="logo.png" alt="Logo Portal Kursus" class="logo-img">
+            <span>Portal kursus</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-btn active"><i class="fa-solid fa-house"></i> Utama</a></li>
+        </ul>
+    </header>
+
+    <main class="auth-wrapper">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-icon"></div>
+                <h2>Log Masuk Akaun</h2>
+                <p>Sila masukkan maklumat akaun anda untuk log masuk</p>
+            </div>
+
+            <form id="login-form" onsubmit="handleLogin(event)">
+                <!-- Pilihan Peranan / Role -->
+                <div class="form-group">
+                    <label for="login-role">Log Masuk Sebagai</label>
+                    <div class="input-container">
+                        <select id="login-role" class="role-select" onchange="toggleLoginRole()" required>
+                            <option value="user">Pengguna Biasa / Peserta</option>
+                            <option value="admin">Pentadbir (Admin)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="login-email">E-mel / No. MyKad</label>
+                    <div class="input-container">
+                        <input type="text" id="login-email" placeholder="contoh@mosti.gov.my / No. MyKad" required>
+                    </div>
+                </div>
+
+                <!-- Kata Laluan untuk User -->
+                <div class="form-group" id="pass-group">
+                    <label for="login-password">Kata Laluan</label>
+                    <div class="input-container">
+                        <input type="password" id="login-password" placeholder="••••••••" required>
+                        <i class="fa-regular fa-eye toggle-pass" onclick="togglePassword('login-password', this)"></i>
+                    </div>
+                </div>
+
+                <!-- Secret Key untuk Admin -->
+                <div class="form-group" id="secret-key-group" style="display: none;">
+                    <label for="login-secret-key">Kunci Rahsia Admin (Secret Key)</label>
+                    <div class="input-container">
+                        <input type="password" id="login-secret-key" placeholder="Masukkan Secret Key Admin">
+                        <i class="fa-regular fa-eye toggle-pass" onclick="togglePassword('login-secret-key', this)"></i>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Log Masuk <i class="fa-solid fa-arrow-right"></i></button>
+            </form>
+
+            <div class="auth-footer">
+                Belum mempunyai akaun? <a href="register.html">Daftar Akaun Baru</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function togglePassword(id, icon) {
+            const input = document.getElementById(id);
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
+        function toggleLoginRole() {
+            const role = document.getElementById('login-role').value;
+            const passGroup = document.getElementById('pass-group');
+            const passInput = document.getElementById('login-password');
+            const secretKeyGroup = document.getElementById('secret-key-group');
+            const secretKeyInput = document.getElementById('login-secret-key');
+
+            if (role === 'admin') {
+                passGroup.style.display = 'none';
+                passInput.required = false;
+                passInput.value = '';
+
+                secretKeyGroup.style.display = 'block';
+                secretKeyInput.required = true;
+            } else {
+                passGroup.style.display = 'block';
+                passInput.required = true;
+
+                secretKeyGroup.style.display = 'none';
+                secretKeyInput.required = false;
+                secretKeyInput.value = '';
+            }
+        }
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            
+            const role = document.getElementById('login-role').value;
+            const emailOrIc = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value;
+            const secretKey = document.getElementById('login-secret-key').value.trim();
+
+            const btnSubmit = document.querySelector('button[type="submit"]');
+            if (btnSubmit) {
+                btnSubmit.disabled = true;
+                btnSubmit.innerHTML = 'Memproses... <i class="fa-solid fa-spinner fa-spin"></i>';
+            }
+
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ role, emailOrIc, password, secretKey })
+                });
+
+                const contentType = response.headers.get("content-type");
+                
+                if (contentType && contentType.includes("application/json")) {
+                    const data = await response.json();
+                    if (response.ok) {
+                        alert(data.message || 'Log masuk berjaya!');
+                        sessionStorage.setItem('user', JSON.stringify(data.user));
+                        localStorage.setItem('user', JSON.stringify(data.user));
+
+                        // Semak peranan dan lencongkan ke halaman yang sepadan
+if (data.user && data.user.role === 'admin') {
+    window.location.href = 'index.html'; // Admin terus ke index.html
+} else {
+    window.location.href = 'index.html'; // User biasa terus ke index.html
+}
+                    } else {
+                        alert('Gagal log masuk: ' + (data.error || 'Maklumat tidak sah.'));
+                    }
+                } else {
+                    const rawText = await response.text();
+                    console.error("Non-JSON Response:", rawText);
+                    alert(`Ralat Server (${response.status}): Respons bukan dalam format JSON.`);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Ralat Server: ' + error.message);
+            } finally {
+                if (btnSubmit) {
+                    btnSubmit.disabled = false;
+                    btnSubmit.innerHTML = 'Log Masuk <i class="fa-solid fa-arrow-right"></i>';
+                }
+            }
+        }
+    </script>
+</body>
+</html>

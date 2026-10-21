@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin - Pengurusan Kursus</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .container { max-width: 950px; margin: 30px auto; padding: 25px; background: #fff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 20px; }
+        .course-form { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #f8fafc; padding: 20px; border-radius: 8px; margin-bottom: 30px; border: 1px solid #e2e8f0; }
+        .full-width { grid-column: span 2; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #cbd5e1; padding: 10px; text-align: left; }
+        th { background: #1e293b; color: white; }
+        .btn-sm { padding: 6px 12px; font-size: 13px; border: none; border-radius: 4px; cursor: pointer; }
+        .btn-danger { background: #ef4444; color: white; }
+        .btn-edit { background: #f59e0b; color: white; }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <img src="logo.png" alt="Logo" class="logo-img">
+            <span>Portal Kursus MOSTI (Admin Panel)</span>
+        </div>
+        <ul class="nav-links">
+            <li><button onclick="logout()" class="nav-btn" style="background:#ef4444; color:white; border:none; cursor:pointer;"><i class="fa-solid fa-right-from-bracket"></i> Log Keluar</button></li>
+        </ul>
+    </header>
+
+    <div class="container">
+        <div class="admin-header">
+            <h2><i class="fa-solid fa-folder-plus"></i> Pengurusan Kursus</h2>
+            <span id="admin-name" style="font-weight:600; color:#475569;"></span>
+        </div>
+
+        <h3>Tambah / Edit Kursus</h3>
+        <form id="course-form" onsubmit="saveCourse(event)" class="course-form">
+            <input type="hidden" id="course-id">
+            <div>
+                <label><strong>Tajuk Kursus:</strong></label>
+                <input type="text" id="course-title" style="width:100%; padding:8px;" required>
+            </div>
+            <div>
+                <label><strong>Tarikh:</strong></label>
+                <input type="text" id="course-date" placeholder="Contoh: 20 - 22 Ogos 2026" style="width:100%; padding:8px;" required>
+            </div>
+            <div class="full-width">
+                <label><strong>Tempat / Lokasi:</strong></label>
+                <input type="text" id="course-location" style="width:100%; padding:8px;" required>
+            </div>
+            <div class="full-width">
+                <label><strong>Penerangan Ringkas:</strong></label>
+                <textarea id="course-desc" style="width:100%; padding:8px; height:80px;" required></textarea>
+            </div>
+            <div class="full-width">
+                <button type="submit" class="btn btn-primary" id="btn-submit">Simpan Kursus</button>
+                <button type="button" onclick="resetForm()" class="btn" style="background:#64748b; color:white;">Batal</button>
+            </div>
+        </form>
+
+        <h3>Senarai Kursus Berdaftar</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Bil</th>
+                    <th>Tajuk Kursus</th>
+                    <th>Tarikh</th>
+                    <th>Lokasi</th>
+                    <th>Tindakan</th>
+                </tr>
+            </thead>
+            <tbody id="course-table-body">
+                <tr><td colspan="5" style="text-align:center;">Memuatkan kursus...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const user = JSON.parse(sessionStorage.getItem('user') || localStorage.getItem('user'));
+            if (!user || user.role !== 'admin') {
+                alert("Akses Ditolak! Sila log masuk sebagai Admin.");
+                window.location.href = 'login.html';
+                return;
+            }
+            document.getElementById('admin-name').innerText = "Pentadbir: " + user.nama;
+            loadCourses();
+        });
+
+        async function loadCourses() {
+            const res = await fetch('/api/kursus');
+            const data = await res.json();
+            const tbody = document.getElementById('course-table-body');
+            tbody.innerHTML = '';
+
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Tiada kursus didaftarkan.</td></tr>';
+                return;
+            }
+
+            data.forEach((item, idx) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${idx + 1}</td>
+                        <td>${item.tajuk}</td>
+                        <td>${item.tarikh}</td>
+                        <td>${item.tempat}</td>
+                        <td>
+                            <button class="btn-sm btn-edit" onclick='editCourse(${JSON.stringify(item)})'><i class="fa-solid fa-pen"></i></button>
+                            <button class="btn-sm btn-danger" onclick="deleteCourse('${item.id}')"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        async function saveCourse(e) {
+            e.preventDefault();
+            const id = document.getElementById('course-id').value;
+            const tajuk = document.getElementById('course-title').value;
+            const tarikh = document.getElementById('course-date').value;
+            const tempat = document.getElementById('course-location').value;
+            const penerangan = document.getElementById('course-desc').value;
+
+            const method = id ? 'PUT' : 'POST';
+            const url = id ? `/api/kursus/${id}` : '/api/kursus';
+
+            const res = await fetch(url, {
+                method: method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ tajuk, tarikh, tempat, penerangan })
+            });
+
+            if (res.ok) {
+                alert('Berjaya disimpan!');
+                resetForm();
+                loadCourses();
+            }
+        }
+
+        function editCourse(item) {
+            document.getElementById('course-id').value = item.id;
+            document.getElementById('course-title').value = item.tajuk;
+            document.getElementById('course-date').value = item.tarikh;
+            document.getElementById('course-location').value = item.tempat;
+            document.getElementById('course-desc').value = item.penerangan;
+            document.getElementById('btn-submit').innerText = 'Kemas Kini Kursus';
+        }
+
+        async function deleteCourse(id) {
+            if (!confirm('Padam kursus ini?')) return;
+            const res = await fetch(`/api/kursus/${id}`, { method: 'DELETE' });
+            if (res.ok) loadCourses();
+        }
+
+        function resetForm() {
+            document.getElementById('course-id').value = '';
+            document.getElementById('course-form').reset();
+            document.getElementById('btn-submit').innerText = 'Simpan Kursus';
+        }
+
+        function logout() {
+            sessionStorage.clear();
+            localStorage.clear();
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

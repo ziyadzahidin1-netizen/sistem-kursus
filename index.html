@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Syarikat & Portal Kursus</title>
+    
+    <!-- Pautan ke Fail CSS Asing -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- FontAwesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Gaya Panel Editor Admin */
+        .admin-editor-panel {
+            background: #ffffff;
+            border: 2px solid #2563eb;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.1);
+        }
+        .admin-editor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+        .admin-badge {
+            background: #dc2626;
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .editor-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .editor-form-grid .full-width {
+            grid-column: span 2;
+        }
+        .editor-form-grid label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: block;
+            color: #1e293b;
+        }
+        .editor-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .editor-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .btn-admin-save {
+            background-color: #2563eb;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .btn-admin-cancel {
+            background-color: #64748b;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .admin-controls-card {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #cbd5e1;
+            display: flex;
+            gap: 10px;
+        }
+        .btn-card-edit {
+            background-color: #f59e0b;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        .btn-card-delete {
+            background-color: #ef4444;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        .preview-img {
+            max-height: 100px;
+            border-radius: 6px;
+            margin-top: 5px;
+            display: none;
+        }
+        .badge-new {
+            background-color: #2563eb;
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        /* PAKSA GRID KUNCI SAIZ KAD SUPAYA TIDAK MELEBAR */
+        .cards-grid-fixed {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            justify-content: center !important;
+            gap: 25px !important;
+            width: 100% !important;
+        }
+
+        .cards-grid-fixed .card {
+            flex: 0 0 calc(33.333% - 20px) !important;
+            max-width: 360px !important;
+            min-width: 280px !important;
+            box-sizing: border-box !important;
+        }
+
+        @media screen and (max-width: 900px) {
+            .cards-grid-fixed .card {
+                flex: 0 0 calc(50% - 20px) !important;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .cards-grid-fixed .card {
+                flex: 0 0 100% !important;
+                max-width: 100% !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Bar Navigasi (Navbar) -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="logo.png" alt="Logo Portal Kursus" class="logo-img">
+            <span>Portal kursus</span>
+        </div>
+
+        <div class="menu-toggle" id="mobile-menu" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <nav class="nav-links" id="nav-links">
+            <a href="index.html" class="nav-btn active"><i class="fa-solid fa-house"></i> Utama</a>
+            <a href="iklan.html" class="nav-btn"><i class="fa-solid fa-bullhorn"></i> Jenis & Iklan Kursus</a>
+            <a href="takwim.html" class="nav-btn"><i class="fa-solid fa-calendar-days"></i> Takwim Kursus</a>
+            <a href="mohon.html" class="nav-btn btn-apply"><i class="fa-solid fa-paper-plane"></i> Mohon Kursus</a>
+            <a href="#contact-section" class="nav-btn"><i class="fa-solid fa-envelope"></i> Hubungi Kami</a>
+            
+            <span id="user-nav-container">
+                <a href="login.html" class="nav-btn btn-apply"><i class="fa-solid fa-paper-plane"></i> Log Masuk</a>
+            </span>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="hero-section" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <span class="hero-badge">Portal Kursus MOSTI</span>
+            <h1>Selamat Datang Ke Portal Kursus MOSTI</h1>
+            <p>Tingkatkan kemahiran anda menerusi program dan latihan terkini kami.</p>
+            
+            <div class="hero-buttons">
+                <a href="#about-section" class="btn-primary">Ketahui Mengenai MOSTI <i class="fa-solid fa-arrow-down"></i></a>
+                <a href="iklan.html" class="btn-secondary">Lihat Kursus Terkini</a>
+            </div>
+        </div>
+
+        <a href="#about-section" class="scroll-down-indicator">
+            <span>Tatal Ke Bawah Untuk Profil Syarikat</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </a>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about-section" class="content-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Mengenai MOSTI</h2>
+            </div>
+
+            <div class="about-grid">
+                <div class="about-text">
+                    <h3>Kementerian Sains Teknologi dan Inovasi (MOSTI)</h3>
+                    <p>
+                        Kementerian Sains, Teknologi dan Inovasi (MOSTI) ialah kementerian di bawah Kerajaan Malaysia yang bertanggungjawab menerajui pembangunan sains, teknologi, inovasi (STI) dan ekonomi (STIE).
+                    </p>
+                    <p>
+                        Memperkasa ekosistem syarikat pemula (startup), bioteknologi, keselamatan siber, nanoteknologi, dan teknologi angkasa.
+                    </p>
+
+                    <div class="stats-mini-grid">
+                        <div class="stat-box">
+                            <div>
+                                <h4 id="stat-kursus">...</h4>
+                                <p>Jumlah Kursus</p>
+                            </div>
+                        </div>
+                        <div class="stat-box">
+                            <div>
+                                <h4 id="stat-bidang">...</h4>
+                                <p>Jumlah Bidang</p>
+                            </div>
+                        </div>
+                        <div class="stat-box">
+                            <div>
+                                <h4 id="stat-peserta">...</h4>
+                                <p>Peserta</p>
+                            </div>
+                        </div>
+                        <div class="stat-box">
+                            <div>
+                                <h4 id="stat-pusat">...</h4>
+                                <p>Pusat Latihan</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-card-box">
+                    <div class="card-info">
+                        <h4>Visi Kami</h4>
+                        <p>Negara Berteknologi Tinggi Melalui STIE.</p>
+                    </div>
+
+                    <div class="card-info highlight">
+                        <h4>Misi Kami</h4>
+                        <p>Menerajui STIE untuk cabaran negara, kesejahteraan masyarakat, dan pembangunan mampan.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- KURSUS AKAN DATANG TERKINI -->
+    <section id="services-section" class="content-section bg-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>Kursus Akan Datang Terkini</h2>
+                <p>Sertai program latihan, bengkel, dan majlis rasmi terkini yang dianjurkan oleh MOSTI.</p>
+            </div>
+
+            <!-- PANEL MODE EDITOR ADMIN -->
+            <div id="admin-editor-section" class="admin-editor-panel" style="display: none;">
+                <div class="admin-editor-header">
+                    <h3><i class="fa-solid fa-pen-to-square"></i> Mode Editor Admin (Tambah / Edit Kursus)</h3>
+                    <span class="admin-badge"><i class="fa-solid fa-user-shield"></i> Akses Admin</span>
+                </div>
+                <form id="admin-course-form" onsubmit="handleAdminSaveCourse(event)">
+                    <input type="hidden" id="editor-course-id">
+                    <div class="editor-form-grid">
+                        <div>
+                            <label for="editor-tajuk">Nama / Tajuk Kursus</label>
+                            <input type="text" id="editor-tajuk" class="editor-input" placeholder="Contoh: Kursus AI" required>
+                        </div>
+                        <div>
+                            <label for="editor-tarikh">Tarikh Kursus</label>
+                            <input type="text" id="editor-tarikh" class="editor-input" placeholder="Contoh: 20 - 22 Ogos 2026" required>
+                        </div>
+                        <div class="full-width">
+                            <label for="editor-tempat">Lokasi / Tempat</label>
+                            <input type="text" id="editor-tempat" class="editor-input" placeholder="Contoh: Dewan Perhimpunan MOSTI" required>
+                        </div>
+                        <div class="full-width">
+                            <label for="editor-penerangan">Penerangan Ringkas</label>
+                            <textarea id="editor-penerangan" class="editor-input" style="height: 80px;" placeholder="Penerangan ringkas kursus..." required></textarea>
+                        </div>
+                        <div class="full-width">
+                            <label for="editor-gambar-file">Muat Naik Gambar Kursus (Fail atau URL)</label>
+                            <input type="file" id="editor-gambar-file" class="editor-input" accept="image/*" onchange="previewSelectedImage(event)">
+                            <p style="margin: 5px 0; font-size: 12px; color: #64748b;">Atau masukkan URL gambar secara terus:</p>
+                            <input type="text" id="editor-gambar-url" class="editor-input" placeholder="https://example.com/gambar.jpg">
+                            <img id="img-preview" class="preview-img" alt="Pratonton Gambar">
+                        </div>
+                    </div>
+                    <div class="editor-actions">
+                        <button type="submit" id="btn-save-editor" class="btn-admin-save"><i class="fa-solid fa-floppy-disk"></i> Simpan Kursus</button>
+                        <button type="button" onclick="resetEditorForm()" class="btn-admin-cancel">Batal</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- KONTENA FLEX GRID DENGAN SAIZ DIPAKSA TERKUNCI -->
+            <div class="cards-grid-fixed" id="courses-container">
+                <!-- Data Dimuat Secara Dinamik -->
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="iklan.html" class="btn-secondary" style="display: inline-block; background: #2563eb; border: none; color: white;"><i class="fa-solid fa-list"></i> Lihat Semua Kursus Di Iklan</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- HUBUNGI KAMI -->
+    <section id="contact-section" class="content-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Hubungi Kami</h2>
+            </div>
+
+            <div style="display: flex; justify-content: center; align-items: center;">
+                <div class="card-info" style="max-width: 600px; width: 100%; text-align: center; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-radius: 10px; background-color: #ffffff;">
+                    <h3 style="margin-bottom: 20px; color: #1e293b;">Maklumat Perhubungan</h3>
+                    
+                    <p style="margin-bottom: 15px;">
+                        <i class="fa-solid fa-location-dot" style="font-size: 1.2rem; color: #2563eb; margin-bottom: 5px;"></i><br>
+                        <strong>Alamat:</strong><br>
+                        Kementerian Sains, Teknologi dan Inovasi (MOSTI),<br>
+                        Aras 5, Blok C4, Kompleks C,<br>
+                        Pusat Pentadbiran Kerajaan Persekutuan,<br>
+                        62662 Putrajaya, Malaysia.
+                    </p>
+
+                    <p style="margin-bottom: 15px;">
+                        <i class="fa-solid fa-phone" style="color: #2563eb;"></i> <strong>Telefon:</strong> +603-8885 8000
+                    </p>
+                    
+                    <p style="margin-bottom: 15px;">
+                        <i class="fa-solid fa-envelope" style="color: #2563eb;"></i> <strong>E-mel:</strong> hr_traning@mosti.gov.my
+                    </p>
+                    
+                    <p style="margin-bottom: 0;">
+                        <i class="fa-solid fa-clock" style="color: #2563eb;"></i> <strong>Waktu Operasi:</strong> Isnin - Jumaat (8.00 pagi - 5.00 petang)
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background-color: #1e293b; color: #fff; text-align: center; padding: 20px; font-size: 0.9rem; margin-top: 40px;">
+        <p>&copy; 2026 Kementerian Sains, Teknologi dan Inovasi (MOSTI). Hak Cipta Terpelihara.</p>
+    </footer>
+
+    <script>
+        let currentUser = null;
+        let base64ImageString = "";
+
+        const defaultCourses = [
+            {
+                tajuk: "Kursus Aplikasi Asas Generative AI MOSTI TAHUN 2026",
+                tarikh: "20 hingga 22 Ogos 2026",
+                tempat: "Institut Latihan Felda, FELDA Residence Trolak, Sungkai, Perak",
+                penerangan: "Pendedahan dan latihan praktikal penggunaan Generative AI dalam meningkatkan produktiviti.",
+                gambar_url: "kursus AI.jpg"
+            },
+            {
+                tajuk: "Majlis Sambutan Maulidur Rasul SAW Peringkat Kebangsaan Tahun 1448H/2026M",
+                tarikh: "25 Ogos 2026 / 12 Rabiulawal 1448H (Selasa)",
+                tempat: "Akan dimaklumkan kelak",
+                penerangan: "Sambutan peringkat kebangsaan memperingati kelahiran Baginda Nabi Muhammad SAW.",
+                gambar_url: "pic 2.jpg"
+            },
+            {
+                tajuk: "Basic Occupational First Aid, CPR & AED Training",
+                tarikh: "1 & 2 SEPTEMBER 2026",
+                tempat: "DEWAN PERHIMPUNAN MOSTI, ARAS 4, BLOK C7",
+                penerangan: "Latihan pertolongan cemas, bantuan CPR, dan penggunaan AED di tempat kerja.",
+                gambar_url: "pic 8.jpg"
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const storedUser = sessionStorage.getItem('user') || localStorage.getItem('user');
+            if (storedUser) {
+                try {
+                    currentUser = JSON.parse(storedUser);
+                } catch(e) { console.error(e); }
+            }
+
+            setupNavbar();
+            checkAdminMode();
+            fetchAndRenderTop3Courses();
+        });
+
+        function toggleMenu() {
+            const navLinks = document.getElementById('nav-links');
+            const menuToggle = document.getElementById('mobile-menu');
+            navLinks.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        }
+
+        function setupNavbar() {
+            const navContainer = document.getElementById('user-nav-container');
+            if (currentUser) {
+                navContainer.innerHTML = `
+                    <span style="color:#fff; margin-right:10px; font-weight:600;"><i class="fa-solid fa-user"></i> ${currentUser.nama} (${currentUser.role.toUpperCase()})</span>
+                    <button onclick="handleLogout()" class="nav-btn btn-apply" style="background:#ef4444; border:none; cursor:pointer;"><i class="fa-solid fa-right-from-bracket"></i> Log Keluar</button>
+                `;
+            }
+        }
+
+        function checkAdminMode() {
+            const adminSection = document.getElementById('admin-editor-section');
+            if (currentUser && currentUser.role === 'admin') {
+                adminSection.style.display = 'block';
+            } else {
+                adminSection.style.display = 'none';
+            }
+        }
+
+        function previewSelectedImage(event) {
+            const file = event.target.files[0];
+            const preview = document.getElementById('img-preview');
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    base64ImageString = e.target.result;
+                    preview.src = base64ImageString;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function renderCoursesToUI(coursesList) {
+            const container = document.getElementById('courses-container');
+            container.innerHTML = '';
+
+            coursesList.forEach((item) => {
+                const isAdmin = currentUser && currentUser.role === 'admin';
+                const adminControls = (isAdmin && item.id) ? `
+                    <div class="admin-controls-card">
+                        <button class="btn-card-edit" onclick='triggerEditCourse(${JSON.stringify(item)})'><i class="fa-solid fa-pen"></i> Edit</button>
+                        <button class="btn-card-delete" onclick="handleDeleteCourse('${item.id}')"><i class="fa-solid fa-trash"></i> Padam</button>
+                    </div>
+                ` : '';
+
+                const courseImg = item.gambar_url || 'logo.png';
+
+                const cardHTML = `
+                    <div class="card">
+                        <span class="badge-new"><i class="fa-solid fa-sparkles"></i> Terkini</span>
+                        <img src="${courseImg}" alt="${item.tajuk}" style="width: 100%; height: 200px; object-fit: cover; display: block; border-radius: 6px;">
+                        <h3 style="font-size: 1.1rem; margin: 12px 0 8px 0; color: #1e293b;">${item.tajuk}</h3>
+                        <p style="margin: 4px 0; font-size: 0.9rem;"><strong>Tempoh:</strong> ${item.tarikh || '-'}</p>
+                        <p style="margin: 4px 0; font-size: 0.9rem;"><strong>Lokasi:</strong> ${item.tempat || '-'}</p>
+                        <p style="margin: 4px 0; font-size: 0.9rem; color: #64748b;">${item.penerangan || ''}</p>
+                        <hr style="margin: 15px 0; border: 0; border-top: 1px solid #eee;">
+                        <a href="mohon.html?kursus=${encodeURIComponent(item.tajuk)}" class="btn-primary full-width" style="margin-top: 10px; text-align: center; display: block;">Mohon Kursus Ini</a>
+                        ${adminControls}
+                    </div>
+                `;
+                container.innerHTML += cardHTML;
+            });
+        }
+
+        // FUNGSI UTAMA: MENJAMIN Laman PAPAR 3 KAD (CAMPURAN DATA ADMIN + DATA DEFAULT)
+        async function fetchAndRenderTop3Courses() {
+            try {
+                const response = await fetch('/api/kursus');
+                if (response.ok) {
+                    let courses = await response.json();
+                    
+                    if (courses && courses.length > 0) {
+                        let displayList = [...courses];
+
+                        // Jika data admin kurang dari 3, tambah kad default sehingga cukup 3
+                        if (displayList.length < 3) {
+                            const extraNeeded = 3 - displayList.length;
+                            displayList = displayList.concat(defaultCourses.slice(0, extraNeeded));
+                        } else {
+                            displayList = displayList.slice(0, 3);
+                        }
+
+                        renderCoursesToUI(displayList);
+                        return;
+                    }
+                }
+            } catch (err) {
+                console.error('Menggunakan data fallback default:', err);
+            }
+
+            renderCoursesToUI(defaultCourses);
+        }
+
+        async function handleAdminSaveCourse(e) {
+            e.preventDefault();
+            const id = document.getElementById('editor-course-id').value;
+            const tajuk = document.getElementById('editor-tajuk').value.trim();
+            const tarikh = document.getElementById('editor-tarikh').value.trim();
+            const tempat = document.getElementById('editor-tempat').value.trim();
+            const penerangan = document.getElementById('editor-penerangan').value.trim();
+            const urlImgInput = document.getElementById('editor-gambar-url').value.trim();
+
+            const finalGambarUrl = base64ImageString || urlImgInput || '';
+
+            const method = id ? 'PUT' : 'POST';
+            const url = id ? `/api/kursus/${id}` : '/api/kursus';
+
+            try {
+                const res = await fetch(url, {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        tajuk, 
+                        tarikh, 
+                        tempat, 
+                        penerangan, 
+                        gambar_url: finalGambarUrl 
+                    })
+                });
+
+                if (res.ok) {
+                    alert(id ? 'Kursus berjaya dikemas kini!' : 'Kursus baru berjaya ditambah!');
+                    resetEditorForm();
+                    fetchAndRenderTop3Courses();
+                } else {
+                    const errData = await res.json();
+                    alert('Gagal menyimpan: ' + (errData.error || 'Ralat tidak diketahui'));
+                }
+            } catch (error) {
+                alert('Ralat Server: ' + error.message);
+            }
+        }
+
+        function triggerEditCourse(item) {
+            document.getElementById('editor-course-id').value = item.id;
+            document.getElementById('editor-tajuk').value = item.tajuk;
+            document.getElementById('editor-tarikh').value = item.tarikh;
+            document.getElementById('editor-tempat').value = item.tempat;
+            document.getElementById('editor-penerangan').value = item.penerangan;
+            document.getElementById('editor-gambar-url').value = item.gambar_url || '';
+            
+            if (item.gambar_url) {
+                const preview = document.getElementById('img-preview');
+                preview.src = item.gambar_url;
+                preview.style.display = 'block';
+            }
+
+            document.getElementById('btn-save-editor').innerHTML = '<i class="fa-solid fa-pen-to-square"></i> Kemas Kini Kursus';
+            document.getElementById('admin-editor-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        async function handleDeleteCourse(id) {
+            if (!confirm('Adakah anda pasti mahu memadam kursus ini?')) return;
+
+            try {
+                const res = await fetch(`/api/kursus/${id}`, { method: 'DELETE' });
+                if (res.ok) {
+                    alert('Kursus berjaya dipadam!');
+                    fetchAndRenderTop3Courses();
+                } else {
+                    alert('Gagal memadam kursus.');
+                }
+            } catch (error) {
+                alert('Ralat Server: ' + error.message);
+            }
+        }
+
+        function resetEditorForm() {
+            document.getElementById('editor-course-id').value = '';
+            document.getElementById('admin-course-form').reset();
+            document.getElementById('img-preview').style.display = 'none';
+            base64ImageString = "";
+            document.getElementById('btn-save-editor').innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Kursus';
+        }
+
+        function handleLogout() {
+            sessionStorage.clear();
+            localStorage.clear();
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
