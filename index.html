@@ -59,6 +59,11 @@
             font-size: 14px;
             box-sizing: border-box;
         }
+        .date-picker-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
         .editor-actions {
             display: flex;
             gap: 10px;
@@ -152,6 +157,72 @@
                 max-width: 100% !important;
             }
         }
+
+        /* GAYA BAHAGIAN CARIAN KURSUS DTIMS INTAN */
+        .dtims-search-section {
+            background-color: #4b6b82;
+            padding: 35px 20px;
+            color: #ffffff;
+        }
+        .dtims-search-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .dtims-search-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        .dtims-input-group {
+            margin-bottom: 12px;
+        }
+        .dtims-input {
+            width: 100%;
+            padding: 10px 14px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            box-sizing: border-box;
+            outline: none;
+            background-color: #ffffff;
+        }
+        
+        .dtims-select-dropdown {
+            width: 100%;
+            padding: 10px 14px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            background-color: #ffffff;
+            color: #333333;
+            outline: none;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+        
+        .dtims-select-dropdown option {
+            padding: 8px;
+            font-size: 13px;
+        }
+
+        .btn-dtims-search {
+            background-color: #2563eb;
+            color: #ffffff;
+            border: none;
+            padding: 10px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-dtims-search:hover {
+            background-color: #1d4ed8;
+        }
     </style>
 </head>
 <body>
@@ -200,6 +271,47 @@
             <span>Tatal Ke Bawah Untuk Profil Syarikat</span>
             <i class="fa-solid fa-chevron-down"></i>
         </a>
+    </section>
+
+    <!-- CARIAN KURSUS PORTAL DTIMS INTAN SECTION -->
+    <section class="dtims-search-section">
+        <div class="dtims-search-container">
+            <h2 class="dtims-search-title">Carian Kursus</h2>
+            
+            <!-- Input Kata Kunci -->
+            <div class="dtims-input-group">
+                <input type="text" id="dtims-keyword" class="dtims-input" placeholder="Kata kunci kursus" onkeyup="filterCourses()">
+            </div>
+
+            <!-- Dropdown Pilihan Bidang -->
+            <div class="dtims-input-group">
+                <select id="dtims-bidang-select" class="dtims-select-dropdown" onchange="filterCourses()">
+                    <option value="" selected>--Semua Bidang--</option>
+                    <option value="PEMBANGUNAN DIRI DAN SAHSIAH">PEMBANGUNAN DIRI DAN SAHSIAH</option>
+                    <option value="BAHASA">BAHASA</option>
+                    <option value="MANDATORI">MANDATORI</option>
+                    <option value="KEPIMPINAN">KEPIMPINAN</option>
+                    <option value="KOMUNIKASI">KOMUNIKASI</option>
+                    <option value="TEKNOLOGI MAKLUMAT DAN AI">TEKNOLOGI MAKLUMAT DAN AI</option>
+                    <option value="PENGURUSAN PROJEK">PENGURUSAN PROJEK</option>
+                    <option value="KEWANGAN DAN PEROLEHAN">KEWANGAN DAN PEROLEHAN</option>
+                    <option value="KESELAMATAN DAN KESIHATAN PEKERJAAN (OSH)">KESELAMATAN DAN KESIHATAN PEKERJAAN (OSH)</option>
+                    <option value="INNOVASI DAN KREATIVITI">INNOVASI DAN KREATIVITI</option>
+                    <option value="PENGURUSAN STRATEGIK">PENGURUSAN STRATEGIK</option>
+                    <option value="ETIKA DAN INTEGRITI">ETIKA DAN INTEGRITI</option>
+                    <option value="PENGURUSAN SUMBER MANUSIA">PENGURUSAN SUMBER MANUSIA</option>
+                    <option value="DASAR PUBLIK DAN PENTADBIRAN">DASAR PUBLIK DAN PENTADBIRAN</option>
+                    <option value="PROTOKOL DAN MAJLIS RASMI">PROTOKOL DAN MAJLIS RASMI</option>
+                </select>
+            </div>
+
+            <!-- BUTANG CARIAN KE IKLAN.HTML -->
+            <div style="margin-top: 15px;">
+                <button type="button" class="btn-dtims-search" onclick="goToIklanPageWithSearch()">
+                    <i class="fa-solid fa-magnifying-glass"></i> Carian
+                </button>
+            </div>
+        </div>
     </section>
 
     <!-- ABOUT SECTION -->
@@ -283,18 +395,48 @@
                             <label for="editor-tajuk">Nama / Tajuk Kursus</label>
                             <input type="text" id="editor-tajuk" class="editor-input" placeholder="Contoh: Kursus AI" required>
                         </div>
+                        
+                        <!-- BAHAGIAN TARIKH DENGAN KALENDAR -->
                         <div>
                             <label for="editor-tarikh">Tarikh Kursus</label>
-                            <input type="text" id="editor-tarikh" class="editor-input" placeholder="Contoh: 20 - 22 Ogos 2026" required>
+                            <div class="date-picker-group">
+                                <input type="date" id="editor-tarikh-mula" class="editor-input" onchange="autoFormatDateText()">
+                                <span>hingga</span>
+                                <input type="date" id="editor-tarikh-tamat" class="editor-input" onchange="autoFormatDateText()">
+                            </div>
+                            <input type="text" id="editor-tarikh" class="editor-input" style="margin-top: 5px;" placeholder="Contoh: 20 - 22 Ogos 2026" required>
+                            <small style="font-size: 11px; color: #64748b;">Gunakan pemilih tarikh di atas atau taip secara manual format tarikh.</small>
                         </div>
+
                         <div class="full-width">
                             <label for="editor-tempat">Lokasi / Tempat</label>
                             <input type="text" id="editor-tempat" class="editor-input" placeholder="Contoh: Dewan Perhimpunan MOSTI" required>
                         </div>
                         <div class="full-width">
                             <label for="editor-penerangan">Penerangan Ringkas</label>
-                            <textarea id="editor-penerangan" class="editor-input" style="height: 80px;" placeholder="Penerangan ringkas kursus..." required></textarea>
+                            <textarea id="editor-penerangan" class="editor-input" style="height: 70px;" placeholder="Penerangan ringkas kursus..." required></textarea>
                         </div>
+                        
+                        <!-- OBJEKTIF KURSUS -->
+                        <div class="full-width">
+                            <label for="editor-objektif">Objektif Kursus (Gunakan baris baharu untuk setiap objektif)</label>
+                            <textarea id="editor-objektif" class="editor-input" style="height: 90px;" placeholder="1. Meningkatkan kemahiran peserta&#10;2. Memahami konsep utama"></textarea>
+                        </div>
+
+                        <!-- PENYELARAS -->
+                        <div>
+                            <label for="editor-penyelaras-nama">Nama Penyelaras</label>
+                            <input type="text" id="editor-penyelaras-nama" class="editor-input" placeholder="Contoh: Puan Nurul Huda Binti Ahmad">
+                        </div>
+                        <div>
+                            <label for="editor-penyelaras-emel">Emel Penyelaras</label>
+                            <input type="email" id="editor-penyelaras-emel" class="editor-input" placeholder="penyelaras@mosti.gov.my">
+                        </div>
+                        <div class="full-width">
+                            <label for="editor-penyelaras-telefon">No. Telefon Penyelaras</label>
+                            <input type="text" id="editor-penyelaras-telefon" class="editor-input" placeholder="03-8885 8000">
+                        </div>
+
                         <div class="full-width">
                             <label for="editor-gambar-file">Muat Naik Gambar Kursus (Fail atau URL)</label>
                             <input type="file" id="editor-gambar-file" class="editor-input" accept="image/*" onchange="previewSelectedImage(event)">
@@ -310,9 +452,9 @@
                 </form>
             </div>
 
-            <!-- KONTENA FLEX GRID DENGAN SAIZ DIPAKSA TERKUNCI -->
+            <!-- KONTENA FLEX GRID -->
             <div class="cards-grid-fixed" id="courses-container">
-                <!-- Data Dimuat Secara Dinamik -->
+                <!-- Data Admin Dimuat Secara Dinamik -->
             </div>
 
             <div style="text-align: center; margin-top: 30px;">
@@ -362,33 +504,13 @@
         <p>&copy; 2026 Kementerian Sains, Teknologi dan Inovasi (MOSTI). Hak Cipta Terpelihara.</p>
     </footer>
 
+    <!-- PAUTAN PADA FAIL SCRIPT.JS -->
+    <script src="script.js"></script>
+
     <script>
         let currentUser = null;
         let base64ImageString = "";
-
-        const defaultCourses = [
-            {
-                tajuk: "Kursus Aplikasi Asas Generative AI MOSTI TAHUN 2026",
-                tarikh: "20 hingga 22 Ogos 2026",
-                tempat: "Institut Latihan Felda, FELDA Residence Trolak, Sungkai, Perak",
-                penerangan: "Pendedahan dan latihan praktikal penggunaan Generative AI dalam meningkatkan produktiviti.",
-                gambar_url: "kursus AI.jpg"
-            },
-            {
-                tajuk: "Majlis Sambutan Maulidur Rasul SAW Peringkat Kebangsaan Tahun 1448H/2026M",
-                tarikh: "25 Ogos 2026 / 12 Rabiulawal 1448H (Selasa)",
-                tempat: "Akan dimaklumkan kelak",
-                penerangan: "Sambutan peringkat kebangsaan memperingati kelahiran Baginda Nabi Muhammad SAW.",
-                gambar_url: "pic 2.jpg"
-            },
-            {
-                tajuk: "Basic Occupational First Aid, CPR & AED Training",
-                tarikh: "1 & 2 SEPTEMBER 2026",
-                tempat: "DEWAN PERHIMPUNAN MOSTI, ARAS 4, BLOK C7",
-                penerangan: "Latihan pertolongan cemas, bantuan CPR, dan penggunaan AED di tempat kerja.",
-                gambar_url: "pic 8.jpg"
-            }
-        ];
+        let allCurrentCourses = [];
 
         document.addEventListener('DOMContentLoaded', () => {
             const storedUser = sessionStorage.getItem('user') || localStorage.getItem('user');
@@ -400,7 +522,12 @@
 
             setupNavbar();
             checkAdminMode();
-            fetchAndRenderTop3Courses();
+            loadAdminCoursesOnly();
+            
+            // Panggil Fungsi Statistik Live
+            if (typeof loadDashboardStats === 'function') {
+                loadDashboardStats();
+            }
         });
 
         function toggleMenu() {
@@ -429,6 +556,39 @@
             }
         }
 
+        /* FUNGSI TUKAR DATE PICKER KEPADA FORMAT FORMAT KURSUS AUTOMATIK */
+        function autoFormatDateText() {
+            const dateMulaVal = document.getElementById('editor-tarikh-mula').value;
+            const dateTamatVal = document.getElementById('editor-tarikh-tamat').value;
+            const tarikhInput = document.getElementById('editor-tarikh');
+
+            if (!dateMulaVal) return;
+
+            const bulanMalay = ["Januari", "Februari", "Mac", "April", "Mei", "Jun", "Julai", "Ogos", "September", "Oktober", "November", "Disember"];
+
+            const dMula = new Date(dateMulaVal);
+            const dayMula = dMula.getDate();
+            const monthMula = bulanMalay[dMula.getMonth()];
+            const yearMula = dMula.getFullYear();
+
+            if (!dateTamatVal || dateMulaVal === dateTamatVal) {
+                tarikhInput.value = `${dayMula} ${monthMula} ${yearMula}`;
+            } else {
+                const dTamat = new Date(dateTamatVal);
+                const dayTamat = dTamat.getDate();
+                const monthTamat = bulanMalay[dTamat.getMonth()];
+                const yearTamat = dTamat.getFullYear();
+
+                if (monthMula === monthTamat && yearMula === yearTamat) {
+                    tarikhInput.value = `${dayMula} - ${dayTamat} ${monthMula} ${yearMula}`;
+                } else if (yearMula === yearTamat) {
+                    tarikhInput.value = `${dayMula} ${monthMula} - ${dayTamat} ${monthTamat} ${yearMula}`;
+                } else {
+                    tarikhInput.value = `${dayMula} ${monthMula} ${yearMula} - ${dayTamat} ${monthTamat} ${yearTamat}`;
+                }
+            }
+        }
+
         function previewSelectedImage(event) {
             const file = event.target.files[0];
             const preview = document.getElementById('img-preview');
@@ -443,9 +603,31 @@
             }
         }
 
+        function getStoredCustomCourses() {
+            try {
+                return JSON.parse(localStorage.getItem('custom_courses')) || [];
+            } catch(e) {
+                return [];
+            }
+        }
+
+        function saveCustomCoursesToStorage(courses) {
+            localStorage.setItem('custom_courses', JSON.stringify(courses));
+        }
+
         function renderCoursesToUI(coursesList) {
             const container = document.getElementById('courses-container');
             container.innerHTML = '';
+
+            if (!coursesList || coursesList.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; color: #64748b; width: 100%; padding: 30px;">
+                        <i class="fa-solid fa-folder-open" style="font-size: 2.5rem; color: #cbd5e1; margin-bottom: 10px;"></i>
+                        <p>Tiada kursus ditawarkan buat masa ini.</p>
+                    </div>
+                `;
+                return;
+            }
 
             coursesList.forEach((item) => {
                 const isAdmin = currentUser && currentUser.role === 'admin';
@@ -475,81 +657,107 @@
             });
         }
 
-        // FUNGSI UTAMA: MENJAMIN Laman PAPAR 3 KAD (CAMPURAN DATA ADMIN + DATA DEFAULT)
-        async function fetchAndRenderTop3Courses() {
-            try {
-                const response = await fetch('/api/kursus');
-                if (response.ok) {
-                    let courses = await response.json();
-                    
-                    if (courses && courses.length > 0) {
-                        let displayList = [...courses];
-
-                        // Jika data admin kurang dari 3, tambah kad default sehingga cukup 3
-                        if (displayList.length < 3) {
-                            const extraNeeded = 3 - displayList.length;
-                            displayList = displayList.concat(defaultCourses.slice(0, extraNeeded));
-                        } else {
-                            displayList = displayList.slice(0, 3);
-                        }
-
-                        renderCoursesToUI(displayList);
-                        return;
-                    }
-                }
-            } catch (err) {
-                console.error('Menggunakan data fallback default:', err);
-            }
-
-            renderCoursesToUI(defaultCourses);
+        function loadAdminCoursesOnly() {
+            allCurrentCourses = getStoredCustomCourses();
+            renderCoursesToUI(allCurrentCourses);
         }
 
-        async function handleAdminSaveCourse(e) {
+        function filterCourses() {
+            const keyword = document.getElementById('dtims-keyword').value.toLowerCase().trim();
+            const selectedBidang = document.getElementById('dtims-bidang-select').value;
+
+            const filtered = allCurrentCourses.filter(course => {
+                const matchesKeyword = !keyword || 
+                    (course.tajuk && course.tajuk.toLowerCase().includes(keyword)) ||
+                    (course.penerangan && course.penerangan.toLowerCase().includes(keyword)) ||
+                    (course.tempat && course.tempat.toLowerCase().includes(keyword));
+
+                const matchesBidang = !selectedBidang || (course.bidang && course.bidang.toUpperCase() === selectedBidang.toUpperCase());
+
+                return matchesKeyword && matchesBidang;
+            });
+
+            renderCoursesToUI(filtered);
+        }
+
+        function goToIklanPageWithSearch() {
+            const keyword = document.getElementById('dtims-keyword').value.trim();
+            const bidang = document.getElementById('dtims-bidang-select').value.trim();
+
+            let targetUrl = 'iklan.html';
+            const params = new URLSearchParams();
+
+            if (keyword) params.append('keyword', keyword);
+            if (bidang) params.append('bidang', bidang);
+
+            const queryString = params.toString();
+            if (queryString) {
+                targetUrl += '?' + queryString;
+            }
+
+            window.location.href = targetUrl;
+        }
+
+        function handleAdminSaveCourse(e) {
             e.preventDefault();
             const id = document.getElementById('editor-course-id').value;
             const tajuk = document.getElementById('editor-tajuk').value.trim();
             const tarikh = document.getElementById('editor-tarikh').value.trim();
             const tempat = document.getElementById('editor-tempat').value.trim();
             const penerangan = document.getElementById('editor-penerangan').value.trim();
+            const objektif = document.getElementById('editor-objektif').value.trim();
+            const penyelaras_nama = document.getElementById('editor-penyelaras-nama').value.trim();
+            const penyelaras_emel = document.getElementById('editor-penyelaras-emel').value.trim();
+            const penyelaras_telefon = document.getElementById('editor-penyelaras-telefon').value.trim();
             const urlImgInput = document.getElementById('editor-gambar-url').value.trim();
 
-            const finalGambarUrl = base64ImageString || urlImgInput || '';
+            const finalGambarUrl = base64ImageString || urlImgInput || 'logo.png';
 
-            const method = id ? 'PUT' : 'POST';
-            const url = id ? `/api/kursus/${id}` : '/api/kursus';
-
-            try {
-                const res = await fetch(url, {
-                    method: method,
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        tajuk, 
-                        tarikh, 
-                        tempat, 
-                        penerangan, 
-                        gambar_url: finalGambarUrl 
-                    })
-                });
-
-                if (res.ok) {
-                    alert(id ? 'Kursus berjaya dikemas kini!' : 'Kursus baru berjaya ditambah!');
-                    resetEditorForm();
-                    fetchAndRenderTop3Courses();
-                } else {
-                    const errData = await res.json();
-                    alert('Gagal menyimpan: ' + (errData.error || 'Ralat tidak diketahui'));
+            let currentStored = getStoredCustomCourses();
+            
+            if (id) {
+                const index = currentStored.findIndex(c => c.id === id);
+                if (index !== -1) {
+                    currentStored[index] = {
+                        ...currentStored[index],
+                        tajuk, tarikh, tempat, penerangan, objektif,
+                        penyelaras_nama, penyelaras_emel, penyelaras_telefon,
+                        gambar_url: finalGambarUrl
+                    };
                 }
-            } catch (error) {
-                alert('Ralat Server: ' + error.message);
+            } else {
+                const newCourse = {
+                    id: 'custom-' + Date.now(),
+                    tajuk, tarikh, tempat, penerangan, objektif,
+                    penyelaras_nama, penyelaras_emel, penyelaras_telefon,
+                    gambar_url: finalGambarUrl,
+                    bidang: "PEMBANGUNAN DIRI DAN SAHSIAH"
+                };
+                currentStored.unshift(newCourse);
+            }
+
+            saveCustomCoursesToStorage(currentStored);
+
+            alert(id ? 'Kursus berjaya dikemas kini di semua halaman!' : 'Kursus baru berjaya ditambah ke semua halaman!');
+            resetEditorForm();
+            loadAdminCoursesOnly();
+
+            // Kemaskini semula statistik
+            if (typeof loadDashboardStats === 'function') {
+                loadDashboardStats();
             }
         }
 
         function triggerEditCourse(item) {
-            document.getElementById('editor-course-id').value = item.id;
-            document.getElementById('editor-tajuk').value = item.tajuk;
-            document.getElementById('editor-tarikh').value = item.tarikh;
-            document.getElementById('editor-tempat').value = item.tempat;
-            document.getElementById('editor-penerangan').value = item.penerangan;
+            document.getElementById('editor-course-id').value = item.id || '';
+            document.getElementById('editor-tajuk').value = item.tajuk || '';
+            document.getElementById('editor-tarikh').value = item.tarikh || '';
+            document.getElementById('editor-tempat').value = item.tempat || '';
+            document.getElementById('editor-penerangan').value = item.penerangan || '';
+            document.getElementById('editor-objektif').value = item.objektif || '';
+            document.getElementById('editor-penyelaras-nama').value = item.penyelaras_nama || '';
+            document.getElementById('editor-penyelaras-emel').value = item.penyelaras_emel || '';
+            document.getElementById('editor-penyelaras-telefon').value = item.penyelaras_telefon || '';
             document.getElementById('editor-gambar-url').value = item.gambar_url || '';
             
             if (item.gambar_url) {
@@ -562,19 +770,19 @@
             document.getElementById('admin-editor-section').scrollIntoView({ behavior: 'smooth' });
         }
 
-        async function handleDeleteCourse(id) {
+        function handleDeleteCourse(id) {
             if (!confirm('Adakah anda pasti mahu memadam kursus ini?')) return;
 
-            try {
-                const res = await fetch(`/api/kursus/${id}`, { method: 'DELETE' });
-                if (res.ok) {
-                    alert('Kursus berjaya dipadam!');
-                    fetchAndRenderTop3Courses();
-                } else {
-                    alert('Gagal memadam kursus.');
-                }
-            } catch (error) {
-                alert('Ralat Server: ' + error.message);
+            let currentStored = getStoredCustomCourses();
+            currentStored = currentStored.filter(c => c.id !== id);
+            saveCustomCoursesToStorage(currentStored);
+
+            alert('Kursus berjaya dipadam!');
+            loadAdminCoursesOnly();
+
+            // Kemaskini semula statistik
+            if (typeof loadDashboardStats === 'function') {
+                loadDashboardStats();
             }
         }
 
@@ -584,12 +792,6 @@
             document.getElementById('img-preview').style.display = 'none';
             base64ImageString = "";
             document.getElementById('btn-save-editor').innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Kursus';
-        }
-
-        function handleLogout() {
-            sessionStorage.clear();
-            localStorage.clear();
-            window.location.href = 'index.html';
         }
     </script>
 </body>

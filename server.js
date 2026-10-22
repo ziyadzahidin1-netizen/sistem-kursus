@@ -50,7 +50,58 @@ app.get('/api/health', (req, res) => {
     return res.status(200).json({ status: 'ok', message: 'API Backend Beroperasi!' });
 });
 
-// 2. API REGISTER (Admin guna Secret Key, User biasa guna Password)
+// 2. API STATISTIK LIVE (JUMLAH KURSUS, BIDANG, PESERTA & PUSAT LATIHAN)
+app.get('/api/stats', async (req, res) => {
+    try {
+        const supabase = getSupabase();
+        let courses = [];
+
+        if (supabase) {
+            const { data, error } = await supabase.from('courses').select('bidang, tempat');
+            if (!error && data) {
+                courses = data;
+            }
+        }
+
+        // Kira Statistik LIVE
+        const totalKursus = courses.length;
+        
+        // Ambil bidang unik
+        const bidangSet = new Set(courses.map(c => c.bidang).filter(Boolean));
+        const totalBidang = bidangSet.size;
+
+        // Ambil lokasi / pusat latihan unik
+        const pusatSet = new Set(courses.map(c => c.tempat).filter(Boolean));
+        const totalPusat = pusatSet.size;
+
+        // Dapatkan Jumlah Peserta Live dari Google Apps Script
+        let totalPeserta = 0;
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyV9pe3TYHqXAYqQwkNRG10n96p_oz1RoYNd27X1t_T3r5nZEvoWRtACmMbwcoc98qNEw/exec';
+        
+        try {
+            const gsResponse = await fetch(GOOGLE_SCRIPT_URL);
+            if (gsResponse.ok) {
+                const gsData = await gsResponse.json();
+                if (gsData.totalPeserta !== undefined) {
+                    totalPeserta = Number(gsData.totalPeserta) || 0;
+                }
+            }
+        } catch (gsError) {
+            console.warn('Gagal mengambil totalPeserta dari Google Script:', gsError.message);
+        }
+
+        return res.status(200).json({
+            totalKursus,
+            totalBidang,
+            totalPeserta,
+            totalPusat
+        });
+    } catch (error) {
+        return res.status(500).json({ error: 'Ralat Server Stats: ' + error.message });
+    }
+});
+
+// 3. API REGISTER (Admin guna Secret Key, User biasa guna Password)
 app.post('/api/register', async function(req, res) {
     try {
         const supabase = getSupabase();
@@ -118,7 +169,7 @@ app.post('/api/register', async function(req, res) {
     }
 });
 
-// 3. API LOGIN
+// 4. API LOGIN
 app.post('/api/login', async function(req, res) {
     try {
         const supabase = getSupabase();
@@ -182,7 +233,7 @@ app.post('/api/login', async function(req, res) {
     }
 });
 
-// 4. API PENGURUSAN KURSUS (CRUD DENGAN GAMBAR)
+// 5. API PENGURUSAN KURSUS
 app.get('/api/kursus', async (req, res) => {
     try {
         const supabase = getSupabase();
@@ -202,14 +253,22 @@ app.post('/api/kursus', async (req, res) => {
         const supabase = getSupabase();
         if (!supabase) return res.status(500).json({ error: 'Tetapan Supabase tidak dijumpai.' });
 
-        const { tajuk, tarikh, tempat, penerangan, gambar_url } = req.body || {};
+        const { 
+            tajuk, tarikh, tempat, penerangan, gambar_url, 
+            objektif, penyelaras_nama, penyelaras_emel, penyelaras_telefon, bidang 
+        } = req.body || {};
+
         if (!tajuk || !tarikh || !tempat || !penerangan) {
             return res.status(400).json({ error: 'Sila lengkapkan semua medan wajib!' });
         }
 
         const { data, error } = await supabase
             .from('courses')
-            .insert([{ tajuk, tarikh, tempat, penerangan, gambar_url }]);
+            .insert([{ 
+                tajuk, tarikh, tempat, penerangan, gambar_url, 
+                objektif, penyelaras_nama, penyelaras_emel, penyelaras_telefon, 
+                bidang: bidang || 'PEMBANGUNAN DIRI DAN SAHSIAH'
+            }]);
 
         if (error) return res.status(500).json({ error: error.message });
         return res.status(201).json({ message: 'Kursus berjaya ditambah!', data });
@@ -224,11 +283,17 @@ app.put('/api/kursus/:id', async (req, res) => {
         if (!supabase) return res.status(500).json({ error: 'Tetapan Supabase tidak dijumpai.' });
 
         const { id } = req.params;
-        const { tajuk, tarikh, tempat, penerangan, gambar_url } = req.body || {};
+        const { 
+            tajuk, tarikh, tempat, penerangan, gambar_url, 
+            objektif, penyelaras_nama, penyelaras_emel, penyelaras_telefon, bidang 
+        } = req.body || {};
 
         const { error } = await supabase
             .from('courses')
-            .update({ tajuk, tarikh, tempat, penerangan, gambar_url })
+            .update({ 
+                tajuk, tarikh, tempat, penerangan, gambar_url, 
+                objektif, penyelaras_nama, penyelaras_emel, penyelaras_telefon, bidang 
+            })
             .eq('id', id);
 
         if (error) return res.status(500).json({ error: error.message });
@@ -253,7 +318,7 @@ app.delete('/api/kursus/:id', async (req, res) => {
     }
 });
 
-// 5. API MOHON KURSUS
+// 6. API MOHON KURSUS
 app.post('/api/mohon', async function(req, res) {
     try {
         const { nama, ic, email, jawatan, gred, jabatan, penyakit, pengangkutan, kursus } = req.body || {};

@@ -1,26 +1,46 @@
 // ==========================================
-// 1. DASHBOARD & GOOGLE APPS SCRIPT
+// 1. DASHBOARD & STATISTIK LIVE
 // ==========================================
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyV9pe3TYHqXAYqQwkNRG10n96p_oz1RoYNd27X1t_T3r5nZEvoWRtACmMbwcoc98qNEw/exec';
-
 async function loadDashboardStats() {
-    const totalKursus = 8;
-    const totalBidang = 28;
-    const totalPusat = 8;
+    let totalKursus = 0;
+    let totalBidang = 0;
+    let totalPusat = 0;
     let totalPeserta = 0;
 
+    // Ambil kursus dari localStorage (User & Admin local additions)
+    let localCourses = [];
     try {
-        const response = await fetch(SCRIPT_URL);
-        if (response.ok) {
-            const data = await response.json();
-            if (data.totalPeserta !== undefined) {
-                totalPeserta = data.totalPeserta;
-            }
-        }
-    } catch (error) {
-        console.warn('Gagal mengambil jumlah peserta live dari Google Sheets, menggunakan nilai lalai:', error);
+        localCourses = JSON.parse(localStorage.getItem('custom_courses')) || [];
+    } catch (e) {
+        localCourses = [];
     }
 
+    try {
+        // Ambil data statistik daripada Backend API
+        const response = await fetch('/api/stats');
+        if (response.ok) {
+            const data = await response.json();
+            totalKursus = data.totalKursus || 0;
+            totalBidang = data.totalBidang || 0;
+            totalPusat = data.totalPusat || 0;
+            totalPeserta = data.totalPeserta || 0;
+        }
+    } catch (error) {
+        console.warn('Gagal mengambil statistik dari server, bertukar ke pengiraan tempatan:', error);
+    }
+
+    // Gabungkan dengan data tempatan jika ada
+    if (localCourses.length > 0) {
+        totalKursus += localCourses.length;
+
+        const bidangSet = new Set(localCourses.map(c => c.bidang).filter(Boolean));
+        const pusatSet = new Set(localCourses.map(c => c.tempat).filter(Boolean));
+
+        totalBidang = Math.max(totalBidang, bidangSet.size);
+        totalPusat = Math.max(totalPusat, pusatSet.size);
+    }
+
+    // Kemaskini elemen HTML secara Live
     updateElementText('stat-kursus', totalKursus);
     updateElementText('stat-bidang', totalBidang);
     updateElementText('stat-peserta', totalPeserta.toLocaleString());
@@ -103,7 +123,6 @@ function setupCourseForm() {
                 };
 
                 try {
-                    // Gunakan Relative URL '/api/mohon' supaya serasi di Vercel & Localhost
                     const response = await fetch('/api/mohon', {
                         method: 'POST',
                         headers: {
