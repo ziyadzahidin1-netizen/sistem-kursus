@@ -741,6 +741,7 @@
             localStorage.setItem('custom_courses', JSON.stringify(courses));
         }
 
+        // FUNGSI DIKEMAS KINI: Menghadkan paparan hanya 3 KAD SAHAJA
         function renderCoursesToUI(coursesList) {
             const container = document.getElementById('courses-container');
             if (!container) return;
@@ -756,7 +757,10 @@
                 return;
             }
 
-            coursesList.forEach((item) => {
+            // HANYA AMBIL 3 KURSUS PERTAMA/TERKINI
+            const displayCourses = coursesList.slice(0, 3);
+
+            displayCourses.forEach((item) => {
                 const isAdmin = currentUser && currentUser.role === 'admin';
                 const adminControls = (isAdmin && item.id) ? `
                     <div class="admin-controls-card">
@@ -789,13 +793,11 @@
         async function loadAdminCoursesOnly() {
             allCurrentCourses = getStoredCustomCourses();
 
-            // Ambil data terkini dari Backend API sekiranya ada
             try {
                 const response = await fetch('/api/kursus');
                 if (response.ok) {
                     const apiCourses = await response.json();
                     if (apiCourses && apiCourses.length > 0) {
-                        // Gabungkan data dari LocalStorage dan API Pangkalan Data
                         const mergedMap = new Map();
                         allCurrentCourses.forEach(c => mergedMap.set(c.id || c.tajuk, c));
                         apiCourses.forEach(c => mergedMap.set(c.id || c.tajuk, c));
@@ -827,12 +829,10 @@
             renderCoursesToUI(filtered);
         }
 
-        // FUNGSI DIKEMAS KINI: Terus ke maklumat_lanjut.html jika kursus ditemui
         function goToIklanPageWithSearch() {
             const keyword = document.getElementById('dtims-keyword').value.trim().toLowerCase();
             const bidang = document.getElementById('dtims-bidang-select').value.trim();
 
-            // 1. Cari kursus yang padan mengikut bidang atau kata kunci
             const matchedCourse = allCurrentCourses.find(course => {
                 const matchesBidang = bidang ? (course.bidang && course.bidang.toUpperCase() === bidang.toUpperCase()) : true;
                 const matchesKeyword = keyword ? (
@@ -843,7 +843,6 @@
                 return matchesBidang && matchesKeyword;
             });
 
-            // 2. Jika dijumpai, terus Buka Halaman Maklumat Lanjut Kursus berkenaan
             if (matchedCourse) {
                 if (matchedCourse.id) {
                     window.location.href = `maklumat_lanjut.html?id=${encodeURIComponent(matchedCourse.id)}&kursus=${encodeURIComponent(matchedCourse.tajuk)}`;
@@ -851,7 +850,6 @@
                     window.location.href = `maklumat_lanjut.html?kursus=${encodeURIComponent(matchedCourse.tajuk)}`;
                 }
             } else {
-                // 3. Jika tiada kursus yang padan, bawa ke halaman iklan
                 let targetUrl = 'iklan.html';
                 const params = new URLSearchParams();
 
