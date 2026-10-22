@@ -786,8 +786,26 @@
             });
         }
 
-        function loadAdminCoursesOnly() {
+        async function loadAdminCoursesOnly() {
             allCurrentCourses = getStoredCustomCourses();
+
+            // Ambil data terkini dari Backend API sekiranya ada
+            try {
+                const response = await fetch('/api/kursus');
+                if (response.ok) {
+                    const apiCourses = await response.json();
+                    if (apiCourses && apiCourses.length > 0) {
+                        // Gabungkan data dari LocalStorage dan API Pangkalan Data
+                        const mergedMap = new Map();
+                        allCurrentCourses.forEach(c => mergedMap.set(c.id || c.tajuk, c));
+                        apiCourses.forEach(c => mergedMap.set(c.id || c.tajuk, c));
+                        allCurrentCourses = Array.from(mergedMap.values());
+                    }
+                }
+            } catch (e) {
+                console.warn('API backend tidak tersambung, mengguna simpanan tempatan.');
+            }
+
             renderCoursesToUI(allCurrentCourses);
         }
 
@@ -809,22 +827,44 @@
             renderCoursesToUI(filtered);
         }
 
+        // FUNGSI DIKEMAS KINI: Terus ke maklumat_lanjut.html jika kursus ditemui
         function goToIklanPageWithSearch() {
-            const keyword = document.getElementById('dtims-keyword').value.trim();
+            const keyword = document.getElementById('dtims-keyword').value.trim().toLowerCase();
             const bidang = document.getElementById('dtims-bidang-select').value.trim();
 
-            let targetUrl = 'iklan.html';
-            const params = new URLSearchParams();
+            // 1. Cari kursus yang padan mengikut bidang atau kata kunci
+            const matchedCourse = allCurrentCourses.find(course => {
+                const matchesBidang = bidang ? (course.bidang && course.bidang.toUpperCase() === bidang.toUpperCase()) : true;
+                const matchesKeyword = keyword ? (
+                    (course.tajuk && course.tajuk.toLowerCase().includes(keyword)) ||
+                    (course.penerangan && course.penerangan.toLowerCase().includes(keyword))
+                ) : true;
 
-            if (keyword) params.append('keyword', keyword);
-            if (bidang) params.append('bidang', bidang);
+                return matchesBidang && matchesKeyword;
+            });
 
-            const queryString = params.toString();
-            if (queryString) {
-                targetUrl += '?' + queryString;
+            // 2. Jika dijumpai, terus Buka Halaman Maklumat Lanjut Kursus berkenaan
+            if (matchedCourse) {
+                if (matchedCourse.id) {
+                    window.location.href = `maklumat_lanjut.html?id=${encodeURIComponent(matchedCourse.id)}&kursus=${encodeURIComponent(matchedCourse.tajuk)}`;
+                } else {
+                    window.location.href = `maklumat_lanjut.html?kursus=${encodeURIComponent(matchedCourse.tajuk)}`;
+                }
+            } else {
+                // 3. Jika tiada kursus yang padan, bawa ke halaman iklan
+                let targetUrl = 'iklan.html';
+                const params = new URLSearchParams();
+
+                if (keyword) params.append('keyword', keyword);
+                if (bidang) params.append('bidang', bidang);
+
+                const queryString = params.toString();
+                if (queryString) {
+                    targetUrl += '?' + queryString;
+                }
+
+                window.location.href = targetUrl;
             }
-
-            window.location.href = targetUrl;
         }
 
         async function handleAdminSaveCourse(e) {
