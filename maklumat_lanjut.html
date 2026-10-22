@@ -45,7 +45,7 @@
 
         .details-header-img {
             width: 100%;
-            height: 260px;
+            aspect-ratio: 2550 / 3300;
             object-fit: cover;
             border-radius: 12px;
             border: 1px solid #cbd5e1;
@@ -289,7 +289,7 @@
                         <i class="fa-solid fa-clock"></i>
                         <div>
                             <h4>Waktu / Masa</h4>
-                            <p id="course-time">8.30 Pagi - 4.30 Petang</p>
+                            <p id="course-time">-</p>
                         </div>
                     </div>
                     <div class="meta-item">
@@ -365,110 +365,23 @@
             menuToggle.classList.toggle('active');
         }
 
-        const knownCourses = {
-            "Kursus Aplikasi Asas Generative AI MOSTI TAHUN 2026": {
-                date: "20 hingga 22 Ogos 2026",
-                location: "Institut Latihan Felda, FELDA Residence Trolak, Sungkai, Perak",
-                time: "8.30 Pagi - 5.00 Petang",
-                img: "kursus AI.jpg",
-                desc: "Pendedahan dan latihan praktikal penggunaan Generative AI dalam meningkatkan produktiviti tugasan harian di pentadbiran kerajaan.",
-                objectives: ["Memahami konsep asas Generative AI.", "Mengaplikasikan alatan AI dalam tugas harian.", "Meningkatkan kecekapan pengurusan perkhidmatan awam."],
-                coordinator: "Encik Ahmad Zaki",
-                email: "zaki@mosti.gov.my",
-                phone: "03-8885 8123"
-            },
-            "Majlis Sambutan Maulidur Rasul SAW": {
-                date: "25 Ogos 2026 / 12 Rabiulawal 1448H (Selasa)",
-                location: "Akan dimaklumkan kelak",
-                time: "6.00 Pagi - 12.00 Tengah Hari",
-                img: "pic 2.jpg",
-                desc: "Sambutan peringkat kebangsaan memperingati kelahiran Baginda Nabi Muhammad SAW merangkap majlis ceramah dan aktiviti keagamaan.",
-                objectives: ["Memperingati kelahiran Rasulullah SAW.", "Memupuk kecintaan kepada Nabi Muhammad SAW.", "Eratkan perpaduan dalam kalangan penjawat awam."],
-                coordinator: "Ustazah Aminah",
-                email: "aminah@mosti.gov.my",
-                phone: "03-8885 8234"
-            },
-            "Bengkel Pemerkasaan Ibadah solat": {
-                date: "25 Mei dan/ atau 5 Jun 2026",
-                location: "Surau Ar-Raudhah As-Sakinah MOSTI",
-                time: "9.00 Pagi - 1.00 Tengah Hari",
-                img: "pic 3.jpg",
-                desc: "Bengkel amali memperbaiki kualiti ibadah solat serta meningkatkan kelancaran tilawah Al-Quran dalam kalangan penjawat awam.",
-                objectives: ["Memperbaiki kualiti dan Rukun Solat.", "Meningkatkan kelancaran bacaan Al-Quran.", "Menerapkan kerohanian dalam budaya kerja."],
-                coordinator: "Encik Farhan",
-                email: "farhan@mosti.gov.my",
-                phone: "03-8885 8345"
-            },
-            "Kursus Pembangunan dan Pemantapan Skim": {
-                date: "14 hingga 16 Mei 2026",
-                location: "Rumah Peranginan Persekutuan (RPP), Port Dickson, N.Sembilan",
-                time: "Sepenuh Masa",
-                img: "pic 4.jpg",
-                desc: "Program pemantapan kerjaya dan pengukuhan kemahiran sains/teknikal khas untuk warga skim Penolong Pegawai Sains, Penyelidik, dan Pembantu Makmal.",
-                objectives: ["Memantapkan kemahiran sains dan teknikal.", "Memahami laluan kerjaya skim perkhidmatan.", "Memupuk kerjasama strategik antara unit."],
-                coordinator: "Puan Siti Sarah",
-                email: "sitisarah@mosti.gov.my",
-                phone: "03-8885 8456"
-            },
-            "PROGRAM LATIHAN DAN PEMBANGUNAN ANJURAN INTAN": {
-                date: "September hingga November 2026",
-                location: "Kampus-kampus INTAN terpilih di seluruh Malaysia",
-                time: "Mengikut Modul INTAN",
-                img: "pic 5.jpg",
-                desc: "Siri latihan khas pembangunan sahsiah, kepimpinan, dan pengurusan organisasi Kerajaan anjuran Institut Tadbiran Awam Negara.",
-                objectives: ["Meningkatkan kepimpinan dalam perkhidmatan awam.", "Menguasi pengurusan strategik.", "Memperkasakan etika dan integriti."],
-                coordinator: "Encik Ridzuan",
-                email: "ridzuan@mosti.gov.my",
-                phone: "03-8885 8567"
-            },
-            "Program Bicara Eksekutif": {
-                date: "6 Oktober 2026 (Selasa)",
-                location: "Auditorium, Perpustakaan Negara Malaysia, Kuala Lumpur",
-                time: "10.00 Pagi – 1.00 Tengah Hari",
-                img: "pic 6.jpg",
-                desc: "Sesi wacana intelek membincangkan peranan geopolitik, cabaran ekonomi, dan implikasi strategi dasar antarabangsa terhadap Malaysia.",
-                objectives: ["Menganalisis cabaran ekonomi global.", "Memahami dasar antarabangsa berkaitan Malaysia.", "Menjana gagasan pemikiran strategik."],
-                coordinator: "Dr. Azman",
-                email: "azman@mosti.gov.my",
-                phone: "03-8885 8678"
-            },
-            "BENGKEL PENGUKUHAN KERJA BERPASUKAN KENEGARAAN": {
-                date: "16 hingga 18 April 2026",
-                location: "Pusat Latihan Kenegaraan Ulu Kernas, Perak",
-                time: "Sepenuh Masa (Program Berkemps)",
-                img: "pic 7.jpg",
-                desc: "Bengkel fizikal berasaskan modul jati diri kenegaraan dan aktiviti pengukuhan semangat perpaduan sesama ahli pasukan.",
-                objectives: ["Meningkatkan kerjasama berpasukan.", "Memupuk semangat patriotisme.", "Membina daya ketahanan fizikal dan mental."],
-                coordinator: "Encik Khairul",
-                email: "khairul@mosti.gov.my",
-                phone: "03-8885 8789"
-            },
-            "Basic Occupational First Aid": {
-                date: "1 & 2 September 2026",
-                location: "Dewan Perhimpunan MOSTI, Aras 4, Blok C7",
-                time: "8.30 Pagi - 4.30 Petang",
-                img: "pic 8.jpg",
-                desc: "Latihan praktikal keselamatan pekerjaan merangkumi teknik pertolongan cemas, kemahiran CPR, dan cara betul mengendalikan mesin AED.",
-                objectives: ["Menguasai teknik pertolongan cemas asas.", "Melaksanakan sokongan hayat CPR dan mesin AED.", "Memenuhi piawaian OSH di pejabat."],
-                coordinator: "Puan Rozita",
-                email: "rozita@mosti.gov.my",
-                phone: "03-8885 8890"
-            }
-        };
-
         function populateUI(data) {
-            document.getElementById('course-date').innerText = data.date || data.tarikh || '-';
-            document.getElementById('course-location').innerText = data.location || data.tempat || '-';
-            if (data.time) document.getElementById('course-time').innerText = data.time;
-            document.getElementById('course-desc').innerText = data.desc || data.penerangan || 'Tiada penerangan lanjut.';
+            document.getElementById('course-date').innerText = data.tarikh || data.date || '-';
+            document.getElementById('course-location').innerText = data.tempat || data.location || '-';
             
-            if (data.img || data.gambar_url) {
-                document.getElementById('course-img').src = data.img || data.gambar_url;
+            // Sokong kedua-dua kunci property (masa / time)
+            const timeVal = data.masa || data.time || '-';
+            document.getElementById('course-time').innerText = timeVal;
+            
+            document.getElementById('course-desc').innerText = data.penerangan || data.desc || 'Tiada penerangan lanjut.';
+            
+            if (data.gambar_url || data.img) {
+                document.getElementById('course-img').src = data.gambar_url || data.img;
             }
 
             // Populasi Objektif
             const objList = document.getElementById('course-objectives-list');
-            let rawObj = data.objectives || data.objektif;
+            let rawObj = data.objektif || data.objectives;
             if (rawObj) {
                 objList.innerHTML = '';
                 let arr = Array.isArray(rawObj) ? rawObj : rawObj.split('\n');
@@ -480,9 +393,9 @@
             }
 
             // Populasi Penyelaras
-            const name = data.coordinator || data.penyelaras_nama;
-            const email = data.email || data.penyelaras_emel;
-            const phone = data.phone || data.penyelaras_telefon;
+            const name = data.penyelaras_nama || data.coordinator;
+            const email = data.penyelaras_emel || data.email;
+            const phone = data.penyelaras_telefon || data.phone;
 
             if (name) document.getElementById('coordinator-name').innerText = name;
             if (email) {
@@ -506,7 +419,7 @@
             document.getElementById('course-title').innerText = decodedTitle;
             document.getElementById('btn-apply-link').href = "mohon.html?kursus=" + encodeURIComponent(decodedTitle);
 
-            // 1. Semak Storan Tempatan (Local Storage Admin Edit)
+            // 1. UTAMAKAN KURSUS DARIPADA LOCALSTORAGE (HASIL EDIT ADMIN)
             let storedCustom = [];
             try {
                 storedCustom = JSON.parse(localStorage.getItem('custom_courses')) || [];
@@ -522,28 +435,15 @@
                 return;
             }
 
-            // 2. Semak Senarai statik
-            let foundData = null;
-            for (let key in knownCourses) {
-                if (decodedTitle.toLowerCase().includes(key.toLowerCase()) || key.toLowerCase().includes(decodedTitle.toLowerCase())) {
-                    foundData = knownCourses[key];
-                    break;
-                }
-            }
-
-            if (foundData) {
-                populateUI(foundData);
-                return;
-            }
-
-            // 3. Semak API
+            // 2. JIKA TIADA DALAM LOCALSTORAGE, SEMAK API BACKEND / SUPABASE
             try {
                 const response = await fetch('/api/kursus');
                 if (response.ok) {
                     const courses = await response.json();
-                    const matchedDb = courses.find(c => (idParam && c.id === idParam) || c.tajuk.toLowerCase() === decodedTitle.toLowerCase());
+                    const matchedDb = courses.find(c => (idParam && c.id === idParam) || (c.tajuk && c.tajuk.toLowerCase() === decodedTitle.toLowerCase()));
                     if (matchedDb) {
                         populateUI(matchedDb);
+                        return;
                     }
                 }
             } catch (e) {

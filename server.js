@@ -254,7 +254,7 @@ app.post('/api/kursus', async (req, res) => {
         if (!supabase) return res.status(500).json({ error: 'Tetapan Supabase tidak dijumpai.' });
 
         const { 
-            tajuk, tarikh, tempat, penerangan, gambar_url, 
+            tajuk, tarikh, masa, tempat, penerangan, gambar_url, 
             objektif, penyelaras_nama, penyelaras_emel, penyelaras_telefon, bidang 
         } = req.body || {};
 
@@ -265,7 +265,7 @@ app.post('/api/kursus', async (req, res) => {
         const { data, error } = await supabase
             .from('courses')
             .insert([{ 
-                tajuk, tarikh, tempat, penerangan, gambar_url, 
+                tajuk, tarikh, masa, tempat, penerangan, gambar_url, 
                 objektif, penyelaras_nama, penyelaras_emel, penyelaras_telefon, 
                 bidang: bidang || 'PEMBANGUNAN DIRI DAN SAHSIAH'
             }]);
@@ -284,14 +284,14 @@ app.put('/api/kursus/:id', async (req, res) => {
 
         const { id } = req.params;
         const { 
-            tajuk, tarikh, tempat, penerangan, gambar_url, 
+            tajuk, tarikh, masa, tempat, penerangan, gambar_url, 
             objektif, penyelaras_nama, penyelaras_emel, penyelaras_telefon, bidang 
         } = req.body || {};
 
         const { error } = await supabase
             .from('courses')
             .update({ 
-                tajuk, tarikh, tempat, penerangan, gambar_url, 
+                tajuk, tarikh, masa, tempat, penerangan, gambar_url, 
                 objektif, penyelaras_nama, penyelaras_emel, penyelaras_telefon, bidang 
             })
             .eq('id', id);

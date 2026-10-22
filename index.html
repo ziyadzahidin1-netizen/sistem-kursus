@@ -112,7 +112,10 @@
             font-size: 0.85rem;
         }
         .preview-img {
-            max-height: 100px;
+            max-height: 200px;
+            aspect-ratio: 2550 / 3300;
+            width: auto;
+            object-fit: cover;
             border-radius: 6px;
             margin-top: 5px;
             display: none;
@@ -408,10 +411,17 @@
                             <small style="font-size: 11px; color: #64748b;">Gunakan pemilih tarikh di atas atau taip secara manual format tarikh.</small>
                         </div>
 
-                        <div class="full-width">
+                        <!-- BAHAGIAN WAKTU / MASA KURSUS -->
+                        <div>
+                            <label for="editor-masa">Masa / Waktu Kursus</label>
+                            <input type="text" id="editor-masa" class="editor-input" placeholder="Contoh: 8:30 Pagi - 4:30 Petang">
+                        </div>
+
+                        <div>
                             <label for="editor-tempat">Lokasi / Tempat</label>
                             <input type="text" id="editor-tempat" class="editor-input" placeholder="Contoh: Dewan Perhimpunan MOSTI" required>
                         </div>
+
                         <div class="full-width">
                             <label for="editor-penerangan">Penerangan Ringkas</label>
                             <textarea id="editor-penerangan" class="editor-input" style="height: 70px;" placeholder="Penerangan ringkas kursus..." required></textarea>
@@ -472,7 +482,7 @@
 
             <div style="display: flex; justify-content: center; align-items: center;">
                 <div class="card-info" style="max-width: 600px; width: 100%; text-align: center; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-radius: 10px; background-color: #ffffff;">
-                    <h3 style="margin-bottom: 20px; color: #1e293b;">Maklumat Perhubungan</h3>
+                    <h3 style="margin-bottom: 20px; color: #1e293b;">Maklumat Perhitungan</h3>
                     
                     <p style="margin-bottom: 15px;">
                         <i class="fa-solid fa-location-dot" style="font-size: 1.2rem; color: #2563eb; margin-bottom: 5px;"></i><br>
@@ -643,11 +653,13 @@
                 const cardHTML = `
                     <div class="card">
                         <span class="badge-new"><i class="fa-solid fa-sparkles"></i> Terkini</span>
-                        <img src="${courseImg}" alt="${item.tajuk}" style="width: 100%; height: 200px; object-fit: cover; display: block; border-radius: 6px;">
+                        <div style="width: 100%; aspect-ratio: 2550 / 3300; border-radius: 6px; overflow: hidden;">
+                            <img src="${courseImg}" alt="${item.tajuk}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                        </div>
                         <h3 style="font-size: 1.1rem; margin: 12px 0 8px 0; color: #1e293b;">${item.tajuk}</h3>
                         <p style="margin: 4px 0; font-size: 0.9rem;"><strong>Tempoh:</strong> ${item.tarikh || '-'}</p>
                         <p style="margin: 4px 0; font-size: 0.9rem;"><strong>Lokasi:</strong> ${item.tempat || '-'}</p>
-                        <p style="margin: 4px 0; font-size: 0.9rem; color: #64748b;">${item.penerangan || ''}</p>
+                        <p style="margin: 4px 0; font-size: 0.9rem;"><strong>Masa:</strong> ${item.masa || '-'}</p>
                         <hr style="margin: 15px 0; border: 0; border-top: 1px solid #eee;">
                         <a href="mohon.html?kursus=${encodeURIComponent(item.tajuk)}" class="btn-primary full-width" style="margin-top: 10px; text-align: center; display: block;">Mohon Kursus Ini</a>
                         ${adminControls}
@@ -698,11 +710,12 @@
             window.location.href = targetUrl;
         }
 
-        function handleAdminSaveCourse(e) {
+        async function handleAdminSaveCourse(e) {
             e.preventDefault();
             const id = document.getElementById('editor-course-id').value;
             const tajuk = document.getElementById('editor-tajuk').value.trim();
             const tarikh = document.getElementById('editor-tarikh').value.trim();
+            const masa = document.getElementById('editor-masa').value.trim();
             const tempat = document.getElementById('editor-tempat').value.trim();
             const penerangan = document.getElementById('editor-penerangan').value.trim();
             const objektif = document.getElementById('editor-objektif').value.trim();
@@ -720,7 +733,7 @@
                 if (index !== -1) {
                     currentStored[index] = {
                         ...currentStored[index],
-                        tajuk, tarikh, tempat, penerangan, objektif,
+                        tajuk, tarikh, masa, tempat, penerangan, objektif,
                         penyelaras_nama, penyelaras_emel, penyelaras_telefon,
                         gambar_url: finalGambarUrl
                     };
@@ -728,7 +741,7 @@
             } else {
                 const newCourse = {
                     id: 'custom-' + Date.now(),
-                    tajuk, tarikh, tempat, penerangan, objektif,
+                    tajuk, tarikh, masa, tempat, penerangan, objektif,
                     penyelaras_nama, penyelaras_emel, penyelaras_telefon,
                     gambar_url: finalGambarUrl,
                     bidang: "PEMBANGUNAN DIRI DAN SAHSIAH"
@@ -737,6 +750,22 @@
             }
 
             saveCustomCoursesToStorage(currentStored);
+
+            // Menyimpan terus ke backend jika API tersedia
+            try {
+                const method = id && !id.startsWith('custom-') ? 'PUT' : 'POST';
+                const url = id && !id.startsWith('custom-') ? `/api/kursus/${id}` : '/api/kursus';
+                await fetch(url, {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        tajuk, tarikh, masa, tempat, penerangan, gambar_url: finalGambarUrl,
+                        objektif, penyelaras_nama, penyelaras_emel, penyelaras_telefon
+                    })
+                });
+            } catch (err) {
+                console.warn('Backend API tidak tersambung, menggunakan simpanan tempatan.');
+            }
 
             alert(id ? 'Kursus berjaya dikemas kini di semua halaman!' : 'Kursus baru berjaya ditambah ke semua halaman!');
             resetEditorForm();
@@ -752,6 +781,7 @@
             document.getElementById('editor-course-id').value = item.id || '';
             document.getElementById('editor-tajuk').value = item.tajuk || '';
             document.getElementById('editor-tarikh').value = item.tarikh || '';
+            document.getElementById('editor-masa').value = item.masa || '';
             document.getElementById('editor-tempat').value = item.tempat || '';
             document.getElementById('editor-penerangan').value = item.penerangan || '';
             document.getElementById('editor-objektif').value = item.objektif || '';
@@ -770,17 +800,24 @@
             document.getElementById('admin-editor-section').scrollIntoView({ behavior: 'smooth' });
         }
 
-        function handleDeleteCourse(id) {
+        async function handleDeleteCourse(id) {
             if (!confirm('Adakah anda pasti mahu memadam kursus ini?')) return;
 
             let currentStored = getStoredCustomCourses();
             currentStored = currentStored.filter(c => c.id !== id);
             saveCustomCoursesToStorage(currentStored);
 
+            if (id && !id.startsWith('custom-')) {
+                try {
+                    await fetch(`/api/kursus/${id}`, { method: 'DELETE' });
+                } catch (e) {
+                    console.warn('Gagal memadam dari server API:', e);
+                }
+            }
+
             alert('Kursus berjaya dipadam!');
             loadAdminCoursesOnly();
 
-            // Kemaskini semula statistik
             if (typeof loadDashboardStats === 'function') {
                 loadDashboardStats();
             }

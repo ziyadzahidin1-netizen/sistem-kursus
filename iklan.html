@@ -19,6 +19,35 @@
             text-transform: uppercase;
         }
 
+        /* PAKSA GRID KUNCI SAIZ KAD SAMA DENGAN INDEX.HTML */
+        .cards-grid-fixed {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            justify-content: center !important;
+            gap: 25px !important;
+            width: 100% !important;
+        }
+
+        .cards-grid-fixed .card {
+            flex: 0 0 calc(33.333% - 20px) !important;
+            max-width: 360px !important;
+            min-width: 280px !important;
+            box-sizing: border-box !important;
+        }
+
+        @media screen and (max-width: 900px) {
+            .cards-grid-fixed .card {
+                flex: 0 0 calc(50% - 20px) !important;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .cards-grid-fixed .card {
+                flex: 0 0 100% !important;
+                max-width: 100% !important;
+            }
+        }
+
         /* Susunan Bersebelahan untuk Butang Tindakan Kad */
         .card-actions {
             display: flex;
@@ -100,8 +129,8 @@
             <p>Pilih program latihan kemahiran terbaik untuk meningkatkan potensi anda.</p>
         </div>
 
-        <!-- KONTENA GRID UNTUK SEMUA KAD KURSUS -->
-        <div class="cards-grid" id="main-courses-grid">
+        <!-- KONTENA GRID DENGAN SAIZ KAD SAMA MACAM INDEX.HTML -->
+        <div class="cards-grid-fixed" id="main-courses-grid">
             <div id="dynamic-courses-wrapper" style="display: contents;"></div>
         </div>
     </div>
@@ -132,7 +161,7 @@
             // Jika tiada kursus yang ditambah oleh admin
             if (customCourses.length === 0) {
                 wrapper.innerHTML = `
-                    <div style="grid-column: 1 / -1; text-align: center; padding: 50px 20px; color: #64748b;">
+                    <div style="width: 100%; text-align: center; padding: 50px 20px; color: #64748b;">
                         <i class="fa-solid fa-folder-open" style="font-size: 3rem; margin-bottom: 15px; color: #cbd5e1;"></i>
                         <h3>Tiada Kursus Ditawarkan Buat Masa Ini</h3>
                     </div>
@@ -147,11 +176,13 @@
                 htmlContent += `
                     <div class="card">
                         <span class="badge-new"><i class="fa-solid fa-sparkles"></i> Terkini</span>
-                        <img src="${img}" alt="${item.tajuk}" style="width: 100%; height: 200px; object-fit: cover; display: block;">
-                        <h3>${item.tajuk}</h3>
-                        <p><strong>Tempoh:</strong> ${item.tarikh || '-'}</p>
-                        <p><strong>Lokasi:</strong> ${item.tempat || '-'}</p>
-                        <p style="font-size: 0.9rem; color: #64748b;">${item.penerangan || ''}</p>
+                        <div style="width: 100%; aspect-ratio: 2550 / 3300; border-radius: 6px; overflow: hidden;">
+                            <img src="${img}" alt="${item.tajuk}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                        </div>
+                        <h3 style="font-size: 1.1rem; margin: 12px 0 8px 0; color: #1e293b;">${item.tajuk}</h3>
+                        <p style="margin: 4px 0; font-size: 0.9rem;"><strong>Tempoh:</strong> ${item.tarikh || '-'}</p>
+                        <p style="margin: 4px 0; font-size: 0.9rem;"><strong>Lokasi:</strong> ${item.tempat || '-'}</p>
+                        <p style="margin: 4px 0; font-size: 0.9rem;"><strong>Masa:</strong> ${item.masa || '-'}</p>
                         <hr style="margin: 15px 0; border: 0; border-top: 1px solid #eee;">
                         <div class="card-actions">
                             <a href="maklumat_lanjut.html?id=${encodeURIComponent(item.id || '')}&kursus=${encodeURIComponent(item.tajuk)}" class="btn-info">Maklumat Lanjut &raquo;</a>
@@ -163,7 +194,7 @@
             wrapper.innerHTML = htmlContent;
         }
 
-        // Jalankan SERTA-MERTA sebaik sahaja DOM siap diproses (Tanpa sebarang delay/fetch API)
+        // Jalankan SERTA-MERTA sebaik sahaja DOM siap diproses
         document.addEventListener('DOMContentLoaded', renderAdminCoursesOnly);
 
         // Kemaskini automatik sekiranya admin menambah/memadam kursus dari tab lain
