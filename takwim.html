@@ -29,9 +29,9 @@
         </div>
 
         <nav class="nav-links" id="nav-links">
-            <a href="index.html" class="nav-btn active"><i class="fa-solid fa-house"></i> Utama</a>
+            <a href="index.html" class="nav-btn"><i class="fa-solid fa-house"></i> Utama</a>
             <a href="iklan.html" class="nav-btn"><i class="fa-solid fa-bullhorn"></i> Jenis & Iklan Kursus</a>
-            <a href="takwim.html" class="nav-btn"><i class="fa-solid fa-calendar-days"></i> Takwim Kursus</a>
+            <a href="takwim.html" class="nav-btn active"><i class="fa-solid fa-calendar-days"></i> Takwim Kursus</a>
             <a href="mohon.html" class="nav-btn btn-apply"><i class="fa-solid fa-paper-plane"></i> Mohon Kursus</a>
         </nav>
     </header>
@@ -46,7 +46,7 @@
         </div>
     </div>
 
-    <!-- Script Inisialisasi Kalendar 2026 -->
+    <!-- Script Inisialisasi Kalendar Dinamik -->
     <script>
         function toggleMenu() {
             const navLinks = document.getElementById('nav-links');
@@ -55,37 +55,132 @@
             menuToggle.classList.toggle('active');
         }
 
+        // Fungsi Penukar Format Tarikh Bahasa Melayu/Text kepada YYYY-MM-DD
+        function parseToIsoDate(dateStr) {
+            if (!dateStr) return null;
+
+            // Jika sudah dalam format YYYY-MM-DD
+            if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr.trim())) {
+                return dateStr.trim();
+            }
+
+            const monthMap = {
+                'januari': '01', 'jan': '01',
+                'februari': '02', 'feb': '02',
+                'mac': '03', 'mar': '03',
+                'april': '04', 'apr': '04',
+                'mei': '05',
+                'jun': '06',
+                'julai': '07', 'jul': '07',
+                'ogos': '08', 'ogo': '08', 'aug': '08',
+                'september': '09', 'sep': '09',
+                'oktober': '10', 'okt': '10', 'oct': '10',
+                'november': '11', 'nov': '11',
+                'disember': '12', 'dis': '12', 'dec': '12'
+            };
+
+            const cleanStr = dateStr.toLowerCase().replace(/[\,\.\:]/g, '');
+            const yearMatch = cleanStr.match(/\b(20\d{2})\b/);
+            const year = yearMatch ? yearMatch[1] : new Date().getFullYear().toString();
+
+            let foundMonth = null;
+            for (let [mName, mNum] of Object.entries(monthMap)) {
+                if (cleanStr.includes(mName)) {
+                    foundMonth = mNum;
+                    break;
+                }
+            }
+
+            const dayMatch = cleanStr.match(/\b(\d{1,2})\b/);
+            const day = dayMatch ? dayMatch[1].padStart(2, '0') : '01';
+
+            if (foundMonth) {
+                return `${year}-${foundMonth}-${day}`;
+            }
+
+            return null;
+        }
+
+        // Memuatkan Acara Dinamik dari LocalStorage
+        function getCoursesAsCalendarEvents() {
+            let customCourses = [];
+            try {
+                customCourses = JSON.parse(localStorage.getItem('custom_courses')) || [];
+            } catch(e) {
+                customCourses = [];
+            }
+
+            const events = [];
+
+            customCourses.forEach(item => {
+                let startDate = item.tarikh_mula || item.startDate;
+                let endDate = item.tarikh_tamat || item.endDate;
+
+                // Jika tarikh hanya disimpan dalam teks (cth: "20 - 22 Ogos 2026")
+                if (!startDate && item.tarikh) {
+                    startDate = parseToIsoDate(item.tarikh);
+                }
+
+                if (startDate) {
+                    // Jika ada tarikh tamat untuk acara pelbagai hari, tambah 1 hari supaya FullCalendar memaparkannya dengan betul
+                    let formattedEndDate = endDate;
+                    if (endDate && endDate !== startDate) {
+                        let endD = new Date(endDate);
+                        endD.setDate(endD.getDate() + 1);
+                        formattedEndDate = endD.toISOString().split('T')[0];
+                    }
+
+                    events.push({
+                        title: item.tajuk,
+                        start: startDate,
+                        end: formattedEndDate || undefined,
+                        url: `mohon.html?kursus=${encodeURIComponent(item.tajuk)}`,
+                        color: '#2563eb', // Warna tema Portal
+                        extendedProps: {
+                            tempat: item.tempat || '',
+                            masa: item.masa || ''
+                        }
+                    });
+                }
+            });
+
+            return events;
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
-                initialDate: '2026-01-01', // Bermula dari Januari 2026
-                locale: 'ms', // Bahasa Melayu
+                initialDate: '2026-01-01',
+                locale: 'ms',
                 headerToolbar: {
                     left: 'title',
                     center: '',
                     right: 'today prev,next'
                 },
                 buttonText: {
-                    today: 'today'
+                    today: 'Hari Ini'
                 },
-                dayHeaderFormat: { weekday: 'short' }, // Ahd, Isn, Sel...
-                
-                // Senarai Kursus sepanjang tahun 2026
-                events: [
-                    { title: 'Kursus Aplikasi Asas Generative AI MOSTI TAHUN 2026', start: '2026-08-20',  end: '2026-08-22', url: 'mohon.html', color: '#64748b' },
-                    { title: 'Majlis Sambutan Maulidur Rasul SAW Peringkat Kebangsaan Tahun 1448H/2026M.', start: '2026-08-25', url: 'mohon.html', color: '#64748b' },
-                    { title: 'Bengkel Pemerkasaan Ibadah solat dan Kemahiran Tilawah : Ngaji Smooth, Solat Approved!', start: '2026-05-25', url: 'mohon.html', color: '#64748b' },
-                    { title: 'Kursus Pembangunan dan Pemantapan Skim Perkhidmatan Penolong Pegawai Sains, Penolong Pegawai Penyelidik, Pembantu Makmal dan Pembantu Penyelidik MOSTI Tahun 2026', start: '2026-05-14',end: '2026-05-16', url: 'mohon.html', color: '#64748b' },
-                    { title: 'PROGRAM LATIHAN DAN PEMBANGUNAN ANJURAN INTAN', start: '', url: 'mohon.html', color: '#64748b' },
-                    { title: 'Program Bicara Eksekutif bertajuk “Kuasa Dunia: Implikasi Ekonomi dan Politik Masa Kini Terhadap Malaysia”', start: '2026-10-06', url: 'mohon.html', color: '#64748b' },
-                    { title: 'BENGKEL PENGUKUHAN KERJA BERPASUKAN KENEGARAAN', start: '2026-04-16', end: '2026-04-18', url: 'mohon.html', color: '#64748b' },
-                    
-                ]
+                dayHeaderFormat: { weekday: 'short' },
+                events: getCoursesAsCalendarEvents(),
+                eventClick: function(info) {
+                    if (info.event.url) {
+                        window.location.href = info.event.url;
+                        info.jsEvent.preventDefault();
+                    }
+                }
             });
 
             calendar.render();
+
+            // Kemaskini automatik sekiranya admin menambah/memadam kursus dari tab lain
+            window.addEventListener('storage', function(e) {
+                if (e.key === 'custom_courses') {
+                    calendar.removeAllEvents();
+                    calendar.addEventSource(getCoursesAsCalendarEvents());
+                }
+            });
         });
     </script>
 

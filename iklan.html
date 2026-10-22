@@ -158,7 +158,25 @@
                 customCourses = [];
             }
 
-            // Jika tiada kursus yang ditambah oleh admin
+            // Membaca parameter carian sekiranya dihantar melalui halaman utama
+            const urlParams = new URLSearchParams(window.location.search);
+            const keywordParam = urlParams.get('keyword')?.toLowerCase().trim();
+            const bidangParam = urlParams.get('bidang')?.toUpperCase().trim();
+
+            if (keywordParam || bidangParam) {
+                customCourses = customCourses.filter(item => {
+                    const matchesKeyword = !keywordParam || 
+                        (item.tajuk && item.tajuk.toLowerCase().includes(keywordParam)) ||
+                        (item.penerangan && item.penerangan.toLowerCase().includes(keywordParam)) ||
+                        (item.tempat && item.tempat.toLowerCase().includes(keywordParam));
+
+                    const matchesBidang = !bidangParam || (item.bidang && item.bidang.toUpperCase() === bidangParam);
+
+                    return matchesKeyword && matchesBidang;
+                });
+            }
+
+            // Jika tiada kursus yang ditambah oleh admin / ditemui
             if (customCourses.length === 0) {
                 wrapper.innerHTML = `
                     <div style="width: 100%; text-align: center; padding: 50px 20px; color: #64748b;">
@@ -173,6 +191,8 @@
             let htmlContent = '';
             customCourses.forEach((item) => {
                 const img = item.gambar_url || 'logo.png';
+                const bidangVal = item.bidang || 'PEMBANGUNAN DIRI DAN SAHSIAH';
+
                 htmlContent += `
                     <div class="card">
                         <span class="badge-new"><i class="fa-solid fa-sparkles"></i> Terkini</span>
@@ -180,6 +200,7 @@
                             <img src="${img}" alt="${item.tajuk}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
                         </div>
                         <h3 style="font-size: 1.1rem; margin: 12px 0 8px 0; color: #1e293b;">${item.tajuk}</h3>
+                        <p style="margin: 4px 0 8px 0; font-size: 0.9rem; color: #059669; font-weight: 700;">${bidangVal}</p>
                         <p style="margin: 4px 0; font-size: 0.9rem;"><strong>Tempoh:</strong> ${item.tarikh || '-'}</p>
                         <p style="margin: 4px 0; font-size: 0.9rem;"><strong>Lokasi:</strong> ${item.tempat || '-'}</p>
                         <p style="margin: 4px 0; font-size: 0.9rem;"><strong>Masa:</strong> ${item.masa || '-'}</p>

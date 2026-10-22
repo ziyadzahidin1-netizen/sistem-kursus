@@ -278,6 +278,13 @@
                 <img id="course-img" src="logo.png" alt="Gambar Kursus" class="details-header-img">
                 
                 <div class="meta-info-container">
+                    <!-- HANYA PAPAR NAMA JENIS BIDANG TANPA TAJUK "BIDANG KURSUS" -->
+                    <div class="meta-item">
+                        <i class="fa-solid fa-bookmark" style="color: #059669;"></i>
+                        <div>
+                            <p id="course-bidang" style="color: #059669; font-weight: 700; font-size: 0.95rem; text-transform: uppercase;">-</p>
+                        </div>
+                    </div>
                     <div class="meta-item">
                         <i class="fa-solid fa-calendar-days"></i>
                         <div>
@@ -366,10 +373,10 @@
         }
 
         function populateUI(data) {
+            document.getElementById('course-bidang').innerText = data.bidang || 'PEMBANGUNAN DIRI DAN SAHSIAH';
             document.getElementById('course-date').innerText = data.tarikh || data.date || '-';
             document.getElementById('course-location').innerText = data.tempat || data.location || '-';
             
-            // Sokong kedua-dua kunci property (masa / time)
             const timeVal = data.masa || data.time || '-';
             document.getElementById('course-time').innerText = timeVal;
             

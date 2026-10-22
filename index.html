@@ -132,7 +132,6 @@
             text-transform: uppercase;
         }
 
-        /* PAKSA GRID KUNCI SAIZ KAD SUPAYA TIDAK MELEBAR */
         .cards-grid-fixed {
             display: flex !important;
             flex-wrap: wrap !important;
@@ -148,20 +147,6 @@
             box-sizing: border-box !important;
         }
 
-        @media screen and (max-width: 900px) {
-            .cards-grid-fixed .card {
-                flex: 0 0 calc(50% - 20px) !important;
-            }
-        }
-
-        @media screen and (max-width: 600px) {
-            .cards-grid-fixed .card {
-                flex: 0 0 100% !important;
-                max-width: 100% !important;
-            }
-        }
-
-        /* GAYA BAHAGIAN CARIAN KURSUS DTIMS INTAN */
         .dtims-search-section {
             background-color: #4b6b82;
             padding: 35px 20px;
@@ -226,6 +211,124 @@
         .btn-dtims-search:hover {
             background-color: #1d4ed8;
         }
+
+        @media screen and (max-width: 768px) {
+            .navbar {
+                padding: 14px 18px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+            }
+            .logo-img {
+                height: 28px !important;
+                width: auto !important;
+            }
+            .logo span {
+                font-size: 1.1rem !important;
+                font-weight: 700 !important;
+            }
+
+            .hero {
+                min-height: 80vh !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+                align-items: center !important;
+                padding: 60px 20px 40px 20px !important;
+                box-sizing: border-box !important;
+                text-align: center !important;
+            }
+            
+            .hero-badge {
+                display: inline-block !important;
+                font-size: 0.75rem !important;
+                padding: 5px 14px !important;
+                margin-bottom: 18px !important;
+                border-radius: 20px !important;
+                letter-spacing: 0.5px !important;
+            }
+
+            .hero h1 {
+                font-size: 1.65rem !important;
+                line-height: 1.35 !important;
+                margin-bottom: 14px !important;
+                font-weight: 800 !important;
+                text-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
+            }
+
+            .hero p {
+                font-size: 0.9rem !important;
+                line-height: 1.5 !important;
+                margin-bottom: 25px !important;
+                max-width: 90% !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+                opacity: 0.95 !important;
+            }
+
+            .hero-buttons {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 12px !important;
+                width: 100% !important;
+                max-width: 290px !important;
+                margin: 0 auto !important;
+            }
+
+            .hero-buttons .btn-primary, 
+            .hero-buttons .btn-secondary {
+                width: 100% !important;
+                box-sizing: border-box !important;
+                text-align: center !important;
+                padding: 12px 18px !important;
+                font-size: 0.88rem !important;
+                font-weight: 600 !important;
+                border-radius: 6px !important;
+                margin: 0 !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                gap: 8px !important;
+            }
+
+            .scroll-down-indicator {
+                margin-top: 30px !important;
+                font-size: 0.75rem !important;
+                opacity: 0.8 !important;
+            }
+
+            .dtims-search-section {
+                padding: 28px 18px !important;
+            }
+            .dtims-search-title {
+                font-size: 1.25rem !important;
+                margin-bottom: 15px !important;
+            }
+            .dtims-input, .dtims-select-dropdown {
+                padding: 10px 12px !important;
+                font-size: 13.5px !important;
+            }
+            .btn-dtims-search {
+                width: 100% !important;
+                justify-content: center !important;
+                padding: 11px !important;
+            }
+
+            .content-section {
+                padding: 30px 18px !important;
+            }
+            .cards-grid-fixed .card {
+                flex: 0 0 100% !important;
+                max-width: 100% !important;
+            }
+            
+            .editor-form-grid {
+                grid-template-columns: 1fr !important;
+            }
+            .editor-form-grid .full-width {
+                grid-column: span 1 !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -237,7 +340,7 @@
             <span>Portal kursus</span>
         </div>
 
-        <div class="menu-toggle" id="mobile-menu" onclick="toggleMenu()">
+        <div class="menu-toggle" id="mobile-menu">
             <span></span>
             <span></span>
             <span></span>
@@ -260,7 +363,7 @@
     <section id="hero-section" class="hero">
         <div class="hero-overlay"></div>
         <div class="hero-content">
-            <span class="hero-badge">Portal Kursus MOSTI</span>
+            <span class="hero-badge">PORTAL KURSUS MOSTI</span>
             <h1>Selamat Datang Ke Portal Kursus MOSTI</h1>
             <p>Tingkatkan kemahiran anda menerusi program dan latihan terkini kami.</p>
             
@@ -276,17 +379,15 @@
         </a>
     </section>
 
-    <!-- CARIAN KURSUS PORTAL DTIMS INTAN SECTION -->
+    <!-- CARIAN KURSUS -->
     <section class="dtims-search-section">
         <div class="dtims-search-container">
             <h2 class="dtims-search-title">Carian Kursus</h2>
             
-            <!-- Input Kata Kunci -->
             <div class="dtims-input-group">
                 <input type="text" id="dtims-keyword" class="dtims-input" placeholder="Kata kunci kursus" onkeyup="filterCourses()">
             </div>
 
-            <!-- Dropdown Pilihan Bidang -->
             <div class="dtims-input-group">
                 <select id="dtims-bidang-select" class="dtims-select-dropdown" onchange="filterCourses()">
                     <option value="" selected>--Semua Bidang--</option>
@@ -308,7 +409,6 @@
                 </select>
             </div>
 
-            <!-- BUTANG CARIAN KE IKLAN.HTML -->
             <div style="margin-top: 15px;">
                 <button type="button" class="btn-dtims-search" onclick="goToIklanPageWithSearch()">
                     <i class="fa-solid fa-magnifying-glass"></i> Carian
@@ -397,6 +497,29 @@
                         <div>
                             <label for="editor-tajuk">Nama / Tajuk Kursus</label>
                             <input type="text" id="editor-tajuk" class="editor-input" placeholder="Contoh: Kursus AI" required>
+                        </div>
+
+                        <!-- DROPDOWN JENIS BIDANG KURSUS UNTUK ADMIN -->
+                        <div>
+                            <label for="editor-bidang">Jenis Bidang Kursus</label>
+                            <select id="editor-bidang" class="editor-input" required>
+                                <option value="" disabled selected>-- Pilih Bidang Kursus --</option>
+                                <option value="PEMBANGUNAN DIRI DAN SAHSIAH">PEMBANGUNAN DIRI DAN SAHSIAH</option>
+                                <option value="BAHASA">BAHASA</option>
+                                <option value="MANDATORI">MANDATORI</option>
+                                <option value="KEPIMPINAN">KEPIMPINAN</option>
+                                <option value="KOMUNIKASI">KOMUNIKASI</option>
+                                <option value="TEKNOLOGI MAKLUMAT DAN AI">TEKNOLOGI MAKLUMAT DAN AI</option>
+                                <option value="PENGURUSAN PROJEK">PENGURUSAN PROJEK</option>
+                                <option value="KEWANGAN DAN PEROLEHAN">KEWANGAN DAN PEROLEHAN</option>
+                                <option value="KESELAMATAN DAN KESIHATAN PEKERJAAN (OSH)">KESELAMATAN DAN KESIHATAN PEKERJAAN (OSH)</option>
+                                <option value="INNOVASI DAN KREATIVITI">INNOVASI DAN KREATIVITI</option>
+                                <option value="PENGURUSAN STRATEGIK">PENGURUSAN STRATEGIK</option>
+                                <option value="ETIKA DAN INTEGRITI">ETIKA DAN INTEGRITI</option>
+                                <option value="PENGURUSAN SUMBER MANUSIA">PENGURUSAN SUMBER MANUSIA</option>
+                                <option value="DASAR PUBLIK DAN PENTADBIRAN">DASAR PUBLIK DAN PENTADBIRAN</option>
+                                <option value="PROTOKOL DAN MAJLIS RASMI">PROTOKOL DAN MAJLIS RASMI</option>
+                            </select>
                         </div>
                         
                         <!-- BAHAGIAN TARIKH DENGAN KALENDAR -->
@@ -534,22 +657,14 @@
             checkAdminMode();
             loadAdminCoursesOnly();
             
-            // Panggil Fungsi Statistik Live
             if (typeof loadDashboardStats === 'function') {
                 loadDashboardStats();
             }
         });
 
-        function toggleMenu() {
-            const navLinks = document.getElementById('nav-links');
-            const menuToggle = document.getElementById('mobile-menu');
-            navLinks.classList.toggle('active');
-            menuToggle.classList.toggle('active');
-        }
-
         function setupNavbar() {
             const navContainer = document.getElementById('user-nav-container');
-            if (currentUser) {
+            if (currentUser && navContainer) {
                 navContainer.innerHTML = `
                     <span style="color:#fff; margin-right:10px; font-weight:600;"><i class="fa-solid fa-user"></i> ${currentUser.nama} (${currentUser.role.toUpperCase()})</span>
                     <button onclick="handleLogout()" class="nav-btn btn-apply" style="background:#ef4444; border:none; cursor:pointer;"><i class="fa-solid fa-right-from-bracket"></i> Log Keluar</button>
@@ -559,14 +674,15 @@
 
         function checkAdminMode() {
             const adminSection = document.getElementById('admin-editor-section');
-            if (currentUser && currentUser.role === 'admin') {
-                adminSection.style.display = 'block';
-            } else {
-                adminSection.style.display = 'none';
+            if (adminSection) {
+                if (currentUser && currentUser.role === 'admin') {
+                    adminSection.style.display = 'block';
+                } else {
+                    adminSection.style.display = 'none';
+                }
             }
         }
 
-        /* FUNGSI TUKAR DATE PICKER KEPADA FORMAT FORMAT KURSUS AUTOMATIK */
         function autoFormatDateText() {
             const dateMulaVal = document.getElementById('editor-tarikh-mula').value;
             const dateTamatVal = document.getElementById('editor-tarikh-tamat').value;
@@ -627,6 +743,7 @@
 
         function renderCoursesToUI(coursesList) {
             const container = document.getElementById('courses-container');
+            if (!container) return;
             container.innerHTML = '';
 
             if (!coursesList || coursesList.length === 0) {
@@ -714,7 +831,10 @@
             e.preventDefault();
             const id = document.getElementById('editor-course-id').value;
             const tajuk = document.getElementById('editor-tajuk').value.trim();
+            const bidang = document.getElementById('editor-bidang').value;
             const tarikh = document.getElementById('editor-tarikh').value.trim();
+            const dateMulaVal = document.getElementById('editor-tarikh-mula').value;
+            const dateTamatVal = document.getElementById('editor-tarikh-tamat').value;
             const masa = document.getElementById('editor-masa').value.trim();
             const tempat = document.getElementById('editor-tempat').value.trim();
             const penerangan = document.getElementById('editor-penerangan').value.trim();
@@ -733,25 +853,43 @@
                 if (index !== -1) {
                     currentStored[index] = {
                         ...currentStored[index],
-                        tajuk, tarikh, masa, tempat, penerangan, objektif,
-                        penyelaras_nama, penyelaras_emel, penyelaras_telefon,
+                        tajuk, 
+                        bidang: bidang || "PEMBANGUNAN DIRI DAN SAHSIAH",
+                        tarikh, 
+                        tarikh_mula: dateMulaVal,
+                        tarikh_tamat: dateTamatVal,
+                        masa, 
+                        tempat, 
+                        penerangan, 
+                        objektif,
+                        penyelaras_nama, 
+                        penyelaras_emel, 
+                        penyelaras_telefon,
                         gambar_url: finalGambarUrl
                     };
                 }
             } else {
                 const newCourse = {
                     id: 'custom-' + Date.now(),
-                    tajuk, tarikh, masa, tempat, penerangan, objektif,
-                    penyelaras_nama, penyelaras_emel, penyelaras_telefon,
-                    gambar_url: finalGambarUrl,
-                    bidang: "PEMBANGUNAN DIRI DAN SAHSIAH"
+                    tajuk, 
+                    bidang: bidang || "PEMBANGUNAN DIRI DAN SAHSIAH",
+                    tarikh, 
+                    tarikh_mula: dateMulaVal,
+                    tarikh_tamat: dateTamatVal,
+                    masa, 
+                    tempat, 
+                    penerangan, 
+                    objektif,
+                    penyelaras_nama, 
+                    penyelaras_emel, 
+                    penyelaras_telefon,
+                    gambar_url: finalGambarUrl
                 };
                 currentStored.unshift(newCourse);
             }
 
             saveCustomCoursesToStorage(currentStored);
 
-            // Menyimpan terus ke backend jika API tersedia
             try {
                 const method = id && !id.startsWith('custom-') ? 'PUT' : 'POST';
                 const url = id && !id.startsWith('custom-') ? `/api/kursus/${id}` : '/api/kursus';
@@ -759,7 +897,7 @@
                     method: method,
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        tajuk, tarikh, masa, tempat, penerangan, gambar_url: finalGambarUrl,
+                        tajuk, bidang, tarikh, tarikh_mula: dateMulaVal, tarikh_tamat: dateTamatVal, masa, tempat, penerangan, gambar_url: finalGambarUrl,
                         objektif, penyelaras_nama, penyelaras_emel, penyelaras_telefon
                     })
                 });
@@ -771,7 +909,6 @@
             resetEditorForm();
             loadAdminCoursesOnly();
 
-            // Kemaskini semula statistik
             if (typeof loadDashboardStats === 'function') {
                 loadDashboardStats();
             }
@@ -780,7 +917,10 @@
         function triggerEditCourse(item) {
             document.getElementById('editor-course-id').value = item.id || '';
             document.getElementById('editor-tajuk').value = item.tajuk || '';
+            document.getElementById('editor-bidang').value = item.bidang || 'PEMBANGUNAN DIRI DAN SAHSIAH';
             document.getElementById('editor-tarikh').value = item.tarikh || '';
+            document.getElementById('editor-tarikh-mula').value = item.tarikh_mula || '';
+            document.getElementById('editor-tarikh-tamat').value = item.tarikh_tamat || '';
             document.getElementById('editor-masa').value = item.masa || '';
             document.getElementById('editor-tempat').value = item.tempat || '';
             document.getElementById('editor-penerangan').value = item.penerangan || '';
