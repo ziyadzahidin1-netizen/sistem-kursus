@@ -147,13 +147,21 @@
             menuToggle.classList.toggle('active');
         }
 
-        function renderAdminCoursesOnly() {
+        async function renderAdminCoursesOnly() {
             const wrapper = document.getElementById('dynamic-courses-wrapper');
             let customCourses = [];
 
             try {
                 // Ambil KURSUS ADMIN SAHAJA dari localStorage
                 customCourses = JSON.parse(localStorage.getItem('custom_courses')) || [];
+
+                // TAMBAHAN MINIMA: Jika localStorage kosong (Chrome profil berbeza), cuba muat dari courses.json
+                if (customCourses.length === 0) {
+                    const response = await fetch('courses.json');
+                    if (response.ok) {
+                        customCourses = await response.json();
+                    }
+                }
             } catch(e) {
                 customCourses = [];
             }
