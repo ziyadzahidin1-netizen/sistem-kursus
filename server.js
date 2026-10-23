@@ -45,63 +45,28 @@ function getSupabase() {
     }
 }
 
+// Helper function untuk tapis hanya lajur yang wujud dalam jadual Supabase
+async function filterExistingColumns(supabase, tableName, payload) {
+    const { data, error } = await supabase.from(tableName).select('*').limit(1);
+    if (error || !data || data.length === 0) {
+        return payload;
+    }
+    const existingKeys = Object.keys(data[0]);
+    const filteredPayload = {};
+    for (const key of Object.keys(payload)) {
+        if (existingKeys.includes(key)) {
+            filteredPayload[key] = payload[key];
+        }
+    }
+    return filteredPayload;
+}
+
 // 1. ROUTE UJIAN HEALTH CHECK
 app.get('/api/health', (req, res) => {
     return res.status(200).json({ status: 'ok', message: 'API Backend Beroperasi!' });
 });
 
-// 2. API STATISTIK LIVE (JUMLAH KURSUS, BIDANG, PESERTA & PUSAT LATIHAN)
-app.get('/api/stats', async (req, res) => {
-    try {
-        const supabase = getSupabase();
-        let courses = [];
-
-        if (supabase) {
-            const { data, error } = await supabase.from('courses').select('bidang, tempat');
-            if (!error && data) {
-                courses = data;
-            }
-        }
-
-        // Kira Statistik LIVE
-        const totalKursus = courses.length;
-        
-        // Ambil bidang unik
-        const bidangSet = new Set(courses.map(c => c.bidang).filter(Boolean));
-        const totalBidang = bidangSet.size;
-
-        // Ambil lokasi / pusat latihan unik
-        const pusatSet = new Set(courses.map(c => c.tempat).filter(Boolean));
-        const totalPusat = pusatSet.size;
-
-        // Dapatkan Jumlah Peserta Live dari Google Apps Script
-        let totalPeserta = 0;
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyV9pe3TYHqXAYqQwkNRG10n96p_oz1RoYNd27X1t_T3r5nZEvoWRtACmMbwcoc98qNEw/exec';
-        
-        try {
-            const gsResponse = await fetch(GOOGLE_SCRIPT_URL);
-            if (gsResponse.ok) {
-                const gsData = await gsResponse.json();
-                if (gsData.totalPeserta !== undefined) {
-                    totalPeserta = Number(gsData.totalPeserta) || 0;
-                }
-            }
-        } catch (gsError) {
-            console.warn('Gagal mengambil totalPeserta dari Google Script:', gsError.message);
-        }
-
-        return res.status(200).json({
-            totalKursus,
-            totalBidang,
-            totalPeserta,
-            totalPusat
-        });
-    } catch (error) {
-        return res.status(500).json({ error: 'Ralat Server Stats: ' + error.message });
-    }
-});
-
-// 3. API REGISTER (Admin guna Secret Key, User biasa guna Password)
+// 2. API REGISTER (Admin guna Secret Key, User biasa guna Password)
 app.post('/api/register', async function(req, res) {
     try {
         const supabase = getSupabase();
@@ -169,7 +134,7 @@ app.post('/api/register', async function(req, res) {
     }
 });
 
-// 4. API LOGIN
+// 3. API LOGIN
 app.post('/api/login', async function(req, res) {
     try {
         const supabase = getSupabase();
@@ -233,7 +198,7 @@ app.post('/api/login', async function(req, res) {
     }
 });
 
-// 5. API PENGURUSAN KURSUS
+// 4. API PENGURUSAN KURSUS (CRUD DENGAN GAMBAR)
 app.get('/api/kursus', async (req, res) => {
     try {
         const supabase = getSupabase();
@@ -253,22 +218,17 @@ app.post('/api/kursus', async (req, res) => {
         const supabase = getSupabase();
         if (!supabase) return res.status(500).json({ error: 'Tetapan Supabase tidak dijumpai.' });
 
-        const { 
-            tajuk, tarikh, masa, tempat, penerangan, gambar_url, 
-            objektif, penyelaras_nama, penyelaras_emel, penyelaras_telefon, bidang 
-        } = req.body || {};
-
+        const { tajuk, tarikh, tempat, penerangan, gambar_url, bidang, masa, objektif, penyelaras_nama, penyelaras_emel, penyelaras_telefon } = req.body || {};
         if (!tajuk || !tarikh || !tempat || !penerangan) {
             return res.status(400).json({ error: 'Sila lengkapkan semua medan wajib!' });
         }
 
+        const rawData = { tajuk, tarikh, tempat, penerangan, gambar_url, bidang, masa, objektif, penyelaras_nama, penyelaras_emel, penyelaras_telefon };
+        const safePayload = await filterExistingColumns(supabase, 'courses', rawData);
+
         const { data, error } = await supabase
             .from('courses')
-            .insert([{ 
-                tajuk, tarikh, masa, tempat, penerangan, gambar_url, 
-                objektif, penyelaras_nama, penyelaras_emel, penyelaras_telefon, 
-                bidang: bidang || 'PEMBANGUNAN DIRI DAN SAHSIAH'
-            }]);
+            .insert([safePayload]);
 
         if (error) return res.status(500).json({ error: error.message });
         return res.status(201).json({ message: 'Kursus berjaya ditambah!', data });
@@ -283,17 +243,14 @@ app.put('/api/kursus/:id', async (req, res) => {
         if (!supabase) return res.status(500).json({ error: 'Tetapan Supabase tidak dijumpai.' });
 
         const { id } = req.params;
-        const { 
-            tajuk, tarikh, masa, tempat, penerangan, gambar_url, 
-            objektif, penyelaras_nama, penyelaras_emel, penyelaras_telefon, bidang 
-        } = req.body || {};
+        const { tajuk, tarikh, tempat, penerangan, gambar_url, bidang, masa, objektif, penyelaras_nama, penyelaras_emel, penyelaras_telefon } = req.body || {};
+
+        const rawData = { tajuk, tarikh, tempat, penerangan, gambar_url, bidang, masa, objektif, penyelaras_nama, penyelaras_emel, penyelaras_telefon };
+        const updateData = await filterExistingColumns(supabase, 'courses', rawData);
 
         const { error } = await supabase
             .from('courses')
-            .update({ 
-                tajuk, tarikh, masa, tempat, penerangan, gambar_url, 
-                objektif, penyelaras_nama, penyelaras_emel, penyelaras_telefon, bidang 
-            })
+            .update(updateData)
             .eq('id', id);
 
         if (error) return res.status(500).json({ error: error.message });
@@ -318,7 +275,7 @@ app.delete('/api/kursus/:id', async (req, res) => {
     }
 });
 
-// 6. API MOHON KURSUS
+// 5. API MOHON KURSUS (TERUS SIMPAN KE SUPABASE DATABASE)
 app.post('/api/mohon', async function(req, res) {
     try {
         const { nama, ic, email, jawatan, gred, jabatan, penyakit, pengangkutan, kursus } = req.body || {};
@@ -327,21 +284,51 @@ app.post('/api/mohon', async function(req, res) {
             return res.status(400).json({ error: 'Alamat e-mel tidak dijumpai!' });
         }
 
+        const supabase = getSupabase();
+        if (supabase) {
+            try {
+                const newRecord = {
+                    ic: String(ic).trim(),
+                    user_ic: String(ic).trim(),
+                    nama_pemohon: nama,
+                    nama: nama,
+                    email: email,
+                    nama_kursus: kursus,
+                    kursus: kursus,
+                    jawatan: jawatan,
+                    gred: gred,
+                    jabatan: jabatan,
+                    penyakit: penyakit,
+                    pengangkutan: pengangkutan,
+                    kod_kursus: 'KSR-' + Math.floor(100 + Math.random() * 900),
+                    status: 'Dalam Proses',
+                    yuran_kursus: 'RM 0.00',
+                    created_at: new Date().toISOString()
+                };
+
+                const safePayload = await filterExistingColumns(supabase, 'applications', newRecord);
+                const { error: insertErr } = await supabase.from('applications').insert([safePayload]);
+                if (insertErr) console.error("Supabase Insert Error:", insertErr.message);
+
+            } catch(dbErr) {
+                console.error("Gagal simpan ke Supabase DB:", dbErr.message);
+            }
+        }
+
+        // Hantar ke Google Sheet
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyV9pe3TYHqXAYqQwkNRG10n96p_oz1RoYNd27X1t_T3r5nZEvoWRtACmMbwcoc98qNEw/exec';
-        
         try {
-            const gsResponse = await fetch(GOOGLE_SCRIPT_URL, {
+            await fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(req.body),
                 redirect: 'follow'
             });
-            const gsResult = await gsResponse.text();
-            console.log('Maklum balas Google Sheet:', gsResult);
         } catch (gsError) {
             console.error('Google Sheets Error:', gsError.message);
         }
 
+        // Hantar E-mel Pengesahan melalui Brevo
         const htmlContent = `
             <div style="font-family: Arial, sans-serif; padding: 20px;">
                 <h2>Portal Kursus MOSTI</h2>
@@ -357,24 +344,278 @@ app.post('/api/mohon', async function(req, res) {
             htmlContent: htmlContent
         };
 
-        const brevoResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
-            method: 'POST',
-            headers: {
-                'accept': 'application/json',
-                'api-key': process.env.BREVO_API_KEY,
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(brevoPayload)
-        });
+        try {
+            await fetch('https://api.brevo.com/v3/smtp/email', {
+                method: 'POST',
+                headers: {
+                    'accept': 'application/json',
+                    'api-key': process.env.BREVO_API_KEY,
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(brevoPayload)
+            });
+        } catch(e) { console.error('Brevo Email Error:', e.message); }
 
-        if (!brevoResponse.ok) {
-            const brevoData = await brevoResponse.json();
-            throw new Error(brevoData.message || 'Gagal menghantar e-mel');
+        return res.status(200).json({ status: 'success', message: 'Permohonan diterima dan rekod telah disimpan!' });
+    } catch (error) {
+        return res.status(500).json({ error: 'Ralat Server: ' + error.message });
+    }
+});
+
+// =========================================================================
+// 6. API ADMIN: PENGURUSAN PERMOHONAN DARI PELBAGAI USER
+// =========================================================================
+
+// A. Dapatkan Semua Permohonan (Admin)
+app.get('/api/admin/applications', async (req, res) => {
+    try {
+        const supabase = getSupabase();
+        if (!supabase) return res.status(200).json([]);
+
+        const { data, error } = await supabase
+            .from('applications')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (error) return res.status(200).json([]);
+        return res.status(200).json(data || []);
+    } catch (error) {
+        return res.status(200).json([]);
+    }
+});
+
+// B. Kemaskini Status Permohonan (Approve / Reject)
+app.put('/api/admin/applications/:id/status', async (req, res) => {
+    try {
+        const supabase = getSupabase();
+        if (!supabase) return res.status(500).json({ error: 'Supabase Error' });
+
+        const { id } = req.params;
+        const { status } = req.body || {};
+
+        const { error } = await supabase
+            .from('applications')
+            .update({ status: status })
+            .eq('id', id);
+
+        if (error) return res.status(500).json({ error: error.message });
+        return res.status(200).json({ message: 'Status permohonan berjaya dikemas kini!' });
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+});
+
+// C. Padam Permohonan oleh Admin (Auto Delete)
+app.delete('/api/admin/applications/:id', async (req, res) => {
+    try {
+        const supabase = getSupabase();
+        if (!supabase) return res.status(500).json({ error: 'Supabase Error' });
+
+        const { id } = req.params;
+        const { error } = await supabase.from('applications').delete().eq('id', id);
+
+        if (error) return res.status(500).json({ error: error.message });
+        return res.status(200).json({ message: 'Permohonan berjaya dipadam!' });
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+});
+
+// =========================================================================
+// 7. API PENGURUSAN DATA PROFIL, PERKHIDMATAN, KECEMASAN & PENDIDIKAN
+// =========================================================================
+
+// A. Kemaskini Profil Peribadi
+app.put('/api/user/profile', async (req, res) => {
+    try {
+        const supabase = getSupabase();
+        if (!supabase) return res.status(500).json({ error: 'Tetapan Supabase tidak dijumpai.' });
+
+        const { ic, nama, emelRasmi, emelPeribadi, telPejabat, telBimbit, alamat1, alamat2, alamat3, poskod, bandar, negeri, gambar } = req.body || {};
+        if (!ic) return res.status(400).json({ error: 'No. MyKad diperlukan!' });
+
+        const rawData = {
+            nama,
+            email: emelRasmi,
+            email_peribadi: emelPeribadi,
+            tel_pejabat: telPejabat,
+            tel_bimbit: telBimbit,
+            alamat_1: alamat1,
+            alamat_2: alamat2,
+            alamat_3: alamat3,
+            poskod,
+            bandar,
+            negeri
+        };
+        if (gambar) rawData.gambar = gambar;
+
+        const updateData = await filterExistingColumns(supabase, 'users', rawData);
+
+        const { error } = await supabase
+            .from('users')
+            .update(updateData)
+            .eq('ic', String(ic).trim());
+
+        if (error) return res.status(500).json({ error: error.message });
+        return res.status(200).json({ message: 'Profil berjaya dikemas kini!' });
+    } catch (error) {
+        return res.status(500).json({ error: 'Ralat Server: ' + error.message });
+    }
+});
+
+// B. Kemaskini Maklumat Perkhidmatan
+app.put('/api/user/service', async (req, res) => {
+    try {
+        const supabase = getSupabase();
+        if (!supabase) return res.status(500).json({ error: 'Tetapan Supabase tidak dijumpai.' });
+
+        const { ic, jawatan, gelaranJawatan, gredSSM, gredSSPA, tarafJawatan, tarikhLantikan, kementerian, jabatan, bahagian, alamat1, alamat2, alamat3, poskod, bandar, negeri, penyeliaNama, penyeliaJawatan } = req.body || {};
+        if (!ic) return res.status(400).json({ error: 'No. MyKad diperlukan!' });
+
+        const rawData = {
+            jawatan,
+            gelaran_jawatan: gelaranJawatan,
+            gred_ssm: gredSSM,
+            gred_sspa: gredSSPA,
+            taraf_jawatan: tarafJawatan,
+            tarikh_lantikan: tarikhLantikan,
+            kementerian,
+            jabatan,
+            bahagian,
+            srv_alamat_1: alamat1,
+            srv_alamat_2: alamat2,
+            srv_alamat_3: alamat3,
+            srv_poskod: poskod,
+            srv_bandar: bandar,
+            srv_negeri: negeri,
+            penyelia_nama: penyeliaNama,
+            penyelia_jawatan: penyeliaJawatan
+        };
+
+        const updateData = await filterExistingColumns(supabase, 'users', rawData);
+
+        const { error } = await supabase
+            .from('users')
+            .update(updateData)
+            .eq('ic', String(ic).trim());
+
+        if (error) return res.status(500).json({ error: error.message });
+        return res.status(200).json({ message: 'Maklumat perkhidmatan berjaya dikemas kini!' });
+    } catch (error) {
+        return res.status(500).json({ error: 'Ralat Server: ' + error.message });
+    }
+});
+
+// C. Kemaskini Maklumat Perhitungan / Perhitungan Kecemasan
+app.put('/api/user/emergency', async (req, res) => {
+    try {
+        const supabase = getSupabase();
+        if (!supabase) return res.status(500).json({ error: 'Tetapan Supabase tidak dijumpai.' });
+
+        const { ic, nama, tel } = req.body || {};
+        if (!ic) return res.status(400).json({ error: 'No. MyKad diperlukan!' });
+
+        const rawData = {
+            kecemasan_nama: nama,
+            kecemasan_tel: tel
+        };
+
+        const updateData = await filterExistingColumns(supabase, 'users', rawData);
+
+        const { error } = await supabase
+            .from('users')
+            .update(updateData)
+            .eq('ic', String(ic).trim());
+
+        if (error) return res.status(500).json({ error: error.message });
+        return res.status(200).json({ message: 'Maklumat perhubungan kecemasan berjaya dikemas kini!' });
+    } catch (error) {
+        return res.status(500).json({ error: 'Ralat Server: ' + error.message });
+    }
+});
+
+// D. Rekod Pendidikan (Dapatkan / Tambah / Padam)
+app.get('/api/user/education/:ic', async (req, res) => {
+    try {
+        const supabase = getSupabase();
+        if (!supabase) return res.status(500).json({ error: 'Tetapan Supabase tidak dijumpai.' });
+
+        const { ic } = req.params;
+        const { data, error } = await supabase
+            .from('user_education')
+            .select('*')
+            .eq('user_ic', String(ic).trim())
+            .order('created_at', { ascending: false });
+
+        if (error) return res.status(200).json([]);
+        return res.status(200).json(data || []);
+    } catch (error) {
+        return res.status(200).json([]);
+    }
+});
+
+app.post('/api/user/education', async (req, res) => {
+    try {
+        const supabase = getSupabase();
+        if (!supabase) return res.status(500).json({ error: 'Tetapan Supabase tidak dijumpai.' });
+
+        const { ic, peringkat, institusi, bidang, tahun, keputusan } = req.body || {};
+        if (!ic || !peringkat || !institusi) {
+            return res.status(400).json({ error: 'Sila lengkapkan maklumat wajib!' });
         }
 
-        return res.status(200).json({ status: 'success', message: 'Permohonan diterima dan e-mel pengesahan telah dihantar!' });
+        const { data, error } = await supabase
+            .from('user_education')
+            .insert([{
+                user_ic: String(ic).trim(),
+                peringkat,
+                institusi,
+                bidang,
+                tahun,
+                keputusan
+            }]);
+
+        if (error) return res.status(500).json({ error: error.message });
+        return res.status(201).json({ message: 'Rekod pendidikan berjaya ditambah!', data });
     } catch (error) {
-        return res.status(500).json({ error: 'Gagal menghantar e-mel: ' + error.message });
+        return res.status(500).json({ error: 'Ralat Server: ' + error.message });
+    }
+});
+
+app.delete('/api/user/education/:id', async (req, res) => {
+    try {
+        const supabase = getSupabase();
+        if (!supabase) return res.status(500).json({ error: 'Tetapan Supabase tidak dijumpai.' });
+
+        const { id } = req.params;
+        const { error } = await supabase.from('user_education').delete().eq('id', id);
+
+        if (error) return res.status(500).json({ error: error.message });
+        return res.status(200).json({ message: 'Rekod pendidikan berjaya dipadam!' });
+    } catch (error) {
+        return res.status(500).json({ error: 'Ralat Server: ' + error.message });
+    }
+});
+
+// E. Sejarah Permohonan Kursus mengikut User (Mendapatkan rekod dari Supabase)
+app.get('/api/user/applications/:ic', async (req, res) => {
+    try {
+        const supabase = getSupabase();
+        if (!supabase) return res.status(500).json({ error: 'Tetapan Supabase tidak dijumpai.' });
+
+        const { ic } = req.params;
+        const cleanIc = String(ic).trim();
+
+        let { data, error } = await supabase
+            .from('applications')
+            .select('*')
+            .or(`ic.eq.${cleanIc},user_ic.eq.${cleanIc}`)
+            .order('created_at', { ascending: false });
+
+        if (error || !data) return res.status(200).json([]);
+        return res.status(200).json(data || []);
+    } catch (error) {
+        return res.status(200).json([]);
     }
 });
 

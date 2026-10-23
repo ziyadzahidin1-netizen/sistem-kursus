@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tukar Kata Laluan - Portal Kursus</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #f1f5f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .form-container-card {
+            max-width: 500px;
+            margin: 60px auto;
+            background: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+        .card-header-title {
+            background-color: #2563eb;
+            color: #ffffff;
+            padding: 16px 20px;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        .card-body-content {
+            padding: 25px;
+        }
+        .form-group-custom {
+            margin-bottom: 20px;
+        }
+        .form-group-custom label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+            color: #1e293b;
+        }
+        .form-input-custom {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+        }
+        .btn-change-pwd {
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-change-pwd:hover {
+            background-color: #1d4ed8;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">
+            <img src="logo.png" alt="Logo Portal" class="logo-img">
+            <span>Portal kursus</span>
+        </div>
+        <nav class="nav-links">
+            <a href="index.html" class="nav-btn"><i class="fa-solid fa-house"></i> Utama</a>
+            <a href="user_dashboard.html" class="nav-btn"><i class="fa-solid fa-user"></i> User Dashboard</a>
+        </nav>
+    </header>
+
+    <div class="form-container-card">
+        <div class="card-header-title">
+            <i class="fa-solid fa-key"></i> Tukar Kata Laluan
+        </div>
+        <div class="card-body-content">
+            <form onsubmit="handleChangePassword(event)">
+                <div class="form-group-custom">
+                    <label for="oldPwd">Kata Laluan Semasa</label>
+                    <input type="password" id="oldPwd" class="form-input-custom" required placeholder="Masukkan kata laluan semasa">
+                </div>
+                <div class="form-group-custom">
+                    <label for="newPwd">Kata Laluan Baharu</label>
+                    <input type="password" id="newPwd" class="form-input-custom" required minlength="6" placeholder="Minimum 6 aksara">
+                </div>
+                <div class="form-group-custom">
+                    <label for="confirmPwd">Sahkan Kata Laluan Baharu</label>
+                    <input type="password" id="confirmPwd" class="form-input-custom" required minlength="6" placeholder="Ulang kata laluan baharu">
+                </div>
+                <button type="submit" class="btn-change-pwd"><i class="fa-solid fa-check"></i> Kemaskini Kata Laluan</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function handleChangePassword(e) {
+            e.preventDefault();
+            const newPwd = document.getElementById('newPwd').value;
+            const confirmPwd = document.getElementById('confirmPwd').value;
+
+            if (newPwd !== confirmPwd) {
+                alert('Ralat: Kata laluan baharu dan pengesahan kata laluan tidak padan!');
+                return;
+            }
+
+            alert('Kata laluan anda berjaya dikemaskini!');
+            window.location.href = 'user_dashboard.html';
+        }
+    </script>
+</body>
+</html>

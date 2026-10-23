@@ -154,6 +154,46 @@ function setupCourseForm() {
     }
 }
 
+// ==========================================
+// 4. NAVBAR USER DROPDOWN & LOGOUT GLOBAL
+// ==========================================
+function checkAndUpdateUserNav() {
+    const navContainer = document.getElementById('user-nav-container');
+    const userData = localStorage.getItem('user') || sessionStorage.getItem('user');
+
+    if (userData && navContainer) {
+        try {
+            const user = JSON.parse(userData);
+            const userPhoto = user.gambar || 'https://via.placeholder.com/150';
+            const userName = user.nama || user.name || 'Pengguna';
+
+            navContainer.innerHTML = `
+                <div class="user-dropdown-container">
+                    <button id="userMenuBtn" onclick="toggleUserDropdown()" class="user-dropdown-btn">
+                        <img src="${userPhoto}" alt="Avatar" class="user-avatar-small" id="navUserAvatar">
+                        <span>${userName}</span>
+                        <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem;"></i>
+                    </button>
+                    <div id="userMenuDropdown" class="dropdown-menu">
+                        <a href="user_dashboard.html"><i class="fa-solid fa-id-card"></i> User Dashboard</a>
+                        <a href="tukar_kata_laluan.html"><i class="fa-solid fa-key"></i> Tukar Kata Laluan</a>
+                        <button onclick="handleLogout()" class="logout-item"><i class="fa-solid fa-right-from-bracket"></i> Log Keluar</button>
+                    </div>
+                </div>
+            `;
+        } catch(e) {
+            console.error('Ralat parse data pengguna:', e);
+        }
+    }
+}
+
+function toggleUserDropdown() {
+    const dropdown = document.getElementById('userMenuDropdown');
+    if (dropdown) {
+        dropdown.classList.toggle('show');
+    }
+}
+
 function handleLogout() {
     localStorage.removeItem('user');
     sessionStorage.removeItem('user');
@@ -161,11 +201,21 @@ function handleLogout() {
 }
 
 // ==========================================
-// 4. JALANKAN SEBAIK HALAMAN DISIAPKAN
+// 5. JALANKAN SEBAIK HALAMAN DISIAPKAN
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
     loadDashboardStats();
     setupCourseForm();
+    checkAndUpdateUserNav();
+
+    // Tutup dropdown apabila klik di luar
+    document.addEventListener('click', (e) => {
+        const dropdown = document.getElementById('userMenuDropdown');
+        const btn = document.getElementById('userMenuBtn');
+        if (dropdown && btn && !btn.contains(e.target) && !dropdown.contains(e.target)) {
+            dropdown.classList.remove('show');
+        }
+    });
 
     const mobileMenu = document.getElementById('mobile-menu');
     const navLinks = document.getElementById('nav-links');

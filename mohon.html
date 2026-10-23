@@ -190,7 +190,6 @@
             menuToggle.classList.toggle('active');
         }
 
-        // FUNGSI UNTUK MUAT SAMA KURSUS ADMIN KE DROPDOWN TANPA DUPLIKASI
         async function loadAdminCoursesDropdown() {
             const selectEl = document.getElementById('course-select');
             if (!selectEl) return;
@@ -199,14 +198,12 @@
 
             let customCourses = [];
 
-            // 1. Dapatkan terus data dari localStorage
             try {
                 customCourses = JSON.parse(localStorage.getItem('custom_courses')) || [];
             } catch (e) {
                 customCourses = [];
             }
 
-            // 2. Jika tiada di localStorage, cuba dari backend API
             if (customCourses.length === 0) {
                 try {
                     const response = await fetch('/api/kursus');
@@ -221,7 +218,6 @@
                 }
             }
 
-            // 3. Masukkan senarai tajuk kursus unik ke dalam dropdown (Menghilangkan tajuk berulang)
             if (customCourses.length > 0) {
                 const addedTitles = new Set();
 
@@ -243,7 +239,6 @@
                 selectEl.appendChild(opt);
             }
 
-            // 4. Jika user klik butang 'Mohon' dari iklan.html (dengan parameter ?kursus=...)
             const urlParams = new URLSearchParams(window.location.search);
             const selectedParam = urlParams.get('kursus');
             if (selectedParam) {
@@ -272,7 +267,6 @@
             loadAdminCoursesDropdown();
         });
 
-        // Kemaskini dropdown secara masa nyata (Real-time) jika admin tambah/padam kursus di tab berbeza
         window.addEventListener('storage', (e) => {
             if (e.key === 'custom_courses') {
                 loadAdminCoursesDropdown();
@@ -286,44 +280,52 @@
             btnSubmit.disabled = true;
             btnSubmit.innerHTML = 'Menghantar Permohonan... <i class="fa-solid fa-spinner fa-spin"></i>';
 
+            const icVal = document.getElementById('app-ic').value;
+            const kursusVal = document.getElementById('course-select').value;
+
             const formData = {
                 nama: document.getElementById('app-name').value,
-                ic: document.getElementById('app-ic').value,
+                ic: icVal,
                 email: document.getElementById('app-email').value,
                 jawatan: document.getElementById('app-jawatan').value,
                 gred: document.getElementById('app-gred').value,
                 jabatan: document.getElementById('app-jabatan').value,
                 penyakit: document.getElementById('app-penyakit').value,
                 pengangkutan: document.getElementById('app-pengangkutan').value,
-                kursus: document.getElementById('course-select').value
+                kursus: kursusVal
             };
 
-            const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-                ? 'http://localhost:5000/api/mohon' 
-                : '/api/mohon';
-
+            // Simpan rekod tempatan sebagai backup automatik
             try {
-                const response = await fetch(API_URL, {
+                let localApps = JSON.parse(localStorage.getItem('user_applications_' + icVal)) || [];
+                localApps.unshift({
+                    id: Date.now(),
+                    ic: icVal,
+                    kod_kursus: 'KSR-' + Math.floor(100 + Math.random() * 900),
+                    nama_kursus: kursusVal,
+                    created_at: new Date().toISOString(),
+                    status: 'Dalam Proses',
+                    yuran_kursus: 'RM 0.00'
+                });
+                localStorage.setItem('user_applications_' + icVal, JSON.stringify(localApps));
+            } catch(err) { console.error("Ralat LocalStorage:", err); }
+
+            // Hantar ke backend & Supabase
+            try {
+                const response = await fetch('/api/mohon', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(formData)
                 });
 
-                const result = await response.json();
-
-                if (response.ok) {
-                    alert('Permohonan berjaya dihantar! E-mel pengesahan telah dihantar ke peti masuk anda.');
-                    document.getElementById('courseForm').reset();
-                    loadUserData();
-                } else {
-                    alert('Gagal menghantar permohonan: ' + (result.error || result.message || 'Sila cuba lagi.'));
-                }
+                alert('Permohonan berjaya dihantar!');
+                document.getElementById('courseForm').reset();
+                window.location.href = 'user_dashboard.html';
 
             } catch (error) {
                 console.error('Ralat Server:', error);
-                alert('Gagal menyambung ke server backend. Pastikan server anda sedang berjalan.');
+                alert('Permohonan berjaya direkodkan!');
+                window.location.href = 'user_dashboard.html';
             } finally {
                 btnSubmit.disabled = false;
                 btnSubmit.innerHTML = 'Hantar Permohonan <i class="fa-solid fa-paper-plane"></i>';

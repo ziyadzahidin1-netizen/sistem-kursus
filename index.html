@@ -212,6 +212,127 @@
             background-color: #1d4ed8;
         }
 
+        /* GAYA USER DROPDOWN MENU */
+        .user-dropdown-container {
+            position: relative;
+            display: inline-block;
+        }
+        .user-dropdown-btn {
+            background: transparent;
+            color: #ffffff;
+            border: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: background 0.2s ease;
+        }
+        .user-dropdown-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        .user-avatar-small {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ffffff;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            margin-top: 8px;
+            background-color: #ffffff;
+            min-width: 200px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            overflow: hidden;
+            z-index: 1000;
+            border: 1px solid #e2e8f0;
+        }
+        .dropdown-menu.show {
+            display: block;
+        }
+        .dropdown-menu a, .dropdown-menu button {
+            color: #1e293b;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            width: 100%;
+            box-sizing: border-box;
+            border: none;
+            background: none;
+            text-align: left;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .dropdown-menu a:hover, .dropdown-menu button:hover {
+            background-color: #f1f5f9;
+        }
+        .dropdown-menu .logout-item {
+            color: #ef4444;
+            border-top: 1px solid #e2e8f0;
+        }
+        .dropdown-menu .logout-item:hover {
+            background-color: #fef2f2;
+        }
+
+        /* GAYA JADUAL PENGURUSAN PERMOHONAN ADMIN */
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+        .admin-table th {
+            background-color: #0d2838;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        .admin-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+        }
+        .btn-approve {
+            background-color: #22c55e;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+        .btn-reject {
+            background-color: #f59e0b;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+        .btn-delete-app {
+            background-color: #ef4444;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
         @media screen and (max-width: 768px) {
             .navbar {
                 padding: 14px 18px !important;
@@ -377,6 +498,37 @@
             <span>Tatal Ke Bawah Untuk Profil Syarikat</span>
             <i class="fa-solid fa-chevron-down"></i>
         </a>
+    </section>
+
+    <!-- BAHAGIAN BARU: PENGURUSAN PERMOHONAN KHAS UNTUK ADMIN -->
+    <section id="admin-applications-section" class="content-section" style="display: none; background-color: #f8fafc;">
+        <div class="container">
+            <div class="admin-editor-panel" style="border-color: #dc2626;">
+                <div class="admin-editor-header">
+                    <h3><i class="fa-solid fa-users-gear"></i> Sejarah Permohonan Dari Pelbagai User</h3>
+                    <span class="admin-badge"><i class="fa-solid fa-user-shield"></i> Akses Admin</span>
+                </div>
+                <p style="font-size: 0.9rem; color: #475569; margin-bottom: 15px;">Admin boleh meluluskan (Approve), menolak (Reject) atau memadam permohonan. Sebarang perubahan akan dikemaskini secara automatik pada Dashboard User.</p>
+                
+                <div style="overflow-x: auto;">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Bil</th>
+                                <th>Nama Pemohon & IC</th>
+                                <th>Nama Kursus</th>
+                                <th>Tarikh Mohon</th>
+                                <th>Status Semasa</th>
+                                <th>Tindakan Admin</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminApplicationsTableBody">
+                            <!-- Data Permohonan Dimuatkan Secara Dinamik -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- CARIAN KURSUS -->
@@ -660,27 +812,153 @@
             if (typeof loadDashboardStats === 'function') {
                 loadDashboardStats();
             }
+
+            // Tutup dropdown apabila klik di luar
+            document.addEventListener('click', (e) => {
+                const dropdown = document.getElementById('userMenuDropdown');
+                const btn = document.getElementById('userMenuBtn');
+                if (dropdown && btn && !btn.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.classList.remove('show');
+                }
+            });
         });
 
+        // FUNGSI KEMASKINI NAVBAR DENGAN DROPDOWN PENGGUNA
         function setupNavbar() {
             const navContainer = document.getElementById('user-nav-container');
             if (currentUser && navContainer) {
+                const userPhoto = currentUser.gambar || 'https://via.placeholder.com/150';
+                const userName = currentUser.nama || 'Pengguna';
+
                 navContainer.innerHTML = `
-                    <span style="color:#fff; margin-right:10px; font-weight:600;"><i class="fa-solid fa-user"></i> ${currentUser.nama} (${currentUser.role.toUpperCase()})</span>
-                    <button onclick="handleLogout()" class="nav-btn btn-apply" style="background:#ef4444; border:none; cursor:pointer;"><i class="fa-solid fa-right-from-bracket"></i> Log Keluar</button>
+                    <div class="user-dropdown-container">
+                        <button id="userMenuBtn" onclick="toggleUserDropdown()" class="user-dropdown-btn">
+                            <img src="${userPhoto}" alt="Avatar" class="user-avatar-small" id="navUserAvatar">
+                            <span>${userName}</span>
+                            <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem;"></i>
+                        </button>
+                        <div id="userMenuDropdown" class="dropdown-menu">
+                            <a href="user_dashboard.html"><i class="fa-solid fa-id-card"></i> User Dashboard</a>
+                            <a href="tukar_kata_laluan.html"><i class="fa-solid fa-key"></i> Tukar Kata Laluan</a>
+                            <button onclick="handleLogout()" class="logout-item"><i class="fa-solid fa-right-from-bracket"></i> Log Keluar</button>
+                        </div>
+                    </div>
                 `;
             }
         }
 
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userMenuDropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('show');
+            }
+        }
+
+        function handleLogout() {
+            sessionStorage.removeItem('user');
+            localStorage.removeItem('user');
+            window.location.href = 'login.html';
+        }
+
         function checkAdminMode() {
             const adminSection = document.getElementById('admin-editor-section');
-            if (adminSection) {
-                if (currentUser && currentUser.role === 'admin') {
-                    adminSection.style.display = 'block';
-                } else {
-                    adminSection.style.display = 'none';
-                }
+            const adminAppSection = document.getElementById('admin-applications-section');
+            if (currentUser && currentUser.role === 'admin') {
+                if (adminSection) adminSection.style.display = 'block';
+                if (adminAppSection) adminAppSection.style.display = 'block';
+                loadAllUserApplicationsForAdmin();
+            } else {
+                if (adminSection) adminSection.style.display = 'none';
+                if (adminAppSection) adminAppSection.style.display = 'none';
             }
+        }
+
+        // MEMUATKAN PERMOHONAN SEMUA USER UNTUK ADMIN
+        async function loadAllUserApplicationsForAdmin() {
+            const tbody = document.getElementById('adminApplicationsTableBody');
+            if (!tbody) return;
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Memuatkan data permohonan...</td></tr>';
+
+            let appList = [];
+            try {
+                const res = await fetch('/api/admin/applications');
+                if (res.ok) {
+                    appList = await res.json();
+                }
+            } catch (err) { console.error(err); }
+
+            tbody.innerHTML = '';
+            if (appList.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px; color:#64748b;">Tiada permohonan dari pengguna setakat ini.</td></tr>';
+                return;
+            }
+
+            appList.forEach((item, index) => {
+                let statusBadge = item.status === 'Berjaya' || item.status === 'Lulus' ? 
+                    '<span style="background-color:#22c55e; color:white; padding:4px 8px; border-radius:4px; font-weight:700;">Lulus (Approved)</span>' : 
+                    (item.status === 'Tidak Berjaya' ? '<span style="background-color:#ef4444; color:white; padding:4px 8px; border-radius:4px; font-weight:700;">Tidak Lulus</span>' : 
+                    '<span style="background-color:#f59e0b; color:white; padding:4px 8px; border-radius:4px; font-weight:700;">Dalam Proses</span>');
+
+                let formattedDate = item.created_at ? new Date(item.created_at).toLocaleDateString('ms-MY') : '-';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td><strong>${item.nama_pemohon || item.nama || '-'}</strong><br><small style="color:#64748b;">IC: ${item.ic || item.user_ic || '-'}</small></td>
+                    <td><strong style="color:#0284c7;">${item.kod_kursus || ''}</strong> ${item.nama_kursus || item.kursus || ''}</td>
+                    <td>${formattedDate}</td>
+                    <td>${statusBadge}</td>
+                    <td>
+                        <button class="btn-approve" onclick="updateAppStatus('${item.id}', '${item.ic}', 'Berjaya')"><i class="fa-solid fa-check"></i> Lulus</button>
+                        <button class="btn-reject" onclick="updateAppStatus('${item.id}', '${item.ic}', 'Tidak Berjaya')"><i class="fa-solid fa-xmark"></i> Tolak</button>
+                        <button class="btn-delete-app" onclick="deleteUserApp('${item.id}', '${item.ic}')"><i class="fa-solid fa-trash"></i> Padam</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // TUKAR STATUS (APPROVE / REJECT) BY ADMIN
+        async function updateAppStatus(id, ic, newStatus) {
+            try {
+                await fetch(`/api/admin/applications/${id}/status`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: newStatus })
+                });
+
+                if (ic) {
+                    let localApps = JSON.parse(localStorage.getItem('user_applications_' + ic)) || [];
+                    localApps = localApps.map(app => {
+                        if (String(app.id) === String(id) || app.nama_kursus) {
+                            app.status = newStatus;
+                        }
+                        return app;
+                    });
+                    localStorage.setItem('user_applications_' + ic, JSON.stringify(localApps));
+                }
+
+                alert('Status permohonan berjaya ditukar kepada ' + newStatus + '!');
+                loadAllUserApplicationsForAdmin();
+            } catch (err) { alert('Ralat: ' + err.message); }
+        }
+
+        // PADAM PERMOHONAN BY ADMIN (AUTO DELETE DI DASHBOARD USER JUGA)
+        async function deleteUserApp(id, ic) {
+            if (!confirm('Adakah anda pasti mahu memadam permohonan ini? Permohonan ini juga akan terpadam dari dashboard pengguna.')) return;
+
+            try {
+                await fetch(`/api/admin/applications/${id}`, { method: 'DELETE' });
+
+                if (ic) {
+                    let localApps = JSON.parse(localStorage.getItem('user_applications_' + ic)) || [];
+                    localApps = localApps.filter(app => String(app.id) !== String(id));
+                    localStorage.setItem('user_applications_' + ic, JSON.stringify(localApps));
+                }
+
+                alert('Permohonan berjaya dipadam secara menyeluruh!');
+                loadAllUserApplicationsForAdmin();
+            } catch (err) { alert('Ralat: ' + err.message); }
         }
 
         function autoFormatDateText() {
@@ -741,7 +1019,6 @@
             localStorage.setItem('custom_courses', JSON.stringify(courses));
         }
 
-        // FUNGSI DIKEMAS KINI: Menghadkan paparan hanya 3 KAD SAHAJA
         function renderCoursesToUI(coursesList) {
             const container = document.getElementById('courses-container');
             if (!container) return;
@@ -757,7 +1034,6 @@
                 return;
             }
 
-            // HANYA AMBIL 3 KURSUS PERTAMA/TERKINI
             const displayCourses = coursesList.slice(0, 3);
 
             displayCourses.forEach((item) => {
