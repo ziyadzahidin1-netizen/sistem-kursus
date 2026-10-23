@@ -1225,32 +1225,68 @@
             document.getElementById('admin-editor-section').scrollIntoView({ behavior: 'smooth' });
         }
 
-        async function handleDeleteCourse(id) {
-            if (!confirm('Adakah anda pasti mahu memadam kursus ini?')) return;
+        async function handleAdminSaveCourse(e) {
+    e.preventDefault();
+    const id = document.getElementById('editor-course-id').value;
+    const tajuk = document.getElementById('editor-tajuk').value.trim();
+    const bidang = document.getElementById('editor-bidang').value;
+    const tarikh = document.getElementById('editor-tarikh').value.trim();
+    const dateMulaVal = document.getElementById('editor-tarikh-mula').value;
+    const dateTamatVal = document.getElementById('editor-tarikh-tamat').value;
+    const masa = document.getElementById('editor-masa').value.trim();
+    const tempat = document.getElementById('editor-tempat').value.trim();
+    const penerangan = document.getElementById('editor-penerangan').value.trim();
+    const objektif = document.getElementById('editor-objektif').value.trim();
+    const penyelaras_nama = document.getElementById('editor-penyelaras-nama').value.trim();
+    const penyelaras_emel = document.getElementById('editor-penyelaras-emel').value.trim();
+    const penyelaras_telefon = document.getElementById('editor-penyelaras-telefon').value.trim();
+    const urlImgInput = document.getElementById('editor-gambar-url').value.trim();
 
-            if (id && !id.startsWith('custom-')) {
-                try {
-                    await fetch(`/api/kursus/${id}`, { method: 'DELETE' });
-                } catch (e) {
-                    console.warn('Gagal memadam dari server API:', e);
-                }
-            }
+    const finalGambarUrl = base64ImageString || urlImgInput || 'logo.png';
 
-            alert('Kursus berjaya dipadam!');
+    const payloadData = {
+        tajuk, 
+        bidang: bidang || "PEMBANGUNAN DIRI DAN SAHSIAH",
+        tarikh, 
+        tarikh_mula: dateMulaVal,
+        tarikh_tamat: dateTamatVal,
+        masa, 
+        tempat, 
+        penerangan, 
+        objektif,
+        penyelaras_nama, 
+        penyelaras_emel, 
+        penyelaras_telefon,
+        gambar_url: finalGambarUrl
+    };
+
+    try {
+        const method = id && !id.startsWith('custom-') ? 'PUT' : 'POST';
+        const url = id && !id.startsWith('custom-') ? `/api/kursus/${id}` : '/api/kursus';
+        const res = await fetch(url, {
+            method: method,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payloadData)
+        });
+
+        const result = await res.json();
+
+        if (res.ok) {
+            alert(id ? 'Kursus berjaya dikemas kini di server!' : 'Kursus baru berjaya ditambah ke server!');
+            resetEditorForm();
             await loadAdminCoursesOnly();
-
-            if (typeof loadDashboardStats === 'function') {
-                loadDashboardStats();
-            }
+        } else {
+            alert('Gagal menyimpan ke server: ' + (result.error || 'Ralat tidak diketahui.'));
         }
+    } catch (err) {
+        console.error('API Backend Ralat:', err);
+        alert('Gagal menyambung ke server backend anda.');
+    }
 
-        function resetEditorForm() {
-            document.getElementById('editor-course-id').value = '';
-            document.getElementById('admin-course-form').reset();
-            document.getElementById('img-preview').style.display = 'none';
-            base64ImageString = "";
-            document.getElementById('btn-save-editor').innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Kursus';
-        }
+    if (typeof loadDashboardStats === 'function') {
+        loadDashboardStats();
+    }
+}
     </script>
 </body>
 </html>

@@ -21,6 +21,30 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 // Sajikan fail statik HTML/CSS/JS dari folder semasa
 app.use(express.static(path.join(__dirname)));
 
+// =========================================================================
+// SOKONGAN REALTIME SSE (SERVER-SENT EVENTS) UNTUK AUTO-UPDATE LIVE
+// =========================================================================
+let clients = [];
+
+app.get('/api/events', (req, res) => {
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+    res.flushHeaders();
+
+    clients.push(res);
+
+    req.on('close', () => {
+        clients = clients.filter(client => client !== res);
+    });
+});
+
+function broadcastUpdate(type, data) {
+    clients.forEach(client => {
+        client.write(`data: ${JSON.stringify({ type, data })}\n\n`);
+    });
+}
+
 // Helper untuk dapatkan Supabase Client dengan selamat tanpa crash
 function getSupabase() {
     const supabaseUrl = process.env.SUPABASE_URL;
@@ -228,9 +252,14 @@ app.post('/api/kursus', async (req, res) => {
 
         const { data, error } = await supabase
             .from('courses')
-            .insert([safePayload]);
+            .insert([safePayload])
+            .select();
 
         if (error) return res.status(500).json({ error: error.message });
+
+        // Siarkan kemaskini Live ke semua pelayar
+        broadcastUpdate('COURSE_UPDATED', data);
+
         return res.status(201).json({ message: 'Kursus berjaya ditambah!', data });
     } catch (error) {
         return res.status(500).json({ error: 'Ralat Server: ' + error.message });
@@ -254,6 +283,10 @@ app.put('/api/kursus/:id', async (req, res) => {
             .eq('id', id);
 
         if (error) return res.status(500).json({ error: error.message });
+
+        // Siarkan kemaskini Live ke semua pelayar
+        broadcastUpdate('COURSE_UPDATED', updateData);
+
         return res.status(200).json({ message: 'Kursus berjaya dikemas kini!' });
     } catch (error) {
         return res.status(500).json({ error: 'Ralat Server: ' + error.message });
@@ -269,6 +302,10 @@ app.delete('/api/kursus/:id', async (req, res) => {
         const { error } = await supabase.from('courses').delete().eq('id', id);
 
         if (error) return res.status(500).json({ error: error.message });
+
+        // Siarkan kemaskini Live ke semua pelayar
+        broadcastUpdate('COURSE_UPDATED', { id });
+
         return res.status(200).json({ message: 'Kursus berjaya dipadam!' });
     } catch (error) {
         return res.status(500).json({ error: 'Ralat Server: ' + error.message });
@@ -356,6 +393,9 @@ app.post('/api/mohon', async function(req, res) {
             });
         } catch(e) { console.error('Brevo Email Error:', e.message); }
 
+        // Siarkan kemaskini permohonan ke admin secara live
+        broadcastUpdate('APPLICATION_UPDATED', {});
+
         return res.status(200).json({ status: 'success', message: 'Permohonan diterima dan rekod telah disimpan!' });
     } catch (error) {
         return res.status(500).json({ error: 'Ralat Server: ' + error.message });
@@ -399,6 +439,9 @@ app.put('/api/admin/applications/:id/status', async (req, res) => {
             .eq('id', id);
 
         if (error) return res.status(500).json({ error: error.message });
+
+        broadcastUpdate('APPLICATION_UPDATED', { id, status });
+
         return res.status(200).json({ message: 'Status permohonan berjaya dikemas kini!' });
     } catch (error) {
         return res.status(500).json({ error: error.message });
@@ -415,6 +458,9 @@ app.delete('/api/admin/applications/:id', async (req, res) => {
         const { error } = await supabase.from('applications').delete().eq('id', id);
 
         if (error) return res.status(500).json({ error: error.message });
+
+        broadcastUpdate('APPLICATION_UPDATED', { id });
+
         return res.status(200).json({ message: 'Permohonan berjaya dipadam!' });
     } catch (error) {
         return res.status(500).json({ error: error.message });

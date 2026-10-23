@@ -201,24 +201,30 @@ function handleLogout() {
 }
 
 // ==========================================
-// 5. AUTO-CHECKING / POLLING RENTAS PELAYAR
+// 5. REALTIME LISTENER (SERVER-SENT EVENTS)
 // ==========================================
-function startAutoChecking() {
-    // Menyemak semula pangkalan data dari server setiap 5 saat (5000 ms)
-    setInterval(() => {
-        // Jika di halaman Utama (index.html)
-        if (typeof loadAdminCoursesOnly === 'function') {
-            loadAdminCoursesOnly();
-        }
+function initRealtimeListener() {
+    if (!!window.EventSource) {
+        const eventSource = new EventSource('/api/events');
 
-        // Jika di halaman Iklan (iklan.html)
-        if (typeof renderAdminCoursesOnly === 'function') {
-            renderAdminCoursesOnly();
-        }
+        eventSource.onmessage = function(e) {
+            const data = JSON.parse(e.data);
 
-        // Kemaskini statistik live
-        loadDashboardStats();
-    }, 5000);
+            if (data.type === 'COURSE_UPDATED') {
+                if (typeof loadAdminCoursesOnly === 'function') loadAdminCoursesOnly();
+                if (typeof renderAdminCoursesOnly === 'function') renderAdminCoursesOnly();
+                loadDashboardStats();
+            }
+
+            if (data.type === 'APPLICATION_UPDATED') {
+                if (typeof loadAllUserApplicationsForAdmin === 'function') loadAllUserApplicationsForAdmin();
+            }
+        };
+
+        eventSource.onerror = function(err) {
+            console.warn("Ralat sambungan live SSE:", err);
+        };
+    }
 }
 
 // ==========================================
@@ -229,8 +235,8 @@ document.addEventListener('DOMContentLoaded', () => {
     setupCourseForm();
     checkAndUpdateUserNav();
     
-    // Mulakan semakan automatik (Auto-checking)
-    startAutoChecking();
+    // Mulakan Realtime Listener untuk ganti Polling
+    initRealtimeListener();
 
     // Tutup dropdown apabila klik di luar
     document.addEventListener('click', (e) => {
