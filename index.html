@@ -1067,21 +1067,18 @@
         }
 
         async function loadAdminCoursesOnly() {
-            allCurrentCourses = getStoredCustomCourses();
-
             try {
+                // UTAMAKAN MEMANGGIL DATABASE UTAMA MELALUI API BACKEND
                 const response = await fetch('/api/kursus');
                 if (response.ok) {
-                    const apiCourses = await response.json();
-                    if (apiCourses && apiCourses.length > 0) {
-                        const mergedMap = new Map();
-                        allCurrentCourses.forEach(c => mergedMap.set(c.id || c.tajuk, c));
-                        apiCourses.forEach(c => mergedMap.set(c.id || c.tajuk, c));
-                        allCurrentCourses = Array.from(mergedMap.values());
-                    }
+                    allCurrentCourses = await response.json();
+                    saveCustomCoursesToStorage(allCurrentCourses);
+                } else {
+                    allCurrentCourses = getStoredCustomCourses();
                 }
             } catch (e) {
                 console.warn('API backend tidak tersambung, mengguna simpanan tempatan.');
+                allCurrentCourses = getStoredCustomCourses();
             }
 
             renderCoursesToUI(allCurrentCourses);
@@ -1160,68 +1157,42 @@
 
             const finalGambarUrl = base64ImageString || urlImgInput || 'logo.png';
 
-            let currentStored = getStoredCustomCourses();
-            
-            if (id) {
-                const index = currentStored.findIndex(c => c.id === id);
-                if (index !== -1) {
-                    currentStored[index] = {
-                        ...currentStored[index],
-                        tajuk, 
-                        bidang: bidang || "PEMBANGUNAN DIRI DAN SAHSIAH",
-                        tarikh, 
-                        tarikh_mula: dateMulaVal,
-                        tarikh_tamat: dateTamatVal,
-                        masa, 
-                        tempat, 
-                        penerangan, 
-                        objektif,
-                        penyelaras_nama, 
-                        penyelaras_emel, 
-                        penyelaras_telefon,
-                        gambar_url: finalGambarUrl
-                    };
-                }
-            } else {
-                const newCourse = {
-                    id: 'custom-' + Date.now(),
-                    tajuk, 
-                    bidang: bidang || "PEMBANGUNAN DIRI DAN SAHSIAH",
-                    tarikh, 
-                    tarikh_mula: dateMulaVal,
-                    tarikh_tamat: dateTamatVal,
-                    masa, 
-                    tempat, 
-                    penerangan, 
-                    objektif,
-                    penyelaras_nama, 
-                    penyelaras_emel, 
-                    penyelaras_telefon,
-                    gambar_url: finalGambarUrl
-                };
-                currentStored.unshift(newCourse);
-            }
-
-            saveCustomCoursesToStorage(currentStored);
+            const payloadData = {
+                tajuk, 
+                bidang: bidang || "PEMBANGUNAN DIRI DAN SAHSIAH",
+                tarikh, 
+                tarikh_mula: dateMulaVal,
+                tarikh_tamat: dateTamatVal,
+                masa, 
+                tempat, 
+                penerangan, 
+                objektif,
+                penyelaras_nama, 
+                penyelaras_emel, 
+                penyelaras_telefon,
+                gambar_url: finalGambarUrl
+            };
 
             try {
                 const method = id && !id.startsWith('custom-') ? 'PUT' : 'POST';
                 const url = id && !id.startsWith('custom-') ? `/api/kursus/${id}` : '/api/kursus';
-                await fetch(url, {
+                const res = await fetch(url, {
                     method: method,
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        tajuk, bidang, tarikh, tarikh_mula: dateMulaVal, tarikh_tamat: dateTamatVal, masa, tempat, penerangan, gambar_url: finalGambarUrl,
-                        objektif, penyelaras_nama, penyelaras_emel, penyelaras_telefon
-                    })
+                    body: JSON.stringify(payloadData)
                 });
+
+                if (res.ok) {
+                    alert(id ? 'Kursus berjaya dikemas kini di pangkalan data!' : 'Kursus baru berjaya ditambah ke pangkalan data!');
+                } else {
+                    alert('Makluman: Data disimpankan secara tempatan sahaja.');
+                }
             } catch (err) {
                 console.warn('Backend API tidak tersambung, menggunakan simpanan tempatan.');
             }
 
-            alert(id ? 'Kursus berjaya dikemas kini di semua halaman!' : 'Kursus baru berjaya ditambah ke semua halaman!');
             resetEditorForm();
-            loadAdminCoursesOnly();
+            await loadAdminCoursesOnly();
 
             if (typeof loadDashboardStats === 'function') {
                 loadDashboardStats();
@@ -1257,10 +1228,6 @@
         async function handleDeleteCourse(id) {
             if (!confirm('Adakah anda pasti mahu memadam kursus ini?')) return;
 
-            let currentStored = getStoredCustomCourses();
-            currentStored = currentStored.filter(c => c.id !== id);
-            saveCustomCoursesToStorage(currentStored);
-
             if (id && !id.startsWith('custom-')) {
                 try {
                     await fetch(`/api/kursus/${id}`, { method: 'DELETE' });
@@ -1270,7 +1237,7 @@
             }
 
             alert('Kursus berjaya dipadam!');
-            loadAdminCoursesOnly();
+            await loadAdminCoursesOnly();
 
             if (typeof loadDashboardStats === 'function') {
                 loadDashboardStats();

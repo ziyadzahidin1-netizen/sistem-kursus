@@ -201,12 +201,36 @@ function handleLogout() {
 }
 
 // ==========================================
-// 5. JALANKAN SEBAIK HALAMAN DISIAPKAN
+// 5. AUTO-CHECKING / POLLING RENTAS PELAYAR
+// ==========================================
+function startAutoChecking() {
+    // Menyemak semula pangkalan data dari server setiap 5 saat (5000 ms)
+    setInterval(() => {
+        // Jika di halaman Utama (index.html)
+        if (typeof loadAdminCoursesOnly === 'function') {
+            loadAdminCoursesOnly();
+        }
+
+        // Jika di halaman Iklan (iklan.html)
+        if (typeof renderAdminCoursesOnly === 'function') {
+            renderAdminCoursesOnly();
+        }
+
+        // Kemaskini statistik live
+        loadDashboardStats();
+    }, 5000);
+}
+
+// ==========================================
+// 6. JALANKAN SEBAIK HALAMAN DISIAPKAN
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
     loadDashboardStats();
     setupCourseForm();
     checkAndUpdateUserNav();
+    
+    // Mulakan semakan automatik (Auto-checking)
+    startAutoChecking();
 
     // Tutup dropdown apabila klik di luar
     document.addEventListener('click', (e) => {

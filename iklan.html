@@ -152,18 +152,16 @@
             let customCourses = [];
 
             try {
-                // Ambil KURSUS ADMIN SAHAJA dari localStorage
-                customCourses = JSON.parse(localStorage.getItem('custom_courses')) || [];
-
-                // TAMBAHAN MINIMA: Jika localStorage kosong (Chrome profil berbeza), cuba muat dari courses.json
-                if (customCourses.length === 0) {
-                    const response = await fetch('courses.json');
-                    if (response.ok) {
-                        customCourses = await response.json();
-                    }
+                // 1. UTAMAKAN MENGAMBIL DATA KURSUS DARIPADA BACKEND API (DATABASE)
+                const response = await fetch('/api/kursus');
+                if (response.ok) {
+                    customCourses = await response.json();
+                } else {
+                    customCourses = JSON.parse(localStorage.getItem('custom_courses')) || [];
                 }
             } catch(e) {
-                customCourses = [];
+                // Fallback ke localStorage sekiranya tiada sambungan
+                customCourses = JSON.parse(localStorage.getItem('custom_courses')) || [];
             }
 
             // Membaca parameter carian sekiranya dihantar melalui halaman utama
@@ -185,7 +183,7 @@
             }
 
             // Jika tiada kursus yang ditambah oleh admin / ditemui
-            if (customCourses.length === 0) {
+            if (!customCourses || customCourses.length === 0) {
                 wrapper.innerHTML = `
                     <div style="width: 100%; text-align: center; padding: 50px 20px; color: #64748b;">
                         <i class="fa-solid fa-folder-open" style="font-size: 3rem; margin-bottom: 15px; color: #cbd5e1;"></i>
