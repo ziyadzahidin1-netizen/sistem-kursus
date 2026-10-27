@@ -21,30 +21,6 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 // Sajikan fail statik HTML/CSS/JS dari folder semasa
 app.use(express.static(path.join(__dirname)));
 
-// =========================================================================
-// SOKONGAN REALTIME SSE (SERVER-SENT EVENTS) UNTUK AUTO-UPDATE LIVE
-// =========================================================================
-let clients = [];
-
-app.get('/api/events', (req, res) => {
-    res.setHeader('Content-Type', 'text/event-stream');
-    res.setHeader('Cache-Control', 'no-cache');
-    res.setHeader('Connection', 'keep-alive');
-    res.flushHeaders();
-
-    clients.push(res);
-
-    req.on('close', () => {
-        clients = clients.filter(client => client !== res);
-    });
-});
-
-function broadcastUpdate(type, data) {
-    clients.forEach(client => {
-        client.write(`data: ${JSON.stringify({ type, data })}\n\n`);
-    });
-}
-
 // Helper untuk dapatkan Supabase Client dengan selamat tanpa crash
 function getSupabase() {
     const supabaseUrl = process.env.SUPABASE_URL;
@@ -69,20 +45,57 @@ function getSupabase() {
     }
 }
 
-// Helper function untuk tapis hanya lajur yang wujud dalam jadual Supabase
+// Helper function yang diperbaiki untuk menapis lajur yang tidak wujud dengan selamat
 async function filterExistingColumns(supabase, tableName, payload) {
-    const { data, error } = await supabase.from(tableName).select('*').limit(1);
-    if (error || !data || data.length === 0) {
+    try {
+        const { data, error } = await supabase.from(tableName).select('*').limit(1);
+        
+        if (error || !data || data.length === 0) {
+            return payload;
+        }
+
+        const existingKeys = Object.keys(data[0]);
+        const filteredPayload = {};
+        for (const key of Object.keys(payload)) {
+            if (existingKeys.includes(key)) {
+                filteredPayload[key] = payload[key];
+            }
+        }
+        return filteredPayload;
+    } catch (e) {
+        console.warn("Ralat penapisan lajur:", e.message);
         return payload;
     }
-    const existingKeys = Object.keys(data[0]);
-    const filteredPayload = {};
-    for (const key of Object.keys(payload)) {
-        if (existingKeys.includes(key)) {
-            filteredPayload[key] = payload[key];
+}
+
+// =========================================================================
+// REALTIME SSE (SERVER-SENT EVENTS) BROADCASTER
+// =========================================================================
+let sseClients = [];
+
+app.get('/api/events', (req, res) => {
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+    res.flushHeaders();
+
+    // Simpan sambungan klien
+    sseClients.push(res);
+
+    // Buang klien dari senarai apabila peranti/pelayar ditutup
+    req.on('close', () => {
+        sseClients = sseClients.filter(client => client !== res);
+    });
+});
+
+function broadcastEvent(data) {
+    sseClients.forEach(client => {
+        try {
+            client.write(`data: ${JSON.stringify(data)}\n\n`);
+        } catch (err) {
+            console.error("Gagal hantar SSE:", err);
         }
-    }
-    return filteredPayload;
+    });
 }
 
 // 1. ROUTE UJIAN HEALTH CHECK
@@ -222,7 +235,7 @@ app.post('/api/login', async function(req, res) {
     }
 });
 
-// 4. API PENGURUSAN KURSUS (CRUD DENGAN GAMBAR)
+// 4. API PENGURUSAN KURSUS (CRUD DENGAN GAMBAR + REALTIME BROADCAST)
 app.get('/api/kursus', async (req, res) => {
     try {
         const supabase = getSupabase();
@@ -252,13 +265,12 @@ app.post('/api/kursus', async (req, res) => {
 
         const { data, error } = await supabase
             .from('courses')
-            .insert([safePayload])
-            .select();
+            .insert([safePayload]);
 
         if (error) return res.status(500).json({ error: error.message });
 
-        // Siarkan kemaskini Live ke semua pelayar
-        broadcastUpdate('COURSE_UPDATED', data);
+        // Pancarkan notifikasi kemaskini kepada SEMUA pelayar yang dibuka
+        broadcastEvent({ type: 'COURSE_UPDATED' });
 
         return res.status(201).json({ message: 'Kursus berjaya ditambah!', data });
     } catch (error) {
@@ -284,8 +296,8 @@ app.put('/api/kursus/:id', async (req, res) => {
 
         if (error) return res.status(500).json({ error: error.message });
 
-        // Siarkan kemaskini Live ke semua pelayar
-        broadcastUpdate('COURSE_UPDATED', updateData);
+        // Pancarkan acara ke pelayar lain
+        broadcastEvent({ type: 'COURSE_UPDATED' });
 
         return res.status(200).json({ message: 'Kursus berjaya dikemas kini!' });
     } catch (error) {
@@ -303,8 +315,8 @@ app.delete('/api/kursus/:id', async (req, res) => {
 
         if (error) return res.status(500).json({ error: error.message });
 
-        // Siarkan kemaskini Live ke semua pelayar
-        broadcastUpdate('COURSE_UPDATED', { id });
+        // Pancarkan acara ke pelayar lain
+        broadcastEvent({ type: 'COURSE_UPDATED' });
 
         return res.status(200).json({ message: 'Kursus berjaya dipadam!' });
     } catch (error) {
@@ -346,6 +358,9 @@ app.post('/api/mohon', async function(req, res) {
                 const safePayload = await filterExistingColumns(supabase, 'applications', newRecord);
                 const { error: insertErr } = await supabase.from('applications').insert([safePayload]);
                 if (insertErr) console.error("Supabase Insert Error:", insertErr.message);
+
+                // Pancarkan notifikasi permohonan baru untuk peranti Admin
+                broadcastEvent({ type: 'APPLICATION_UPDATED' });
 
             } catch(dbErr) {
                 console.error("Gagal simpan ke Supabase DB:", dbErr.message);
@@ -393,9 +408,6 @@ app.post('/api/mohon', async function(req, res) {
             });
         } catch(e) { console.error('Brevo Email Error:', e.message); }
 
-        // Siarkan kemaskini permohonan ke admin secara live
-        broadcastUpdate('APPLICATION_UPDATED', {});
-
         return res.status(200).json({ status: 'success', message: 'Permohonan diterima dan rekod telah disimpan!' });
     } catch (error) {
         return res.status(500).json({ error: 'Ralat Server: ' + error.message });
@@ -440,7 +452,7 @@ app.put('/api/admin/applications/:id/status', async (req, res) => {
 
         if (error) return res.status(500).json({ error: error.message });
 
-        broadcastUpdate('APPLICATION_UPDATED', { id, status });
+        broadcastEvent({ type: 'APPLICATION_UPDATED' });
 
         return res.status(200).json({ message: 'Status permohonan berjaya dikemas kini!' });
     } catch (error) {
@@ -459,7 +471,7 @@ app.delete('/api/admin/applications/:id', async (req, res) => {
 
         if (error) return res.status(500).json({ error: error.message });
 
-        broadcastUpdate('APPLICATION_UPDATED', { id });
+        broadcastEvent({ type: 'APPLICATION_UPDATED' });
 
         return res.status(200).json({ message: 'Permohonan berjaya dipadam!' });
     } catch (error) {

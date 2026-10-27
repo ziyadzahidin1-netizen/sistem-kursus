@@ -7,37 +7,28 @@ async function loadDashboardStats() {
     let totalPusat = 0;
     let totalPeserta = 0;
 
-    // Ambil kursus dari localStorage (User & Admin local additions)
-    let localCourses = [];
     try {
-        localCourses = JSON.parse(localStorage.getItem('custom_courses')) || [];
-    } catch (e) {
-        localCourses = [];
-    }
+        // Ambil data senarai kursus dari Backend API secara terus
+        const coursesResponse = await fetch('/api/kursus');
+        if (coursesResponse.ok) {
+            const courses = await coursesResponse.json();
+            totalKursus = courses.length;
 
-    try {
-        // Ambil data statistik daripada Backend API
-        const response = await fetch('/api/stats');
-        if (response.ok) {
-            const data = await response.json();
-            totalKursus = data.totalKursus || 0;
-            totalBidang = data.totalBidang || 0;
-            totalPusat = data.totalPusat || 0;
-            totalPeserta = data.totalPeserta || 0;
+            const bidangSet = new Set(courses.map(c => c.bidang).filter(Boolean));
+            const pusatSet = new Set(courses.map(c => c.tempat).filter(Boolean));
+
+            totalBidang = bidangSet.size;
+            totalPusat = pusatSet.size;
+        }
+
+        // Ambil data statistik am daripada Backend API
+        const statsResponse = await fetch('/api/stats');
+        if (statsResponse.ok) {
+            const data = await statsResponse.json();
+            if (data.totalPeserta) totalPeserta = data.totalPeserta;
         }
     } catch (error) {
-        console.warn('Gagal mengambil statistik dari server, bertukar ke pengiraan tempatan:', error);
-    }
-
-    // Gabungkan dengan data tempatan jika ada
-    if (localCourses.length > 0) {
-        totalKursus += localCourses.length;
-
-        const bidangSet = new Set(localCourses.map(c => c.bidang).filter(Boolean));
-        const pusatSet = new Set(localCourses.map(c => c.tempat).filter(Boolean));
-
-        totalBidang = Math.max(totalBidang, bidangSet.size);
-        totalPusat = Math.max(totalPusat, pusatSet.size);
+        console.warn('Gagal mengambil data dari server:', error);
     }
 
     // Kemaskini elemen HTML secara Live
@@ -213,6 +204,7 @@ function initRealtimeListener() {
             if (data.type === 'COURSE_UPDATED') {
                 if (typeof loadAdminCoursesOnly === 'function') loadAdminCoursesOnly();
                 if (typeof renderAdminCoursesOnly === 'function') renderAdminCoursesOnly();
+                if (typeof loadCourses === 'function') loadCourses();
                 loadDashboardStats();
             }
 
@@ -235,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupCourseForm();
     checkAndUpdateUserNav();
     
-    // Mulakan Realtime Listener untuk ganti Polling
+    // Mulakan Realtime Listener untuk mengemas kini semua pelayar secara automatik
     initRealtimeListener();
 
     // Tutup dropdown apabila klik di luar
