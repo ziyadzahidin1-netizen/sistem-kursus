@@ -101,7 +101,7 @@
     </header>
 
     <section class="user-header-banner">
-        <h1 id="userBannerName">NOOR DIANA HAYATI BINTI KAMUDIN</h1>
+        <h1 id="userBannerName">-</h1>
         <div class="stats-container">
             <div class="stat-item"><div class="number" id="statTotalPermohonan">0</div><div class="label">Permohonan</div></div>
             <div class="stat-item"><div class="number" id="statDalamProses">0</div><div class="label">Dalam Proses</div></div>
@@ -144,7 +144,7 @@
                         <button class="btn-upload-pic" onclick="document.getElementById('passportInput').click()"><i class="fa-solid fa-upload"></i> Kemaskini Gambar</button>
                         <div class="upload-notes">**Gambar berformat JPG, JPEG atau PNG sahaja<br><br>**Saiz gambar maksimum adalah 2MB</div>
                         <div><span class="badge-hrmis"><i class="fa-solid fa-sync"></i> Hrmis</span></div>
-                        <div style="font-size: 0.8rem; margin-top: 10px; color: #475569;"><strong>Tarikh Kemaskini :</strong><br><span id="lastUpdatedDate">13/10/2026</span></div>
+                        <div style="font-size: 0.8rem; margin-top: 10px; color: #475569;"><strong>Tarikh Kemaskini :</strong><br><span id="lastUpdatedDate">-</span></div>
                     </div>
 
                     <div class="form-card">
@@ -152,30 +152,44 @@
                         <div class="form-card-body">
                             <form id="profileForm" onsubmit="saveProfileData(event)">
                                 <div class="form-grid-3">
-                                    <div class="form-group"><label>No.MyKad</label><input type="text" id="profMyKad" class="form-control" value="790207095158"></div>
-                                    <div class="form-group"><label>Gelaran</label><input type="text" id="profGelaran" class="form-control" value="Puan"></div>
-                                    <div class="form-group"><label>Nama</label><input type="text" id="profNama" class="form-control" value="NOOR DIANA HAYATI BINTI KAMUDIN"></div>
+                                    <div class="form-group"><label>No.MyKad</label><input type="text" id="profMyKad" class="form-control" value=""></div>
+                                    <div class="form-group"><label>Gelaran</label><input type="text" id="profGelaran" class="form-control" value=""></div>
+                                    <div class="form-group"><label>Nama</label><input type="text" id="profNama" class="form-control" value=""></div>
                                 </div>
                                 <div class="form-grid-4">
-                                    <div class="form-group" style="grid-column: span 2;"><label>Alamat Emel Rasmi</label><input type="email" id="profEmelRasmi" class="form-control" value="Dyanahayati@mosti.gov.my"></div>
-                                    <div class="form-group" style="grid-column: span 2;"><label>Alamat Emel Peribadi</label><input type="email" id="profEmelPeribadi" class="form-control" value="jutanitaanggun@gmail.com"></div>
+                                    <div class="form-group" style="grid-column: span 2;"><label>Alamat Emel Rasmi</label><input type="email" id="profEmelRasmi" class="form-control" value=""></div>
+                                    <div class="form-group" style="grid-column: span 2;"><label>Alamat Emel Peribadi</label><input type="email" id="profEmelPeribadi" class="form-control" value=""></div>
                                 </div>
                                 <div class="form-grid-2">
-                                    <div class="form-group"><label>Telefon Pejabat</label><input type="text" id="profTelPejabat" class="form-control" value="0388858226"></div>
-                                    <div class="form-group"><label>Telefon Bimbit</label><input type="text" id="profTelBimbit" class="form-control" value="019-2616009"></div>
+                                    <div class="form-group"><label>Telefon Pejabat</label><input type="text" id="profTelPejabat" class="form-control" value=""></div>
+                                    <div class="form-group"><label>Telefon Bimbit</label><input type="text" id="profTelBimbit" class="form-control" value=""></div>
                                 </div>
-                                <div class="form-group" style="margin-bottom: 12px;"><label>Alamat 1</label><input type="text" id="profAlamat1" class="form-control" value="NO.7 JALAN INTAN 5/3,"></div>
-                                <div class="form-group" style="margin-bottom: 12px;"><label>Alamat 2</label><input type="text" id="profAlamat2" class="form-control" value="TAMAN INTAN,"></div>
+                                <div class="form-group" style="margin-bottom: 12px;"><label>Alamat 1</label><input type="text" id="profAlamat1" class="form-control" value=""></div>
+                                <div class="form-group" style="margin-bottom: 12px;"><label>Alamat 2</label><input type="text" id="profAlamat2" class="form-control" value=""></div>
                                 <div class="form-group" style="margin-bottom: 15px;"><label>Alamat 3</label><input type="text" id="profAlamat3" class="form-control" value=""></div>
                                 <div class="form-grid-3">
-                                    <div class="form-group"><label>Poskod</label><input type="text" id="profPoskod" class="form-control" value="43800"></div>
-                                    <div class="form-group"><label>Bandar</label><input type="text" id="profBandar" class="form-control" value="Dengkil"></div>
+                                    <div class="form-group"><label>Poskod</label><input type="text" id="profPoskod" class="form-control" value=""></div>
+                                    <div class="form-group"><label>Bandar</label><input type="text" id="profBandar" class="form-control" value=""></div>
                                     <div class="form-group">
                                         <label>Negeri</label>
                                         <select id="profNegeri" class="form-control">
-                                            <option value="Selangor" selected>Selangor</option>
+                                            <option value="">-- Sila Pilih --</option>
+                                            <option value="Selangor">Selangor</option>
                                             <option value="Wilayah Persekutuan Putrajaya">Wilayah Persekutuan Putrajaya</option>
                                             <option value="Wilayah Persekutuan Kuala Lumpur">Wilayah Persekutuan Kuala Lumpur</option>
+                                            <option value="Johor">Johor</option>
+                                            <option value="Kedah">Kedah</option>
+                                            <option value="Kelantan">Kelantan</option>
+                                            <option value="Melaka">Melaka</option>
+                                            <option value="Negeri Sembilan">Negeri Sembilan</option>
+                                            <option value="Pahang">Pahang</option>
+                                            <option value="Perak">Perak</option>
+                                            <option value="Perlis">Perlis</option>
+                                            <option value="Pulau Pinang">Pulau Pinang</option>
+                                            <option value="Sabah">Sabah</option>
+                                            <option value="Sarawak">Sarawak</option>
+                                            <option value="Terengganu">Terengganu</option>
+                                            <option value="Wilayah Persekutuan Labuan">Wilayah Persekutuan Labuan</option>
                                         </select>
                                     </div>
                                 </div>
@@ -203,6 +217,7 @@
                                         <div class="form-group">
                                             <label>Peringkat Pendidikan</label>
                                             <select id="newEduPeringkat" class="form-control" required>
+                                                <option value="">-- Sila Pilih --</option>
                                                 <option value="SPM">SPM / SPMV</option>
                                                 <option value="STPM">STPM / Matrikulasi</option>
                                                 <option value="Diploma">Diploma</option>
@@ -243,7 +258,7 @@
                         <button class="btn-upload-pic" onclick="document.getElementById('passportInput').click()"><i class="fa-solid fa-upload"></i> Kemaskini Gambar</button>
                         <div class="upload-notes">**Gambar berformat JPG, JPEG atau PNG sahaja<br><br>**Saiz gambar maksimum adalah 2MB</div>
                         <div><span class="badge-hrmis"><i class="fa-solid fa-sync"></i> Hrmis</span></div>
-                        <div style="font-size: 0.8rem; margin-top: 10px; color: #475569;"><strong>Tarikh Kemaskini :</strong><br><span>13/10/2026</span></div>
+                        <div style="font-size: 0.8rem; margin-top: 10px; color: #475569;"><strong>Tarikh Kemaskini :</strong><br><span>-</span></div>
                     </div>
 
                     <div>
@@ -252,14 +267,14 @@
                                 <div class="form-card-header"><i class="fa-solid fa-briefcase"></i> JAWATAN</div>
                                 <div class="form-card-body">
                                     <div class="form-grid-2">
-                                        <div class="form-group"><label>Jawatan</label><input type="text" id="srvJawatan" class="form-control" value="Penolong Pegawai Tadbir, Gred N7"></div>
-                                        <div class="form-group"><label>Gelaran Jawatan</label><input type="text" id="srvGelaranJawatan" class="form-control" value="Penolong Pegawai Tadbir"></div>
+                                        <div class="form-group"><label>Jawatan</label><input type="text" id="srvJawatan" class="form-control" value=""></div>
+                                        <div class="form-group"><label>Gelaran Jawatan</label><input type="text" id="srvGelaranJawatan" class="form-control" value=""></div>
                                     </div>
                                     <div class="form-grid-4">
-                                        <div class="form-group"><label>Gred SSM</label><input type="text" id="srvGredSSM" class="form-control" value="N7"></div>
-                                        <div class="form-group"><label>Gred SSPA</label><input type="text" id="srvGredSSPA" class="form-control" value="N6"></div>
-                                        <div class="form-group"><label>Taraf Jawatan</label><input type="text" id="srvTarafJawatan" class="form-control" value="Lantikan Tetap"></div>
-                                        <div class="form-group"><label>Tarikh Lantikan Jawatan Semasa</label><input type="text" id="srvTarikhLantikan" class="form-control" value="01/12/2024"></div>
+                                        <div class="form-group"><label>Gred SSM</label><input type="text" id="srvGredSSM" class="form-control" value=""></div>
+                                        <div class="form-group"><label>Gred SSPA</label><input type="text" id="srvGredSSPA" class="form-control" value=""></div>
+                                        <div class="form-group"><label>Taraf Jawatan</label><input type="text" id="srvTarafJawatan" class="form-control" value=""></div>
+                                        <div class="form-group"><label>Tarikh Lantikan Jawatan Semasa</label><input type="text" id="srvTarikhLantikan" class="form-control" value=""></div>
                                     </div>
                                     <button type="button" onclick="saveServiceData(event)" class="btn-green-submit" style="margin-bottom: 5px;"><i class="fa-solid fa-floppy-disk"></i> KEMASKINI GRED / JAWATAN</button>
                                 </div>
@@ -269,17 +284,17 @@
                                 <div class="form-card-header"><i class="fa-solid fa-location-dot"></i> TEMPAT BERTUGAS</div>
                                 <div class="form-card-body">
                                     <div class="form-grid-2">
-                                        <div class="form-group"><label>Kementerian</label><input type="text" id="srvKementerian" class="form-control" value="KEMENTERIAN SAINS, TEKNOLOGI DAN INOVASI"></div>
-                                        <div class="form-group"><label>Jabatan / Agensi</label><input type="text" id="srvJabatan" class="form-control" value="KEMENTERIAN SAINS, TEKNOLOGI DAN INOVASI"></div>
+                                        <div class="form-group"><label>Kementerian</label><input type="text" id="srvKementerian" class="form-control" value=""></div>
+                                        <div class="form-group"><label>Jabatan / Agensi</label><input type="text" id="srvJabatan" class="form-control" value=""></div>
                                     </div>
-                                    <div class="form-group" style="margin-bottom: 12px;"><label>Bahagian</label><textarea id="srvBahagian" class="form-control" style="height: 70px;">SEKSYEN PEMBANGUNAN SUMBER MANUSIA DAN KOMPETENSI</textarea></div>
-                                    <div class="form-group" style="margin-bottom: 12px;"><label>Alamat 1</label><input type="text" id="srvAlamat1" class="form-control" value="BAHAGIAN PENGURUSAN SUMBER MANUSIA"></div>
-                                    <div class="form-group" style="margin-bottom: 12px;"><label>Alamat 2</label><input type="text" id="srvAlamat2" class="form-control" value="ARAS 5, BLOK C4, KOMPLEKS C"></div>
+                                    <div class="form-group" style="margin-bottom: 12px;"><label>Bahagian</label><textarea id="srvBahagian" class="form-control" style="height: 70px;"></textarea></div>
+                                    <div class="form-group" style="margin-bottom: 12px;"><label>Alamat 1</label><input type="text" id="srvAlamat1" class="form-control" value=""></div>
+                                    <div class="form-group" style="margin-bottom: 12px;"><label>Alamat 2</label><input type="text" id="srvAlamat2" class="form-control" value=""></div>
                                     <div class="form-group" style="margin-bottom: 12px;"><label>Alamat 3</label><input type="text" id="srvAlamat3" class="form-control" value=""></div>
                                     <div class="form-grid-3">
-                                        <div class="form-group"><label>Poskod</label><input type="text" id="srvPoskod" class="form-control" value="62662"></div>
-                                        <div class="form-group"><label>Bandar</label><input type="text" id="srvBandar" class="form-control" value="Putrajaya"></div>
-                                        <div class="form-group"><label>Negeri</label><input type="text" id="srvNegeri" class="form-control" value="Wilayah Persekutuan Putrajaya"></div>
+                                        <div class="form-group"><label>Poskod</label><input type="text" id="srvPoskod" class="form-control" value=""></div>
+                                        <div class="form-group"><label>Bandar</label><input type="text" id="srvBandar" class="form-control" value=""></div>
+                                        <div class="form-group"><label>Negeri</label><input type="text" id="srvNegeri" class="form-control" value=""></div>
                                     </div>
                                 </div>
                             </div>
@@ -288,8 +303,8 @@
                                 <div class="form-card-header"><i class="fa-solid fa-users"></i> PENYELIA</div>
                                 <div class="form-card-body">
                                     <div class="form-grid-2">
-                                        <div class="form-group"><label>Nama</label><input type="text" id="srvPenyeliaNama" class="form-control" value="CHAN TAT SENG"></div>
-                                        <div class="form-group"><label>Jawatan</label><input type="text" id="srvPenyeliaJawatan" class="form-control" value="Ketua Penolong Setiausaha"></div>
+                                        <div class="form-group"><label>Nama</label><input type="text" id="srvPenyeliaNama" class="form-control" value=""></div>
+                                        <div class="form-group"><label>Jawatan</label><input type="text" id="srvPenyeliaJawatan" class="form-control" value=""></div>
                                     </div>
                                     <button type="submit" class="btn-blue-submit" style="margin-top: 15px;"><i class="fa-solid fa-floppy-disk"></i> KEMASKINI MAKLUMAT PERKHIDMATAN KESELURUHAN</button>
                                 </div>
@@ -314,8 +329,8 @@
                                 <tbody>
                                     <tr>
                                         <td>1</td>
-                                        <td><input type="text" id="emgNama" class="form-control" value="AHMAD RASHIDI BIN ABD RAHIM"></td>
-                                        <td><input type="text" id="emgTel" class="form-control" value="01110083207"></td>
+                                        <td><input type="text" id="emgNama" class="form-control" value=""></td>
+                                        <td><input type="text" id="emgTel" class="form-control" value=""></td>
                                         <td><button type="button" class="btn-blue-submit" style="padding: 8px 12px; width: auto;" onclick="saveEmergencyData()"><i class="fa-solid fa-floppy-disk"></i> Simpan Kecemasan</button></td>
                                     </tr>
                                 </tbody>
@@ -372,17 +387,29 @@
 
         function populateUserData() {
             if (!currentUser) return;
-            document.getElementById('userBannerName').innerText = currentUser.nama || 'NOOR DIANA HAYATI BINTI KAMUDIN';
+            document.getElementById('userBannerName').innerText = currentUser.nama || '-';
             document.getElementById('profNama').value = currentUser.nama || '';
             document.getElementById('profMyKad').value = currentUser.ic || '';
-            document.getElementById('profEmelRasmi').value = currentUser.email || '';
+            document.getElementById('profEmelRasmi').value = currentUser.email || currentUser.emelRasmi || '';
+
+            // Populasikan hanya jika data wujud dalam akaun pengguna
+            document.getElementById('profGelaran').value = currentUser.gelaran || '';
+            document.getElementById('profEmelPeribadi').value = currentUser.emelPeribadi || '';
+            document.getElementById('profTelPejabat').value = currentUser.telPejabat || '';
+            document.getElementById('profTelBimbit').value = currentUser.telBimbit || '';
+            document.getElementById('profAlamat1').value = currentUser.alamat1 || '';
+            document.getElementById('profAlamat2').value = currentUser.alamat2 || '';
+            document.getElementById('profAlamat3').value = currentUser.alamat3 || '';
+            document.getElementById('profPoskod').value = currentUser.poskod || '';
+            document.getElementById('profBandar').value = currentUser.bandar || '';
+            document.getElementById('profNegeri').value = currentUser.negeri || '';
 
             if (currentUser.gambar) {
                 updateAllPassportImages(currentUser.gambar);
             }
 
-            if(currentUser.kecemasan_nama) document.getElementById('emgNama').value = currentUser.kecemasan_nama;
-            if(currentUser.kecemasan_tel) document.getElementById('emgTel').value = currentUser.kecemasan_tel;
+            document.getElementById('emgNama').value = currentUser.kecemasan_nama || '';
+            document.getElementById('emgTel').value = currentUser.kecemasan_tel || '';
         }
 
         function updateAllPassportImages(imgSrc) {
@@ -397,6 +424,7 @@
             if(e) e.preventDefault();
             const profilePayload = {
                 ic: document.getElementById('profMyKad').value,
+                gelaran: document.getElementById('profGelaran').value,
                 nama: document.getElementById('profNama').value,
                 emelRasmi: document.getElementById('profEmelRasmi').value,
                 emelPeribadi: document.getElementById('profEmelPeribadi').value,
@@ -421,9 +449,11 @@
                 if (res.ok) {
                     alert('Maklumat Profil Peribadi berjaya disimpan!');
                     if (currentUser) {
-                        currentUser.nama = profilePayload.nama;
-                        currentUser.email = profilePayload.emelRasmi;
+                        Object.assign(currentUser, profilePayload, {
+                            email: profilePayload.emelRasmi
+                        });
                         sessionStorage.setItem('user', JSON.stringify(currentUser));
+                        localStorage.setItem('user', JSON.stringify(currentUser));
                     }
                 } else alert('Gagal menyimpan profil: ' + data.error);
             } catch (err) { alert('Ralat Server: ' + err.message); }
@@ -482,6 +512,7 @@
                         currentUser.kecemasan_nama = nama;
                         currentUser.kecemasan_tel = tel;
                         sessionStorage.setItem('user', JSON.stringify(currentUser));
+                        localStorage.setItem('user', JSON.stringify(currentUser));
                     }
                 } else alert('Gagal menyimpan kecemasan: ' + data.error);
             } catch (err) { alert('Ralat Server: ' + err.message); }
@@ -558,20 +589,17 @@
             } catch (err) { alert('Ralat: ' + err.message); }
         }
 
-        // AMBIL DATA SUPABASE DAFTAR DENGAN BACKUP LOCALSTORAGE (PADAN KUNCI MOHON.HTML)
         async function loadUserApplications() {
             const ic = currentUser ? currentUser.ic : document.getElementById('profMyKad').value;
             let dbList = [];
             let localList = [];
 
-            // 1. Ambil dari LocalStorage (Guna Key Padan: user_applications_ + IC)
             if (ic) {
                 try {
                     localList = JSON.parse(localStorage.getItem('user_applications_' + ic)) || [];
                 } catch(e) { localList = []; }
             }
 
-            // 2. Ambil dari Supabase Database
             if (ic) {
                 try {
                     const res = await fetch(`/api/user/applications/${ic}`);
@@ -581,7 +609,6 @@
                 } catch (err) { console.error('Gagal fetch Supabase:', err); }
             }
 
-            // Gabungkan kedua-dua punca data tanpa duplikasi
             const combined = [...localList, ...dbList];
             const uniqueList = Array.from(new Map(combined.map(item => [(item.id || item.created_at || item.nama_kursus || item.kursus), item])).values());
 
