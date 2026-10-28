@@ -378,14 +378,19 @@
             document.getElementById('profEmelRasmi').value = currentUser.email || '';
 
             if (currentUser.gambar) {
-                document.getElementById('userPassportImg').src = currentUser.gambar;
-                if(document.getElementById('userPassportImgPendidikan')) document.getElementById('userPassportImgPendidikan').src = currentUser.gambar;
-                if(document.getElementById('userPassportImgPerkhidmatan')) document.getElementById('userPassportImgPerkhidmatan').src = currentUser.gambar;
-                if(document.getElementById('userPassportImgKecemasan')) document.getElementById('userPassportImgKecemasan').src = currentUser.gambar;
+                updateAllPassportImages(currentUser.gambar);
             }
 
             if(currentUser.kecemasan_nama) document.getElementById('emgNama').value = currentUser.kecemasan_nama;
             if(currentUser.kecemasan_tel) document.getElementById('emgTel').value = currentUser.kecemasan_tel;
+        }
+
+        function updateAllPassportImages(imgSrc) {
+            const imgIds = ['userPassportImg', 'userPassportImgPendidikan', 'userPassportImgPerkhidmatan', 'userPassportImgKecemasan'];
+            imgIds.forEach(id => {
+                const imgEl = document.getElementById(id);
+                if (imgEl) imgEl.src = imgSrc;
+            });
         }
 
         async function saveProfileData(e) {
@@ -413,8 +418,14 @@
                     body: JSON.stringify(profilePayload)
                 });
                 const data = await res.json();
-                if (res.ok) alert('Maklumat Profil Peribadi berjaya disimpan!');
-                else alert('Gagal menyimpan profil: ' + data.error);
+                if (res.ok) {
+                    alert('Maklumat Profil Peribadi berjaya disimpan!');
+                    if (currentUser) {
+                        currentUser.nama = profilePayload.nama;
+                        currentUser.email = profilePayload.emelRasmi;
+                        sessionStorage.setItem('user', JSON.stringify(currentUser));
+                    }
+                } else alert('Gagal menyimpan profil: ' + data.error);
             } catch (err) { alert('Ralat Server: ' + err.message); }
         }
 
@@ -465,8 +476,14 @@
                     body: JSON.stringify({ ic, nama, tel })
                 });
                 const data = await res.json();
-                if (res.ok) alert('Maklumat Perhitungan Kecemasan berjaya disimpan!');
-                else alert('Gagal menyimpan kecemasan: ' + data.error);
+                if (res.ok) {
+                    alert('Maklumat Perhitungan Kecemasan berjaya disimpan!');
+                    if (currentUser) {
+                        currentUser.kecemasan_nama = nama;
+                        currentUser.kecemasan_tel = tel;
+                        sessionStorage.setItem('user', JSON.stringify(currentUser));
+                    }
+                } else alert('Gagal menyimpan kecemasan: ' + data.error);
             } catch (err) { alert('Ralat Server: ' + err.message); }
         }
 
@@ -639,7 +656,7 @@
             const reader = new FileReader();
             reader.onload = async function(e) {
                 const base64Image = e.target.result;
-                document.getElementById('userPassportImg').src = base64Image;
+                updateAllPassportImages(base64Image);
                 if(!currentUser) currentUser = {};
                 currentUser.gambar = base64Image;
                 saveProfileData(new Event('submit'));
