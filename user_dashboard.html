@@ -15,6 +15,71 @@
             padding: 0;
         }
 
+        /* NAV BAR & AVATAR USER */
+        .user-avatar-small {
+            width: 32px !important;
+            height: 32px !important;
+            border-radius: 50% !important;
+            object-fit: cover !important;
+        }
+
+        .user-dropdown-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .user-dropdown-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 110%;
+            background-color: white;
+            min-width: 180px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            overflow: hidden;
+            z-index: 1000;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+
+        .dropdown-menu a, .dropdown-menu button {
+            color: #334155;
+            padding: 10px 16px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.88rem;
+            width: 100%;
+            border: none;
+            background: none;
+            text-align: left;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+
+        .dropdown-menu a:hover, .dropdown-menu button:hover {
+            background-color: #f1f5f9;
+            color: #0284c7;
+        }
+
+        /* HEADER BANNER */
         .user-header-banner {
             background-color: #0d2838;
             color: white;
@@ -31,6 +96,7 @@
         .stat-item .number { font-size: 1.6rem; font-weight: 700; }
         .stat-item .label { font-size: 0.85rem; color: #cbd5e1; }
 
+        /* TAB NAVIGASI UTAMA */
         .main-tabs-nav {
             background-color: #ffffff;
             border-bottom: 2px solid #e2e8f0;
@@ -39,7 +105,17 @@
             gap: 30px;
         }
         .tab-btn {
-            background: none; border: none; padding: 15px 10px; font-size: 1rem; font-weight: 600; color: #64748b; cursor: pointer; border-bottom: 3px solid transparent; display: flex; align-items: center; gap: 8px;
+            background: none; 
+            border: none; 
+            padding: 15px 10px; 
+            font-size: 1rem; 
+            font-weight: 600; 
+            color: #64748b; 
+            cursor: pointer; 
+            border-bottom: 3px solid transparent; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px;
         }
         .tab-btn.active { color: #0284c7; border-bottom-color: #0284c7; }
 
@@ -79,10 +155,118 @@
         .btn-blue-submit { background-color: #0284c7; color: white; border: none; padding: 10px 24px; border-radius: 4px; font-weight: 600; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.9rem; }
         .btn-green-submit { background-color: #22c55e; color: white; border: none; padding: 10px 24px; border-radius: 4px; font-weight: 700; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.88rem; text-transform: uppercase; }
 
+        /* BUTANG AKTIVITI SIJIL */
+        .btn-cert {
+            background-color: #8b5cf6;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            font-size: 0.82rem;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+        }
+        .btn-cert:hover { background-color: #7c3aed; }
+
         .custom-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         .custom-table th { text-align: left; padding: 12px; font-size: 0.88rem; background-color: #f8fafc; border-bottom: 2px solid #e2e8f0; color: #1e293b; }
         .custom-table td { padding: 12px; border-bottom: 1px solid #e2e8f0; font-size: 0.9rem; vertical-align: middle; }
         .btn-action-del { background-color: #ef4444; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; }
+
+        /* MODAL OVERLAY & CONTAINER TEMPLATE SIJIL SENDIRI */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .modal-overlay.show { display: flex; }
+
+        .cert-modal-body {
+            background: #ffffff;
+            width: 100%;
+            max-width: 850px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        /* GAMBAR SIJIL SENDIRI SEBAGAI BACKGROUND */
+        .cert-container-print {
+            width: 800px;
+            height: 565px; /* Nisbah A4 Landskap */
+            margin: 20px auto;
+            text-align: center;
+            background: url('sijil_template.png') no-repeat center center;
+            background-size: contain;
+            color: #1e293b;
+            font-family: 'Georgia', serif;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .cert-recipient-name {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #0d2838;
+            padding-top: 150px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cert-user-ic {
+            font-size: 0.95rem;
+            color: #475569;
+            margin-top: 5px;
+            font-weight: 600;
+        }
+
+        .cert-course-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #0284c7;
+            margin-top: 35px;
+            padding: 0 40px;
+        }
+
+        .cert-date {
+            font-size: 0.95rem;
+            color: #334155;
+            margin-top: 15px;
+        }
+
+        .cert-actions {
+            background: #f8fafc;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        @media print {
+            body * { visibility: hidden; }
+            #certPrintArea, #certPrintArea * { visibility: visible; }
+            #certPrintArea { 
+                position: absolute; 
+                left: 0; top: 0; 
+                width: 100%; 
+                height: 100%; 
+                margin: 0; 
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            .cert-actions { display: none; }
+        }
 
         @media (max-width: 900px) { .profile-grid { grid-template-columns: 1fr; } .form-grid-4, .form-grid-3, .form-grid-2 { grid-template-columns: 1fr; } }
     </style>
@@ -110,6 +294,7 @@
         </div>
     </section>
 
+    <!-- BARIS TAB UTAMA DASHBOARD -->
     <div class="main-tabs-nav">
         <button class="tab-btn active" onclick="switchMainTab('tab-profil', this)"><i class="fa-solid fa-user"></i> Profil</button>
         <button class="tab-btn" onclick="switchMainTab('tab-senarai', this)"><i class="fa-solid fa-list-check"></i> Senarai Permohonan</button>
@@ -366,10 +551,53 @@
                 </div>
             </div>
         </div>
+
+        <!-- BAHAGIAN 3: KURSUS CADANGAN -->
+        <div id="tab-cadangan" class="tab-content">
+            <div class="form-card">
+                <div class="form-card-header"><i class="fa-solid fa-graduation-cap"></i> KURSUS CADANGAN UNTUK ANDA</div>
+                <div class="form-card-body">
+                    <p style="color: #64748b;">Senarai cadangan kursus mengikut gred dan skop jawatan anda akan dipaparkan di sini.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- BAHAGIAN 4: MAKLUMAN -->
+        <div id="tab-makluman" class="tab-content">
+            <div class="form-card">
+                <div class="form-card-header"><i class="fa-solid fa-envelope"></i> MAKLUMAN & NOTIFIKASI</div>
+                <div class="form-card-body">
+                    <p style="color: #64748b;">Tiada makluman baru buat masa ini.</p>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <!-- MODAL POPUP SIJIL (TEMPLATE GAMBAR SENDIRI) -->
+    <div id="certModal" class="modal-overlay">
+        <div class="cert-modal-body">
+            <div id="certPrintArea" class="cert-container-print">
+                <div class="cert-recipient-name" id="certUserName">-</div>
+                <div class="cert-user-ic">NO. MYKAD: <span id="certUserIC">-</span></div>
+                <div class="cert-course-name" id="certCourseTitle">-</div>
+                <div class="cert-date">Tarikh: <span id="certDate">-</span></div>
+            </div>
+
+            <div class="cert-actions">
+                <button class="btn-blue-submit" style="width: auto; padding: 8px 18px;" onclick="window.print()">
+                    <i class="fa-solid fa-print"></i> Cetak / Simpan PDF
+                </button>
+                <button class="btn-action-del" style="background-color: #64748b;" onclick="closeCertModal()">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
     <script>
         let currentUser = null;
+        let globalUserApplications = [];
 
         document.addEventListener('DOMContentLoaded', () => {
             const storedUser = sessionStorage.getItem('user') || localStorage.getItem('user');
@@ -392,7 +620,6 @@
             document.getElementById('profMyKad').value = currentUser.ic || '';
             document.getElementById('profEmelRasmi').value = currentUser.email || currentUser.emelRasmi || '';
 
-            // Populasikan hanya jika data wujud dalam akaun pengguna
             document.getElementById('profGelaran').value = currentUser.gelaran || '';
             document.getElementById('profEmelPeribadi').value = currentUser.emelPeribadi || '';
             document.getElementById('profTelPejabat').value = currentUser.telPejabat || '';
@@ -610,9 +837,9 @@
             }
 
             const combined = [...localList, ...dbList];
-            const uniqueList = Array.from(new Map(combined.map(item => [(item.id || item.created_at || item.nama_kursus || item.kursus), item])).values());
+            globalUserApplications = Array.from(new Map(combined.map(item => [(item.id || item.created_at || item.nama_kursus || item.kursus), item])).values());
 
-            renderApplicationTable(uniqueList);
+            renderApplicationTable(globalUserApplications);
         }
 
         function renderApplicationTable(list) {
@@ -632,11 +859,14 @@
 
             list.forEach((item, index) => {
                 let statusBadge = '';
-                if (item.status === 'Berjaya' || item.status === 'Hadir') {
-                    statusBadge = '<span style="background-color:#22c55e; color:white; padding:4px 10px; border-radius:12px; font-size:0.8rem; font-weight:700;">' + item.status + '</span>';
+                let isPassed = false;
+
+                if (item.status === 'Berjaya' || item.status === 'Lulus' || item.status === 'Hadir') {
+                    statusBadge = '<span style="background-color:#22c55e; color:white; padding:4px 10px; border-radius:12px; font-size:0.8rem; font-weight:700;">' + (item.status === 'Berjaya' ? 'Lulus' : item.status) + '</span>';
                     countBerjaya++;
-                } else if (item.status === 'Tidak Berjaya') {
-                    statusBadge = '<span style="background-color:#ef4444; color:white; padding:4px 10px; border-radius:12px; font-size:0.8rem; font-weight:700;">' + item.status + '</span>';
+                    isPassed = true;
+                } else if (item.status === 'Tidak Berjaya' || item.status === 'Tidak Lulus') {
+                    statusBadge = '<span style="background-color:#ef4444; color:white; padding:4px 10px; border-radius:12px; font-size:0.8rem; font-weight:700;">Tidak Lulus</span>';
                     countGagal++;
                 } else {
                     statusBadge = '<span style="background-color:#f59e0b; color:white; padding:4px 10px; border-radius:12px; font-size:0.8rem; font-weight:700;">Dalam Proses</span>';
@@ -651,6 +881,13 @@
                     formattedDateTime = item.tarikh;
                 }
 
+                // Hanya tunjukkan Butang Sijil jika status LULUS
+                let certBtnHtml = isPassed ? `
+                    <button class="btn-cert" onclick="openCertModal('${item.id || index}')" title="Jana Sijil Penyertaan">
+                        <i class="fa-solid fa-award"></i> Sijil
+                    </button>
+                ` : '<span style="color:#94a3b8; font-size:0.82rem;">-</span>';
+
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>${index + 1}</td>
@@ -658,11 +895,7 @@
                     <td><i class="fa-regular fa-clock" style="color:#64748b; margin-right:4px;"></i>${formattedDateTime}</td>
                     <td>${statusBadge}</td>
                     <td>${item.yuran_kursus || 'RM 0.00'}</td>
-                    <td>
-                        <button class="btn-blue-submit" style="padding: 5px 10px; font-size:0.78rem; width:auto; display:inline-flex;" onclick="viewApplicationDetail('${item.id || index}')">
-                            <i class="fa-solid fa-eye"></i> Semak
-                        </button>
-                    </td>
+                    <td>${certBtnHtml}</td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -673,8 +906,36 @@
             document.getElementById('statTidakBerjaya').innerText = countGagal;
         }
 
-        function viewApplicationDetail(id) {
-            alert('Menyemak butiran permohonan ID: ' + id);
+        /* FUNGSI KENDALIKAN MODAL SIJIL TEMPLATE SENDIRI */
+        function openCertModal(appIdOrIndex) {
+            const item = globalUserApplications.find((a, idx) => String(a.id) === String(appIdOrIndex) || String(idx) === String(appIdOrIndex));
+            
+            if (!item) {
+                alert('Data kursus tidak dijumpai.');
+                return;
+            }
+
+            const userName = (currentUser ? currentUser.nama : '') || item.nama_pemohon || item.nama || 'PENGGUNA';
+            const userIC = (currentUser ? currentUser.ic : '') || item.ic || item.user_ic || '-';
+            const courseTitle = (item.kod_kursus ? item.kod_kursus + ' - ' : '') + (item.nama_kursus || item.kursus || 'KURSUS');
+            
+            let dateStr = '-';
+            if (item.created_at) {
+                dateStr = new Date(item.created_at).toLocaleDateString('ms-MY', { day: 'numeric', month: 'long', year: 'numeric' });
+            } else if (item.tarikh) {
+                dateStr = item.tarikh;
+            }
+
+            document.getElementById('certUserName').innerText = userName;
+            document.getElementById('certUserIC').innerText = userIC;
+            document.getElementById('certCourseTitle').innerText = courseTitle;
+            document.getElementById('certDate').innerText = dateStr;
+
+            document.getElementById('certModal').classList.add('show');
+        }
+
+        function closeCertModal() {
+            document.getElementById('certModal').classList.remove('show');
         }
 
         function handlePassportUpload(event) {

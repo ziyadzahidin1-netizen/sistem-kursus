@@ -290,7 +290,7 @@
                 localStorage.setItem('user_applications_' + icVal, JSON.stringify(userApps));
             } catch(err) { console.error("Ralat LocalStorage:", err); }
 
-            // Hantar ke Backend API (Supabase & Broadcast SSE)
+            // Hantar ke Backend API
             try {
                 const response = await fetch('/api/mohon', {
                     method: 'POST',

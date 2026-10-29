@@ -211,6 +211,8 @@ function initRealtimeListener() {
             if (data.type === 'APPLICATION_UPDATED') {
                 if (typeof loadAllUserApplicationsForAdmin === 'function') loadAllUserApplicationsForAdmin();
                 if (typeof loadAllApplicationsPage === 'function') loadAllApplicationsPage();
+                if (typeof loadAllApplications === 'function') loadAllApplications();
+                if (typeof loadUserApplications === 'function') loadUserApplications();
             }
         };
 

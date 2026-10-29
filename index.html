@@ -828,12 +828,17 @@
             });
         });
 
-        // FUNGSI KEMASKINI NAVBAR DENGAN DROPDOWN PENGGUNA
+        // FUNGSI KEMASKINI NAVBAR DENGAN DROPDOWN PENGGUNA (HANYA PAPAR PERANAN ADMIN JIKA ROLE === 'admin')
         function setupNavbar() {
             const navContainer = document.getElementById('user-nav-container');
             if (currentUser && navContainer) {
                 const userPhoto = currentUser.gambar || 'https://via.placeholder.com/150';
                 const userName = currentUser.nama || 'Pengguna';
+
+                // Semakan peranan admin: hanya tunjuk pautan ini jika role === 'admin'
+                const adminMenuOption = currentUser.role === 'admin' 
+                    ? `<a href="admin_dashboard.html"><i class="fa-solid fa-user-shield"></i> Peranan Admin</a>` 
+                    : '';
 
                 navContainer.innerHTML = `
                     <div class="user-dropdown-container">
@@ -844,6 +849,7 @@
                         </button>
                         <div id="userMenuDropdown" class="dropdown-menu">
                             <a href="user_dashboard.html"><i class="fa-solid fa-id-card"></i> User Dashboard</a>
+                            ${adminMenuOption}
                             <a href="tukar_kata_laluan.html"><i class="fa-solid fa-key"></i> Tukar Kata Laluan</a>
                             <button onclick="handleLogout()" class="logout-item"><i class="fa-solid fa-right-from-bracket"></i> Log Keluar</button>
                         </div>

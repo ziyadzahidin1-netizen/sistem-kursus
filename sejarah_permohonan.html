@@ -122,14 +122,10 @@
                 return;
             }
 
-            // Muat data awal
             loadAllApplications();
-
-            // Mulakan pendengar acara secara langsung (Realtime Listener)
             initAdminApplicationsRealtime();
         });
 
-        // Pengesan acara langsung untuk mengemas kini jadual secara automatik
         function initAdminApplicationsRealtime() {
             if (!!window.EventSource) {
                 const eventSource = new EventSource('/api/events');
@@ -156,40 +152,48 @@
 
             try {
                 const res = await fetch('/api/admin/applications');
+                let appList = [];
+                
                 if (res.ok) {
-                    const appList = await res.json();
-                    tbody.innerHTML = '';
-
-                    if (appList.length === 0) {
-                        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:20px;">Tiada permohonan daripada pengguna setakat ini.</td></tr>';
-                        return;
-                    }
-
-                    appList.forEach((item, index) => {
-                        let statusBadge = item.status === 'Berjaya' || item.status === 'Lulus' ? 
-                            '<span style="background-color:#22c55e; color:white; padding:4px 8px; border-radius:4px; font-weight:700;">Lulus</span>' : 
-                            (item.status === 'Tidak Berjaya' ? '<span style="background-color:#ef4444; color:white; padding:4px 8px; border-radius:4px; font-weight:700;">Tidak Lulus</span>' : 
-                            '<span style="background-color:#f59e0b; color:white; padding:4px 8px; border-radius:4px; font-weight:700;">Dalam Proses</span>');
-
-                        let formattedDate = item.created_at ? new Date(item.created_at).toLocaleDateString('ms-MY') : '-';
-
-                        const tr = document.createElement('tr');
-                        tr.innerHTML = `
-                            <td>${index + 1}</td>
-                            <td><strong>${item.nama_pemohon || item.nama || '-'}</strong><br><small style="color:#64748b;">IC: ${item.ic || item.user_ic || '-'}</small></td>
-                            <td>${item.jawatan || '-'}<br><small style="color:#64748b;">${item.jabatan || '-'}</small></td>
-                            <td><strong style="color:#0284c7;">${item.kod_kursus || ''}</strong> ${item.nama_kursus || item.kursus || ''}</td>
-                            <td>${formattedDate}</td>
-                            <td>${statusBadge}</td>
-                            <td>
-                                <button class="btn-approve" onclick="updateAppStatus('${item.id}', 'Berjaya')" title="Luluskan"><i class="fa-solid fa-check"></i></button>
-                                <button class="btn-reject" onclick="updateAppStatus('${item.id}', 'Tidak Berjaya')" title="Tolak"><i class="fa-solid fa-xmark"></i></button>
-                                <button class="btn-delete-app" onclick="deleteUserApp('${item.id}')" title="Padam"><i class="fa-solid fa-trash"></i></button>
-                            </td>
-                        `;
-                        tbody.appendChild(tr);
-                    });
+                    appList = await res.json();
                 }
+
+                // Backup LocalStorage jika server memulangkan tatasusunan kosong
+                if (!appList || appList.length === 0) {
+                    appList = JSON.parse(localStorage.getItem('all_global_applications')) || [];
+                }
+
+                tbody.innerHTML = '';
+
+                if (appList.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:20px;">Tiada permohonan daripada pengguna setakat ini.</td></tr>';
+                    return;
+                }
+
+                appList.forEach((item, index) => {
+                    let statusBadge = item.status === 'Berjaya' || item.status === 'Lulus' ? 
+                        '<span style="background-color:#22c55e; color:white; padding:4px 8px; border-radius:4px; font-weight:700;">Lulus</span>' : 
+                        (item.status === 'Tidak Berjaya' ? '<span style="background-color:#ef4444; color:white; padding:4px 8px; border-radius:4px; font-weight:700;">Tidak Lulus</span>' : 
+                        '<span style="background-color:#f59e0b; color:white; padding:4px 8px; border-radius:4px; font-weight:700;">Dalam Proses</span>');
+
+                    let formattedDate = item.created_at ? new Date(item.created_at).toLocaleDateString('ms-MY') : '-';
+
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td><strong>${item.nama_pemohon || item.nama || '-'}</strong><br><small style="color:#64748b;">IC: ${item.ic || item.user_ic || '-'}</small></td>
+                        <td>${item.jawatan || '-'}<br><small style="color:#64748b;">${item.jabatan || '-'}</small></td>
+                        <td><strong style="color:#0284c7;">${item.kod_kursus || ''}</strong> ${item.nama_kursus || item.kursus || ''}</td>
+                        <td>${formattedDate}</td>
+                        <td>${statusBadge}</td>
+                        <td>
+                            <button class="btn-approve" onclick="updateAppStatus('${item.id}', 'Berjaya')" title="Luluskan"><i class="fa-solid fa-check"></i></button>
+                            <button class="btn-reject" onclick="updateAppStatus('${item.id}', 'Tidak Berjaya')" title="Tolak"><i class="fa-solid fa-xmark"></i></button>
+                            <button class="btn-delete-app" onclick="deleteUserApp('${item.id}')" title="Padam"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
             } catch (err) {
                 tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:red;">Ralat memuatkan data.</td></tr>';
             }
@@ -202,7 +206,28 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ status: newStatus })
                 });
-                alert('Status permohonan kemaskini!');
+
+                // Kemaskini dalam localStorage global jika wujud
+                let allGlobalApps = JSON.parse(localStorage.getItem('all_global_applications')) || [];
+                const appIndex = allGlobalApps.findIndex(a => String(a.id) === String(id));
+                if (appIndex !== -1) {
+                    allGlobalApps[appIndex].status = newStatus;
+                    localStorage.setItem('all_global_applications', JSON.stringify(allGlobalApps));
+                    
+                    // Kemaskini rekod tempatan pengguna sekiranya dikemaskini pada peranti yang sama
+                    const userIc = allGlobalApps[appIndex].ic || allGlobalApps[appIndex].user_ic;
+                    if (userIc) {
+                        let userKey = 'user_applications_' + userIc;
+                        let userApps = JSON.parse(localStorage.getItem(userKey)) || [];
+                        const userAppIdx = userApps.findIndex(a => String(a.id) === String(id));
+                        if (userAppIdx !== -1) {
+                            userApps[userAppIdx].status = newStatus;
+                            localStorage.setItem(userKey, JSON.stringify(userApps));
+                        }
+                    }
+                }
+
+                alert('Status permohonan berjaya dikemaskini!');
                 loadAllApplications();
             } catch (err) { alert('Ralat: ' + err.message); }
         }
@@ -211,7 +236,7 @@
             if (!confirm('Pasti mahu memadam permohonan ini?')) return;
             try {
                 await fetch(`/api/admin/applications/${id}`, { method: 'DELETE' });
-                alert('Permohonan dipadam!');
+                alert('Permohonan berjaya dipadam!');
                 loadAllApplications();
             } catch (err) { alert('Ralat: ' + err.message); }
         }
