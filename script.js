@@ -125,9 +125,9 @@ function setupCourseForm() {
                     const result = await response.json();
 
                     if (response.ok) {
-                        alert('Permohonan berjaya dihantar! E-mel pengesahan telah dihantar.');
+                        alert('Permohonan berjaya dihantar!');
                         courseForm.reset();
-                        loadUserData();
+                        window.location.href = 'user_dashboard.html';
                     } else {
                         alert('Gagal menghantar permohonan: ' + (result.error || result.message || 'Sila cuba lagi.'));
                     }
@@ -210,6 +210,7 @@ function initRealtimeListener() {
 
             if (data.type === 'APPLICATION_UPDATED') {
                 if (typeof loadAllUserApplicationsForAdmin === 'function') loadAllUserApplicationsForAdmin();
+                if (typeof loadAllApplicationsPage === 'function') loadAllApplicationsPage();
             }
         };
 

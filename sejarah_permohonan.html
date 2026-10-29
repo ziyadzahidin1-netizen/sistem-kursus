@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sejarah Permohonan Pelbagai User - Admin MOSTI</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .container-admin {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        .admin-table th {
+            background-color: #0d2838;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        .admin-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+        }
+        .btn-approve {
+            background-color: #22c55e;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .btn-reject {
+            background-color: #f59e0b;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .btn-delete-app {
+            background-color: #ef4444;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-back {
+            background-color: #64748b;
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body style="background-color: #f8fafc;">
+
+    <div class="container-admin">
+        <div class="admin-header">
+            <div>
+                <h2><i class="fa-solid fa-users-gear"></i> Sejarah Permohonan Dari Pelbagai User</h2>
+                <p style="color: #64748b; font-size: 0.9rem;">Senarai semua kursus yang dipohon oleh pengguna secara terkini.</p>
+            </div>
+            <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Kembali ke Utama</a>
+        </div>
+
+        <div style="overflow-x: auto;">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Bil</th>
+                        <th>Nama Pemohon & IC</th>
+                        <th>Jawatan & Jabatan</th>
+                        <th>Nama Kursus</th>
+                        <th>Tarikh Mohon</th>
+                        <th>Status</th>
+                        <th>Tindakan Admin</th>
+                    </tr>
+                </thead>
+                <tbody id="fullAdminApplicationsTableBody">
+                    <!-- Data Dimuatkan Secara Dinamik -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const storedUser = sessionStorage.getItem('user') || localStorage.getItem('user');
+            if (storedUser) {
+                const user = JSON.parse(storedUser);
+                if (user.role !== 'admin') {
+                    alert('Akses terhad untuk Admin sahaja.');
+                    window.location.href = 'index.html';
+                    return;
+                }
+            } else {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Muat data awal
+            loadAllApplications();
+
+            // Mulakan pendengar acara secara langsung (Realtime Listener)
+            initAdminApplicationsRealtime();
+        });
+
+        // Pengesan acara langsung untuk mengemas kini jadual secara automatik
+        function initAdminApplicationsRealtime() {
+            if (!!window.EventSource) {
+                const eventSource = new EventSource('/api/events');
+
+                eventSource.onmessage = function(e) {
+                    try {
+                        const data = JSON.parse(e.data);
+                        if (data.type === 'APPLICATION_UPDATED') {
+                            loadAllApplications();
+                        }
+                    } catch (err) {
+                        console.error("Ralat SSE Parse:", err);
+                    }
+                };
+
+                eventSource.onerror = function(err) {
+                    console.warn("Ralat sambungan SSE Realtime:", err);
+                };
+            }
+        }
+
+        async function loadAllApplications() {
+            const tbody = document.getElementById('fullAdminApplicationsTableBody');
+
+            try {
+                const res = await fetch('/api/admin/applications');
+                if (res.ok) {
+                    const appList = await res.json();
+                    tbody.innerHTML = '';
+
+                    if (appList.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:20px;">Tiada permohonan daripada pengguna setakat ini.</td></tr>';
+                        return;
+                    }
+
+                    appList.forEach((item, index) => {
+                        let statusBadge = item.status === 'Berjaya' || item.status === 'Lulus' ? 
+                            '<span style="background-color:#22c55e; color:white; padding:4px 8px; border-radius:4px; font-weight:700;">Lulus</span>' : 
+                            (item.status === 'Tidak Berjaya' ? '<span style="background-color:#ef4444; color:white; padding:4px 8px; border-radius:4px; font-weight:700;">Tidak Lulus</span>' : 
+                            '<span style="background-color:#f59e0b; color:white; padding:4px 8px; border-radius:4px; font-weight:700;">Dalam Proses</span>');
+
+                        let formattedDate = item.created_at ? new Date(item.created_at).toLocaleDateString('ms-MY') : '-';
+
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${index + 1}</td>
+                            <td><strong>${item.nama_pemohon || item.nama || '-'}</strong><br><small style="color:#64748b;">IC: ${item.ic || item.user_ic || '-'}</small></td>
+                            <td>${item.jawatan || '-'}<br><small style="color:#64748b;">${item.jabatan || '-'}</small></td>
+                            <td><strong style="color:#0284c7;">${item.kod_kursus || ''}</strong> ${item.nama_kursus || item.kursus || ''}</td>
+                            <td>${formattedDate}</td>
+                            <td>${statusBadge}</td>
+                            <td>
+                                <button class="btn-approve" onclick="updateAppStatus('${item.id}', 'Berjaya')" title="Luluskan"><i class="fa-solid fa-check"></i></button>
+                                <button class="btn-reject" onclick="updateAppStatus('${item.id}', 'Tidak Berjaya')" title="Tolak"><i class="fa-solid fa-xmark"></i></button>
+                                <button class="btn-delete-app" onclick="deleteUserApp('${item.id}')" title="Padam"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+            } catch (err) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:red;">Ralat memuatkan data.</td></tr>';
+            }
+        }
+
+        async function updateAppStatus(id, newStatus) {
+            try {
+                await fetch(`/api/admin/applications/${id}/status`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: newStatus })
+                });
+                alert('Status permohonan kemaskini!');
+                loadAllApplications();
+            } catch (err) { alert('Ralat: ' + err.message); }
+        }
+
+        async function deleteUserApp(id) {
+            if (!confirm('Pasti mahu memadam permohonan ini?')) return;
+            try {
+                await fetch(`/api/admin/applications/${id}`, { method: 'DELETE' });
+                alert('Permohonan dipadam!');
+                loadAllApplications();
+            } catch (err) { alert('Ralat: ' + err.message); }
+        }
+    </script>
+</body>
+</html>

@@ -17,7 +17,6 @@
             <span>Portal Kursus</span>
         </div>
         
-        <!-- Toggle Menu Mobile -->
         <div class="menu-toggle" id="mobile-menu" onclick="toggleMenu()">
             <span></span>
             <span></span>
@@ -42,7 +41,6 @@
 
             <form id="courseForm" onsubmit="handleApply(event)" class="form-grid">
                 
-                <!-- Maklumat Diri (Autofill & Readonly) -->
                 <div class="form-group">
                     <label for="app-name">Nama Penuh</label>
                     <div class="input-icon-wrapper">
@@ -67,7 +65,6 @@
                     </div>
                 </div>
 
-                <!-- Jawatan & Gred -->
                 <div class="form-group">
                     <label for="app-jawatan">Jawatan</label>
                     <div class="input-icon-wrapper">
@@ -99,7 +96,6 @@
                     </div>
                 </div>
 
-                <!-- Bahagian / Jabatan / Agensi -->
                 <div class="form-group full-width">
                     <label for="app-jabatan">Jabatan/Agensi/Bahagian</label>
                     <div class="input-icon-wrapper">
@@ -138,7 +134,6 @@
                     </div>
                 </div>
 
-                <!-- Penyakit & Pengangkutan -->
                 <div class="form-group">
                     <label for="app-penyakit">Sejarah Penyakit / Alahan</label>
                     <div class="input-icon-wrapper">
@@ -162,7 +157,6 @@
                     </div>
                 </div>
 
-                <!-- Pilihan Kursus Dinamik Berdasarkan Admin -->
                 <div class="form-group full-width">
                     <label for="course-select">Pilih Kursus Permohonan</label>
                     <div class="input-icon-wrapper">
@@ -182,6 +176,7 @@
         </div>
     </main>
 
+    <script src="script.js"></script>
     <script>
         function toggleMenu() {
             const navLinks = document.getElementById('nav-links');
@@ -193,34 +188,18 @@
         async function loadAdminCoursesDropdown() {
             const selectEl = document.getElementById('course-select');
             if (!selectEl) return;
-
             selectEl.innerHTML = '<option value="">-- Sila Pilih Kursus --</option>';
 
             let customCourses = [];
-
             try {
-                customCourses = JSON.parse(localStorage.getItem('custom_courses')) || [];
-            } catch (e) {
-                customCourses = [];
-            }
-
-            if (customCourses.length === 0) {
-                try {
-                    const response = await fetch('/api/kursus');
-                    if (response.ok) {
-                        const apiData = await response.json();
-                        if (Array.isArray(apiData) && apiData.length > 0) {
-                            customCourses = apiData;
-                        }
-                    }
-                } catch (e) {
-                    console.warn('Gagal muat dari API server', e);
+                const response = await fetch('/api/kursus');
+                if (response.ok) {
+                    customCourses = await response.json();
                 }
-            }
+            } catch (e) { console.warn('Gagal muat dari API server', e); }
 
             if (customCourses.length > 0) {
                 const addedTitles = new Set();
-
                 customCourses.forEach(item => {
                     const title = item.tajuk || item.title;
                     if (title && !addedTitles.has(title)) {
@@ -231,12 +210,6 @@
                         selectEl.appendChild(opt);
                     }
                 });
-            } else {
-                const opt = document.createElement('option');
-                opt.value = "";
-                opt.textContent = "Tiada kursus ditawarkan buat masa ini";
-                opt.disabled = true;
-                selectEl.appendChild(opt);
             }
 
             const urlParams = new URLSearchParams(window.location.search);
@@ -248,7 +221,6 @@
 
         function loadUserData() {
             const userData = localStorage.getItem('user') || sessionStorage.getItem('user');
-
             if (!userData) {
                 alert('Sila log masuk terlebih dahulu.');
                 window.location.href = 'login.html';
@@ -256,7 +228,6 @@
             }
 
             const user = JSON.parse(userData);
-
             document.getElementById('app-name').value = user.nama || user.name || '';
             document.getElementById('app-ic').value = user.ic || '';
             document.getElementById('app-email').value = user.email || '';
@@ -265,12 +236,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             loadUserData();
             loadAdminCoursesDropdown();
-        });
-
-        window.addEventListener('storage', (e) => {
-            if (e.key === 'custom_courses') {
-                loadAdminCoursesDropdown();
-            }
         });
 
         async function handleApply(e) {
@@ -295,22 +260,37 @@
                 kursus: kursusVal
             };
 
-            // Simpan rekod tempatan sebagai backup automatik
+            // Simpan secara tempatan (Local Storage Backup)
             try {
-                let localApps = JSON.parse(localStorage.getItem('user_applications_' + icVal)) || [];
-                localApps.unshift({
-                    id: Date.now(),
+                let allGlobalApps = JSON.parse(localStorage.getItem('all_global_applications')) || [];
+                const newAppObj = {
+                    id: Date.now().toString(),
                     ic: icVal,
+                    user_ic: icVal,
+                    nama_pemohon: formData.nama,
+                    nama: formData.nama,
+                    email: formData.email,
+                    jawatan: formData.jawatan,
+                    gred: formData.gred,
+                    jabatan: formData.jabatan,
+                    penyakit: formData.penyakit,
+                    pengangkutan: formData.pengangkutan,
                     kod_kursus: 'KSR-' + Math.floor(100 + Math.random() * 900),
                     nama_kursus: kursusVal,
+                    kursus: kursusVal,
                     created_at: new Date().toISOString(),
-                    status: 'Dalam Proses',
-                    yuran_kursus: 'RM 0.00'
-                });
-                localStorage.setItem('user_applications_' + icVal, JSON.stringify(localApps));
+                    status: 'Dalam Proses'
+                };
+
+                allGlobalApps.unshift(newAppObj);
+                localStorage.setItem('all_global_applications', JSON.stringify(allGlobalApps));
+
+                let userApps = JSON.parse(localStorage.getItem('user_applications_' + icVal)) || [];
+                userApps.unshift(newAppObj);
+                localStorage.setItem('user_applications_' + icVal, JSON.stringify(userApps));
             } catch(err) { console.error("Ralat LocalStorage:", err); }
 
-            // Hantar ke backend & Supabase
+            // Hantar ke Backend API (Supabase & Broadcast SSE)
             try {
                 const response = await fetch('/api/mohon', {
                     method: 'POST',
@@ -318,14 +298,17 @@
                     body: JSON.stringify(formData)
                 });
 
-                alert('Permohonan berjaya dihantar!');
-                document.getElementById('courseForm').reset();
-                window.location.href = 'user_dashboard.html';
-
+                if (response.ok) {
+                    alert('Permohonan anda berjaya dihantar!');
+                    document.getElementById('courseForm').reset();
+                    window.location.href = 'user_dashboard.html';
+                } else {
+                    const errData = await response.json();
+                    alert('Gagal menghantar permohonan: ' + (errData.error || 'Sila cuba lagi.'));
+                }
             } catch (error) {
-                console.error('Ralat Server:', error);
-                alert('Permohonan berjaya direkodkan!');
-                window.location.href = 'user_dashboard.html';
+                console.error('Backend API Error:', error);
+                alert('Gagal menyambung ke server: ' + error.message);
             } finally {
                 btnSubmit.disabled = false;
                 btnSubmit.innerHTML = 'Hantar Permohonan <i class="fa-solid fa-paper-plane"></i>';
