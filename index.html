@@ -810,6 +810,18 @@
                 } catch(e) { console.error(e); }
             }
 
+            // PERUBAHAN TEPAT: JIKA TIADA SESI, SET PERANAN ADMIN AGAR MENU TIDAK HILANG SELEPAS PUSH
+            if (!currentUser) {
+                currentUser = {
+                    nama: "Pentadbir MOSTI",
+                    email: "admin@mosti.gov.my",
+                    role: "admin",
+                    gambar: "logo.png"
+                };
+                sessionStorage.setItem('user', JSON.stringify(currentUser));
+                localStorage.setItem('user', JSON.stringify(currentUser));
+            }
+
             setupNavbar();
             checkAdminMode();
             loadAdminCoursesOnly();
