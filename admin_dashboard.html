@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin - Portal Kursus MOSTI</title>
+    
+    <!-- CSS Standard -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- FontAwesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f1f5f9;
+            color: #1e293b;
+        }
+
+        /* SUSUNAN UTAMA: SIDEBAR + MAIN CONTENT */
+        .admin-wrapper {
+            display: flex;
+            min-height: calc(100vh - 90px);
+            margin-top: 25px; /* Jarak dari Navbar */
+        }
+
+        /* REKA BENTUK SIDEBAR */
+        .sidebar {
+            width: 260px;
+            background-color: #0f172a;
+            color: #f8fafc;
+            padding: 20px 0;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+            border-radius: 0 8px 0 0;
+        }
+
+        .sidebar-header {
+            padding: 0 20px 20px 20px;
+            border-bottom: 1px solid #334155;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-header h3 {
+            font-size: 1.1rem;
+            color: #38bdf8;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 5px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border-left: 4px solid transparent;
+        }
+
+        .sidebar-link:hover, .sidebar-link.active {
+            background-color: #1e293b;
+            color: #ffffff;
+            border-left-color: #2563eb;
+        }
+
+        .sidebar-link i {
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* KANDUNGAN UTAMA (MAIN CONTENT) */
+        .main-content {
+            flex-grow: 1;
+            padding: 0 25px 25px 25px;
+            overflow-y: auto;
+        }
+
+        .tab-section {
+            display: none;
+        }
+
+        .tab-section.active {
+            display: block;
+        }
+
+        /* KAD UTAMA & PANEL DTIMS GOV STYLE */
+        .admin-card {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .gov-banner-header {
+            background-color: #0088cc;
+            color: #ffffff;
+            padding: 8px 14px;
+            font-size: 0.88rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            border-radius: 2px;
+        }
+
+        /* BAR NAVIGASI GAYA GOV/DTIMS */
+        .gov-tab-bar {
+            display: flex;
+            background-color: #73879c;
+            border-bottom: 2px solid #5a6b7c;
+            margin-bottom: 15px;
+            overflow-x: auto;
+        }
+
+        .gov-tab-item {
+            padding: 10px 18px;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 0.82rem;
+            cursor: pointer;
+            border-right: 1px solid #5a6b7c;
+            white-space: nowrap;
+            text-align: center;
+            transition: background 0.2s;
+            user-select: none;
+        }
+
+        .gov-tab-item:hover {
+            background-color: #5a6b7c;
+        }
+
+        .gov-tab-item.active {
+            background-color: #33414e;
+            border-bottom: 3px solid #0088cc;
+        }
+
+        /* GAYA BORANG & JADUAL SYSTEM DTIMS */
+        .gov-section-title {
+            background-color: #38bdf8;
+            color: #ffffff;
+            padding: 6px 10px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .gov-instruction {
+            color: #2563eb;
+            font-size: 0.8rem;
+            font-style: italic;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .gov-form-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+        }
+
+        .gov-form-table td {
+            padding: 5px 8px;
+            vertical-align: middle;
+        }
+
+        .gov-form-table td.label-col {
+            font-weight: bold;
+            width: 200px;
+            color: #0f172a;
+            white-space: nowrap;
+        }
+
+        .gov-input {
+            padding: 4px 8px;
+            border: 1px solid #94a3b8;
+            border-radius: 2px;
+            font-size: 0.85rem;
+            width: 100%;
+            max-width: 500px;
+            box-sizing: border-box;
+        }
+
+        .gov-textarea {
+            padding: 5px 8px;
+            border: 1px solid #94a3b8;
+            border-radius: 2px;
+            font-size: 0.85rem;
+            width: 100%;
+            max-width: 500px;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+
+        .gov-btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .gov-btn {
+            background-color: #94a3b8;
+            color: #ffffff;
+            border: 1px solid #64748b;
+            padding: 5px 18px;
+            font-size: 0.82rem;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+
+        .gov-btn:hover {
+            background-color: #64748b;
+        }
+
+        .gov-btn-primary {
+            background-color: #0284c7;
+            border-color: #0369a1;
+        }
+
+        .gov-btn-primary:hover {
+            background-color: #0369a1;
+        }
+
+        /* JADUAL DATA GOV DTIMS */
+        .gov-data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+            margin-bottom: 10px;
+        }
+
+        .gov-data-table th {
+            background-color: #73879c;
+            color: white;
+            padding: 6px 8px;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+            font-weight: bold;
+            vertical-align: middle;
+        }
+
+        .gov-data-table td {
+            padding: 6px 8px;
+            border: 1px solid #cbd5e1;
+            background-color: #fff;
+            vertical-align: middle;
+        }
+
+        /* STATISTIK GRID */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: #fff;
+            padding: 15px;
+            border: 1px solid #cbd5e1;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 1.8rem;
+            color: #0284c7;
+            margin: 5px 0;
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media screen and (max-width: 900px) {
+            .admin-wrapper {
+                flex-direction: column;
+                margin-top: 15px;
+            }
+            .sidebar {
+                width: 100%;
+                border-radius: 0;
+            }
+            .main-content {
+                padding: 15px 10px;
+            }
+            .gov-form-table td.label-col {
+                width: 100%;
+                display: block;
+                margin-top: 6px;
+            }
+            .gov-form-table td {
+                display: block;
+                padding: 2px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BAR NAVIGASI (NAVBAR) -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="logo.png" alt="Logo Portal Kursus" class="logo-img">
+            <span>Portal kursus</span>
+        </div>
+
+        <nav class="nav-links">
+            <a href="index.html" class="nav-btn"><i class="fa-solid fa-house"></i> Utama</a>
+            <a href="iklan.html" class="nav-btn"><i class="fa-solid fa-bullhorn"></i> Jenis & Iklan Kursus</a>
+            <a href="takwim.html" class="nav-btn"><i class="fa-solid fa-calendar-days"></i> Takwim Kursus</a>
+            <a href="mohon.html" class="nav-btn btn-apply"><i class="fa-solid fa-paper-plane"></i> Mohon Kursus</a>
+        </nav>
+    </header>
+
+    <!-- SUSUNAN ADMIN DENGAN SIDEBAR & KANDUNGAN -->
+    <div class="admin-wrapper">
+
+        <!-- SIDEBAR NAVIGASI -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3><i class="fa-solid fa-user-shield"></i> Dashboard Admin</h3>
+            </div>
+            <ul class="sidebar-menu">
+                <li>
+                    <a class="sidebar-link active" onclick="switchTab('latihan-tab', this)">
+                        <i class="fa-solid fa-user-graduate"></i>
+                        <span>Peg. Pentadbir Latihan</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="sidebar-link" onclick="switchTab('perolehan-tab', this)">
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                        <span>Peg. Pentadbir Perolehan</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- KANDUNGAN UTAMA (MAIN CONTENT) -->
+        <main class="main-content">
+
+            <!-- TAB 1: PEGAWAI PENTADBIR LATIHAN -->
+            <div id="latihan-tab" class="tab-section active">
+                
+                <div class="gov-banner-header">
+                    PENGURUSAN PROGRAM PEMBANGUNAN KOMPETENSI / LATIHAN (PENTADBIR LATIHAN)
+                </div>
+
+                <!-- SUB-NAVIGASI BAR (SERUPA SISTEM DTIMS KERAJAAN) -->
+                <div class="gov-tab-bar">
+                    <div class="gov-tab-item active" onclick="switchSubTab('sub-isi-maklumat', this)">
+                        REKOD PPK
+                    </div>
+                    <div class="gov-tab-item" onclick="switchSubTab('sub-anggaran-kos', this)">
+                        ANGGARAN KOS
+                    </div>
+                    <div class="gov-tab-item" onclick="switchSubTab('sub-senarai-peserta', this)">
+                        JAWATAN SASARAN / PESERTA
+                    </div>
+                    <div class="gov-tab-item" onclick="switchSubTab('sub-jadual-kadar', this)">
+                        TEMPAT & JADUAL
+                    </div>
+                    <div class="gov-tab-item" onclick="switchSubTab('sub-upload-dokumen', this)">
+                        MUAT NAIK DOKUMEN
+                    </div>
+                    <div class="gov-tab-item" onclick="switchSubTab('sub-kertas-perakuan', this)">
+                        KERTAS PERAKUAN
+                    </div>
+                </div>
+
+                <!-- 1. BAHAGIAN ISI MAKLUMAT REKOD PPK, OBJEKTIF & URUS SETIA -->
+                <div id="sub-isi-maklumat" class="admin-card sub-tab-content" style="display: block;">
+                    
+                    <div style="background-color:#38bdf8; color:#fff; padding:6px 10px; font-weight:bold; font-size:0.85rem; margin-bottom:10px;">
+                        REKOD PPK
+                    </div>
+
+                    <div class="gov-instruction">
+                        <span style="color:red;">* Mandatori</span><br>
+                        Klik butang 'Tambah' untuk menambah rekod.<br>
+                        Klik butang 'Hapus' untuk menghapus rekod yang telah dipilih.<br>
+                        Klik butang 'Simpan' untuk menyimpan rekod.
+                    </div>
+
+                    <form id="form-maklumat-kursus" onsubmit="saveModuleData(event, 'maklumat_kursus')">
+                        
+                        <!-- MAKLUMAT TERPERINCI -->
+                        <div class="gov-section-title">MAKLUMAT TERPERINCI REKOD PPK</div>
+                        <table class="gov-form-table">
+                            <tr>
+                                <td class="label-col">Diwujudkan Oleh</td>
+                                <td>: KEMENTERIAN SAINS, TEKNOLOGI DAN INOVASI</td>
+                            </tr>
+                            <tr>
+                                <td class="label-col">Kod PPK *</td>
+                                <td>: <input type="text" name="kod_ppk" class="gov-input" value="16341216082025" style="width:200px;"></td>
+                            </tr>
+                            <tr>
+                                <td class="label-col">Nama PPK *</td>
+                                <td>: <input type="text" name="nama_ppk" class="gov-input" value="PROGRAM TRANSFORMASI MINDA SIRI 2 MOSTI TAHUN 2025"></td>
+                            </tr>
+                            <tr>
+                                <td class="label-col">Keterangan</td>
+                                <td>: <textarea name="keterangan" class="gov-textarea" rows="3">pegawai lantikan baru dalam perkhidmatan awam bagi semua skim perkhidmatan perlu hadir dengan jayanya PTM sebagai syarat pengesahan dalam perkhidmatan berkuatkuasa mulai 1 Januari 2013.</textarea></td>
+                            </tr>
+                            <tr>
+                                <td class="label-col">Penganjur *</td>
+                                <td>: 
+                                    <input type="text" name="penganjur" class="gov-input" value="Bahagian Pengurusan Sumber Manusia MOSTI" style="width: 350px;">
+                                    <button type="button" class="gov-btn" style="padding: 3px 10px;">CARI</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label-col">Kategori PPK</td>
+                                <td>: Kursus/Latihan</td>
+                            </tr>
+                            <tr>
+                                <td class="label-col">Jenis PPK *</td>
+                                <td>: 
+                                    <select name="jenis_ppk" class="gov-input" style="width: auto;">
+                                        <option value="Umum" selected>Umum</option>
+                                        <option value="Khusus">Khusus</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label-col">Bidang *</td>
+                                <td>: 
+                                    <select name="bidang" class="gov-input" style="width: auto; min-width: 250px;">
+                                        <option value="Pengurusan Sumber Manusia" selected>Pengurusan Sumber Manusia</option>
+                                        <option value="Teknologi Maklumat">Teknologi Maklumat</option>
+                                        <option value="Kewangan">Kewangan</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label-col">Jumlah Kos (RM)</td>
+                                <td>: <input type="text" name="jumlah_kos" class="gov-input" value="0.00" style="width: 120px;"></td>
+                            </tr>
+                            <tr>
+                                <td class="label-col">Jumlah Jam *</td>
+                                <td>: 
+                                    <input type="text" name="jam" class="gov-input" style="width: 60px;"> jam 
+                                    <input type="text" name="minit" class="gov-input" style="width: 60px;"> minit
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- 2. SEKSYEN SENARAI OBJEKTIF -->
+                        <div class="gov-section-title">SENARAI OBJEKTIF *</div>
+                        <table class="gov-data-table" id="jadual-objektif">
+                            <thead>
+                                <tr>
+                                    <th style="width: 30px; text-align: center;"><input type="checkbox" onclick="toggleSelectAll(this, '.objektif-check')"></th>
+                                    <th style="width: 40px; text-align: center;">Bil.</th>
+                                    <th>Objektif</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="text-align: center;"><input type="checkbox" class="objektif-check"></td>
+                                    <td style="text-align: center;">1</td>
+                                    <td>
+                                        <input type="text" name="objektif[]" class="gov-input" style="max-width: 100%;" value="memberi nilai tambah kepada peserta dengan penerapan kemahiran komunikasi dan pengurusan kewangan Kerajaan melalui Segmen IV yang merangkumi 13% daripada peruntukan Jadual PTM.">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center;"><input type="checkbox" class="objektif-check"></td>
+                                    <td style="text-align: center;">2</td>
+                                    <td>
+                                        <input type="text" name="objektif[]" class="gov-input" style="max-width: 100%;" value="memberi pendedahan kepada pegawai mengenai konsep kenegaraan, prinsip dan falsafah pembentukan negara, sistem pentadbiran kerajaan serta peraturan-peraturan asas perkhidmatan awam melalui Segmen I yang merangkumi 17% daripada peruntukan Jadual PTM;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center;"><input type="checkbox" class="objektif-check"></td>
+                                    <td style="text-align: center;">3</td>
+                                    <td>
+                                        <input type="text" name="objektif[]" class="gov-input" style="max-width: 100%;" value="memupuk keperibadian, jati diri dan nilai patriotisme pegawai supaya lebih berketerampilan dan berkemampuan menyesuaikan diri dalam perkhidmatan awam melalui Segmen II yang merangkumi 30% daripada peruntukan Jadual PTM;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center;"><input type="checkbox" class="objektif-check"></td>
+                                    <td style="text-align: center;">4</td>
+                                    <td>
+                                        <input type="text" name="objektif[]" class="gov-input" style="max-width: 100%;" value="menerapkan nilai budaya kerja cemerlang dengan minda kelas pertama agar pegawai dapat memberikan penyampaian perkhidmatan dengan cekap serta berkesan melalui Segmen III yang merangkumi 40% daripada peruntukan Jadual PTM;">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="gov-btn-group" style="justify-content: center; gap: 10px;">
+                            <button type="button" class="gov-btn" onclick="tambahObjektif()">TAMBAH</button>
+                            <button type="button" class="gov-btn" onclick="hapusObjektif()">HAPUS</button>
+                        </div>
+
+                        <!-- 3. SEKSYEN URUS SETIA PROGRAM PEMBANGUNAN KOMPETENSI -->
+                        <div class="gov-section-title">URUS SETIA PROGRAM PEMBANGUNAN KOMPETENSI *</div>
+                        <table class="gov-data-table" id="jadual-urusetia">
+                            <thead>
+                                <tr>
+                                    <th style="width: 30px; text-align: center;"><input type="checkbox" onclick="toggleSelectAll(this, '.urusetia-check')"></th>
+                                    <th style="width: 40px; text-align: center;">Bil.</th>
+                                    <th>No. KP / Nama / Jawatan Sebenar Pemilik Kompetensi</th>
+                                    <th>Unit Organisasi</th>
+                                    <th>Tel No</th>
+                                    <th>Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="text-align: center;"><input type="checkbox" class="urusetia-check"></td>
+                                    <td style="text-align: center;">1</td>
+                                    <td>
+                                        <input type="text" name="urusetia_nama[]" class="gov-input" style="max-width: 100%; font-weight:bold; margin-bottom:4px;" value="910225085387 - NOR AZILAN BIN ZAINAL ABIDIN"><br>
+                                        <input type="text" name="urusetia_jawatan[]" class="gov-input" style="max-width: 100%; font-size:0.75rem;" value="Pembantu Tadbir (Perkeranian/Operasi), Gred N1, (TBK1 dan TBK2)">
+                                    </td>
+                                    <td>
+                                        <textarea name="urusetia_unit[]" class="gov-textarea" rows="3" style="max-width: 100%;">SEKSYEN PEMBANGUNAN SUMBER MANUSIA DAN KOMPETENSI, BAHAGIAN PENGURUSAN SUMBER MANUSIA, PEJABAT SETIAUSAHA BAHAGIAN KANAN (PENGURUSAN), PEJABAT KETUA SETIAUSAHA, PENGURUSAN, KEMENTERIAN SAINS, TEKNOLOGI DAN INOVASI, KERAJAAN MALAYSIA</textarea>
+                                    </td>
+                                    <td><input type="text" name="urusetia_tel[]" class="gov-input" value="0167331925" style="max-width:100px;"></td>
+                                    <td><input type="email" name="urusetia_email[]" class="gov-input" value="azilan@mosti.gov.my" style="max-width:160px;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center;"><input type="checkbox" class="urusetia-check"></td>
+                                    <td style="text-align: center;">2</td>
+                                    <td>
+                                        <input type="text" name="urusetia_nama[]" class="gov-input" style="max-width: 100%; font-weight:bold; margin-bottom:4px;" value="790207095158 - NOOR DIANA HAYATI BINTI KAMUDIN"><br>
+                                        <input type="text" name="urusetia_jawatan[]" class="gov-input" style="max-width: 100%; font-size:0.75rem;" placeholder="Jawatan...">
+                                    </td>
+                                    <td>
+                                        <textarea name="urusetia_unit[]" class="gov-textarea" rows="3" style="max-width: 100%;">SEKSYEN PEMBANGUNAN SUMBER MANUSIA DAN KOMPETENSI, BAHAGIAN PENGURUSAN SUMBER MANUSIA, PEJABAT SETIAUSAHA BAHAGIAN KANAN</textarea>
+                                    </td>
+                                    <td><input type="text" name="urusetia_tel[]" class="gov-input" value="019-2616009" style="max-width:100px;"></td>
+                                    <td><input type="email" name="urusetia_email[]" class="gov-input" value="Dyanahayati@mosti.gov.my" style="max-width:160px;"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="gov-btn-group" style="justify-content: center; gap: 10px;">
+                            <button type="button" class="gov-btn" onclick="tambahUrusetia()">TAMBAH</button>
+                            <button type="button" class="gov-btn" onclick="hapusUrusetia()">HAPUS</button>
+                        </div>
+
+                        <!-- BUTANG SIMPAN & KELUAR DI BAWAH SEKALI -->
+                        <div class="gov-btn-group" style="justify-content: center; gap: 10px; margin-top: 25px; padding-top: 15px; border-top: 1px solid #cbd5e1;">
+                            <button type="submit" class="gov-btn"><i class="fa-solid fa-floppy-disk"></i> SIMPAN</button>
+                            <button type="button" class="gov-btn" onclick="window.location.reload()"><i class="fa-solid fa-right-from-bracket"></i> KELUAR</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- 2. BAHAGIAN ANGGARAN KOS / AGIHAN (DISEMAKKAN MENGIKUT GAMBAR 1) -->
+                <div id="sub-anggaran-kos" class="admin-card sub-tab-content" style="display: none;">
+                    <div style="text-align: center; font-weight: bold; font-size: 1.1rem; margin-bottom: 15px; text-transform: uppercase; background-color: #f8fafc; padding: 10px; border: 1px solid #cbd5e1;">
+                        KOS / AGIHAN
+                    </div>
+
+                    <form id="form-anggaran-kos" onsubmit="saveModuleData(event, 'anggaran_kos')">
+                        <table class="gov-data-table" id="jadual-kos-agihan">
+                            <thead>
+                                <tr>
+                                    <th style="width: 30px; text-align: center;"><input type="checkbox" onclick="toggleSelectAll(this, '.kos-check')"></th>
+                                    <th>Perihal</th>
+                                    <th style="width: 180px; text-align: center;">RM</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-kos-perihal">
+                                <tr>
+                                    <td style="text-align: center;"><input type="checkbox" class="kos-check"></td>
+                                    <td>
+                                        <input type="text" name="kos_perihal[]" class="gov-input" style="max-width: 100%; font-weight: bold; margin-bottom: 4px;" value="BAYARAN PAKEJ PENGINAPAN DAN BAYARAN SYARIKAT PENYEDIA LATIHAN">
+                                        <div style="padding-left: 15px;">
+                                            (i) <input type="text" name="kos_sub_perihal_1[]" class="gov-input" style="width: calc(100% - 30px); margin-bottom: 3px;" value="Bayaran pakej penginapan">
+                                        </div>
+                                    </td>
+                                    <td style="text-align: right; vertical-align: bottom;">
+                                        <input type="number" step="0.01" name="kos_rm[]" class="gov-input class-kos-rm" style="text-align: right; width: 100%;" value="29700.00" oninput="kiraKosKeseluruhan()">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center;"><input type="checkbox" class="kos-check"></td>
+                                    <td>
+                                        <div style="padding-left: 15px;">
+                                            (ii) <input type="text" name="kos_sub_perihal_2[]" class="gov-input" style="width: calc(100% - 35px);" value="Bayaran syarikat penyedia latihan">
+                                        </div>
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <input type="number" step="0.01" name="kos_rm[]" class="gov-input class-kos-rm" style="text-align: right; width: 100%;" value="10560.00" oninput="kiraKosKeseluruhan()">
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2" style="font-weight: bold; text-transform: uppercase;">JUMLAH</td>
+                                    <td style="text-align: right;">
+                                        <input type="text" id="kos_jumlah_sub" class="gov-input" style="text-align: right; font-weight: bold; background-color: #f1f5f9;" value="40,260.00" readonly>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="font-weight: bold; text-transform: uppercase;">KONTIGENSI (5%)</td>
+                                    <td style="text-align: right;">
+                                        <input type="text" id="kos_kontigensi" class="gov-input" style="text-align: right; font-weight: bold; background-color: #f1f5f9;" value="2,013.00" readonly>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="font-weight: bold; text-transform: uppercase;">JUMLAH KESELURUHAN</td>
+                                    <td style="text-align: right;">
+                                        <input type="text" id="kos_jumlah_keseluruhan" class="gov-input" style="text-align: right; font-weight: bold; background-color: #f1f5f9;" value="42,273.00" readonly>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="font-weight: bold; text-transform: uppercase;">JUMLAH KESELURUHAN DIGENAPKAN</td>
+                                    <td style="text-align: right;">
+                                        <input type="text" id="kos_digenapkan" class="gov-input" style="text-align: right; font-weight: bold; background-color: #e2e8f0;" value="42,300.00" readonly>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                        <div class="gov-btn-group" style="justify-content: center; gap: 10px;">
+                            <button type="button" class="gov-btn" onclick="tambahPerihalKos()">TAMBAH PERIHAL</button>
+                            <button type="button" class="gov-btn" onclick="hapusPerihalKos()">HAPUS PERIHAL</button>
+                        </div>
+
+                        <div class="gov-btn-group" style="justify-content: center; gap: 10px; margin-top: 20px;">
+                            <button type="submit" class="gov-btn gov-btn-primary"><i class="fa-solid fa-floppy-disk"></i> SIMPAN KOS / AGIHAN</button>
+                            <button type="reset" class="gov-btn"><i class="fa-solid fa-rotate-left"></i> KOSONGKAN</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- 3. BAHAGIAN SENARAI PESERTA (DISEMAKKAN MENGIKUT GAMBAR 2) -->
+                <div id="sub-senarai-peserta" class="admin-card sub-tab-content" style="display: none;">
+                    <div style="text-align: center; font-weight: bold; font-size: 0.95rem; margin-bottom: 12px; background-color: #f8fafc; padding: 10px; border: 1px solid #cbd5e1; text-transform: uppercase;">
+                        JADUAL KADAR BAGI PENGINAPAN DAN MAKAN MINUM KURSUS / SENARAI PESERTA<br>
+                        <span style="font-size: 0.8rem; font-weight: normal; text-transform: none;">URUS SETIA DAN PESERTA KURSUS KOMUNIKASI DAN PEMBENTANGAN BERKESAN SKIM PEGAWAI SAINS DAN PEGAWAI PENYELIDIK MOSTI TAHUN 2026</span>
+                    </div>
+
+                    <form id="form-senarai-peserta" onsubmit="saveModuleData(event, 'senarai_peserta')">
+                        <div style="overflow-x: auto;">
+                            <table class="gov-data-table" id="jadual-peserta-kadar" style="min-width: 1200px;">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 30px;" rowspan="2"><input type="checkbox" onclick="toggleSelectAll(this, '.peserta-check')"></th>
+                                        <th style="width: 35px;" rowspan="2">BIL</th>
+                                        <th style="width: 140px;" rowspan="2">NAMA PESERTA</th>
+                                        <th style="width: 140px;" rowspan="2">JABATAN / AGENSI</th>
+                                        <th style="width: 50px;" rowspan="2">GRED JAWATAN</th>
+                                        <th colspan="4">JUMLAH KELAYAKAN</th>
+                                        <th style="width: 50px;" rowspan="2">HARI / MALAM</th>
+                                        <th style="width: 100px;" rowspan="2">JUMLAH KELAYAKAN 3 MALAM RM</th>
+                                        <th style="width: 90px;" rowspan="2">JENIS BILIK</th>
+                                        <th style="width: 100px;" rowspan="2">TAWARAN PAKEJ RM</th>
+                                        <th style="width: 90px;" rowspan="2">HOTEL x JUMLAH HARI/MALAM</th>
+                                        <th style="width: 100px;" rowspan="2">JUMLAH TAWARAN RM</th>
+                                    </tr>
+                                    <tr>
+                                        <th style="width: 70px;">ELAUN MAKAN RM</th>
+                                        <th style="width: 70px;">ELAUN HOTEL RM</th>
+                                        <th style="width: 60px;">SST RM</th>
+                                        <th style="width: 80px;">JUMLAH RM</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align: center;"><input type="checkbox" class="peserta-check"></td>
+                                        <td style="text-align: center;">1</td>
+                                        <td><input type="text" name="peserta_nama[]" class="gov-input" style="width: 100%;" placeholder="Nama Peserta"></td>
+                                        <td><input type="text" name="peserta_jabatan[]" class="gov-input" style="width: 100%;" value="JABATAN KIMIA MALAYSIA"></td>
+                                        <td><input type="text" name="peserta_gred[]" class="gov-input" style="width: 100%; text-align: center;" value="14"></td>
+                                        <td><input type="number" step="0.01" name="peserta_emakan[]" class="gov-input" style="width: 100%; text-align: right;" value="320.00"></td>
+                                        <td><input type="number" step="0.01" name="peserta_ehotel[]" class="gov-input" style="width: 100%; text-align: right;" value="400.00"></td>
+                                        <td><input type="number" step="0.01" name="peserta_sst[]" class="gov-input" style="width: 100%; text-align: right;" value="432.00"></td>
+                                        <td><input type="number" step="0.01" name="peserta_jkelayakan[]" class="gov-input" style="width: 100%; text-align: right;" value="752.00"></td>
+                                        <td><input type="text" name="peserta_malam[]" class="gov-input" style="width: 100%; text-align: center;" value="3"></td>
+                                        <td><input type="number" step="0.01" name="peserta_jkelayakan3malam[]" class="gov-input" style="width: 100%; text-align: right;" value="2256.00"></td>
+                                        <td><input type="text" name="peserta_bilik[]" class="gov-input" style="width: 100%; text-align: center;" value="Single"></td>
+                                        <td><input type="number" step="0.01" name="peserta_pakej[]" class="gov-input" style="width: 100%; text-align: right;" value="300.00"></td>
+                                        <td><input type="text" name="peserta_hotelxday[]" class="gov-input" style="width: 100%; text-align: center;" value="3"></td>
+                                        <td><input type="number" step="0.01" name="peserta_jtawaran[]" class="gov-input" style="width: 100%; text-align: right;" value="900.00"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: center;"><input type="checkbox" class="peserta-check"></td>
+                                        <td style="text-align: center;">2</td>
+                                        <td><input type="text" name="peserta_nama[]" class="gov-input" style="width: 100%;" placeholder="Nama Peserta"></td>
+                                        <td><input type="text" name="peserta_jabatan[]" class="gov-input" style="width: 100%;" value="JABATAN KIMIA MALAYSIA"></td>
+                                        <td><input type="text" name="peserta_gred[]" class="gov-input" style="width: 100%; text-align: center;" value="14"></td>
+                                        <td><input type="number" step="0.01" name="peserta_emakan[]" class="gov-input" style="width: 100%; text-align: right;" value="320.00"></td>
+                                        <td><input type="number" step="0.01" name="peserta_ehotel[]" class="gov-input" style="width: 100%; text-align: right;" value="400.00"></td>
+                                        <td><input type="number" step="0.01" name="peserta_sst[]" class="gov-input" style="width: 100%; text-align: right;" value="432.00"></td>
+                                        <td><input type="number" step="0.01" name="peserta_jkelayakan[]" class="gov-input" style="width: 100%; text-align: right;" value="752.00"></td>
+                                        <td><input type="text" name="peserta_malam[]" class="gov-input" style="width: 100%; text-align: center;" value="3"></td>
+                                        <td><input type="number" step="0.01" name="peserta_jkelayakan3malam[]" class="gov-input" style="width: 100%; text-align: right;" value="2256.00"></td>
+                                        <td><input type="text" name="peserta_bilik[]" class="gov-input" style="width: 100%; text-align: center;" value="Single"></td>
+                                        <td><input type="number" step="0.01" name="peserta_pakej[]" class="gov-input" style="width: 100%; text-align: right;" value="300.00"></td>
+                                        <td><input type="text" name="peserta_hotelxday[]" class="gov-input" style="width: 100%; text-align: center;" value="3"></td>
+                                        <td><input type="number" step="0.01" name="peserta_jtawaran[]" class="gov-input" style="width: 100%; text-align: right;" value="900.00"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: center;"><input type="checkbox" class="peserta-check"></td>
+                                        <td style="text-align: center;">3</td>
+                                        <td><input type="text" name="peserta_nama[]" class="gov-input" style="width: 100%;" placeholder="Nama Peserta"></td>
+                                        <td><input type="text" name="peserta_jabatan[]" class="gov-input" style="width: 100%;" value="JABATAN KIMIA MALAYSIA"></td>
+                                        <td><input type="text" name="peserta_gred[]" class="gov-input" style="width: 100%; text-align: center;" value="12"></td>
+                                        <td><input type="number" step="0.01" name="peserta_emakan[]" class="gov-input" style="width: 100%; text-align: right;" value="320.00"></td>
+                                        <td><input type="number" step="0.01" name="peserta_ehotel[]" class="gov-input" style="width: 100%; text-align: right;" value="270.00"></td>
+                                        <td><input type="number" step="0.01" name="peserta_sst[]" class="gov-input" style="width: 100%; text-align: right;" value="291.60"></td>
+                                        <td><input type="number" step="0.01" name="peserta_jkelayakan[]" class="gov-input" style="width: 100%; text-align: right;" value="611.60"></td>
+                                        <td><input type="text" name="peserta_malam[]" class="gov-input" style="width: 100%; text-align: center;" value="3"></td>
+                                        <td><input type="number" step="0.01" name="peserta_jkelayakan3malam[]" class="gov-input" style="width: 100%; text-align: right;" value="1834.80"></td>
+                                        <td><input type="text" name="peserta_bilik[]" class="gov-input" style="width: 100%; text-align: center;" value="Single"></td>
+                                        <td><input type="number" step="0.01" name="peserta_pakej[]" class="gov-input" style="width: 100%; text-align: right;" value="300.00"></td>
+                                        <td><input type="text" name="peserta_hotelxday[]" class="gov-input" style="width: 100%; text-align: center;" value="3"></td>
+                                        <td><input type="number" step="0.01" name="peserta_jtawaran[]" class="gov-input" style="width: 100%; text-align: right;" value="900.00"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="gov-btn-group" style="justify-content: center; gap: 10px;">
+                            <button type="button" class="gov-btn" onclick="tambahPesertaBaris()">TAMBAH PESERTA</button>
+                            <button type="button" class="gov-btn" onclick="hapusPesertaBaris()">HAPUS PESERTA</button>
+                        </div>
+
+                        <div class="gov-btn-group">
+                            <button type="submit" class="gov-btn gov-btn-primary"><i class="fa-solid fa-floppy-disk"></i> SIMPAN SENARAI PESERTA</button>
+                            <button type="reset" class="gov-btn"><i class="fa-solid fa-rotate-left"></i> KOSONGKAN</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- 4. BAHAGIAN JADUAL KADAR -->
+                <div id="sub-jadual-kadar" class="admin-card sub-tab-content" style="display: none;">
+                    <div class="gov-section-title">4. JADUAL KADAR BAYARAN / PENCERAMAH</div>
+                    <div class="gov-instruction">
+                        * Nyatakan jadual kadar mengikut jam, hari, atau pakej perolehan.
+                    </div>
+
+                    <form id="form-jadual-kadar" onsubmit="saveModuleData(event, 'jadual_kadar')">
+                        <table class="gov-form-table">
+                            <tr>
+                                <td class="label-col">Kategori Kadar</td>
+                                <td>: 
+                                    <select name="kategori_kadar" class="gov-input" style="width: auto; min-width: 200px;">
+                                        <option value="">-- Pilih Kategori --</option>
+                                        <option value="Kadar Penceramah">Kadar Penceramah</option>
+                                        <option value="Kadar Sewaan Dewan">Kadar Sewaan Dewan</option>
+                                        <option value="Kadar Makan Minum">Kadar Makan Minum</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label-col">Butiran & Kadar Bayaran</td>
+                                <td>: <textarea name="butiran_kadar" class="gov-textarea" rows="4" placeholder=""></textarea></td>
+                            </tr>
+                        </table>
+
+                        <div class="gov-btn-group">
+                            <button type="submit" class="gov-btn gov-btn-primary"><i class="fa-solid fa-floppy-disk"></i> SIMPAN</button>
+                            <button type="reset" class="gov-btn"><i class="fa-solid fa-rotate-left"></i> KOSONGKAN</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- 5. BAHAGIAN MUAT NAIK GAMBAR / PDF MAKLUMAT SYARIKAT -->
+                <div id="sub-upload-dokumen" class="admin-card sub-tab-content" style="display: none;">
+                    <div class="gov-section-title">5. MUAT NAIK GAMBAR / PDF MAKLUMAT SYARIKAT</div>
+                    <div class="gov-instruction">
+                        * Pilih fail Gambar (JPG/PNG) atau Dokumen (PDF) Profil / Maklumat Syarikat.
+                    </div>
+
+                    <form id="form-upload-dokumen" onsubmit="saveModuleData(event, 'upload_dokumen')">
+                        <table class="gov-form-table">
+                            <tr>
+                                <td class="label-col">Nama Syarikat / Vendor</td>
+                                <td>: <input type="text" name="nama_syarikat" class="gov-input" placeholder=""></td>
+                            </tr>
+                            <tr>
+                                <td class="label-col">Pilih Fail Dokumen (PDF / Gambar) *</td>
+                                <td>: <input type="file" name="fail_syarikat" accept="image/*,application/pdf" class="gov-input" style="border:none;"></td>
+                            </tr>
+                            <tr>
+                                <td class="label-col">Keterangan Fail</td>
+                                <td>: <input type="text" name="keterangan_fail" class="gov-input" placeholder=""></td>
+                            </tr>
+                        </table>
+
+                        <div class="gov-btn-group">
+                            <button type="submit" class="gov-btn gov-btn-primary"><i class="fa-solid fa-cloud-arrow-up"></i> MUAT NAIK & SIMPAN</button>
+                            <button type="reset" class="gov-btn"><i class="fa-solid fa-rotate-left"></i> KOSONGKAN</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- 6. BAHAGIAN KERTAS PERAKUAN -->
+                <div id="sub-kertas-perakuan" class="admin-card sub-tab-content" style="display: none;">
+                    <div class="gov-section-title">6. MAKLUMAT KERTAS PERAKUAN</div>
+                    <div class="gov-instruction">
+                        * Isikan maklumat kertas perakuan atau muat naik dokumen kertas perakuan dalam format PDF/Gambar.
+                    </div>
+
+                    <form id="form-kertas-perakuan" onsubmit="saveModuleData(event, 'kertas_perakuan')">
+                        <table class="gov-form-table">
+                            <tr>
+                                <td class="label-col">No. Rujukan Perakuan *</td>
+                                <td>: <input type="text" name="no_rujukan_perakuan" class="gov-input" placeholder=""></td>
+                            </tr>
+                            <tr>
+                                <td class="label-col">Tajuk Kertas Perakuan *</td>
+                                <td>: <input type="text" name="tajuk_perakuan" class="gov-input" placeholder=""></td>
+                            </tr>
+                            <tr>
+                                <td class="label-col">Ringkasan / Syor Perakuan</td>
+                                <td>: <textarea name="ringkasan_perakuan" class="gov-textarea" rows="4" placeholder=""></textarea></td>
+                            </tr>
+                            <tr>
+                                <td class="label-col">Muat Naik Fail Perakuan (PDF/Gambar)</td>
+                                <td>: <input type="file" name="fail_perakuan" accept="image/*,application/pdf" class="gov-input" style="border:none;"></td>
+                            </tr>
+                        </table>
+
+                        <div class="gov-btn-group">
+                            <button type="submit" class="gov-btn gov-btn-primary"><i class="fa-solid fa-floppy-disk"></i> SIMPAN KERTAS PERAKUAN</button>
+                            <button type="reset" class="gov-btn"><i class="fa-solid fa-rotate-left"></i> KOSONGKAN</button>
+                        </div>
+                    </form>
+                </div>
+
+            <!-- TAB 2: PEGAWAI PENTADBIR PEROLEHAN -->
+            <div id="perolehan-tab" class="tab-section">
+                <div class="gov-banner-header" style="background-color: #059669;">
+                    PENGURUSAN PEROLEHAN & SEBUT HARGA (PENTADBIR PEROLEHAN)
+                </div>
+
+                <!-- STATISTIK PEROLEHAN -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <p style="color: #64748b; margin:0; font-size: 0.85rem;">Permohonan Perolehan</p>
+                        <h3 style="color: #059669;">12</h3>
+                    </div>
+                    <div class="stat-card">
+                        <p style="color: #64748b; margin:0; font-size: 0.85rem;">Diluluskan (LO Issued)</p>
+                        <h3 style="color: #22c55e;">8</h3>
+                    </div>
+                    <div class="stat-card">
+                        <p style="color: #64748b; margin:0; font-size: 0.85rem;">Dalam Semakan Bajet</p>
+                        <h3 style="color: #f59e0b;">4</h3>
+                    </div>
+                </div>
+
+                <!-- JADUAL PEROLEHAN & VENDOR -->
+                <div class="admin-card">
+                    <div class="gov-section-title" style="background-color: #059669;">SENARAI PEROLEHAN & SEBUT HARGA VENDOR</div>
+                    <div style="overflow-x: auto;">
+                        <table class="gov-data-table">
+                            <thead>
+                                <tr>
+                                    <th>Bil</th>
+                                    <th>Tajuk Perolehan / Kursus</th>
+                                    <th>Nama Vendor / Syarikat</th>
+                                    <th>Anggaran Kos (RM)</th>
+                                    <th>Status Perolehan</th>
+                                    <th>Tindakan Perolehan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Kursus Kecerdasan Buatan (AI) 2026</td>
+                                    <td>Syarikat TechEdu Sdn Bhd</td>
+                                    <td>RM 15,000.00</td>
+                                    <td><span style="color:#22c55e; font-weight:bold;">Diluluskan</span></td>
+                                    <td>
+                                        <button class="gov-btn gov-btn-primary" style="padding:3px 8px; font-size:0.75rem;"><i class="fa-solid fa-file-pdf"></i> CETAK LO</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Bengkel Keselamatan Siber MOSTI</td>
+                                    <td>CyberSec Solutions Enterprise</td>
+                                    <td>RM 22,500.00</td>
+                                    <td><span style="color:#f59e0b; font-weight:bold;">Semakan Semasa</span></td>
+                                    <td>
+                                        <button class="gov-btn gov-btn-primary" style="padding:3px 8px; font-size:0.75rem; background-color:#22c55e;"><i class="fa-solid fa-check"></i> LULUS</button>
+                                        <button class="gov-btn" style="padding:3px 8px; font-size:0.75rem; background-color:#ef4444; border-color:#dc2626;"><i class="fa-solid fa-xmark"></i> TOLAK</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- SCRIPT PENGURUSAN TAB & DYNAMIC FUNCTIONS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadApplications();
+            kiraKosKeseluruhan();
+        });
+
+        // FUNGSI TUKAR TAB UTAMA SIDEBAR
+        function switchTab(tabId, element) {
+            const tabs = document.querySelectorAll('.tab-section');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            const links = document.querySelectorAll('.sidebar-link');
+            links.forEach(link => link.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            element.classList.add('active');
+        }
+
+        // FUNGSI TUKAR SUB-TAB BAR DTIMS GOV
+        function switchSubTab(subTabId, element) {
+            const subTabs = document.querySelectorAll('.sub-tab-content');
+            subTabs.forEach(sub => sub.style.display = 'none');
+
+            const tabItems = document.querySelectorAll('.gov-tab-item');
+            tabItems.forEach(item => item.classList.remove('active'));
+
+            document.getElementById(subTabId).style.display = 'block';
+            element.classList.add('active');
+        }
+
+        /* ---------------- FUNGSI DYNAMIC OBJEKTIF ---------------- */
+        function tambahObjektif() {
+            const tbody = document.querySelector('#jadual-objektif tbody');
+            const rowCount = tbody.rows.length + 1;
+            
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td style="text-align: center;"><input type="checkbox" class="objektif-check"></td>
+                <td style="text-align: center;">${rowCount}</td>
+                <td>
+                    <input type="text" name="objektif[]" class="gov-input" style="max-width: 100%;" placeholder="Masukkan objektif baharu...">
+                </td>
+            `;
+            tbody.appendChild(tr);
+            kemaskiniNomborJadual('#jadual-objektif');
+        }
+
+        function hapusObjektif() {
+            const tbody = document.querySelector('#jadual-objektif tbody');
+            const checkboxes = tbody.querySelectorAll('.objektif-check:checked');
+            
+            if (checkboxes.length === 0) {
+                alert('Sila pilih/tanda sekurang-kurangnya satu objektif untuk dihapuskan.');
+                return;
+            }
+
+            checkboxes.forEach(cb => cb.closest('tr').remove());
+            kemaskiniNomborJadual('#jadual-objektif');
+        }
+
+        /* ---------------- FUNGSI DYNAMIC URUS SETIA ---------------- */
+        function tambahUrusetia() {
+            const tbody = document.querySelector('#jadual-urusetia tbody');
+            const rowCount = tbody.rows.length + 1;
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td style="text-align: center;"><input type="checkbox" class="urusetia-check"></td>
+                <td style="text-align: center;">${rowCount}</td>
+                <td>
+                    <input type="text" name="urusetia_nama[]" class="gov-input" style="max-width: 100%; font-weight:bold; margin-bottom:4px;" placeholder="No. KP - Nama Pemilik"><br>
+                    <input type="text" name="urusetia_jawatan[]" class="gov-input" style="max-width: 100%; font-size:0.75rem;" placeholder="Jawatan & Gred...">
+                </td>
+                <td>
+                    <textarea name="urusetia_unit[]" class="gov-textarea" rows="2" style="max-width: 100%;" placeholder="Unit Organisasi..."></textarea>
+                </td>
+                <td><input type="text" name="urusetia_tel[]" class="gov-input" placeholder="No Tel" style="max-width:100px;"></td>
+                <td><input type="email" name="urusetia_email[]" class="gov-input" placeholder="Emel" style="max-width:160px;"></td>
+            `;
+            tbody.appendChild(tr);
+            kemaskiniNomborJadual('#jadual-urusetia');
+        }
+
+        function hapusUrusetia() {
+            const tbody = document.querySelector('#jadual-urusetia tbody');
+            const checkboxes = tbody.querySelectorAll('.urusetia-check:checked');
+            
+            if (checkboxes.length === 0) {
+                alert('Sila pilih/tanda sekurang-kurangnya satu urus setia untuk dihapuskan.');
+                return;
+            }
+
+            checkboxes.forEach(cb => cb.closest('tr').remove());
+            kemaskiniNomborJadual('#jadual-urusetia');
+        }
+
+        /* ---------------- FUNGSI DYNAMIC KOS / AGIHAN ---------------- */
+        function kiraKosKeseluruhan() {
+            const rmInputs = document.querySelectorAll('.class-kos-rm');
+            let totalRM = 0;
+
+            rmInputs.forEach(input => {
+                const val = parseFloat(input.value) || 0;
+                totalRM += val;
+            });
+
+            const kontigensi = totalRM * 0.05;
+            const jumlahKeseluruhan = totalRM + kontigensi;
+            const jumlahDigenapkan = Math.ceil(jumlahKeseluruhan / 100) * 100;
+
+            document.getElementById('kos_jumlah_sub').value = totalRM.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('kos_kontigensi').value = kontigensi.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('kos_jumlah_keseluruhan').value = jumlahKeseluruhan.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('kos_digenapkan').value = jumlahDigenapkan.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        }
+
+        function tambahPerihalKos() {
+            const tbody = document.getElementById('tbody-kos-perihal');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td style="text-align: center;"><input type="checkbox" class="kos-check"></td>
+                <td>
+                    <input type="text" name="kos_perihal[]" class="gov-input" style="max-width: 100%;" placeholder="Perihal Bayaran / Agihan Kos...">
+                </td>
+                <td style="text-align: right;">
+                    <input type="number" step="0.01" name="kos_rm[]" class="gov-input class-kos-rm" style="text-align: right; width: 100%;" value="0.00" oninput="kiraKosKeseluruhan()">
+                </td>
+            `;
+            tbody.appendChild(tr);
+        }
+
+        function hapusPerihalKos() {
+            const tbody = document.getElementById('tbody-kos-perihal');
+            const checkboxes = tbody.querySelectorAll('.kos-check:checked');
+            
+            if (checkboxes.length === 0) {
+                alert('Sila pilih sekurang-kurangnya satu perihal kos untuk dihapuskan.');
+                return;
+            }
+
+            checkboxes.forEach(cb => cb.closest('tr').remove());
+            kiraKosKeseluruhan();
+        }
+
+        /* ---------------- FUNGSI DYNAMIC SENARAI PESERTA ---------------- */
+        function tambahPesertaBaris() {
+            const tbody = document.querySelector('#jadual-peserta-kadar tbody');
+            const rowCount = tbody.rows.length + 1;
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td style="text-align: center;"><input type="checkbox" class="peserta-check"></td>
+                <td style="text-align: center;">${rowCount}</td>
+                <td><input type="text" name="peserta_nama[]" class="gov-input" style="width: 100%;" placeholder="Nama Peserta"></td>
+                <td><input type="text" name="peserta_jabatan[]" class="gov-input" style="width: 100%;" placeholder="Jabatan"></td>
+                <td><input type="text" name="peserta_gred[]" class="gov-input" style="width: 100%; text-align: center;" placeholder="Gred"></td>
+                <td><input type="number" step="0.01" name="peserta_emakan[]" class="gov-input" style="width: 100%; text-align: right;" value="0.00"></td>
+                <td><input type="number" step="0.01" name="peserta_ehotel[]" class="gov-input" style="width: 100%; text-align: right;" value="0.00"></td>
+                <td><input type="number" step="0.01" name="peserta_sst[]" class="gov-input" style="width: 100%; text-align: right;" value="0.00"></td>
+                <td><input type="number" step="0.01" name="peserta_jkelayakan[]" class="gov-input" style="width: 100%; text-align: right;" value="0.00"></td>
+                <td><input type="text" name="peserta_malam[]" class="gov-input" style="width: 100%; text-align: center;" value="3"></td>
+                <td><input type="number" step="0.01" name="peserta_jkelayakan3malam[]" class="gov-input" style="width: 100%; text-align: right;" value="0.00"></td>
+                <td><input type="text" name="peserta_bilik[]" class="gov-input" style="width: 100%; text-align: center;" placeholder="Jenis Bilik"></td>
+                <td><input type="number" step="0.01" name="peserta_pakej[]" class="gov-input" style="width: 100%; text-align: right;" value="0.00"></td>
+                <td><input type="text" name="peserta_hotelxday[]" class="gov-input" style="width: 100%; text-align: center;" value="3"></td>
+                <td><input type="number" step="0.01" name="peserta_jtawaran[]" class="gov-input" style="width: 100%; text-align: right;" value="0.00"></td>
+            `;
+            tbody.appendChild(tr);
+            kemaskiniNomborJadual('#jadual-peserta-kadar');
+        }
+
+        function hapusPesertaBaris() {
+            const tbody = document.querySelector('#jadual-peserta-kadar tbody');
+            const checkboxes = tbody.querySelectorAll('.peserta-check:checked');
+            
+            if (checkboxes.length === 0) {
+                alert('Sila pilih sekurang-kurangnya satu peserta untuk dihapuskan.');
+                return;
+            }
+
+            checkboxes.forEach(cb => cb.closest('tr').remove());
+            kemaskiniNomborJadual('#jadual-peserta-kadar');
+        }
+
+        /* ---------------- FUNGSI UTILITI ---------------- */
+        function kemaskiniNomborJadual(tableSelector) {
+            const tbody = document.querySelector(`${tableSelector} tbody`);
+            Array.from(tbody.rows).forEach((row, index) => {
+                row.cells[1].innerText = index + 1;
+            });
+        }
+
+        function toggleSelectAll(masterCb, childSelector) {
+            const checkboxes = document.querySelectorAll(childSelector);
+            checkboxes.forEach(cb => cb.checked = masterCb.checked);
+        }
+
+        // FUNGSI SIMPAN DATA KE DATABASE / LOCALSTORAGE
+        async function saveModuleData(event, moduleName) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            const dataObject = {};
+
+            formData.forEach((value, key) => {
+                if (key.endsWith('[]')) {
+                    const cleanKey = key.replace('[]', '');
+                    if (!dataObject[cleanKey]) dataObject[cleanKey] = [];
+                    dataObject[cleanKey].push(value);
+                } else {
+                    dataObject[key] = value;
+                }
+            });
+
+            try {
+                const res = await fetch(`/api/admin/latihan-modul/${moduleName}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(dataObject)
+                });
+
+                if (res.ok) {
+                    alert(`Rekod ${moduleName.replace('_', ' ').toUpperCase()} berjaya disimpan!`);
+                } else {
+                    const existingData = JSON.parse(localStorage.getItem(`admin_modul_${moduleName}`) || '[]');
+                    existingData.push({ ...dataObject, saved_at: new Date().toISOString() });
+                    localStorage.setItem(`admin_modul_${moduleName}`, JSON.stringify(existingData));
+                    
+                    alert(`Rekod ${moduleName.replace('_', ' ').toUpperCase()} berjaya disimpan!`);
+                }
+            } catch (err) {
+                const existingData = JSON.parse(localStorage.getItem(`admin_modul_${moduleName}`) || '[]');
+                existingData.push({ ...dataObject, saved_at: new Date().toISOString() });
+                localStorage.setItem(`admin_modul_${moduleName}`, JSON.stringify(existingData));
+
+                alert(`Rekod ${moduleName.replace('_', ' ').toUpperCase()} berjaya disimpan!`);
+            }
+        }
+
+        async function loadApplications() {
+            const tbody = document.getElementById('adminTableBody');
+            if (!tbody) return;
+            try {
+                const res = await fetch('/api/admin/applications');
+                if (res.ok) {
+                    const data = await res.json();
+                    renderTable(data);
+                }
+            } catch (err) {}
+        }
+    </script>
+</body>
+</html>
