@@ -14,6 +14,8 @@
     <!-- Library untuk Generasi Docx / Word -->
     <script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <!-- Library Signature Pad -->
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
 
     <style>
         * {
@@ -194,7 +196,7 @@
 
         .gov-form-table td.label-col {
             font-weight: bold;
-            width: 200px;
+            width: 220px;
             color: #0f172a;
             white-space: nowrap;
         }
@@ -250,6 +252,15 @@
 
         .gov-btn-primary:hover {
             background-color: #0369a1;
+        }
+
+        .gov-btn-success {
+            background-color: #16a34a;
+            border-color: #15803d;
+        }
+
+        .gov-btn-success:hover {
+            background-color: #15803d;
         }
 
         /* JADUAL DATA GOV DTIMS */
@@ -325,14 +336,63 @@
             font-weight: bold;
         }
 
-        .perakuan-box-option {
+        /* REKA BENTUK PETAK TICK SEPERTI DOKUMEN WORD RASMI */
+        .perakuan-box-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            width: 180px;
             border: 1px solid #000;
-            padding: 6px;
-            text-align: center;
-            font-weight: bold;
-            width: 120px;
-            display: inline-block;
         }
+
+        .perakuan-box-square {
+            width: 32px;
+            height: 28px;
+            border-right: 1px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            background-color: #fff;
+        }
+
+        .perakuan-box-label {
+            padding: 4px 8px;
+            font-weight: bold;
+            font-size: 9pt;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        /* SIGNATURE CANVAS STYLES */
+        .signature-pad-wrapper {
+            border: 1px dashed #0284c7;
+            background-color: #fff;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            text-align: center;
+            border-radius: 4px;
+        }
+
+        canvas#signature-canvas {
+            width: 100%;
+            height: 150px;
+            touch-action: none;
+            cursor: crosshair;
+        }
+
+        .badge-status {
+            display: inline-block;
+            padding: 4px 10px;
+            font-size: 0.78rem;
+            font-weight: bold;
+            border-radius: 3px;
+            color: #fff;
+        }
+        .badge-pending { background-color: #f59e0b; }
+        .badge-approved { background-color: #16a34a; }
+        .badge-draft { background-color: #64748b; }
 
         /* STYLES UNTUK PRINTING */
         @media print {
@@ -359,27 +419,6 @@
             body {
                 background-color: #fff;
             }
-        }
-
-        /* STATISTIK GRID */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .stat-card {
-            background: #fff;
-            padding: 15px;
-            border: 1px solid #cbd5e1;
-            text-align: center;
-        }
-
-        .stat-card h3 {
-            font-size: 1.8rem;
-            color: #0284c7;
-            margin: 5px 0;
         }
 
         /* RESPONSIVE DESIGN */
@@ -817,16 +856,23 @@
                     </form>
                 </div>
 
-                <!-- 6. BAHAGIAN KERTAS PERAKUAN (FORMAT RASMI EXACT LIKE MS WORD) -->
+                <!-- 6. BAHAGIAN KERTAS PERAKUAN -->
                 <div id="sub-kertas-perakuan" class="admin-card sub-tab-content" style="display: none;">
                     
-                    <div class="no-print" style="margin-bottom: 15px; text-align: right; display: flex; gap: 10px; justify-content: flex-end;">
-                        <button type="button" class="gov-btn gov-btn-primary" onclick="janaWordBPSM()"><i class="fa-solid fa-file-word"></i> MUAT TURUN WORD (.DOCX)</button>
-                        <button type="button" class="gov-btn gov-btn-primary" onclick="window.print()"><i class="fa-solid fa-print"></i> PRINT / SIMPAN PDF</button>
-                        <button type="button" class="gov-btn" onclick="janaKertasPerakuanRasmi()"><i class="fa-solid fa-rotate"></i> MUAT SEMULA DATA AUTO</button>
+                    <div class="no-print" style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; background: #e0f2fe; padding: 10px; border-radius: 4px; border: 1px solid #bae6fd;">
+                        <div>
+                            <b>Status Workflow: </b> 
+                            <span id="workflow-status-badge" class="badge-status badge-draft">DRAFT / BELUM DIHANTAR</span>
+                        </div>
+                        <div style="display: flex; gap: 8px;">
+                            <button type="button" class="gov-btn gov-btn-success" onclick="hantarKePerolehan()"><i class="fa-solid fa-paper-plane"></i> HANTAR KE PEG. PEROLEHAN</button>
+                            <button type="button" class="gov-btn gov-btn-primary" onclick="janaWordBPSM()"><i class="fa-solid fa-file-word"></i> MUAT TURUN WORD (.DOCX)</button>
+                            <button type="button" class="gov-btn gov-btn-primary" onclick="window.print()"><i class="fa-solid fa-print"></i> PRINT / PDF</button>
+                            <button type="button" class="gov-btn" onclick="janaKertasPerakuanRasmi()"><i class="fa-solid fa-rotate"></i> REFRESH</button>
+                        </div>
                     </div>
 
-                    <!-- CONTAINER KERTAS PERAKUAN SEBIJI MACAM FORMAT DOKUMEN WORD -->
+                    <!-- CONTAINER KERTAS PERAKUAN SEBIJI MACAM FORMAT DOKUMEN WORD RASMI -->
                     <div class="perakuan-doc-container">
                         
                         <!-- HEADER RUJUKAN & TARIKH -->
@@ -987,7 +1033,7 @@
                             </tbody>
                         </table>
 
-                        <!-- HELAMAN 3: ULASAN SUB (W) & KEPUTUSAN PBM -->
+                        <!-- HELAMAN 3: ULASAN SUB (W) & KEPUTUSAN PBM (TEPAT DENGAN STRUKTUR DOKUMEN WORD WORD) -->
                         <div style="page-break-before: always; margin-top: 30px;"></div>
 
                         <table class="perakuan-top-box">
@@ -1009,6 +1055,7 @@
                             </tr>
                         </table>
 
+                        <!-- JADUAL ULASAN SUB (W) -->
                         <table class="perakuan-table" style="margin-top: 15px;">
                             <tr>
                                 <td style="font-weight: bold; background-color: #ffffff;">ULASAN SUB (W)</td>
@@ -1017,20 +1064,31 @@
                                 <td style="padding: 15px;">
                                     <div style="display: flex; gap: 20px;">
                                         <div style="flex: 1;">
-                                            <div class="perakuan-box-option" style="margin-bottom: 8px;">SOKONG</div><br>
-                                            <div class="perakuan-box-option">TIDAK SOKONG</div>
-                                            <br><br><br>
-                                            <b>(RUHAIRI BIN RAMLI)</b><br>
-                                            Tarikh:
+                                            <!-- PETAK TICK SOKONG / TIDAK SOKONG -->
+                                            <div class="perakuan-box-row">
+                                                <div class="perakuan-box-square" id="tick-sokong"></div>
+                                                <div class="perakuan-box-label">SOKONG</div>
+                                            </div>
+                                            <div class="perakuan-box-row">
+                                                <div class="perakuan-box-square" id="tick-tidaksokong"></div>
+                                                <div class="perakuan-box-label">TIDAK SOKONG</div>
+                                            </div>
+                                            <br>
+                                            <!-- TEMPAT TANDATANGAN AUTOMATIK APABILA DISAHKAN -->
+                                            <div id="subw-signature-holder" style="height: 45px; text-align: left;"></div>
+                                            <b id="subw-pegawai-nama">(RUHAIRI BIN RAMLI)</b><br>
+                                            <span id="subw-pegawai-tarikh">Tarikh: </span>
                                         </div>
-                                        <div style="flex: 2; border-left: 1px solid #000; padding-left: 15px; min-height: 120px;">
+                                        <div style="flex: 2; border-left: 1px solid #000; padding-left: 15px; min-height: 140px;">
                                             <u>Ulasan:</u>
+                                            <div id="subw-ulasan-text" style="margin-top: 8px; font-style: italic; color: #334155;"></div>
                                         </div>
                                     </div>
                                 </td>
                             </tr>
                         </table>
 
+                        <!-- JADUAL KEPUTUSAN PBM -->
                         <table class="perakuan-table">
                             <tr>
                                 <td style="font-weight: bold; background-color: #ffffff;">KEPUTUSAN PBM</td>
@@ -1039,14 +1097,24 @@
                                 <td style="padding: 15px;">
                                     <div style="display: flex; gap: 20px;">
                                         <div style="flex: 1;">
-                                            <div class="perakuan-box-option" style="margin-bottom: 8px;">LULUS</div><br>
-                                            <div class="perakuan-box-option">TIDAK LULUS</div>
-                                            <br><br><br>
-                                            <b>(OOLI GUNALAN A/L MANICKAM)</b><br>
-                                            Tarikh:
+                                            <!-- PETAK TICK LULUS / TIDAK LULUS -->
+                                            <div class="perakuan-box-row">
+                                                <div class="perakuan-box-square" id="tick-lulus"></div>
+                                                <div class="perakuan-box-label">LULUS</div>
+                                            </div>
+                                            <div class="perakuan-box-row">
+                                                <div class="perakuan-box-square" id="tick-tidaklulus"></div>
+                                                <div class="perakuan-box-label">TIDAK LULUS</div>
+                                            </div>
+                                            <br>
+                                            <!-- TEMPAT TANDATANGAN AUTOMATIK APABILA DISAHKAN -->
+                                            <div id="pbm-signature-holder" style="height: 45px; text-align: left;"></div>
+                                            <b id="pbm-pegawai-nama">(OOLI GUNALAN A/L MANICKAM)</b><br>
+                                            <span id="pbm-pegawai-tarikh">Tarikh: </span>
                                         </div>
-                                        <div style="flex: 2; border-left: 1px solid #000; padding-left: 15px; min-height: 120px;">
+                                        <div style="flex: 2; border-left: 1px solid #000; padding-left: 15px; min-height: 140px;">
                                             <u>Ulasan:</u>
+                                            <div id="pbm-ulasan-text" style="margin-top: 8px; font-style: italic; color: #334155;"></div>
                                         </div>
                                     </div>
                                 </td>
@@ -1064,61 +1132,80 @@
                     PENGURUSAN PEROLEHAN & SEBUT HARGA (PENTADBIR PEROLEHAN)
                 </div>
 
-                <!-- STATISTIK PEROLEHAN -->
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <p style="color: #64748b; margin:0; font-size: 0.85rem;">Permohonan Perolehan</p>
-                        <h3 style="color: #059669;">12</h3>
+                <!-- SEKSYEN PENGESAHAN AUTOMATIK KERTAS PERAKUAN LATIHAN -->
+                <div class="admin-card" style="border-top: 4px solid #059669;">
+                    <div class="gov-section-title" style="background-color: #059669;">
+                        <i class="fa-solid fa-signature"></i> PENGESAHAN KERTAS PERAKUAN LATIHAN (SOKONG & KEPUTUSAN PBM)
                     </div>
-                    <div class="stat-card">
-                        <p style="color: #64748b; margin:0; font-size: 0.85rem;">Diluluskan (LO Issued)</p>
-                        <h3 style="color: #22c55e;">8</h3>
-                    </div>
-                    <div class="stat-card">
-                        <p style="color: #64748b; margin:0; font-size: 0.85rem;">Dalam Semakan Bajet</p>
-                        <h3 style="color: #f59e0b;">4</h3>
-                    </div>
-                </div>
 
-                <!-- JADUAL PEROLEHAN & VENDOR -->
-                <div class="admin-card">
-                    <div class="gov-section-title" style="background-color: #059669;">SENARAI PEROLEHAN & SEBUT HARGA VENDOR</div>
-                    <div style="overflow-x: auto;">
-                        <table class="gov-data-table">
-                            <thead>
+                    <div id="perolehan-pending-box" style="display: none; background: #fffbebfb; border: 1px solid #fde68a; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
+                        <div style="font-weight: bold; color: #b45309; font-size: 0.95rem; margin-bottom: 8px;">
+                            <i class="fa-solid fa-triangle-exclamation"></i> Kertas Perakuan Diterima Dari Pegawai Pentadbir Latihan
+                        </div>
+                        <p style="font-size: 0.85rem; color: #334155; margin-bottom: 12px;">
+                            Sila semak Kertas Perakuan, pilih status sokongan dan keputusan PBM, kemudian masukkan tandatangan online. Sistem akan auto-tick petak-petak perakuan berkenaan.
+                        </p>
+
+                        <form id="form-pengesahan-perolehan" onsubmit="laksanaPengesahanPerolehan(event)">
+                            <table class="gov-form-table">
                                 <tr>
-                                    <th>Bil</th>
-                                    <th>Tajuk Perolehan / Kursus</th>
-                                    <th>Nama Vendor / Syarikat</th>
-                                    <th>Anggaran Kos (RM)</th>
-                                    <th>Status Perolehan</th>
-                                    <th>Tindakan Perolehan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Kursus Kecerdasan Buatan (AI) 2026</td>
-                                    <td>Syarikat TechEdu Sdn Bhd</td>
-                                    <td>RM 15,000.00</td>
-                                    <td><span style="color:#22c55e; font-weight:bold;">Diluluskan</span></td>
-                                    <td>
-                                        <button class="gov-btn gov-btn-primary" style="padding:3px 8px; font-size:0.75rem;"><i class="fa-solid fa-file-pdf"></i> CETAK LO</button>
+                                    <td class="label-col">1. Ulasan SUB (W) *</td>
+                                    <td>: 
+                                        <select id="perolehan_status_subw" class="gov-input" style="width: auto; font-weight: bold;">
+                                            <option value="SOKONG" selected>SOKONG</option>
+                                            <option value="TIDAK SOKONG">TIDAK SOKONG</option>
+                                        </select>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>2</td>
-                                    <td>Bengkel Keselamatan Siber MOSTI</td>
-                                    <td>CyberSec Solutions Enterprise</td>
-                                    <td>RM 22,500.00</td>
-                                    <td><span style="color:#f59e0b; font-weight:bold;">Semakan Semasa</span></td>
-                                    <td>
-                                        <button class="gov-btn gov-btn-primary" style="padding:3px 8px; font-size:0.75rem; background-color:#22c55e;"><i class="fa-solid fa-check"></i> LULUS</button>
-                                        <button class="gov-btn" style="padding:3px 8px; font-size:0.75rem; background-color:#ef4444; border-color:#dc2626;"><i class="fa-solid fa-xmark"></i> TOLAK</button>
+                                    <td class="label-col">Catatan / Ulasan SUB (W)</td>
+                                    <td>: <textarea id="perolehan_ulasan_subw" class="gov-textarea" rows="2" placeholder="Ulasan bagi pihak SUB (W)..."></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td class="label-col">2. Keputusan PBM *</td>
+                                    <td>: 
+                                        <select id="perolehan_status_pbm" class="gov-input" style="width: auto; font-weight: bold;">
+                                            <option value="LULUS" selected>LULUS</option>
+                                            <option value="TIDAK LULUS">TIDAK LULUS</option>
+                                        </select>
                                     </td>
                                 </tr>
-                            </tbody>
-                        </table>
+                                <tr>
+                                    <td class="label-col">Catatan / Ulasan PBM</td>
+                                    <td>: <textarea id="perolehan_ulasan_pbm" class="gov-textarea" rows="2" placeholder="Ulasan keputusan PBM..."></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td class="label-col">Nama Pegawai Perolehan *</td>
+                                    <td>: <input type="text" id="perolehan_pegawai_nama" class="gov-input" required placeholder="Nama penuh pegawai yang mengesahkan..."></td>
+                                </tr>
+                                <tr>
+                                    <td class="label-col">Jawatan Pegawai *</td>
+                                    <td>: <input type="text" id="perolehan_pegawai_jawatan" class="gov-input" required placeholder="Jawatan & Gred..."></td>
+                                </tr>
+                                <tr>
+                                    <td class="label-col">Tandatangan Online *</td>
+                                    <td>
+                                        <div class="signature-pad-wrapper" style="max-width: 450px;">
+                                            <canvas id="signature-canvas"></canvas>
+                                            <div style="padding: 4px; background: #f1f5f9; text-align: right;">
+                                                <button type="button" class="gov-btn" style="padding: 2px 8px; font-size: 0.75rem;" onclick="clearSignature()"><i class="fa-solid fa-eraser"></i> Padam Signature</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <div class="gov-btn-group" style="justify-content: flex-start; gap: 10px;">
+                                <button type="submit" class="gov-btn gov-btn-success" style="font-size: 0.9rem; padding: 8px 20px;">
+                                    <i class="fa-solid fa-check-double"></i> SAHKAN & TICK KERTAS PERAKUAN
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div id="perolehan-empty-box" style="padding: 20px; text-align: center; color: #64748b; font-size: 0.88rem; background: #f8fafc; border: 1px dashed #cbd5e1;">
+                        <i class="fa-solid fa-inbox" style="font-size: 2rem; margin-bottom: 8px; color: #94a3b8;"></i><br>
+                        Tiada Kertas Perakuan Latihan yang memerlukan pengesahan pada masa ini.
                     </div>
                 </div>
             </div>
@@ -1128,18 +1215,51 @@
 
     <!-- SCRIPT PENGURUSAN TAB & DYNAMIC FUNCTIONS (PERSISTENT DATA & EMPTY DEFAULT) -->
     <script>
+        let signaturePad = null;
+
         document.addEventListener('DOMContentLoaded', () => {
             loadApplications();
-            // Muatkan data bagi setiap modul dari localStorage/API (Akan kekal walau di-refresh)
+            // Muatkan data bagi setiap modul dari localStorage/API
             loadModuleData('maklumat_kursus');
             loadModuleData('anggaran_kos');
             loadModuleData('senarai_peserta');
             loadModuleData('jadual_kadar');
             loadModuleData('upload_dokumen');
 
-            // Tambah auto-save secara terus apabila pengguna menaip/mengubah input (Live Auto-Save)
+            // Inisialisasi Signature Pad
+            initSignaturePad();
+
+            // Muat Status Workflow Pengesahan Perolehan
+            checkWorkflowStatus();
+
+            // Setup Auto Save
             setupAutoSaveListeners();
         });
+
+        // FUNGSI INIT SIGNATURE CANVAS
+        function initSignaturePad() {
+            const canvas = document.getElementById('signature-canvas');
+            if (canvas) {
+                signaturePad = new SignaturePad(canvas, {
+                    backgroundColor: 'rgb(255, 255, 255)',
+                    penColor: 'rgb(0, 0, 128)'
+                });
+                
+                function resizeCanvas() {
+                    const ratio = Math.max(window.devicePixelRatio || 1, 1);
+                    canvas.width = canvas.offsetWidth * ratio;
+                    canvas.height = canvas.offsetHeight * ratio;
+                    canvas.getContext("2d").scale(ratio, ratio);
+                    signaturePad.clear();
+                }
+                window.addEventListener("resize", resizeCanvas);
+                resizeCanvas();
+            }
+        }
+
+        function clearSignature() {
+            if (signaturePad) signaturePad.clear();
+        }
 
         // FUNGSI TUKAR TAB UTAMA SIDEBAR
         function switchTab(tabId, element) {
@@ -1151,6 +1271,16 @@
 
             document.getElementById(tabId).classList.add('active');
             element.classList.add('active');
+
+            if (tabId === 'perolehan-tab' && signaturePad) {
+                setTimeout(() => {
+                    const canvas = document.getElementById('signature-canvas');
+                    if (canvas && canvas.offsetWidth > 0) {
+                        canvas.width = canvas.offsetWidth;
+                        canvas.height = canvas.offsetHeight;
+                    }
+                }, 100);
+            }
         }
 
         // FUNGSI TUKAR SUB-TAB BAR DTIMS GOV
@@ -1169,7 +1299,112 @@
             }
         }
 
-        /* ---------------- AUTO SAVE LISTENERS (KEKALKAN DATA KETIKA KEY IN) ---------------- */
+        /* ---------------- WORKFLOW PENGESAHAN AUTOMATIK PEROLEHAN ---------------- */
+        function hantarKePerolehan() {
+            const statusData = {
+                status: 'pending',
+                tarikhHantar: new Date().toLocaleString('ms-MY')
+            };
+            localStorage.setItem('kertas_perakuan_workflow', JSON.stringify(statusData));
+            alert('Kertas Perakuan telah berjaya dihantar ke Pegawai Pentadbir Perolehan untuk pengesahan!');
+            checkWorkflowStatus();
+        }
+
+        function laksanaPengesahanPerolehan(event) {
+            event.preventDefault();
+            if (!signaturePad || signaturePad.isEmpty()) {
+                alert('Sila turunkan tandatangan online terlebih dahulu.');
+                return;
+            }
+
+            const statusSubw = document.getElementById('perolehan_status_subw').value;
+            const ulasanSubw = document.getElementById('perolehan_ulasan_subw').value;
+            const statusPbm = document.getElementById('perolehan_status_pbm').value;
+            const ulasanPbm = document.getElementById('perolehan_ulasan_pbm').value;
+            const pegawaiNama = document.getElementById('perolehan_pegawai_nama').value;
+            const pegawaiJawatan = document.getElementById('perolehan_pegawai_jawatan').value;
+            const signatureImgData = signaturePad.toDataURL();
+
+            const workflowResult = {
+                status: 'verified',
+                statusSubw: statusSubw,
+                ulasanSubw: ulasanSubw,
+                statusPbm: statusPbm,
+                ulasanPbm: ulasanPbm,
+                pegawaiNama: pegawaiNama,
+                pegawaiJawatan: pegawaiJawatan,
+                signatureImg: signatureImgData,
+                tarikhPengesahan: new Date().toLocaleDateString('ms-MY')
+            };
+
+            localStorage.setItem('kertas_perakuan_workflow', JSON.stringify(workflowResult));
+            alert('Kertas Perakuan telah berjaya disahkan dan di-tick pada petak Ulasan SUB(W) dan Keputusan PBM!');
+
+            checkWorkflowStatus();
+
+            // Pindah tab kembali ke Pegawai Latihan secara automatik
+            const latihanLink = document.querySelectorAll('.sidebar-link')[0];
+            switchTab('latihan-tab', latihanLink);
+            switchSubTab('sub-kertas-perakuan', document.querySelectorAll('.gov-tab-item')[5]);
+        }
+
+        function checkWorkflowStatus() {
+            const savedWorkflow = localStorage.getItem('kertas_perakuan_workflow');
+            const badgeLatihan = document.getElementById('workflow-status-badge');
+            const perolehanPendingBox = document.getElementById('perolehan-pending-box');
+            const perolehanEmptyBox = document.getElementById('perolehan-empty-box');
+
+            // Reset semua petak tick
+            if (document.getElementById('tick-sokong')) document.getElementById('tick-sokong').innerText = '';
+            if (document.getElementById('tick-tidaksokong')) document.getElementById('tick-tidaksokong').innerText = '';
+            if (document.getElementById('tick-lulus')) document.getElementById('tick-lulus').innerText = '';
+            if (document.getElementById('tick-tidaklulus')) document.getElementById('tick-tidaklulus').innerText = '';
+
+            if (!savedWorkflow) {
+                if (badgeLatihan) { badgeLatihan.className = 'badge-status badge-draft'; badgeLatihan.innerText = 'DRAFT / BELUM DIHANTAR'; }
+                if (perolehanPendingBox) perolehanPendingBox.style.display = 'none';
+                if (perolehanEmptyBox) perolehanEmptyBox.style.display = 'block';
+                return;
+            }
+
+            const data = JSON.parse(savedWorkflow);
+
+            if (data.status === 'pending') {
+                if (badgeLatihan) { badgeLatihan.className = 'badge-status badge-pending'; badgeLatihan.innerText = 'DALAM SEMAKAN PEROLEHAN'; }
+                if (perolehanPendingBox) perolehanPendingBox.style.display = 'block';
+                if (perolehanEmptyBox) perolehanEmptyBox.style.display = 'none';
+            } else if (data.status === 'verified') {
+                if (badgeLatihan) { badgeLatihan.className = 'badge-status badge-approved'; badgeLatihan.innerText = 'DISAHKAN OLEH PEROLEHAN'; }
+                if (perolehanPendingBox) perolehanPendingBox.style.display = 'none';
+                if (perolehanEmptyBox) perolehanEmptyBox.style.display = 'block';
+
+                // 1. AUTO TICK & ISI SOKONG / TIDAK SOKONG (ULASAN SUB W)
+                if (data.statusSubw === 'SOKONG') {
+                    document.getElementById('tick-sokong').innerText = '✓';
+                } else {
+                    document.getElementById('tick-tidaksokong').innerText = '✓';
+                }
+                const holderSubw = document.getElementById('subw-signature-holder');
+                if (holderSubw) holderSubw.innerHTML = `<img src="${data.signatureImg}" style="max-height: 40px; max-width: 140px; object-fit: contain;">`;
+                if (document.getElementById('subw-pegawai-nama')) document.getElementById('subw-pegawai-nama').innerText = `(${data.pegawaiNama.toUpperCase()})`;
+                if (document.getElementById('subw-pegawai-tarikh')) document.getElementById('subw-pegawai-tarikh').innerText = `Tarikh: ${data.tarikhPengesahan}`;
+                if (document.getElementById('subw-ulasan-text')) document.getElementById('subw-ulasan-text').innerText = data.ulasanSubw || '';
+
+                // 2. AUTO TICK & ISI LULUS / TIDAK LULUS (KEPUTUSAN PBM)
+                if (data.statusPbm === 'LULUS') {
+                    document.getElementById('tick-lulus').innerText = '✓';
+                } else {
+                    document.getElementById('tick-tidaklulus').innerText = '✓';
+                }
+                const holderPbm = document.getElementById('pbm-signature-holder');
+                if (holderPbm) holderPbm.innerHTML = `<img src="${data.signatureImg}" style="max-height: 40px; max-width: 140px; object-fit: contain;">`;
+                if (document.getElementById('pbm-pegawai-nama')) document.getElementById('pbm-pegawai-nama').innerText = `(${data.pegawaiNama.toUpperCase()})`;
+                if (document.getElementById('pbm-pegawai-tarikh')) document.getElementById('pbm-pegawai-tarikh').innerText = `Tarikh: ${data.tarikhPengesahan}`;
+                if (document.getElementById('pbm-ulasan-text')) document.getElementById('pbm-ulasan-text').innerText = data.ulasanPbm || '';
+            }
+        }
+
+        /* ---------------- AUTO SAVE LISTENERS ---------------- */
         function setupAutoSaveListeners() {
             const forms = ['form-maklumat-kursus', 'form-anggaran-kos', 'form-senarai-peserta', 'form-jadual-kadar', 'form-upload-dokumen'];
             forms.forEach(formId => {
@@ -1723,11 +1958,10 @@
             checkboxes.forEach(cb => cb.checked = masterCb.checked);
         }
 
-        // FUNGSI MEMUATKAN DATA MODUL DARI LOCALSTORAGE / DATABASE (PERSISTENCE REFRESH KEKAL DATA)
+        // FUNGSI MEMUATKAN DATA MODUL DARI LOCALSTORAGE / DATABASE
         async function loadModuleData(moduleName) {
             let data = null;
 
-            // 1. Dapatkan data dari LocalStorage terlebih dahulu
             const localDataStr = localStorage.getItem(`admin_modul_${moduleName}`);
             if (localDataStr) {
                 try {
@@ -1735,7 +1969,6 @@
                 } catch (e) { console.error(e); }
             }
 
-            // 2. Jika LocalStorage kosong, tarik dari Server API
             if (!data || Object.keys(data).length === 0) {
                 try {
                     const res = await fetch(`/api/admin/latihan-modul/${moduleName}`);
@@ -1747,7 +1980,6 @@
                 }
             }
 
-            // 3. Masukkan data ke borang sekiranya data wujud
             if (data && Object.keys(data).length > 0) {
                 if (moduleName === 'maklumat_kursus') {
                     if (data.objektif && Array.isArray(data.objektif)) {
@@ -1781,7 +2013,6 @@
                     }
                 });
             } else {
-                // Jika tiada sebarang data, pastikan jadual kosong
                 if (moduleName === 'maklumat_kursus') {
                     renderObjektifTable([]);
                     renderUrusetiaTable([]);
@@ -1791,45 +2022,6 @@
             if (typeof kiraKosPeserta === 'function') kiraKosPeserta();
             if (typeof kiraKosKeseluruhan === 'function') kiraKosKeseluruhan();
             if (typeof janaKertasPerakuanRasmi === 'function') janaKertasPerakuanRasmi();
-        }
-
-        /* ---------------- AUTO SAVE LISTENERS (KEKALKAN DATA KETIKA KEY IN) ---------------- */
-        function setupAutoSaveListeners() {
-            const forms = ['form-maklumat-kursus', 'form-anggaran-kos', 'form-senarai-peserta', 'form-jadual-kadar', 'form-upload-dokumen'];
-            forms.forEach(formId => {
-                const form = document.getElementById(formId);
-                if (form) {
-                    form.addEventListener('input', () => {
-                        const moduleName = formId.replace('form-', '').replace(/-/g, '_');
-                        saveToLocalStorage(form, moduleName);
-                    });
-                    form.addEventListener('change', () => {
-                        const moduleName = formId.replace('form-', '').replace(/-/g, '_');
-                        saveToLocalStorage(form, moduleName);
-                    });
-                }
-            });
-        }
-
-        function saveToLocalStorage(form, moduleName) {
-            const formData = new FormData(form);
-            const dataObject = {};
-
-            formData.forEach((value, key) => {
-                const isArrayKey = key.endsWith('[]');
-                const cleanKey = isArrayKey ? key.slice(0, -2) : key;
-
-                if (typeof value === 'string') {
-                    if (isArrayKey) {
-                        if (!dataObject[cleanKey]) dataObject[cleanKey] = [];
-                        dataObject[cleanKey].push(value);
-                    } else {
-                        dataObject[cleanKey] = value;
-                    }
-                }
-            });
-
-            localStorage.setItem(`admin_modul_${moduleName}`, JSON.stringify(dataObject));
         }
 
         // FUNGSI SIMPAN DATA KE DATABASE & LOCALSTORAGE
