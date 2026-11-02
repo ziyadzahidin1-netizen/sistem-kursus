@@ -14,7 +14,7 @@ const app = express();
 // Middleware
 app.use(cors());
 
-// Tingkatkan had saiz request untuk menyokong gambar muat naik Base64
+// Tingkatkan had saiz request untuk menyokong gambar muat naik Base64 / Fail Dokumen
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
@@ -470,6 +470,83 @@ app.delete('/api/admin/applications/:id', async (req, res) => {
 });
 
 // =========================================================================
+// 6.1 API ADMIN DASHBOARD: SIMPAN & DAPATKAN REKOD MODUL LATIHAN (DTIMS)
+// =========================================================================
+
+// Simpan atau Kemaskini Data Modul (Secara Selamat Tanpa Ralat Schema)
+app.post('/api/admin/latihan-modul/:moduleName', async (req, res) => {
+    try {
+        const { moduleName } = req.params;
+        const payload = req.body || {};
+        const supabase = getSupabase();
+
+        if (supabase) {
+            const tableName = `admin_${moduleName}`;
+            
+            // Penapisan pintar automatik mengikut lajur yang wujud di Supabase
+            const safePayload = await filterExistingColumns(supabase, tableName, payload);
+            
+            // Insert rekod baharu terus ke jadual Supabase
+            let { error: insertErr } = await supabase
+                .from(tableName)
+                .insert([safePayload]);
+
+            // PENGENDALIAN AUTOMATIK JIKA SUPABASE MENOLAK MEDAN YANG TIADA
+            if (insertErr) {
+                console.warn(`Penyimpanan pertama Supabase menolak lajur tidak wujud (${moduleName}):`, insertErr.message);
+
+                // Buang medan yang tiada satu demi satu berdasarkan mesej ralat
+                let updatedPayload = { ...safePayload };
+                if (insertErr.message.includes("'fail_syarikat'")) delete updatedPayload.fail_syarikat;
+                if (insertErr.message.includes("'updated_at'")) delete updatedPayload.updated_at;
+
+                const retry = await supabase.from(tableName).insert([updatedPayload]);
+                insertErr = retry.error;
+            }
+
+            if (insertErr) {
+                console.error(`Supabase DB Insert Error Final (${moduleName}):`, insertErr.message);
+                return res.status(500).json({ error: 'Ralat Supabase: ' + insertErr.message });
+            }
+        }
+
+        broadcastEvent({ type: 'ADMIN_MODULE_UPDATED', module: moduleName, data: payload });
+
+        return res.status(200).json({ 
+            status: 'success', 
+            message: `Data ${moduleName.replace(/_/g, ' ')} berjaya disimpan!` 
+        });
+    } catch (error) {
+        return res.status(500).json({ error: 'Ralat Server: ' + error.message });
+    }
+});
+
+// Dapatkan Data Modul Terkini
+app.get('/api/admin/latihan-modul/:moduleName', async (req, res) => {
+    try {
+        const { moduleName } = req.params;
+        const supabase = getSupabase();
+
+        if (supabase) {
+            const { data, error } = await supabase
+                .from(`admin_${moduleName}`)
+                .select('*')
+                .order('created_at', { ascending: false })
+                .limit(1)
+                .maybeSingle();
+
+            if (!error && data) {
+                return res.status(200).json(data);
+            }
+        }
+
+        return res.status(200).json({});
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+});
+
+// =========================================================================
 // 7. API PENGURUSAN DATA PROFIL, PERKHIDMATAN, KECEMASAN & PENDIDIKAN
 // =========================================================================
 
@@ -646,7 +723,7 @@ app.get('/api/user/applications/:ic', async (req, res) => {
     }
 });
 
-// Fallback untuk semua route /api/* yang tidak wujud
+// Fallback untuk semua route /api/* yang tidak wujud (WAJIB DI BAWAH SEKALI)
 app.use('/api/*', (req, res) => {
     return res.status(404).json({ error: 'Route API tidak wujud.' });
 });
