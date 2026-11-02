@@ -546,6 +546,11 @@
                                 <td class="label-col">Nama PPK *</td>
                                 <td>: <input type="text" id="auto_nama_ppk" name="nama_ppk" class="gov-input" value="" placeholder="Masukkan nama program/kursus..." oninput="janaKertasPerakuanRasmi()"></td>
                             </tr>
+                            <!-- DITAMBAH: MEDAN INPUT TARIKH PPK -->
+                            <tr>
+                                <td class="label-col">Tarikh PPK *</td>
+                                <td>: <input type="date" id="auto_tarikh_ppk" name="tarikh_ppk" class="gov-input" style="width: auto;" onchange="janaKertasPerakuanRasmi()"></td>
+                            </tr>
                             <tr>
                                 <td class="label-col">Keterangan</td>
                                 <td>: <textarea id="auto_keterangan" name="keterangan" class="gov-textarea" rows="3" placeholder="Masukkan keterangan..." oninput="janaKertasPerakuanRasmi()"></textarea></td>
@@ -1213,30 +1218,23 @@
         </main>
     </div>
 
-    <!-- SCRIPT PENGURUSAN TAB & DYNAMIC FUNCTIONS (PERSISTENT DATA & EMPTY DEFAULT) -->
+    <!-- SCRIPT PENGURUSAN TAB & DYNAMIC FUNCTIONS -->
     <script>
         let signaturePad = null;
 
         document.addEventListener('DOMContentLoaded', () => {
             loadApplications();
-            // Muatkan data bagi setiap modul dari localStorage/API
             loadModuleData('maklumat_kursus');
             loadModuleData('anggaran_kos');
             loadModuleData('senarai_peserta');
             loadModuleData('jadual_kadar');
             loadModuleData('upload_dokumen');
 
-            // Inisialisasi Signature Pad
             initSignaturePad();
-
-            // Muat Status Workflow Pengesahan Perolehan
             checkWorkflowStatus();
-
-            // Setup Auto Save
             setupAutoSaveListeners();
         });
 
-        // FUNGSI INIT SIGNATURE CANVAS
         function initSignaturePad() {
             const canvas = document.getElementById('signature-canvas');
             if (canvas) {
@@ -1261,7 +1259,6 @@
             if (signaturePad) signaturePad.clear();
         }
 
-        // FUNGSI TUKAR TAB UTAMA SIDEBAR
         function switchTab(tabId, element) {
             const tabs = document.querySelectorAll('.tab-section');
             tabs.forEach(tab => tab.classList.remove('active'));
@@ -1283,7 +1280,6 @@
             }
         }
 
-        // FUNGSI TUKAR SUB-TAB BAR DTIMS GOV
         function switchSubTab(subTabId, element) {
             const subTabs = document.querySelectorAll('.sub-tab-content');
             subTabs.forEach(sub => sub.style.display = 'none');
@@ -1299,7 +1295,6 @@
             }
         }
 
-        /* ---------------- WORKFLOW PENGESAHAN AUTOMATIK PEROLEHAN ---------------- */
         function hantarKePerolehan() {
             const statusData = {
                 status: 'pending',
@@ -1342,7 +1337,6 @@
 
             checkWorkflowStatus();
 
-            // Pindah tab kembali ke Pegawai Latihan secara automatik
             const latihanLink = document.querySelectorAll('.sidebar-link')[0];
             switchTab('latihan-tab', latihanLink);
             switchSubTab('sub-kertas-perakuan', document.querySelectorAll('.gov-tab-item')[5]);
@@ -1354,7 +1348,6 @@
             const perolehanPendingBox = document.getElementById('perolehan-pending-box');
             const perolehanEmptyBox = document.getElementById('perolehan-empty-box');
 
-            // Reset semua petak tick
             if (document.getElementById('tick-sokong')) document.getElementById('tick-sokong').innerText = '';
             if (document.getElementById('tick-tidaksokong')) document.getElementById('tick-tidaksokong').innerText = '';
             if (document.getElementById('tick-lulus')) document.getElementById('tick-lulus').innerText = '';
@@ -1378,7 +1371,6 @@
                 if (perolehanPendingBox) perolehanPendingBox.style.display = 'none';
                 if (perolehanEmptyBox) perolehanEmptyBox.style.display = 'block';
 
-                // 1. AUTO TICK & ISI SOKONG / TIDAK SOKONG (ULASAN SUB W)
                 if (data.statusSubw === 'SOKONG') {
                     document.getElementById('tick-sokong').innerText = '✓';
                 } else {
@@ -1390,7 +1382,6 @@
                 if (document.getElementById('subw-pegawai-tarikh')) document.getElementById('subw-pegawai-tarikh').innerText = `Tarikh: ${data.tarikhPengesahan}`;
                 if (document.getElementById('subw-ulasan-text')) document.getElementById('subw-ulasan-text').innerText = data.ulasanSubw || '';
 
-                // 2. AUTO TICK & ISI LULUS / TIDAK LULUS (KEPUTUSAN PBM)
                 if (data.statusPbm === 'LULUS') {
                     document.getElementById('tick-lulus').innerText = '✓';
                 } else {
@@ -1404,7 +1395,6 @@
             }
         }
 
-        /* ---------------- AUTO SAVE LISTENERS ---------------- */
         function setupAutoSaveListeners() {
             const forms = ['form-maklumat-kursus', 'form-anggaran-kos', 'form-senarai-peserta', 'form-jadual-kadar', 'form-upload-dokumen'];
             forms.forEach(formId => {
@@ -1443,7 +1433,6 @@
             localStorage.setItem(`admin_modul_${moduleName}`, JSON.stringify(dataObject));
         }
 
-        /* ---------------- FUNGSI KIRA KOS & BILANGAN PESERTA AUTO ---------------- */
         function kiraKosPeserta() {
             const rows = document.querySelectorAll('#jadual-peserta-kadar tbody tr');
             let totalTawaranSemua = 0;
@@ -1493,7 +1482,6 @@
             janaKertasPerakuanRasmi();
         }
 
-        /* ---------------- FUNGSI KIRA KOS / AGIHAN AUTO ---------------- */
         function kiraKosKeseluruhan() {
             const rmInputs = document.querySelectorAll('.class-kos-rm');
             let totalRM = 0;
@@ -1524,12 +1512,23 @@
             janaKertasPerakuanRasmi();
         }
 
-        /* ---------------- FUNGSI SEGERAKAN KERTAS PERAKUAN BPSM ---------------- */
+        /* ---------------- FUNGSI SEGERAKAN KERTAS PERAKUAN BPSM (TERKEMASKINI DENGAN TARIKH AUTO) ---------------- */
         function janaKertasPerakuanRasmi() {
             const namaPPK = document.getElementById('auto_nama_ppk')?.value || '-';
             const lokasi = document.getElementById('auto_lokasi')?.value || '-';
             const negeri = document.getElementById('auto_negeri')?.value || '';
             const lokasiPenuh = lokasi + (negeri ? ', ' + negeri : '');
+
+            // SEGERAKAN TARIKH DARI REKOD PPK KE KERTAS PERAKUAN
+            const rawTarikh = document.getElementById('auto_tarikh_ppk')?.value;
+            let formattedTarikh = '-';
+            if (rawTarikh) {
+                const dateObj = new Date(rawTarikh);
+                if (!isNaN(dateObj.getTime())) {
+                    const months = ["Januari", "Februari", "Mac", "April", "Mei", "Jun", "Julai", "Ogos", "September", "Oktober", "November", "Disember"];
+                    formattedTarikh = `${dateObj.getDate()} ${months[dateObj.getMonth()]} ${dateObj.getFullYear()}`;
+                }
+            }
 
             ['doc_header_tajuk', 'doc_header_tajuk_2', 'doc_header_tajuk_3'].forEach(id => {
                 if(document.getElementById(id)) document.getElementById(id).innerText = namaPPK;
@@ -1537,6 +1536,10 @@
 
             ['doc_header_lokasi', 'doc_header_lokasi_2', 'doc_header_lokasi_3'].forEach(id => {
                 if(document.getElementById(id)) document.getElementById(id).innerText = lokasiPenuh || '-';
+            });
+
+            ['doc_header_tarikh', 'doc_header_tarikh_2', 'doc_header_tarikh_3'].forEach(id => {
+                if(document.getElementById(id)) document.getElementById(id).innerText = formattedTarikh;
             });
 
             const objektifInputs = document.querySelectorAll('.input-objektif');
@@ -1617,7 +1620,6 @@
             }
         }
 
-        /* ---------------- FUNGSI EXPORT AUTOMATIK KE MS WORD (.DOCX) ---------------- */
         function janaWordBPSM() {
             const { Document, Packer, Paragraph, Table, TableRow, TableCell, TextRun, WidthType, AlignmentType } = docx;
 
@@ -1626,6 +1628,16 @@
             const syor = document.getElementById('auto_syor')?.value || '-';
             const lokasi = document.getElementById('auto_lokasi')?.value || '-';
             
+            const rawTarikh = document.getElementById('auto_tarikh_ppk')?.value;
+            let formattedTarikh = '-';
+            if (rawTarikh) {
+                const dateObj = new Date(rawTarikh);
+                if (!isNaN(dateObj.getTime())) {
+                    const months = ["Januari", "Februari", "Mac", "April", "Mei", "Jun", "Julai", "Ogos", "September", "Oktober", "November", "Disember"];
+                    formattedTarikh = `${dateObj.getDate()} ${months[dateObj.getMonth()]} ${dateObj.getFullYear()}`;
+                }
+            }
+
             const bilPeserta = document.getElementById('input_bil_peserta')?.value || '0';
             const bilUrusetia = document.getElementById('input_bil_urusetia')?.value || '0';
             const jumlahPeserta = parseInt(bilPeserta) + parseInt(bilUrusetia);
@@ -1661,7 +1673,7 @@
                         new Paragraph({
                             children: [
                                 new TextRun({ text: "Rujukan: MOSTI.500-8/2/1 Jld. 18 (   )", bold: true }),
-                                new TextRun({ text: "\t\t\t\tTarikh:   Disember 2025", bold: true })
+                                new TextRun({ text: `\t\t\t\tTarikh:   ${formattedTarikh}`, bold: true })
                             ]
                         }),
                         new Paragraph({ text: "\n" }),
@@ -1678,6 +1690,12 @@
                                     children: [
                                         new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "TAJUK", bold: true })] })] }),
                                         new TableCell({ children: [new Paragraph({ text: namaPPK })] })
+                                    ]
+                                }),
+                                new TableRow({
+                                    children: [
+                                        new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "TARIKH", bold: true })] })] }),
+                                        new TableCell({ children: [new Paragraph({ text: formattedTarikh })] })
                                     ]
                                 }),
                                 new TableRow({
@@ -1748,7 +1766,6 @@
             });
         }
 
-        /* ---------------- FUNGSI DYNAMIC OBJEKTIF ---------------- */
         function renderObjektifTable(objList) {
             const tbody = document.querySelector('#jadual-objektif tbody');
             if (!tbody) return;
@@ -1802,7 +1819,6 @@
             saveToLocalStorage(document.getElementById('form-maklumat-kursus'), 'maklumat_kursus');
         }
 
-        /* ---------------- FUNGSI DYNAMIC URUS SETIA ---------------- */
         function renderUrusetiaTable(urusetiaList) {
             const tbody = document.querySelector('#jadual-urusetia tbody');
             if (!tbody) return;
@@ -1868,7 +1884,6 @@
             saveToLocalStorage(document.getElementById('form-maklumat-kursus'), 'maklumat_kursus');
         }
 
-        /* ---------------- FUNGSI DYNAMIC KOS / AGIHAN ---------------- */
         function tambahPerihalKos() {
             const tbody = document.getElementById('tbody-kos-perihal');
             const tr = document.createElement('tr');
@@ -1899,7 +1914,6 @@
             saveToLocalStorage(document.getElementById('form-anggaran-kos'), 'anggaran_kos');
         }
 
-        /* ---------------- FUNGSI DYNAMIC SENARAI PESERTA ---------------- */
         function tambahPesertaBaris() {
             const tbody = document.querySelector('#jadual-peserta-kadar tbody');
             const rowCount = tbody.rows.length + 1;
@@ -1943,7 +1957,6 @@
             saveToLocalStorage(document.getElementById('form-senarai-peserta'), 'senarai_peserta');
         }
 
-        /* ---------------- FUNGSI UTILITI ---------------- */
         function kemaskiniNomborJadual(tableSelector) {
             const tbody = document.querySelector(`${tableSelector} tbody`);
             if (tbody) {
@@ -1958,7 +1971,6 @@
             checkboxes.forEach(cb => cb.checked = masterCb.checked);
         }
 
-        // FUNGSI MEMUATKAN DATA MODUL DARI LOCALSTORAGE / DATABASE
         async function loadModuleData(moduleName) {
             let data = null;
 
@@ -2024,7 +2036,6 @@
             if (typeof janaKertasPerakuanRasmi === 'function') janaKertasPerakuanRasmi();
         }
 
-        // FUNGSI SIMPAN DATA KE DATABASE & LOCALSTORAGE
         async function saveModuleData(event, moduleName) {
             event.preventDefault();
             const form = event.target;
