@@ -554,34 +554,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td style="text-align: center;"><input type="checkbox" class="objektif-check"></td>
-                                    <td style="text-align: center;">1</td>
-                                    <td>
-                                        <input type="text" name="objektif[]" class="gov-input input-objektif" style="max-width: 100%;" value="Memberi pendedahan kepada pegawai mengenai konsep kenegaraan, prinsip dan falsafah pembentukan negara, sistem pentadbiran kerajaan serta peraturan-peraturan asas perkhidmatan awam." oninput="janaKertasPerakuanRasmi()">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: center;"><input type="checkbox" class="objektif-check"></td>
-                                    <td style="text-align: center;">2</td>
-                                    <td>
-                                        <input type="text" name="objektif[]" class="gov-input input-objektif" style="max-width: 100%;" value="Memupuk keperibadian, jati diri dan nilai patriotisme pegawai supaya lebih berketerampilan dan berkemampuan menyesuaikan diri dalam perkhidmatan awam." oninput="janaKertasPerakuanRasmi()">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: center;"><input type="checkbox" class="objektif-check"></td>
-                                    <td style="text-align: center;">3</td>
-                                    <td>
-                                        <input type="text" name="objektif[]" class="gov-input input-objektif" style="max-width: 100%;" value="Menerapkan nilai budaya kerja cemerlang dengan minda kelas pertama agar pegawai dapat memberikan penyampaian perkhidmatan dengan cekap serta berkesan." oninput="janaKertasPerakuanRasmi()">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: center;"><input type="checkbox" class="objektif-check"></td>
-                                    <td style="text-align: center;">4</td>
-                                    <td>
-                                        <input type="text" name="objektif[]" class="gov-input input-objektif" style="max-width: 100%;" value="Memberi nilai tambah kepada peserta dengan penerapan kemahiran komunikasi dan pengurusan kewangan Kerajaan." oninput="janaKertasPerakuanRasmi()">
-                                    </td>
-                                </tr>
+                                <!-- Dihasilkan secara dinamik oleh loadModuleData / JavaScript -->
                             </tbody>
                         </table>
 
@@ -604,32 +577,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td style="text-align: center;"><input type="checkbox" class="urusetia-check"></td>
-                                    <td style="text-align: center;">1</td>
-                                    <td>
-                                        <input type="text" name="urusetia_nama[]" class="gov-input" style="max-width: 100%; font-weight:bold; margin-bottom:4px;" value="910225085387 - NOR AZILAN BIN ZAINAL ABIDIN"><br>
-                                        <input type="text" name="urusetia_jawatan[]" class="gov-input" style="max-width: 100%; font-size:0.75rem;" value="Pembantu Tadbir (Perkeranian/Operasi), Gred N1, (TBK1 dan TBK2)">
-                                    </td>
-                                    <td>
-                                        <textarea name="urusetia_unit[]" class="gov-textarea" rows="3" style="max-width: 100%;">SEKSYEN PEMBANGUNAN SUMBER MANUSIA DAN KOMPETENSI, BAHAGIAN PENGURUSAN SUMBER MANUSIA, PEJABAT SETIAUSAHA BAHAGIAN KANAN (PENGURUSAN), PEJABAT KETUA SETIAUSAHA, PENGURUSAN, KEMENTERIAN SAINS, TEKNOLOGI DAN INOVASI, KERAJAAN MALAYSIA</textarea>
-                                    </td>
-                                    <td><input type="text" name="urusetia_tel[]" class="gov-input" value="0167331925" style="max-width:100px;"></td>
-                                    <td><input type="email" name="urusetia_email[]" class="gov-input" value="azilan@mosti.gov.my" style="max-width:160px;"></td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: center;"><input type="checkbox" class="urusetia-check"></td>
-                                    <td style="text-align: center;">2</td>
-                                    <td>
-                                        <input type="text" name="urusetia_nama[]" class="gov-input" style="max-width: 100%; font-weight:bold; margin-bottom:4px;" value="790207095158 - NOOR DIANA HAYATI BINTI KAMUDIN"><br>
-                                        <input type="text" name="urusetia_jawatan[]" class="gov-input" style="max-width: 100%; font-size:0.75rem;" placeholder="Jawatan...">
-                                    </td>
-                                    <td>
-                                        <textarea name="urusetia_unit[]" class="gov-textarea" rows="3" style="max-width: 100%;">SEKSYEN PEMBANGUNAN SUMBER MANUSIA DAN KOMPETENSI, BAHAGIAN PENGURUSAN SUMBER MANUSIA, PEJABAT SETIAUSAHA BAHAGIAN KANAN</textarea>
-                                    </td>
-                                    <td><input type="text" name="urusetia_tel[]" class="gov-input" value="019-2616009" style="max-width:100px;"></td>
-                                    <td><input type="email" name="urusetia_email[]" class="gov-input" value="Dyanahayati@mosti.gov.my" style="max-width:160px;"></td>
-                                </tr>
+                                <!-- Dihasilkan secara dinamik oleh loadModuleData / JavaScript -->
                             </tbody>
                         </table>
 
@@ -1205,15 +1153,36 @@
 
     <!-- SCRIPT PENGURUSAN TAB & DYNAMIC FUNCTIONS -->
     <script>
+        // Data Default untuk Paparan Awal (Sekiranya Pangkalan Data Masih Kosong)
+        const defaultObjektif = [
+            "Memberi pendedahan kepada pegawai mengenai konsep kenegaraan, prinsip dan falsafah pembentukan negara, sistem pentadbiran kerajaan serta peraturan-peraturan asas perkhidmatan awam.",
+            "Memupuk keperibadian, jati diri dan nilai patriotisme pegawai supaya lebih berketerampilan dan berkemampuan menyesuaikan diri dalam perkhidmatan awam.",
+            "Menerapkan nilai budaya kerja cemerlang dengan minda kelas pertama agar pegawai dapat memberikan penyampaian perkhidmatan dengan cekap serta berkesan.",
+            "Memberi nilai tambah kepada peserta dengan penerapan kemahiran komunikasi dan pengurusan kewangan Kerajaan."
+        ];
+
+        const defaultUrusetia = [
+            {
+                nama: "910225085387 - NOR AZILAN BIN ZAINAL ABIDIN",
+                jawatan: "Pembantu Tadbir (Perkeranian/Operasi), Gred N1, (TBK1 dan TBK2)",
+                unit: "SEKSYEN PEMBANGUNAN SUMBER MANUSIA DAN KOMPETENSI, BAHAGIAN PENGURUSAN SUMBER MANUSIA, PEJABAT SETIAUSAHA BAHAGIAN KANAN (PENGURUSAN), PEJABAT KETUA SETIAUSAHA, PENGURUSAN, KEMENTERIAN SAINS, TEKNOLOGI DAN INOVASI, KERAJAAN MALAYSIA",
+                tel: "0167331925",
+                email: "azilan@mosti.gov.my"
+            },
+            {
+                nama: "790207095158 - NOOR DIANA HAYATI BINTI KAMUDIN",
+                jawatan: "",
+                unit: "SEKSYEN PEMBANGUNAN SUMBER MANUSIA DAN KOMPETENSI, BAHAGIAN PENGURUSAN SUMBER MANUSIA, PEJABAT SETIAUSAHA BAHAGIAN KANAN",
+                tel: "019-2616009",
+                email: "Dyanahayati@mosti.gov.my"
+            }
+        ];
+
         document.addEventListener('DOMContentLoaded', () => {
             loadApplications();
             loadModuleData('maklumat_kursus');
             loadModuleData('anggaran_kos');
             loadModuleData('jadual_kadar');
-            
-            kiraKosPeserta();
-            kiraKosKeseluruhan();
-            janaKertasPerakuanRasmi();
         });
 
         // FUNGSI TUKAR TAB UTAMA SIDEBAR
@@ -1249,18 +1218,15 @@
             const rows = document.querySelectorAll('#jadual-peserta-kadar tbody tr');
             let totalTawaranSemua = 0;
 
-            // Update Bilangan Peserta Auto
             const bilPeserta = rows.length;
             const inputBilPeserta = document.getElementById('input_bil_peserta');
             if (inputBilPeserta) inputBilPeserta.value = bilPeserta;
 
-            // Bilangan Urus Setia
             const rowsUrusetia = document.querySelectorAll('#jadual-urusetia tbody tr');
             const bilUrusetia = rowsUrusetia.length;
             const inputBilUrusetia = document.getElementById('input_bil_urusetia');
             if (inputBilUrusetia) inputBilUrusetia.value = bilUrusetia;
 
-            // Jumlah Keseluruhan Peserta + Urus Setia
             const inputTotalAll = document.getElementById('input_jumlah_peserta_keseluruhan');
             if (inputTotalAll) inputTotalAll.value = bilPeserta + bilUrusetia;
 
@@ -1273,12 +1239,10 @@
                 const pakej = parseFloat(row.querySelector('input[name="peserta_pakej[]"]')?.value || 0);
                 const hotelxday = parseFloat(row.querySelector('input[name="peserta_hotelxday[]"]')?.value || 0);
 
-                // Formula Pengiraan
                 const jKelayakan = emakan + ehotel + sst;
                 const jKelayakan3Malam = jKelayakan * (malam || 1);
                 const jTawaran = pakej * (hotelxday || 1);
 
-                // Set nilai dikira
                 const inputJKelayakan = row.querySelector('input[name="peserta_jkelayakan[]"]');
                 if (inputJKelayakan) inputJKelayakan.value = jKelayakan.toFixed(2);
 
@@ -1319,12 +1283,11 @@
             const strTot = jumlahKeseluruhan.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
             const strGen = jumlahDigenapkan.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
-            document.getElementById('kos_jumlah_sub').value = strSub;
-            document.getElementById('kos_kontigensi').value = strKon;
-            document.getElementById('kos_jumlah_keseluruhan').value = strTot;
-            document.getElementById('kos_digenapkan').value = strGen;
+            if (document.getElementById('kos_jumlah_sub')) document.getElementById('kos_jumlah_sub').value = strSub;
+            if (document.getElementById('kos_kontigensi')) document.getElementById('kos_kontigensi').value = strKon;
+            if (document.getElementById('kos_jumlah_keseluruhan')) document.getElementById('kos_jumlah_keseluruhan').value = strTot;
+            if (document.getElementById('kos_digenapkan')) document.getElementById('kos_digenapkan').value = strGen;
 
-            // Auto-update medan Jumlah Kos pada Rekod PPK
             const autoJumlahKos = document.getElementById('auto_jumlah_kos');
             if (autoJumlahKos) autoJumlahKos.value = strGen;
 
@@ -1333,7 +1296,6 @@
 
         /* ---------------- FUNGSI SEGERAKAN KERTAS PERAKUAN BPSM ---------------- */
         function janaKertasPerakuanRasmi() {
-            // 1. Tajuk, Lokasi & Tarikh
             const namaPPK = document.getElementById('auto_nama_ppk')?.value || '-';
             const lokasi = document.getElementById('auto_lokasi')?.value || '-';
             const negeri = document.getElementById('auto_negeri')?.value || '';
@@ -1347,7 +1309,6 @@
                 if(document.getElementById(id)) document.getElementById(id).innerText = lokasiPenuh || '-';
             });
 
-            // 2. Senarai Objektif
             const objektifInputs = document.querySelectorAll('.input-objektif');
             const docObjektifList = document.getElementById('doc_objektif_list');
             if (docObjektifList) {
@@ -1360,7 +1321,6 @@
                 docObjektifList.innerHTML = htmlObjektif || '-';
             }
 
-            // 3. Bilangan Peserta / Urus Setia
             const bilPeserta = parseInt(document.getElementById('input_bil_peserta')?.value || '0');
             const bilUrusetia = parseInt(document.getElementById('input_bil_urusetia')?.value || '0');
             
@@ -1368,7 +1328,6 @@
                 document.getElementById('doc_jumlah_peserta_all').innerText = (bilPeserta + bilUrusetia);
             }
 
-            // 4. Perincian Kos
             const perihalInputs = document.querySelectorAll('.input-kos-perihal');
             const rmInputs = document.querySelectorAll('.class-kos-rm');
             const docTbodyKos = document.getElementById('doc_tbody_kos');
@@ -1415,7 +1374,6 @@
                 docTbodyKos.innerHTML = htmlKos;
             }
 
-            // 5. Penceramah & Syor
             const penceramahText = document.getElementById('auto_penceramah')?.value || '-';
             if (document.getElementById('doc_penceramah_text')) document.getElementById('doc_penceramah_text').innerText = penceramahText;
 
@@ -1442,14 +1400,12 @@
             const bilUrusetia = document.getElementById('input_bil_urusetia')?.value || '0';
             const jumlahPeserta = parseInt(bilPeserta) + parseInt(bilUrusetia);
 
-            // Objektif List
             const objektifNodes = document.querySelectorAll('.input-objektif');
             let senaraiObjektif = [];
             objektifNodes.forEach(input => {
                 if (input.value.trim() !== '') senaraiObjektif.push(input.value);
             });
 
-            // Kos List
             const perihalInputs = document.querySelectorAll('.input-kos-perihal');
             const rmInputs = document.querySelectorAll('.class-kos-rm');
             let senaraiKos = [];
@@ -1563,6 +1519,23 @@
         }
 
         /* ---------------- FUNGSI DYNAMIC OBJEKTIF ---------------- */
+        function renderObjektifTable(objList) {
+            const tbody = document.querySelector('#jadual-objektif tbody');
+            tbody.innerHTML = '';
+            
+            objList.forEach((textVal, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="text-align: center;"><input type="checkbox" class="objektif-check"></td>
+                    <td style="text-align: center;">${index + 1}</td>
+                    <td>
+                        <input type="text" name="objektif[]" class="gov-input input-objektif" style="max-width: 100%;" value="${textVal}" oninput="janaKertasPerakuanRasmi()">
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
         function tambahObjektif() {
             const tbody = document.querySelector('#jadual-objektif tbody');
             const rowCount = tbody.rows.length + 1;
@@ -1595,6 +1568,29 @@
         }
 
         /* ---------------- FUNGSI DYNAMIC URUS SETIA ---------------- */
+        function renderUrusetiaTable(urusetiaList) {
+            const tbody = document.querySelector('#jadual-urusetia tbody');
+            tbody.innerHTML = '';
+
+            urusetiaList.forEach((u, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="text-align: center;"><input type="checkbox" class="urusetia-check"></td>
+                    <td style="text-align: center;">${index + 1}</td>
+                    <td>
+                        <input type="text" name="urusetia_nama[]" class="gov-input" style="max-width: 100%; font-weight:bold; margin-bottom:4px;" value="${u.nama || ''}"><br>
+                        <input type="text" name="urusetia_jawatan[]" class="gov-input" style="max-width: 100%; font-size:0.75rem;" value="${u.jawatan || ''}" placeholder="Jawatan...">
+                    </td>
+                    <td>
+                        <textarea name="urusetia_unit[]" class="gov-textarea" rows="3" style="max-width: 100%;">${u.unit || ''}</textarea>
+                    </td>
+                    <td><input type="text" name="urusetia_tel[]" class="gov-input" value="${u.tel || ''}" style="max-width:100px;"></td>
+                    <td><input type="email" name="urusetia_email[]" class="gov-input" value="${u.email || ''}" style="max-width:160px;"></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
         function tambahUrusetia() {
             const tbody = document.querySelector('#jadual-urusetia tbody');
             const rowCount = tbody.rows.length + 1;
@@ -1720,13 +1716,39 @@
         async function loadModuleData(moduleName) {
             try {
                 const res = await fetch(`/api/admin/latihan-modul/${moduleName}`);
+                let data = {};
                 if (res.ok) {
-                    const data = await res.json();
-                    if (!data || Object.keys(data).length === 0) return;
+                    data = await res.json();
+                }
 
+                if (moduleName === 'maklumat_kursus') {
+                    // Paparkan Objektif dari Database atau Default
+                    if (data && data.objektif && Array.isArray(data.objektif)) {
+                        renderObjektifTable(data.objektif);
+                    } else {
+                        renderObjektifTable(defaultObjektif);
+                    }
+
+                    // Paparkan Urus Setia dari Database atau Default
+                    if (data && data.urusetia_nama && Array.isArray(data.urusetia_nama)) {
+                        const uList = data.urusetia_nama.map((nama, idx) => ({
+                            nama: nama,
+                            jawatan: data.urusetia_jawatan?.[idx] || '',
+                            unit: data.urusetia_unit?.[idx] || '',
+                            tel: data.urusetia_tel?.[idx] || '',
+                            email: data.urusetia_email?.[idx] || ''
+                        }));
+                        renderUrusetiaTable(uList);
+                    } else {
+                        renderUrusetiaTable(defaultUrusetia);
+                    }
+                }
+
+                if (data && Object.keys(data).length > 0) {
                     Object.keys(data).forEach(key => {
+                        if (key === 'objektif' || key.startsWith('urusetia_')) return;
+
                         const inputs = document.querySelectorAll(`[name="${key}"], [name="${key}[]"]`);
-                        
                         if (inputs.length > 0) {
                             const val = data[key];
                             if (Array.isArray(val)) {
@@ -1738,17 +1760,21 @@
                             }
                         }
                     });
-
-                    if (typeof kiraKosPeserta === 'function') kiraKosPeserta();
-                    if (typeof kiraKosKeseluruhan === 'function') kiraKosKeseluruhan();
-                    if (typeof janaKertasPerakuanRasmi === 'function') janaKertasPerakuanRasmi();
                 }
+
+                if (typeof kiraKosPeserta === 'function') kiraKosPeserta();
+                if (typeof kiraKosKeseluruhan === 'function') kiraKosKeseluruhan();
+                if (typeof janaKertasPerakuanRasmi === 'function') janaKertasPerakuanRasmi();
             } catch (err) {
                 console.warn(`Gagal memuatkan data ${moduleName}:`, err);
+                if (moduleName === 'maklumat_kursus') {
+                    renderObjektifTable(defaultObjektif);
+                    renderUrusetiaTable(defaultUrusetia);
+                }
             }
         }
 
-        // FUNGSI SIMPAN DATA KE DATABASE / LOCALSTORAGE (DIKEMAS KINI UNTUK MUAT NAIK FAIL BASE64)
+        // FUNGSI SIMPAN DATA KE DATABASE / LOCALSTORAGE
         async function saveModuleData(event, moduleName) {
             event.preventDefault();
             const form = event.target;
