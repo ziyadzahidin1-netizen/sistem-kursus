@@ -5,9 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Admin - Portal Kursus MOSTI</title>
     
-    <!-- CSS Standard -->
+    <!-- Pautan ke Fail CSS Asing -->
     <link rel="stylesheet" href="style.css">
     
+    <!-- Google Fonts: Light & Clean Typography (Open Sans & Plus Jakarta Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <!-- FontAwesome untuk Ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -18,56 +23,289 @@
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
 
     <style>
-        * {
-            box-sizing: border-box;
+        /* ASAS FONT KORPORAT NIPIS */
+        body, button, input, select, textarea {
+            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif !important;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 0;
+            color: #1e293b;
+        }
+
+        /* HEADER DUA BARIS (SAMA MACAM MOHON.HTML & INDEX.HTML) */
+        .navbar-header-container {
+            background-color: #0c2847 !important; /* Warna biru gelap */
+            border-bottom: 1px solid #002b58;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* BARIS ATAS: LOGO (KIRI) & LINK PROFIL/LOG MASUK (KANAN) */
+        .header-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 50px !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 44px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .header-title-group {
+            display: flex;
+            flex-direction: column;
+            text-transform: uppercase;
+            color: #ffffff;
+            line-height: 1.15;
+            border-left: 1px solid rgba(255, 255, 255, 0.3);
+            padding-left: 12px;
+        }
+
+        .header-subtitle {
+            font-size: 0.65rem;
+            letter-spacing: 0.5px;
+            font-weight: 300;
+            color: #cbd5e1;
+        }
+
+        .header-english-title {
+            font-size: 0.72rem;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+            color: #ffffff;
+        }
+
+        .header-tagline {
+            font-size: 0.58rem;
+            letter-spacing: 0.8px;
+            margin-top: 1px;
+            font-weight: 300;
+            color: #ef7c00;
+        }
+
+        .header-top-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 0.85rem;
+        }
+
+        /* BARIS BAWAH: NAVIGASI UTAMA DI BAWAH LOGO */
+        .header-bottom-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 50px !important;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .nav-links-sub {
+            display: flex;
+            align-items: center;
+            gap: 25px !important;
+            list-style: none;
             margin: 0;
             padding: 0;
         }
 
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: #f1f5f9;
+        .nav-links-sub a {
+            color: #334155;
+            text-decoration: none;
+            font-size: 0.9rem !important;
+            font-weight: 300 !important;
+            padding: 12px 0 !important;
+            display: inline-block;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .nav-links-sub a:hover, .nav-links-sub a.active {
+            color: #003d7c;
+            font-weight: 400 !important;
+        }
+
+        .nav-links-sub a.active::after, .nav-links-sub a:hover::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #ef7c00;
+        }
+
+        /* BAR CARIAN DI NAV BARIS BAWAH */
+        .nav-search-box {
+            display: flex;
+            align-items: center;
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 20px;
+            padding: 4px 12px !important;
+            transition: all 0.3s ease;
+        }
+
+        .nav-search-box:focus-within {
+            background: #ffffff;
+            border-color: #003d7c;
+            box-shadow: 0 0 0 3px rgba(0, 61, 124, 0.1);
+        }
+
+        .nav-search-box input {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 0.82rem !important;
+            color: #334155;
+            width: 150px !important;
+        }
+
+        .nav-search-box button {
+            background: transparent;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+            padding: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-search-box button:hover {
+            color: #003d7c;
+        }
+
+        /* USER DROPDOWN SAMA MACAM MOHON.HTML */
+        .user-dropdown-container {
+            position: relative;
+            display: inline-block;
+        }
+        .user-dropdown-btn {
+            background: transparent;
+            color: #ffffff;
+            border: none;
+            font-size: 0.88rem;
+            font-weight: 400;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: background 0.2s ease;
+        }
+        .user-dropdown-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .user-avatar-small {
+            width: 28px !important;
+            height: 28px !important;
+            border-radius: 50% !important;
+            object-fit: cover !important;
+            border: 1px solid #ffffff;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            margin-top: 8px;
+            background-color: #ffffff;
+            min-width: 200px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            overflow: hidden;
+            z-index: 1000;
+            border: 1px solid #e2e8f0;
+        }
+        .dropdown-menu.show {
+            display: block;
+        }
+        .dropdown-menu a, .dropdown-menu button {
             color: #1e293b;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            width: 100%;
+            box-sizing: border-box;
+            border: none;
+            background: none;
+            text-align: left;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .dropdown-menu a:hover, .dropdown-menu button:hover {
+            background-color: #f1f5f9;
+        }
+        .dropdown-menu .logout-item {
+            color: #ef4444;
+            border-top: 1px solid #e2e8f0;
+        }
+        .dropdown-menu .logout-item:hover {
+            background-color: #fef2f2;
         }
 
         /* SUSUNAN UTAMA: SIDEBAR + MAIN CONTENT */
         .admin-wrapper {
             display: flex;
-            min-height: calc(100vh - 90px);
-            margin-top: 25px; /* Jarak dari Navbar */
+            min-height: calc(100vh - 120px);
+            margin-top: 0;
         }
 
-        /* REKA BENTUK SIDEBAR */
+        /* REKA BENTUK SIDEBAR KORPORAT CLEAN */
         .sidebar {
             width: 260px;
-            background-color: #0f172a;
+            background-color: #0c2847;
             color: #f8fafc;
-            padding: 20px 0;
+            padding: 25px 0;
             flex-shrink: 0;
             transition: all 0.3s ease;
-            border-radius: 0 8px 0 0;
         }
 
         .sidebar-header {
             padding: 0 20px 20px 20px;
-            border-bottom: 1px solid #334155;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             margin-bottom: 20px;
         }
 
         .sidebar-header h3 {
-            font-size: 1.1rem;
-            color: #38bdf8;
+            font-size: 1.05rem;
+            font-weight: 400;
+            color: #ef7c00;
             display: flex;
             align-items: center;
             gap: 10px;
+            margin: 0;
         }
 
         .sidebar-menu {
             list-style: none;
+            padding: 0;
+            margin: 0;
         }
 
         .sidebar-menu li {
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         .sidebar-link {
@@ -77,21 +315,22 @@
             padding: 12px 20px;
             color: #cbd5e1;
             text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
+            font-size: 0.9rem;
+            font-weight: 300;
             transition: all 0.2s ease;
             cursor: pointer;
             border-left: 4px solid transparent;
         }
 
         .sidebar-link:hover, .sidebar-link.active {
-            background-color: #1e293b;
+            background-color: #003d7c;
             color: #ffffff;
-            border-left-color: #2563eb;
+            border-left-color: #ef7c00;
+            font-weight: 400;
         }
 
         .sidebar-link i {
-            font-size: 1.1rem;
+            font-size: 1rem;
             width: 20px;
             text-align: center;
         }
@@ -99,7 +338,7 @@
         /* KANDUNGAN UTAMA (MAIN CONTENT) */
         .main-content {
             flex-grow: 1;
-            padding: 0 25px 25px 25px;
+            padding: 30px 40px;
             overflow-y: auto;
         }
 
@@ -114,185 +353,214 @@
         /* KAD UTAMA & PANEL DTIMS GOV STYLE */
         .admin-card {
             background: #ffffff;
-            border: 1px solid #cbd5e1;
-            padding: 15px;
+            border: 1px solid #eaeaea;
+            border-radius: 4px;
+            padding: 20px;
             margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 25px rgba(0,0,0,0.03);
         }
 
         .gov-banner-header {
-            background-color: #0088cc;
+            background-color: #0c2847;
             color: #ffffff;
-            padding: 8px 14px;
-            font-size: 0.88rem;
-            font-weight: bold;
-            margin-bottom: 15px;
+            padding: 12px 18px;
+            font-size: 0.9rem;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+            margin-bottom: 20px;
             text-transform: uppercase;
-            border-radius: 2px;
+            border-radius: 4px;
         }
 
         /* BAR NAVIGASI GAYA GOV/DTIMS */
         .gov-tab-bar {
             display: flex;
-            background-color: #73879c;
-            border-bottom: 2px solid #5a6b7c;
-            margin-bottom: 15px;
+            background-color: #f1f5f9;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            margin-bottom: 20px;
             overflow-x: auto;
         }
 
         .gov-tab-item {
-            padding: 10px 18px;
-            color: #ffffff;
-            font-weight: bold;
-            font-size: 0.82rem;
+            padding: 12px 20px;
+            color: #475569;
+            font-weight: 400;
+            font-size: 0.85rem;
             cursor: pointer;
-            border-right: 1px solid #5a6b7c;
+            border-right: 1px solid #d1d5db;
             white-space: nowrap;
             text-align: center;
-            transition: background 0.2s;
+            transition: all 0.2s;
             user-select: none;
         }
 
         .gov-tab-item:hover {
-            background-color: #5a6b7c;
+            background-color: #e2e8f0;
+            color: #0c2847;
         }
 
         .gov-tab-item.active {
-            background-color: #33414e;
-            border-bottom: 3px solid #0088cc;
+            background-color: #0c2847;
+            color: #ffffff;
+            font-weight: 500;
         }
 
         /* GAYA BORANG & JADUAL SYSTEM DTIMS */
         .gov-section-title {
-            background-color: #38bdf8;
-            color: #ffffff;
-            padding: 6px 10px;
-            font-size: 0.85rem;
-            font-weight: bold;
+            background-color: #f8fafc;
+            border-left: 4px solid #0c2847;
+            color: #0c2847;
+            padding: 10px 14px;
+            font-size: 0.88rem;
+            font-weight: 600;
             margin-top: 15px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             text-transform: uppercase;
+            border-top: 1px solid #eaeaea;
+            border-right: 1px solid #eaeaea;
+            border-bottom: 1px solid #eaeaea;
         }
 
         .gov-instruction {
-            color: #2563eb;
-            font-size: 0.8rem;
+            color: #003d7c;
+            font-size: 0.82rem;
             font-style: italic;
-            margin-bottom: 12px;
-            line-height: 1.4;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            font-weight: 300;
         }
 
         .gov-form-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.85rem;
-            margin-bottom: 15px;
+            font-size: 0.88rem;
+            margin-bottom: 20px;
         }
 
         .gov-form-table td {
-            padding: 5px 8px;
+            padding: 8px 10px;
             vertical-align: middle;
         }
 
         .gov-form-table td.label-col {
-            font-weight: bold;
+            font-weight: 400;
             width: 220px;
-            color: #0f172a;
+            color: #334155;
             white-space: nowrap;
         }
 
         .gov-input {
-            padding: 4px 8px;
-            border: 1px solid #94a3b8;
-            border-radius: 2px;
-            font-size: 0.85rem;
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 0.88rem;
+            font-weight: 300;
             width: 100%;
             max-width: 500px;
             box-sizing: border-box;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .gov-input:focus, .gov-textarea:focus {
+            border-color: #0c2847;
+            box-shadow: 0 0 0 3px rgba(12, 40, 71, 0.05);
         }
 
         .gov-textarea {
-            padding: 5px 8px;
-            border: 1px solid #94a3b8;
-            border-radius: 2px;
-            font-size: 0.85rem;
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 0.88rem;
+            font-weight: 300;
             width: 100%;
             max-width: 500px;
             box-sizing: border-box;
             resize: vertical;
+            outline: none;
+            transition: all 0.2s;
         }
 
         .gov-btn-group {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-top: 15px;
-            margin-bottom: 15px;
+            gap: 12px;
+            margin-top: 20px;
+            margin-bottom: 20px;
         }
 
         .gov-btn {
-            background-color: #94a3b8;
-            color: #ffffff;
-            border: 1px solid #64748b;
-            padding: 5px 18px;
-            font-size: 0.82rem;
-            font-weight: bold;
+            background-color: #ffffff;
+            color: #334155;
+            border: 1px solid #d1d5db;
+            padding: 9px 20px;
+            font-size: 0.85rem;
+            font-weight: 400;
             cursor: pointer;
-            border-radius: 2px;
+            border-radius: 4px;
+            transition: all 0.2s;
         }
 
         .gov-btn:hover {
-            background-color: #64748b;
+            background-color: #f8fafc;
+            border-color: #0c2847;
+            color: #0c2847;
         }
 
         .gov-btn-primary {
-            background-color: #0284c7;
-            border-color: #0369a1;
+            background-color: #0c2847;
+            color: #ffffff;
+            border-color: #0c2847;
         }
 
         .gov-btn-primary:hover {
-            background-color: #0369a1;
+            background-color: #003d7c;
+            color: #ffffff;
         }
 
         .gov-btn-success {
-            background-color: #16a34a;
-            border-color: #15803d;
+            background-color: #10b981;
+            color: #ffffff;
+            border-color: #10b981;
         }
 
         .gov-btn-success:hover {
-            background-color: #15803d;
+            background-color: #059669;
+            color: #ffffff;
         }
 
         /* JADUAL DATA GOV DTIMS */
         .gov-data-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.82rem;
-            margin-bottom: 10px;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
         }
 
         .gov-data-table th {
-            background-color: #73879c;
-            color: white;
-            padding: 6px 8px;
+            background-color: #f8fafc;
+            color: #475569;
+            padding: 10px 12px;
             text-align: center;
-            border: 1px solid #cbd5e1;
-            font-weight: bold;
+            border: 1px solid #e2e8f0;
+            font-weight: 600;
             vertical-align: middle;
         }
 
         .gov-data-table td {
-            padding: 6px 8px;
-            border: 1px solid #cbd5e1;
+            padding: 10px 12px;
+            border: 1px solid #e2e8f0;
             background-color: #fff;
             vertical-align: middle;
+            font-weight: 300;
         }
 
         /* FORMAT CETAK KERTAS PERAKUAN BPSM (PERSAMAAN TEPAT DOKUMEN WORD) */
         .perakuan-doc-container {
             background-color: #ffffff;
             border: 1px solid #ccc;
-            padding: 30px;
+            padding: 40px;
             color: #000;
             font-family: Arial, sans-serif;
             font-size: 10pt;
@@ -310,7 +578,7 @@
 
         .perakuan-table th, .perakuan-table td {
             border: 1px solid #000;
-            padding: 5px 8px;
+            padding: 6px 10px;
             vertical-align: top;
         }
 
@@ -332,7 +600,7 @@
 
         .perakuan-top-box td {
             border: 1px solid #000;
-            padding: 4px 8px;
+            padding: 5px 10px;
             font-weight: bold;
         }
 
@@ -367,7 +635,7 @@
 
         /* SIGNATURE CANVAS STYLES */
         .signature-pad-wrapper {
-            border: 1px dashed #0284c7;
+            border: 1px dashed #0c2847;
             background-color: #fff;
             margin-top: 10px;
             margin-bottom: 10px;
@@ -384,19 +652,19 @@
 
         .badge-status {
             display: inline-block;
-            padding: 4px 10px;
+            padding: 4px 12px;
             font-size: 0.78rem;
-            font-weight: bold;
-            border-radius: 3px;
+            font-weight: 600;
+            border-radius: 20px;
             color: #fff;
         }
         .badge-pending { background-color: #f59e0b; }
-        .badge-approved { background-color: #16a34a; }
+        .badge-approved { background-color: #10b981; }
         .badge-draft { background-color: #64748b; }
 
         /* STYLES UNTUK PRINTING */
         @media print {
-            header, .sidebar, .gov-tab-bar, .gov-instruction, .gov-btn-group, .no-print {
+            header, .sidebar, .gov-tab-bar, .gov-instruction, .gov-btn-group, .no-print, .navbar-header-container {
                 display: none !important;
             }
             .admin-wrapper {
@@ -423,16 +691,20 @@
 
         /* RESPONSIVE DESIGN */
         @media screen and (max-width: 900px) {
+            .header-top-row { padding: 10px 18px !important; }
+            .header-bottom-nav { padding: 0 18px !important; overflow-x: auto; }
+            .logo-img { height: 32px !important; }
+            .header-subtitle, .header-english-title, .header-tagline { font-size: 0.55rem !important; }
+            .nav-links-sub { gap: 15px !important; }
+            .nav-links-sub a { font-size: 0.8rem !important; padding: 10px 0 !important; }
             .admin-wrapper {
                 flex-direction: column;
-                margin-top: 15px;
             }
             .sidebar {
                 width: 100%;
-                border-radius: 0;
             }
             .main-content {
-                padding: 15px 10px;
+                padding: 20px 15px;
             }
             .gov-form-table td.label-col {
                 width: 100%;
@@ -441,26 +713,53 @@
             }
             .gov-form-table td {
                 display: block;
-                padding: 2px 0;
+                padding: 4px 0;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- BAR NAVIGASI (NAVBAR) -->
-    <header class="navbar">
-        <div class="logo">
-            <img src="logo.png" alt="Logo Portal Kursus" class="logo-img">
-            <span>Portal kursus</span>
+    <!-- CONTAINER HEADER DUA BARIS (SAMA MACAM MOHON.HTML & INDEX.HTML) -->
+    <header class="navbar-header-container">
+        <!-- BARIS ATAS: LOGO MOSTI & PERANAN/LOG MASUK USER -->
+        <div class="header-top-row">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Logo Portal Kursus MOSTI" class="logo-img">
+                <div class="header-title-group">
+                    <span class="header-subtitle">PORTAL KURSUS RASMI</span>
+                    <span class="header-english-title">MINISTRY OF SCIENCE, TECHNOLOGY AND INNOVATION</span>
+                    <span class="header-tagline">SAINS.TEKNOLOGI.INOVASI.BERSAMA</span>
+                </div>
+            </a>
+
+            <div class="header-top-right">
+                <span id="user-nav-container">
+                    <a href="login.html" style="color: #ffffff; text-decoration: none; font-size: 0.85rem;"><i class="fa-solid fa-user"></i> Log Masuk</a>
+                </span>
+            </div>
         </div>
 
-        <nav class="nav-links">
-            <a href="index.html" class="nav-btn"><i class="fa-solid fa-house"></i> Utama</a>
-            <a href="iklan.html" class="nav-btn"><i class="fa-solid fa-bullhorn"></i> Jenis & Iklan Kursus</a>
-            <a href="takwim.html" class="nav-btn"><i class="fa-solid fa-calendar-days"></i> Takwim Kursus</a>
-            <a href="mohon.html" class="nav-btn btn-apply"><i class="fa-solid fa-paper-plane"></i> Mohon Kursus</a>
-        </nav>
+        <!-- BARIS BAWAH: NAVIGASI UTAMA DI BAWAH LOGO & BAR CARIAN -->
+        <div class="header-bottom-nav">
+            <nav>
+                <ul class="nav-links-sub" id="nav-links">
+                    <li><a href="index.html">Utama</a></li>
+                    <li><a href="iklan.html">Jenis & Iklan Kursus</a></li>
+                    <li><a href="takwim.html">Takwim Kursus</a></li>
+                    <li><a href="mohon.html">Mohon Kursus</a></li>
+                    <li><a href="admin_dashboard.html" class="active">Dashboard Admin</a></li>
+                </ul>
+            </nav>
+            
+            <!-- BAR CARIAN DI NAV BARIS BAWAH -->
+            <div class="nav-search-box">
+                <input type="text" id="top-nav-search-input" placeholder="Cari di sini..." onkeypress="if(event.key === 'Enter') handleNavSearch()">
+                <button type="button" onclick="handleNavSearch()" title="Cari">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+        </div>
     </header>
 
     <!-- SUSUNAN ADMIN DENGAN SIDEBAR & KANDUNGAN -->
@@ -522,7 +821,7 @@
                 <!-- 1. BAHAGIAN ISI MAKLUMAT REKOD PPK, OBJEKTIF & URUS SETIA -->
                 <div id="sub-isi-maklumat" class="admin-card sub-tab-content" style="display: block;">
                     
-                    <div style="background-color:#38bdf8; color:#fff; padding:6px 10px; font-weight:bold; font-size:0.85rem; margin-bottom:10px;">
+                    <div style="background-color:#0c2847; color:#fff; padding:8px 12px; font-weight:600; font-size:0.85rem; margin-bottom:12px; border-radius: 4px;">
                         REKOD PPK
                     </div>
 
@@ -632,7 +931,7 @@
 
                         <!-- BUTANG SIMPAN & KELUAR DI BAWAH SEKALI -->
                         <div class="gov-btn-group" style="justify-content: center; gap: 10px; margin-top: 25px; padding-top: 15px; border-top: 1px solid #cbd5e1;">
-                            <button type="submit" class="gov-btn"><i class="fa-solid fa-floppy-disk"></i> SIMPAN</button>
+                            <button type="submit" class="gov-btn gov-btn-primary"><i class="fa-solid fa-floppy-disk"></i> SIMPAN</button>
                             <button type="button" class="gov-btn" onclick="window.location.reload()"><i class="fa-solid fa-right-from-bracket"></i> KELUAR</button>
                         </div>
                     </form>
@@ -864,7 +1163,7 @@
                 <!-- 6. BAHAGIAN KERTAS PERAKUAN -->
                 <div id="sub-kertas-perakuan" class="admin-card sub-tab-content" style="display: none;">
                     
-                    <div class="no-print" style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; background: #e0f2fe; padding: 10px; border-radius: 4px; border: 1px solid #bae6fd;">
+                    <div class="no-print" style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; background: #e0f2fe; padding: 12px 16px; border-radius: 4px; border: 1px solid #bae6fd;">
                         <div>
                             <b>Status Workflow: </b> 
                             <span id="workflow-status-badge" class="badge-status badge-draft">DRAFT / BELUM DIHANTAR</span>
@@ -1133,13 +1432,13 @@
 
             <!-- TAB 2: PEGAWAI PENTADBIR PEROLEHAN -->
             <div id="perolehan-tab" class="tab-section">
-                <div class="gov-banner-header" style="background-color: #059669;">
+                <div class="gov-banner-header" style="background-color: #10b981;">
                     PENGURUSAN PEROLEHAN & SEBUT HARGA (PENTADBIR PEROLEHAN)
                 </div>
 
                 <!-- SEKSYEN PENGESAHAN AUTOMATIK KERTAS PERAKUAN LATIHAN -->
-                <div class="admin-card" style="border-top: 4px solid #059669;">
-                    <div class="gov-section-title" style="background-color: #059669;">
+                <div class="admin-card" style="border-top: 4px solid #10b981;">
+                    <div class="gov-section-title" style="background-color: #f8fafc; border-left-color: #10b981; color: #0c2847;">
                         <i class="fa-solid fa-signature"></i> PENGESAHAN KERTAS PERAKUAN LATIHAN (SOKONG & KEPUTUSAN PBM)
                     </div>
 
@@ -1218,11 +1517,26 @@
         </main>
     </div>
 
+    <footer class="footer" style="background-color: #0c2847; color: #fff; text-align: center; padding: 20px;">
+        <p>&copy; 2026 Kementerian Sains, Teknologi dan Inovasi (MOSTI). Hak Cipta Terpelihara.</p>
+    </footer>
+
+    <script src="script.js"></script>
     <!-- SCRIPT PENGURUSAN TAB & DYNAMIC FUNCTIONS -->
     <script>
         let signaturePad = null;
+        let currentUser = null;
 
         document.addEventListener('DOMContentLoaded', () => {
+            const storedUser = sessionStorage.getItem('user') || localStorage.getItem('user');
+            if (storedUser) {
+                try {
+                    currentUser = JSON.parse(storedUser);
+                } catch(e) { console.error(e); }
+            }
+
+            setupNavbar();
+
             loadApplications();
             loadModuleData('maklumat_kursus');
             loadModuleData('anggaran_kos');
@@ -1233,7 +1547,64 @@
             initSignaturePad();
             checkWorkflowStatus();
             setupAutoSaveListeners();
+
+            document.addEventListener('click', (e) => {
+                const dropdown = document.getElementById('userMenuDropdown');
+                const btn = document.getElementById('userMenuBtn');
+                if (dropdown && btn && !btn.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.classList.remove('show');
+                }
+            });
         });
+
+        /* FUNGSI CARIAN BAR NAVIGASI TOP */
+        function handleNavSearch() {
+            const inputVal = document.getElementById('top-nav-search-input').value.trim();
+            if (inputVal) {
+                window.location.href = `iklan.html?keyword=${encodeURIComponent(inputVal)}`;
+            }
+        }
+
+        function setupNavbar() {
+            const navContainer = document.getElementById('user-nav-container');
+            if (currentUser && navContainer) {
+                const userPhoto = currentUser.gambar || 'https://via.placeholder.com/150';
+                const userName = currentUser.nama || 'Pengguna';
+
+                const adminMenuOption = currentUser.role === 'admin' 
+                    ? `<a href="admin_dashboard.html"><i class="fa-solid fa-user-shield"></i> Peranan Admin</a>` 
+                    : '';
+
+                navContainer.innerHTML = `
+                    <div class="user-dropdown-container">
+                        <button id="userMenuBtn" onclick="toggleUserDropdown()" class="user-dropdown-btn">
+                            <img src="${userPhoto}" alt="Avatar" class="user-avatar-small" id="navUserAvatar">
+                            <span>${userName}</span>
+                            <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem;"></i>
+                        </button>
+                        <div id="userMenuDropdown" class="dropdown-menu">
+                            <a href="user_dashboard.html"><i class="fa-solid fa-id-card"></i> User Dashboard</a>
+                            ${adminMenuOption}
+                            <a href="tukar_kata_laluan.html"><i class="fa-solid fa-key"></i> Tukar Kata Laluan</a>
+                            <button onclick="handleLogout()" class="logout-item"><i class="fa-solid fa-right-from-bracket"></i> Log Keluar</button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userMenuDropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('show');
+            }
+        }
+
+        function handleLogout() {
+            sessionStorage.removeItem('user');
+            localStorage.removeItem('user');
+            window.location.href = 'login.html';
+        }
 
         function initSignaturePad() {
             const canvas = document.getElementById('signature-canvas');

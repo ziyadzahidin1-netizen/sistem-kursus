@@ -3,157 +3,350 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard - Portal Kursus</title>
+    <title>User Dashboard - Portal MOSTI</title>
+    
+    <!-- Pautan ke Fail CSS Asing -->
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Google Fonts: Light & Clean Typography (Open Sans & Plus Jakarta Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome untuk Ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
+        /* ASAS FONT KORPORAT NIPIS */
+        body, button, input, select, textarea {
+            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif !important;
+            -webkit-font-smoothing: antialiased;
+        }
+
         body {
-            background-color: #f1f5f9;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 0;
+            color: #1e293b;
+        }
+
+        /* HEADER DUA BARIS (SAMA MACAM MOHON.HTML & INDEX.HTML) */
+        .navbar-header-container {
+            background-color: #0c2847 !important; /* Warna biru gelap */
+            border-bottom: 1px solid #002b58;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* BARIS ATAS: LOGO (KIRI) & LINK PROFIL/LOG MASUK (KANAN) */
+        .header-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 50px !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 44px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .header-title-group {
+            display: flex;
+            flex-direction: column;
+            text-transform: uppercase;
+            color: #ffffff;
+            line-height: 1.15;
+            border-left: 1px solid rgba(255, 255, 255, 0.3);
+            padding-left: 12px;
+        }
+
+        .header-subtitle {
+            font-size: 0.65rem;
+            letter-spacing: 0.5px;
+            font-weight: 300;
+            color: #cbd5e1;
+        }
+
+        .header-english-title {
+            font-size: 0.72rem;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+            color: #ffffff;
+        }
+
+        .header-tagline {
+            font-size: 0.58rem;
+            letter-spacing: 0.8px;
+            margin-top: 1px;
+            font-weight: 300;
+            color: #ef7c00;
+        }
+
+        .header-top-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 0.85rem;
+        }
+
+        /* BARIS BAWAH: NAVIGASI UTAMA DI BAWAH LOGO */
+        .header-bottom-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 50px !important;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .nav-links-sub {
+            display: flex;
+            align-items: center;
+            gap: 25px !important;
+            list-style: none;
             margin: 0;
             padding: 0;
         }
 
-        /* NAV BAR & AVATAR USER */
-        .user-avatar-small {
-            width: 32px !important;
-            height: 32px !important;
-            border-radius: 50% !important;
-            object-fit: cover !important;
+        .nav-links-sub a {
+            color: #334155;
+            text-decoration: none;
+            font-size: 0.9rem !important;
+            font-weight: 300 !important;
+            padding: 12px 0 !important;
+            display: inline-block;
+            transition: all 0.2s ease;
+            position: relative;
         }
 
+        .nav-links-sub a:hover, .nav-links-sub a.active {
+            color: #003d7c;
+            font-weight: 400 !important;
+        }
+
+        .nav-links-sub a.active::after, .nav-links-sub a:hover::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #ef7c00;
+        }
+
+        /* BAR CARIAN DI NAV BARIS BAWAH */
+        .nav-search-box {
+            display: flex;
+            align-items: center;
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 20px;
+            padding: 4px 12px !important;
+            transition: all 0.3s ease;
+        }
+
+        .nav-search-box:focus-within {
+            background: #ffffff;
+            border-color: #003d7c;
+            box-shadow: 0 0 0 3px rgba(0, 61, 124, 0.1);
+        }
+
+        .nav-search-box input {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 0.82rem !important;
+            color: #334155;
+            width: 150px !important;
+        }
+
+        .nav-search-box button {
+            background: transparent;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+            padding: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-search-box button:hover {
+            color: #003d7c;
+        }
+
+        /* USER DROPDOWN SAMA MACAM MOHON.HTML */
         .user-dropdown-container {
             position: relative;
             display: inline-block;
         }
-
         .user-dropdown-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 6px 14px;
-            border-radius: 20px;
+            background: transparent;
+            color: #ffffff;
+            border: none;
+            font-size: 0.88rem;
+            font-weight: 400;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 0.9rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: background 0.2s ease;
         }
-
+        .user-dropdown-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .user-avatar-small {
+            width: 28px !important;
+            height: 28px !important;
+            border-radius: 50% !important;
+            object-fit: cover !important;
+            border: 1px solid #ffffff;
+        }
         .dropdown-menu {
             display: none;
             position: absolute;
             right: 0;
-            top: 110%;
-            background-color: white;
-            min-width: 180px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            top: 100%;
+            margin-top: 8px;
+            background-color: #ffffff;
+            min-width: 200px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
             border-radius: 8px;
             overflow: hidden;
             z-index: 1000;
+            border: 1px solid #e2e8f0;
         }
-
         .dropdown-menu.show {
             display: block;
         }
-
         .dropdown-menu a, .dropdown-menu button {
-            color: #334155;
-            padding: 10px 16px;
+            color: #1e293b;
+            padding: 12px 16px;
             text-decoration: none;
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 0.88rem;
+            font-size: 0.9rem;
             width: 100%;
+            box-sizing: border-box;
             border: none;
             background: none;
             text-align: left;
             cursor: pointer;
-            box-sizing: border-box;
+            transition: background 0.2s;
         }
-
         .dropdown-menu a:hover, .dropdown-menu button:hover {
             background-color: #f1f5f9;
-            color: #0284c7;
+        }
+        .dropdown-menu .logout-item {
+            color: #ef4444;
+            border-top: 1px solid #e2e8f0;
+        }
+        .dropdown-menu .logout-item:hover {
+            background-color: #fef2f2;
         }
 
-        /* HEADER BANNER */
+        /* HEADER BANNER DASHBOARD */
         .user-header-banner {
-            background-color: #0d2838;
+            background: linear-gradient(135deg, #0c2847 0%, #003d7c 100%);
             color: white;
-            padding: 30px 40px;
+            padding: 40px 50px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 20px;
         }
-        .user-header-banner h1 { margin: 0; font-size: 1.8rem; font-weight: 700; }
-        .stats-container { display: flex; gap: 25px; }
+        .user-header-banner h1 { 
+            margin: 0; 
+            font-size: 2rem; 
+            font-weight: 300; 
+            letter-spacing: -0.5px;
+        }
+        .stats-container { display: flex; gap: 30px; }
         .stat-item { text-align: center; }
-        .stat-item .number { font-size: 1.6rem; font-weight: 700; }
-        .stat-item .label { font-size: 0.85rem; color: #cbd5e1; }
+        .stat-item .number { font-size: 1.8rem; font-weight: 600; color: #ef7c00; }
+        .stat-item .label { font-size: 0.82rem; color: #cbd5e1; font-weight: 300; margin-top: 2px; }
 
         /* TAB NAVIGASI UTAMA */
         .main-tabs-nav {
             background-color: #ffffff;
-            border-bottom: 2px solid #e2e8f0;
-            padding: 0 40px;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 0 50px;
             display: flex;
             gap: 30px;
         }
         .tab-btn {
             background: none; 
             border: none; 
-            padding: 15px 10px; 
-            font-size: 1rem; 
-            font-weight: 600; 
+            padding: 16px 5px; 
+            font-size: 0.95rem; 
+            font-weight: 400; 
             color: #64748b; 
             cursor: pointer; 
             border-bottom: 3px solid transparent; 
             display: flex; 
             align-items: center; 
             gap: 8px;
+            transition: all 0.2s ease;
         }
-        .tab-btn.active { color: #0284c7; border-bottom-color: #0284c7; }
+        .tab-btn:hover { color: #003d7c; }
+        .tab-btn.active { color: #003d7c; border-bottom-color: #ef7c00; font-weight: 600; }
 
-        .dashboard-container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+        .dashboard-container { max-width: 1280px; margin: 40px auto; padding: 0 40px; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
         .info-box-hrmis {
-            background-color: #e0f2fe; border-left: 5px solid #0284c7; padding: 15px 20px; border-radius: 4px; display: flex; align-items: flex-start; gap: 15px; margin-bottom: 20px; color: #0369a1;
+            background-color: #e0f2fe; border-left: 4px solid #003d7c; padding: 16px 20px; border-radius: 4px; display: flex; align-items: flex-start; gap: 15px; margin-bottom: 25px; color: #0369a1;
         }
 
         .sub-tabs { display: flex; gap: 25px; border-bottom: 1px solid #cbd5e1; margin-bottom: 25px; }
-        .sub-tab-btn { background: none; border: none; padding: 10px 5px; font-size: 0.95rem; font-weight: 600; color: #64748b; cursor: pointer; border-bottom: 2px solid transparent; }
-        .sub-tab-btn.active { color: #0284c7; border-bottom-color: #0284c7; }
+        .sub-tab-btn { background: none; border: none; padding: 10px 5px; font-size: 0.92rem; font-weight: 400; color: #64748b; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s ease; }
+        .sub-tab-btn:hover { color: #003d7c; }
+        .sub-tab-btn.active { color: #003d7c; border-bottom-color: #003d7c; font-weight: 600; }
 
-        .profile-grid { display: grid; grid-template-columns: 240px 1fr; gap: 30px; }
+        .profile-grid { display: grid; grid-template-columns: 260px 1fr; gap: 30px; }
 
-        .passport-card { background: #ffffff; padding: 20px 15px; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center; }
+        .passport-card { background: #ffffff; padding: 24px 18px; border-radius: 4px; border: 1px solid #eaeaea; text-align: center; box-shadow: 0 4px 25px rgba(0, 0, 0, 0.03); }
         .passport-img-box { width: 140px; height: 175px; border: 1px dashed #cbd5e1; margin: 0 auto 15px auto; border-radius: 4px; overflow: hidden; background: #f8fafc; display: flex; align-items: center; justify-content: center; }
         .passport-img-box img { width: 100%; height: 100%; object-fit: cover; }
-        .btn-upload-pic { background-color: #ffffff; border: 1px solid #cbd5e1; padding: 8px 14px; border-radius: 4px; font-weight: 600; font-size: 0.82rem; cursor: pointer; width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+        .btn-upload-pic { background-color: #ffffff; border: 1px solid #d1d5db; padding: 9px 14px; border-radius: 4px; font-weight: 400; font-size: 0.85rem; cursor: pointer; width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.2s; }
+        .btn-upload-pic:hover { background-color: #f8fafc; border-color: #0c2847; }
 
-        .upload-notes { font-size: 0.72rem; color: #dc2626; margin-top: 12px; line-height: 1.4; font-weight: 600; }
-        .badge-hrmis { background-color: #22c55e; color: white; padding: 6px 14px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; display: inline-block; margin-top: 15px; }
+        .upload-notes { font-size: 0.72rem; color: #dc2626; margin-top: 12px; line-height: 1.4; font-weight: 400; }
+        .badge-hrmis { background-color: #10b981; color: white; padding: 5px 12px; border-radius: 4px; font-size: 0.78rem; font-weight: 600; display: inline-block; margin-top: 15px; }
 
-        .form-card { background: #ffffff; border-radius: 8px; border: 1px solid #e2e8f0; overflow: hidden; margin-bottom: 25px; }
-        .form-card-header { background-color: #7dd3fc; padding: 10px 18px; font-weight: 700; color: #0f172a; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; text-transform: uppercase; }
-        .form-card-body { padding: 20px; }
-        .form-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 15px; }
-        .form-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 15px; }
-        .form-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 15px; }
+        .form-card { background: #ffffff; border-radius: 4px; border: 1px solid #eaeaea; overflow: hidden; margin-bottom: 25px; box-shadow: 0 4px 25px rgba(0, 0, 0, 0.03); }
+        .form-card-header { background-color: #f8fafc; padding: 14px 20px; font-weight: 600; color: #0c2847; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #eaeaea; text-transform: uppercase; }
+        .form-card-body { padding: 24px; }
+        .form-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 16px; }
+        .form-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 16px; }
+        .form-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 16px; }
 
         .form-group { display: flex; flex-direction: column; }
-        .form-group label { font-size: 0.85rem; font-weight: 600; color: #334155; margin-bottom: 6px; }
-        .form-control { padding: 9px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.9rem; box-sizing: border-box; background-color: #ffffff; }
+        .form-group label { font-size: 0.88rem; font-weight: 400; color: #444444; margin-bottom: 6px; }
+        .form-control { padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 4px; font-size: 0.9rem; font-weight: 300; box-sizing: border-box; background-color: #ffffff; outline: none; transition: all 0.2s; }
+        .form-control:focus { border-color: #0c2847; box-shadow: 0 0 0 3px rgba(12, 40, 71, 0.05); }
 
-        .btn-blue-submit { background-color: #0284c7; color: white; border: none; padding: 10px 24px; border-radius: 4px; font-weight: 600; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.9rem; }
-        .btn-green-submit { background-color: #22c55e; color: white; border: none; padding: 10px 24px; border-radius: 4px; font-weight: 700; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.88rem; text-transform: uppercase; }
+        .btn-blue-submit { background-color: #0c2847; color: white; border: none; padding: 12px 24px; border-radius: 4px; font-weight: 400; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.9rem; transition: background 0.25s; }
+        .btn-blue-submit:hover { background-color: #003d7c; }
+
+        .btn-green-submit { background-color: #10b981; color: white; border: none; padding: 12px 24px; border-radius: 4px; font-weight: 600; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.88rem; text-transform: uppercase; transition: background 0.25s; }
+        .btn-green-submit:hover { background-color: #059669; }
 
         /* BUTANG AKTIVITI SIJIL */
         .btn-cert {
@@ -168,13 +361,15 @@
             align-items: center;
             gap: 6px;
             font-weight: 600;
+            transition: background 0.2s;
         }
         .btn-cert:hover { background-color: #7c3aed; }
 
         .custom-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        .custom-table th { text-align: left; padding: 12px; font-size: 0.88rem; background-color: #f8fafc; border-bottom: 2px solid #e2e8f0; color: #1e293b; }
-        .custom-table td { padding: 12px; border-bottom: 1px solid #e2e8f0; font-size: 0.9rem; vertical-align: middle; }
-        .btn-action-del { background-color: #ef4444; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; }
+        .custom-table th { text-align: left; padding: 12px 16px; font-size: 0.85rem; background-color: #f8fafc; border-bottom: 2px solid #e2e8f0; color: #475569; font-weight: 600; }
+        .custom-table td { padding: 14px 16px; border-bottom: 1px solid #e2e8f0; font-size: 0.9rem; vertical-align: middle; }
+        .btn-action-del { background-color: #ef4444; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; transition: background 0.2s; }
+        .btn-action-del:hover { background-color: #dc2626; }
 
         /* MODAL OVERLAY & CONTAINER TEMPLATE SIJIL SENDIRI */
         .modal-overlay {
@@ -194,7 +389,7 @@
             background: #ffffff;
             width: 100%;
             max-width: 850px;
-            border-radius: 12px;
+            border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
             position: relative;
@@ -217,7 +412,7 @@
         .cert-recipient-name {
             font-size: 2rem;
             font-weight: bold;
-            color: #0d2838;
+            color: #0c2847;
             padding-top: 150px;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -233,7 +428,7 @@
         .cert-course-name {
             font-size: 1.4rem;
             font-weight: bold;
-            color: #0284c7;
+            color: #003d7c;
             margin-top: 35px;
             padding: 0 40px;
         }
@@ -268,20 +463,63 @@
             .cert-actions { display: none; }
         }
 
-        @media (max-width: 900px) { .profile-grid { grid-template-columns: 1fr; } .form-grid-4, .form-grid-3, .form-grid-2 { grid-template-columns: 1fr; } }
+        @media screen and (max-width: 900px) { 
+            .profile-grid { grid-template-columns: 1fr; } 
+            .form-grid-4, .form-grid-3, .form-grid-2 { grid-template-columns: 1fr; } 
+            .header-top-row { padding: 10px 18px !important; }
+            .header-bottom-nav { padding: 0 18px !important; overflow-x: auto; }
+            .logo-img { height: 32px !important; }
+            .header-subtitle, .header-english-title, .header-tagline { font-size: 0.55rem !important; }
+            .nav-links-sub { gap: 15px !important; }
+            .nav-links-sub a { font-size: 0.8rem !important; padding: 10px 0 !important; }
+            .user-header-banner { padding: 30px 20px; }
+            .dashboard-container { padding: 0 20px; }
+            .main-tabs-nav { padding: 0 20px; overflow-x: auto; }
+        }
     </style>
 </head>
 <body>
 
-    <header class="navbar">
-        <div class="logo"><img src="logo.png" alt="Logo Portal" class="logo-img"><span>Portal kursus</span></div>
-        <nav class="nav-links" id="nav-links">
-            <a href="index.html" class="nav-btn"><i class="fa-solid fa-house"></i> Utama</a>
-            <a href="iklan.html" class="nav-btn"><i class="fa-solid fa-bullhorn"></i> Jenis & Iklan Kursus</a>
-            <a href="takwim.html" class="nav-btn"><i class="fa-solid fa-calendar-days"></i> Takwim Kursus</a>
-            <a href="mohon.html" class="nav-btn btn-apply"><i class="fa-solid fa-paper-plane"></i> Mohon Kursus</a>
-            <span id="user-nav-container"><a href="login.html" class="nav-btn btn-apply"><i class="fa-solid fa-paper-plane"></i> Log Masuk</a></span>
-        </nav>
+    <!-- CONTAINER HEADER DUA BARIS (SAMA MACAM MOHON.HTML & INDEX.HTML) -->
+    <header class="navbar-header-container">
+        <!-- BARIS ATAS: LOGO MOSTI & PERANAN/LOG MASUK USER -->
+        <div class="header-top-row">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Logo Portal Kursus MOSTI" class="logo-img">
+                <div class="header-title-group">
+                    <span class="header-subtitle">PORTAL KURSUS RASMI</span>
+                    <span class="header-english-title">MINISTRY OF SCIENCE, TECHNOLOGY AND INNOVATION</span>
+                    <span class="header-tagline">SAINS.TEKNOLOGI.INOVASI.BERSAMA</span>
+                </div>
+            </a>
+
+            <div class="header-top-right">
+                <span id="user-nav-container">
+                    <a href="login.html" style="color: #ffffff; text-decoration: none; font-size: 0.85rem;"><i class="fa-solid fa-user"></i> Log Masuk</a>
+                </span>
+            </div>
+        </div>
+
+        <!-- BARIS BAWAH: NAVIGASI UTAMA DI BAWAH LOGO & BAR CARIAN -->
+        <div class="header-bottom-nav">
+            <nav>
+                <ul class="nav-links-sub" id="nav-links">
+                    <li><a href="index.html">Utama</a></li>
+                    <li><a href="iklan.html">Jenis & Iklan Kursus</a></li>
+                    <li><a href="takwim.html">Takwim Kursus</a></li>
+                    <li><a href="mohon.html">Mohon Kursus</a></li>
+                    <li><a href="user_dashboard.html" class="active">Dashboard Saya</a></li>
+                </ul>
+            </nav>
+            
+            <!-- BAR CARIAN DI NAV BARIS BAWAH -->
+            <div class="nav-search-box">
+                <input type="text" id="top-nav-search-input" placeholder="Cari di sini..." onkeypress="if(event.key === 'Enter') handleNavSearch()">
+                <button type="button" onclick="handleNavSearch()" title="Cari">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+        </div>
     </header>
 
     <section class="user-header-banner">
@@ -306,10 +544,10 @@
         <!-- BAHAGIAN 1: PROFIL -->
         <div id="tab-profil" class="tab-content active">
             <div class="info-box-hrmis">
-                <i class="fa-solid fa-circle-info"></i>
+                <i class="fa-solid fa-circle-info" style="font-size: 1.2rem; margin-top: 2px;"></i>
                 <div>
-                    <h4 style="margin: 0 0 5px 0;">MAKLUMAN!</h4>
-                    <p style="margin:0; font-size:0.88rem;">Maklumat yang dipaparkan adalah daripada Sistem HRMIS. Sekiranya ada perubahan maklumat, sila kemaskini maklumat tersebut di Sistem HRMIS.</p>
+                    <h4 style="margin: 0 0 4px 0; font-weight: 600;">MAKLUMAN!</h4>
+                    <p style="margin:0; font-size:0.88rem; line-height: 1.5;">Maklumat yang dipaparkan adalah daripada Sistem HRMIS. Sekiranya ada perubahan maklumat, sila kemaskini maklumat tersebut di Sistem HRMIS.</p>
                 </div>
             </div>
 
@@ -328,8 +566,8 @@
                         <input type="file" id="passportInput" accept="image/jpeg, image/png, image/jpg" style="display: none;" onchange="handlePassportUpload(event)">
                         <button class="btn-upload-pic" onclick="document.getElementById('passportInput').click()"><i class="fa-solid fa-upload"></i> Kemaskini Gambar</button>
                         <div class="upload-notes">**Gambar berformat JPG, JPEG atau PNG sahaja<br><br>**Saiz gambar maksimum adalah 2MB</div>
-                        <div><span class="badge-hrmis"><i class="fa-solid fa-sync"></i> Hrmis</span></div>
-                        <div style="font-size: 0.8rem; margin-top: 10px; color: #475569;"><strong>Tarikh Kemaskini :</strong><br><span id="lastUpdatedDate">-</span></div>
+                        <div><span class="badge-hrmis"><i class="fa-solid fa-sync"></i> HRMIS</span></div>
+                        <div style="font-size: 0.8rem; margin-top: 14px; color: #64748b;"><strong>Tarikh Kemaskini :</strong><br><span id="lastUpdatedDate">-</span></div>
                     </div>
 
                     <div class="form-card">
@@ -349,9 +587,9 @@
                                     <div class="form-group"><label>Telefon Pejabat</label><input type="text" id="profTelPejabat" class="form-control" value=""></div>
                                     <div class="form-group"><label>Telefon Bimbit</label><input type="text" id="profTelBimbit" class="form-control" value=""></div>
                                 </div>
-                                <div class="form-group" style="margin-bottom: 12px;"><label>Alamat 1</label><input type="text" id="profAlamat1" class="form-control" value=""></div>
-                                <div class="form-group" style="margin-bottom: 12px;"><label>Alamat 2</label><input type="text" id="profAlamat2" class="form-control" value=""></div>
-                                <div class="form-group" style="margin-bottom: 15px;"><label>Alamat 3</label><input type="text" id="profAlamat3" class="form-control" value=""></div>
+                                <div class="form-group" style="margin-bottom: 14px;"><label>Alamat 1</label><input type="text" id="profAlamat1" class="form-control" value=""></div>
+                                <div class="form-group" style="margin-bottom: 14px;"><label>Alamat 2</label><input type="text" id="profAlamat2" class="form-control" value=""></div>
+                                <div class="form-group" style="margin-bottom: 18px;"><label>Alamat 3</label><input type="text" id="profAlamat3" class="form-control" value=""></div>
                                 <div class="form-grid-3">
                                     <div class="form-group"><label>Poskod</label><input type="text" id="profPoskod" class="form-control" value=""></div>
                                     <div class="form-group"><label>Bandar</label><input type="text" id="profBandar" class="form-control" value=""></div>
@@ -378,7 +616,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn-blue-submit"><i class="fa-solid fa-floppy-disk"></i> Kemaskini Profil</button>
+                                <button type="submit" class="btn-blue-submit" style="margin-top: 10px;"><i class="fa-solid fa-floppy-disk"></i> Kemaskini Profil</button>
                             </form>
                         </div>
                     </div>
@@ -417,7 +655,7 @@
                                         <div class="form-group"><label>Tahun Lulus</label><input type="number" id="newEduTahun" class="form-control" required></div>
                                         <div class="form-group"><label>Keputusan / CGPA</label><input type="text" id="newEduKeputusan" class="form-control" required></div>
                                     </div>
-                                    <button type="submit" class="btn-green-submit" style="width: auto;"><i class="fa-solid fa-plus"></i> Tambah Rekod Pendidikan</button>
+                                    <button type="submit" class="btn-green-submit" style="width: auto; margin-top: 6px;"><i class="fa-solid fa-plus"></i> Tambah Rekod Pendidikan</button>
                                 </form>
                             </div>
                         </div>
@@ -442,8 +680,8 @@
                         <div class="passport-img-box"><img id="userPassportImgPerkhidmatan" src="https://via.placeholder.com/160x200?text=Gambar+Pasport" alt="Gambar"></div>
                         <button class="btn-upload-pic" onclick="document.getElementById('passportInput').click()"><i class="fa-solid fa-upload"></i> Kemaskini Gambar</button>
                         <div class="upload-notes">**Gambar berformat JPG, JPEG atau PNG sahaja<br><br>**Saiz gambar maksimum adalah 2MB</div>
-                        <div><span class="badge-hrmis"><i class="fa-solid fa-sync"></i> Hrmis</span></div>
-                        <div style="font-size: 0.8rem; margin-top: 10px; color: #475569;"><strong>Tarikh Kemaskini :</strong><br><span>-</span></div>
+                        <div><span class="badge-hrmis"><i class="fa-solid fa-sync"></i> HRMIS</span></div>
+                        <div style="font-size: 0.8rem; margin-top: 14px; color: #64748b;"><strong>Tarikh Kemaskini :</strong><br><span>-</span></div>
                     </div>
 
                     <div>
@@ -461,7 +699,7 @@
                                         <div class="form-group"><label>Taraf Jawatan</label><input type="text" id="srvTarafJawatan" class="form-control" value=""></div>
                                         <div class="form-group"><label>Tarikh Lantikan Jawatan Semasa</label><input type="text" id="srvTarikhLantikan" class="form-control" value=""></div>
                                     </div>
-                                    <button type="button" onclick="saveServiceData(event)" class="btn-green-submit" style="margin-bottom: 5px;"><i class="fa-solid fa-floppy-disk"></i> KEMASKINI GRED / JAWATAN</button>
+                                    <button type="button" onclick="saveServiceData(event)" class="btn-green-submit" style="margin-bottom: 5px; width: auto;"><i class="fa-solid fa-floppy-disk"></i> KEMASKINI GRED / JAWATAN</button>
                                 </div>
                             </div>
 
@@ -472,10 +710,10 @@
                                         <div class="form-group"><label>Kementerian</label><input type="text" id="srvKementerian" class="form-control" value=""></div>
                                         <div class="form-group"><label>Jabatan / Agensi</label><input type="text" id="srvJabatan" class="form-control" value=""></div>
                                     </div>
-                                    <div class="form-group" style="margin-bottom: 12px;"><label>Bahagian</label><textarea id="srvBahagian" class="form-control" style="height: 70px;"></textarea></div>
-                                    <div class="form-group" style="margin-bottom: 12px;"><label>Alamat 1</label><input type="text" id="srvAlamat1" class="form-control" value=""></div>
-                                    <div class="form-group" style="margin-bottom: 12px;"><label>Alamat 2</label><input type="text" id="srvAlamat2" class="form-control" value=""></div>
-                                    <div class="form-group" style="margin-bottom: 12px;"><label>Alamat 3</label><input type="text" id="srvAlamat3" class="form-control" value=""></div>
+                                    <div class="form-group" style="margin-bottom: 14px;"><label>Bahagian</label><textarea id="srvBahagian" class="form-control" style="height: 70px;"></textarea></div>
+                                    <div class="form-group" style="margin-bottom: 14px;"><label>Alamat 1</label><input type="text" id="srvAlamat1" class="form-control" value=""></div>
+                                    <div class="form-group" style="margin-bottom: 14px;"><label>Alamat 2</label><input type="text" id="srvAlamat2" class="form-control" value=""></div>
+                                    <div class="form-group" style="margin-bottom: 14px;"><label>Alamat 3</label><input type="text" id="srvAlamat3" class="form-control" value=""></div>
                                     <div class="form-grid-3">
                                         <div class="form-group"><label>Poskod</label><input type="text" id="srvPoskod" class="form-control" value=""></div>
                                         <div class="form-group"><label>Bandar</label><input type="text" id="srvBandar" class="form-control" value=""></div>
@@ -516,7 +754,7 @@
                                         <td>1</td>
                                         <td><input type="text" id="emgNama" class="form-control" value=""></td>
                                         <td><input type="text" id="emgTel" class="form-control" value=""></td>
-                                        <td><button type="button" class="btn-blue-submit" style="padding: 8px 12px; width: auto;" onclick="saveEmergencyData()"><i class="fa-solid fa-floppy-disk"></i> Simpan Kecemasan</button></td>
+                                        <td><button type="button" class="btn-blue-submit" style="padding: 8px 16px; width: auto;" onclick="saveEmergencyData()"><i class="fa-solid fa-floppy-disk"></i> Simpan Kecemasan</button></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -557,7 +795,7 @@
             <div class="form-card">
                 <div class="form-card-header"><i class="fa-solid fa-graduation-cap"></i> KURSUS CADANGAN UNTUK ANDA</div>
                 <div class="form-card-body">
-                    <p style="color: #64748b;">Senarai cadangan kursus mengikut gred dan skop jawatan anda akan dipaparkan di sini.</p>
+                    <p style="color: #64748b; margin: 0;">Senarai cadangan kursus mengikut gred dan skop jawatan anda akan dipaparkan di sini.</p>
                 </div>
             </div>
         </div>
@@ -567,7 +805,7 @@
             <div class="form-card">
                 <div class="form-card-header"><i class="fa-solid fa-envelope"></i> MAKLUMAN & NOTIFIKASI</div>
                 <div class="form-card-body">
-                    <p style="color: #64748b;">Tiada makluman baru buat masa ini.</p>
+                    <p style="color: #64748b; margin: 0;">Tiada makluman baru buat masa ini.</p>
                 </div>
             </div>
         </div>
@@ -584,7 +822,7 @@
             </div>
 
             <div class="cert-actions">
-                <button class="btn-blue-submit" style="width: auto; padding: 8px 18px;" onclick="window.print()">
+                <button class="btn-blue-submit" style="width: auto; padding: 10px 20px;" onclick="window.print()">
                     <i class="fa-solid fa-print"></i> Cetak / Simpan PDF
                 </button>
                 <button class="btn-action-del" style="background-color: #64748b;" onclick="closeCertModal()">
@@ -611,7 +849,66 @@
             } else {
                 loadUserApplications();
             }
+
+            setupNavbar();
+
+            document.addEventListener('click', (e) => {
+                const dropdown = document.getElementById('userMenuDropdown');
+                const btn = document.getElementById('userMenuBtn');
+                if (dropdown && btn && !btn.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.classList.remove('show');
+                }
+            });
         });
+
+        /* FUNGSI CARIAN BAR NAVIGASI TOP */
+        function handleNavSearch() {
+            const inputVal = document.getElementById('top-nav-search-input').value.trim();
+            if (inputVal) {
+                window.location.href = `iklan.html?keyword=${encodeURIComponent(inputVal)}`;
+            }
+        }
+
+        function setupNavbar() {
+            const navContainer = document.getElementById('user-nav-container');
+            if (currentUser && navContainer) {
+                const userPhoto = currentUser.gambar || 'https://via.placeholder.com/150';
+                const userName = currentUser.nama || 'Pengguna';
+
+                const adminMenuOption = currentUser.role === 'admin' 
+                    ? `<a href="admin_dashboard.html"><i class="fa-solid fa-user-shield"></i> Peranan Admin</a>` 
+                    : '';
+
+                navContainer.innerHTML = `
+                    <div class="user-dropdown-container">
+                        <button id="userMenuBtn" onclick="toggleUserDropdown()" class="user-dropdown-btn">
+                            <img src="${userPhoto}" alt="Avatar" class="user-avatar-small" id="navUserAvatar">
+                            <span>${userName}</span>
+                            <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem;"></i>
+                        </button>
+                        <div id="userMenuDropdown" class="dropdown-menu">
+                            <a href="user_dashboard.html"><i class="fa-solid fa-id-card"></i> User Dashboard</a>
+                            ${adminMenuOption}
+                            <a href="tukar_kata_laluan.html"><i class="fa-solid fa-key"></i> Tukar Kata Laluan</a>
+                            <button onclick="handleLogout()" class="logout-item"><i class="fa-solid fa-right-from-bracket"></i> Log Keluar</button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userMenuDropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('show');
+            }
+        }
+
+        function handleLogout() {
+            sessionStorage.removeItem('user');
+            localStorage.removeItem('user');
+            window.location.href = 'login.html';
+        }
 
         function populateUserData() {
             if (!currentUser) return;
@@ -762,7 +1059,7 @@
             tbody.innerHTML = '';
 
             if (!eduList || eduList.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#64748b;">Tiada rekod pendidikan. Sila tambah rekod di atas.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#64748b; padding: 20px;">Tiada rekod pendidikan. Sila tambah rekod di atas.</td></tr>';
                 return;
             }
 
@@ -862,14 +1159,14 @@
                 let isPassed = false;
 
                 if (item.status === 'Berjaya' || item.status === 'Lulus' || item.status === 'Hadir') {
-                    statusBadge = '<span style="background-color:#22c55e; color:white; padding:4px 10px; border-radius:12px; font-size:0.8rem; font-weight:700;">' + (item.status === 'Berjaya' ? 'Lulus' : item.status) + '</span>';
+                    statusBadge = '<span style="background-color:#10b981; color:white; padding:4px 12px; border-radius:20px; font-size:0.78rem; font-weight:600;">' + (item.status === 'Berjaya' ? 'Lulus' : item.status) + '</span>';
                     countBerjaya++;
                     isPassed = true;
                 } else if (item.status === 'Tidak Berjaya' || item.status === 'Tidak Lulus') {
-                    statusBadge = '<span style="background-color:#ef4444; color:white; padding:4px 10px; border-radius:12px; font-size:0.8rem; font-weight:700;">Tidak Lulus</span>';
+                    statusBadge = '<span style="background-color:#ef4444; color:white; padding:4px 12px; border-radius:20px; font-size:0.78rem; font-weight:600;">Tidak Lulus</span>';
                     countGagal++;
                 } else {
-                    statusBadge = '<span style="background-color:#f59e0b; color:white; padding:4px 10px; border-radius:12px; font-size:0.8rem; font-weight:700;">Dalam Proses</span>';
+                    statusBadge = '<span style="background-color:#f59e0b; color:white; padding:4px 12px; border-radius:20px; font-size:0.78rem; font-weight:600;">Dalam Proses</span>';
                     countProses++;
                 }
 
@@ -891,8 +1188,8 @@
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>${index + 1}</td>
-                    <td><strong style="color:#0284c7;">${item.kod_kursus || ''}</strong> ${item.nama_kursus || item.kursus || ''}</td>
-                    <td><i class="fa-regular fa-clock" style="color:#64748b; margin-right:4px;"></i>${formattedDateTime}</td>
+                    <td><strong style="color:#003d7c;">${item.kod_kursus || ''}</strong> ${item.nama_kursus || item.kursus || ''}</td>
+                    <td><i class="fa-regular fa-clock" style="color:#64748b; margin-right:6px;"></i>${formattedDateTime}</td>
                     <td>${statusBadge}</td>
                     <td>${item.yuran_kursus || 'RM 0.00'}</td>
                     <td>${certBtnHtml}</td>
@@ -971,4 +1268,4 @@
         }
     </script>
 </body>
-</html> 
+</html>
