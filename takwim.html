@@ -7,33 +7,395 @@
     
     <!-- Link CSS Utamakan -->
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Google Fonts: Plus Jakarta Sans & Open Sans (Sama seperti index.html) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome untuk Ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- FullCalendar Library (CDN) -->
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+
+    <style>
+        /* ASAS FONT KORPORAT NIPIS (SEBIJI INDEX.HTML) */
+        * {
+            box-sizing: border-box;
+            border-radius: 0px !important; /* Memastikan semua elemen berpenjuru petak tajam */
+        }
+
+        body, button, input, select, textarea {
+            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif !important;
+            -webkit-font-smoothing: antialiased;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+
+        /* HEADER DUA BARIS (SEBIJI INDEX.HTML) */
+        .navbar-header-container {
+            background-color: #0c2847 !important; /* Warna biru gelap */
+            border-bottom: 1px solid #002b58;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* BARIS ATAS: LOGO & LINK PROFIL/LOG MASUK (SEBIJI INDEX.HTML) */
+        .header-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 50px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 44px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .header-title-group {
+            display: flex;
+            flex-direction: column;
+            text-transform: uppercase;
+            color: #ffffff;
+            line-height: 1.15;
+            border-left: 1px solid rgba(255, 255, 255, 0.3);
+            padding-left: 12px;
+        }
+
+        .header-subtitle {
+            font-size: 0.65rem;
+            letter-spacing: 0.5px;
+            font-weight: 300;
+            color: #cbd5e1;
+        }
+
+        .header-english-title {
+            font-size: 0.72rem;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+            color: #ffffff;
+        }
+
+        .header-tagline {
+            font-size: 0.58rem;
+            letter-spacing: 0.8px;
+            margin-top: 1px;
+            font-weight: 300;
+            color: #ef7c00;
+        }
+
+        .header-top-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 0.85rem;
+        }
+
+        /* BARIS BAWAH: NAVIGASI UTAMA (SEBIJI INDEX.HTML) */
+        .header-bottom-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 50px;
+            background-color: #ffffff;
+        }
+
+        .nav-links-sub {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links-sub a {
+            color: #334155;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 300;
+            padding: 12px 0;
+            display: inline-block;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .nav-links-sub a:hover, .nav-links-sub a.active {
+            color: #003d7c;
+            font-weight: 400;
+        }
+
+        .nav-links-sub a.active::after, .nav-links-sub a:hover::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #ef7c00;
+        }
+
+        /* BAR CARIAN (SEBIJI INDEX.HTML) */
+        .nav-search-box {
+            display: flex;
+            align-items: center;
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            padding: 4px 12px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-search-box:focus-within {
+            background: #ffffff;
+            border-color: #003d7c;
+            box-shadow: 0 0 0 3px rgba(0, 61, 124, 0.1);
+        }
+
+        .nav-search-box input {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 0.82rem;
+            color: #334155;
+            width: 150px;
+            font-family: 'Open Sans', sans-serif !important;
+        }
+
+        .nav-search-box button {
+            background: transparent;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+            padding: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-search-box button:hover {
+            color: #003d7c;
+        }
+
+        /* USER DROPDOWN (SEBIJI INDEX.HTML) */
+        .user-dropdown-container {
+            position: relative;
+            display: inline-block;
+        }
+        .user-dropdown-btn {
+            background: transparent;
+            color: #ffffff;
+            border: none;
+            font-size: 0.88rem;
+            font-weight: 400;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 8px;
+            transition: background 0.2s ease;
+            font-family: 'Open Sans', sans-serif !important;
+        }
+        .user-dropdown-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .user-avatar-small {
+            width: 28px;
+            height: 28px;
+            border-radius: 50% !important;
+            object-fit: cover;
+            border: 1px solid #ffffff;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            margin-top: 8px;
+            background-color: #ffffff;
+            min-width: 200px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            overflow: hidden;
+            z-index: 1000;
+            border: 1px solid #e2e8f0;
+        }
+        .dropdown-menu.show {
+            display: block;
+        }
+        .dropdown-menu a, .dropdown-menu button {
+            color: #1e293b;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            width: 100%;
+            box-sizing: border-box;
+            border: none;
+            background: none;
+            text-align: left;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-family: 'Open Sans', sans-serif !important;
+        }
+        .dropdown-menu a:hover, .dropdown-menu button:hover {
+            background-color: #f1f5f9;
+        }
+        .dropdown-menu .logout-item {
+            color: #ef4444;
+            border-top: 1px solid #e2e8f0;
+        }
+        .dropdown-menu .logout-item:hover {
+            background-color: #fef2f2;
+        }
+
+        /* GAYA KANDUNGAN UTAMA & TAJUK (SEBIJI INDEX.HTML) */
+        .main-container {
+            max-width: 1140px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* PENEPATAN KESELURUHAN FONT TAJUK SEBIJI INDEX.HTML */
+        .about-title-large, 
+        .section-title h2, 
+        .nus-footer-title,
+        .page-title {
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            font-size: 1.6rem !important;
+            font-weight: 600 !important;
+            color: #0c2847 !important;
+            margin: 0 0 20px 0 !important;
+            letter-spacing: -0.5px !important;
+        }
+
+        .calendar-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        /* FULLCALENDAR */
+        .fc {
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+        }
+        .fc .fc-toolbar-title {
+            font-size: 1.25rem !important;
+            font-weight: 600 !important;
+            color: #0c2847;
+            letter-spacing: -0.3px;
+        }
+        .fc .fc-button-primary {
+            background-color: #0c2847 !important;
+            border-color: #0c2847 !important;
+            font-weight: 600 !important;
+            font-size: 0.85rem !important;
+            padding: 8px 16px !important;
+            transition: all 0.2s ease !important;
+        }
+        .fc .fc-button-primary:hover {
+            background-color: #003d7c !important;
+            border-color: #003d7c !important;
+        }
+        .fc .fc-theme-standard td, .fc .fc-theme-standard th {
+            border-color: #cbd5e1 !important;
+        }
+        .fc .fc-col-header-cell-cushion {
+            font-weight: 600 !important;
+            color: #334155;
+            padding: 10px 0 !important;
+            font-size: 0.85rem;
+        }
+        .fc-event {
+            border: none !important;
+            padding: 4px 8px !important;
+            font-size: 0.8rem !important;
+            font-weight: 500 !important;
+            background-color: #0c2847 !important;
+        }
+
+        @media screen and (max-width: 768px) {
+            .header-top-row {
+                padding: 10px 18px !important;
+            }
+            .header-bottom-nav {
+                padding: 0 18px !important;
+                overflow-x: auto;
+            }
+            .logo-img {
+                height: 32px !important;
+            }
+            .header-subtitle, .header-english-title, .header-tagline {
+                font-size: 0.55rem !important;
+            }
+            .nav-links-sub {
+                gap: 15px !important;
+            }
+            .nav-links-sub a {
+                font-size: 0.8rem !important;
+                padding: 10px 0 !important;
+            }
+            .page-title {
+                font-size: 1.8rem !important;
+            }
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Header Navbar -->
-    <header class="navbar">
-        <div class="logo">
-            <img src="logo.png" alt="Logo Portal Kursus" class="logo-img">
-            <span>Portal kursus</span>
+    <!-- CONTAINER HEADER DUA BARIS -->
+    <header class="navbar-header-container">
+        <!-- BARIS ATAS: LOGO MOSTI & PERANAN/LOG MASUK USER -->
+        <div class="header-top-row">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Logo Portal Kursus MOSTI" class="logo-img">
+                <div class="header-title-group">
+                    <span class="header-subtitle">PORTAL KURSUS RASMI</span>
+                    <span class="header-english-title">MINISTRY OF SCIENCE, TECHNOLOGY AND INNOVATION</span>
+                    <span class="header-tagline">SAINS.TEKNOLOGI.INOVASI.BERSAMA</span>
+                </div>
+            </a>
+
+            <div class="header-top-right">
+                <span id="user-nav-container">
+                    <a href="login.html" style="color: #ffffff; text-decoration: none; font-size: 0.85rem;"><i class="fa-solid fa-user"></i> Log Masuk</a>
+                </span>
+            </div>
         </div>
 
-        <!-- Toggle Menu Mobile -->
-        <div class="menu-toggle" id="mobile-menu" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
+        <!-- BARIS BAWAH: NAVIGASI UTAMA DI BAWAH LOGO & BAR CARIAN -->
+        <div class="header-bottom-nav">
+            <nav>
+                <ul class="nav-links-sub" id="nav-links">
+                    <li><a href="index.html">Utama</a></li>
+                    <li><a href="iklan.html">Jenis & Iklan Kursus</a></li>
+                    <li><a href="takwim.html" class="active">Takwim Kursus</a></li>
+                    <li><a href="mohon.html">Mohon Kursus</a></li>
+                    <li><a href="index.html#contact-section">Hubungi Kami</a></li>
+                </ul>
+            </nav>
+            
+            <!-- BAR CARIAN DI NAV BARIS BAWAH -->
+            <div class="nav-search-box">
+                <input type="text" id="top-nav-search-input" placeholder="Cari di sini..." onkeypress="if(event.key === 'Enter') handleNavSearch()">
+                <button type="button" onclick="handleNavSearch()" title="Cari">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
         </div>
-
-        <nav class="nav-links" id="nav-links">
-            <a href="index.html" class="nav-btn"><i class="fa-solid fa-house"></i> Utama</a>
-            <a href="iklan.html" class="nav-btn"><i class="fa-solid fa-bullhorn"></i> Jenis & Iklan Kursus</a>
-            <a href="takwim.html" class="nav-btn active"><i class="fa-solid fa-calendar-days"></i> Takwim Kursus</a>
-            <a href="mohon.html" class="nav-btn btn-apply"><i class="fa-solid fa-paper-plane"></i> Mohon Kursus</a>
-        </nav>
     </header>
 
     <!-- Content Container -->
@@ -48,11 +410,119 @@
 
     <!-- Script Inisialisasi Kalendar Dinamik -->
     <script>
-        function toggleMenu() {
-            const navLinks = document.getElementById('nav-links');
-            const menuToggle = document.getElementById('mobile-menu');
-            navLinks.classList.toggle('active');
-            menuToggle.classList.toggle('active');
+        let currentUser = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const storedUser = sessionStorage.getItem('user') || localStorage.getItem('user');
+            if (storedUser) {
+                try {
+                    currentUser = JSON.parse(storedUser);
+                } catch(e) { console.error(e); }
+            }
+
+            if (!currentUser) {
+                currentUser = {
+                    nama: "ZIYAD ZAHIDIN BIN YUSRI AMRI",
+                    email: "admin@mosti.gov.my",
+                    role: "admin",
+                    gambar: "logo.png"
+                };
+                sessionStorage.setItem('user', JSON.stringify(currentUser));
+                localStorage.setItem('user', JSON.stringify(currentUser));
+            }
+
+            setupNavbar();
+
+            var calendarEl = document.getElementById('calendar');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                initialDate: '2026-01-01',
+                locale: 'ms',
+                headerToolbar: {
+                    left: 'title',
+                    center: '',
+                    right: 'today prev,next'
+                },
+                buttonText: {
+                    today: 'Hari Ini'
+                },
+                dayHeaderFormat: { weekday: 'short' },
+                events: getCoursesAsCalendarEvents(),
+                eventClick: function(info) {
+                    if (info.event.url) {
+                        window.location.href = info.event.url;
+                        info.jsEvent.preventDefault();
+                    }
+                }
+            });
+
+            calendar.render();
+
+            // Kemaskini automatik sekiranya admin menambah/memadam kursus dari tab lain
+            window.addEventListener('storage', function(e) {
+                if (e.key === 'custom_courses') {
+                    calendar.removeAllEvents();
+                    calendar.addEventSource(getCoursesAsCalendarEvents());
+                }
+            });
+
+            document.addEventListener('click', (e) => {
+                const dropdown = document.getElementById('userMenuDropdown');
+                const btn = document.getElementById('userMenuBtn');
+                if (dropdown && btn && !btn.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.classList.remove('show');
+                }
+            });
+        });
+
+        /* FUNGSI CARIAN BAR NAVIGASI TOP */
+        function handleNavSearch() {
+            const inputVal = document.getElementById('top-nav-search-input').value.trim();
+            if (inputVal) {
+                window.location.href = `iklan.html?keyword=${encodeURIComponent(inputVal)}`;
+            }
+        }
+
+        function setupNavbar() {
+            const navContainer = document.getElementById('user-nav-container');
+            if (currentUser && navContainer) {
+                const userPhoto = currentUser.gambar || 'https://via.placeholder.com/150';
+                const userName = currentUser.nama || 'Pengguna';
+
+                const adminMenuOption = currentUser.role === 'admin' 
+                    ? `<a href="admin_dashboard.html"><i class="fa-solid fa-user-shield"></i> Peranan Admin</a>` 
+                    : '';
+
+                navContainer.innerHTML = `
+                    <div class="user-dropdown-container">
+                        <button id="userMenuBtn" onclick="toggleUserDropdown()" class="user-dropdown-btn">
+                            <img src="${userPhoto}" alt="Avatar" class="user-avatar-small" id="navUserAvatar">
+                            <span>${userName}</span>
+                            <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem;"></i>
+                        </button>
+                        <div id="userMenuDropdown" class="dropdown-menu">
+                            <a href="user_dashboard.html"><i class="fa-solid fa-id-card"></i> User Dashboard</a>
+                            ${adminMenuOption}
+                            <a href="tukar_kata_laluan.html"><i class="fa-solid fa-key"></i> Tukar Kata Laluan</a>
+                            <button onclick="handleLogout()" class="logout-item"><i class="fa-solid fa-right-from-bracket"></i> Log Keluar</button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userMenuDropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('show');
+            }
+        }
+
+        function handleLogout() {
+            sessionStorage.removeItem('user');
+            localStorage.removeItem('user');
+            window.location.href = 'login.html';
         }
 
         // Fungsi Penukar Format Tarikh Bahasa Melayu/Text kepada YYYY-MM-DD
@@ -135,7 +605,7 @@
                         start: startDate,
                         end: formattedEndDate || undefined,
                         url: `mohon.html?kursus=${encodeURIComponent(item.tajuk)}`,
-                        color: '#2563eb', // Warna tema Portal
+                        color: '#0c2847', // Warna tema Portal
                         extendedProps: {
                             tempat: item.tempat || '',
                             masa: item.masa || ''
@@ -146,42 +616,6 @@
 
             return events;
         }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                initialDate: '2026-01-01',
-                locale: 'ms',
-                headerToolbar: {
-                    left: 'title',
-                    center: '',
-                    right: 'today prev,next'
-                },
-                buttonText: {
-                    today: 'Hari Ini'
-                },
-                dayHeaderFormat: { weekday: 'short' },
-                events: getCoursesAsCalendarEvents(),
-                eventClick: function(info) {
-                    if (info.event.url) {
-                        window.location.href = info.event.url;
-                        info.jsEvent.preventDefault();
-                    }
-                }
-            });
-
-            calendar.render();
-
-            // Kemaskini automatik sekiranya admin menambah/memadam kursus dari tab lain
-            window.addEventListener('storage', function(e) {
-                if (e.key === 'custom_courses') {
-                    calendar.removeAllEvents();
-                    calendar.addEventSource(getCoursesAsCalendarEvents());
-                }
-            });
-        });
     </script>
 
 </body>

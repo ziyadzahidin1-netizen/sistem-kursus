@@ -4,123 +4,549 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jenis & Iklan Kursus Terkini</title>
+    
+    <!-- Pautan ke Fail CSS Asing -->
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Google Fonts: Plus Jakarta Sans & Open Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome untuk Ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        .badge-new {
-            background-color: #2563eb;
+        /* ASAS FONT KORPORAT NIPIS */
+        body, button, input, select, textarea {
+            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif !important;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* TUKAR FONT TAJUK UTAMA KEPADA PLUS JAKARTA SANS (SAMA SEPERTI INDEX.HTML) */
+        .section-title h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            font-size: 1.6rem !important;
+            font-weight: 600 !important;
+            color: #0c2847 !important;
+            letter-spacing: -0.5px !important;
+            margin: 0 0 20px 0 !important;
+        }
+
+        /* HEADER DUA BARIS */
+        .navbar-header-container {
+            background-color: #0c2847 !important; /* Warna biru gelap */
+            border-bottom: 1px solid #002b58;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* BARIS ATAS: LOGO (KIRI) & LINK PROFIL/LOG MASUK (KANAN) */
+        .header-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 50px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 44px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .header-title-group {
+            display: flex;
+            flex-direction: column;
+            text-transform: uppercase;
             color: #ffffff;
-            font-size: 0.75rem;
+            line-height: 1.15;
+            border-left: 1px solid rgba(255, 255, 255, 0.3);
+            padding-left: 12px;
+        }
+
+        .header-subtitle {
+            font-size: 0.65rem;
+            letter-spacing: 0.5px;
+            font-weight: 300;
+            color: #cbd5e1;
+        }
+
+        .header-english-title {
+            font-size: 0.72rem;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+            color: #ffffff;
+        }
+
+        .header-tagline {
+            font-size: 0.58rem;
+            letter-spacing: 0.8px;
+            margin-top: 1px;
+            font-weight: 300;
+            color: #ef7c00;
+        }
+
+        .header-top-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 0.85rem;
+        }
+
+        /* BARIS BAWAH: NAVIGASI UTAMA DI BAWAH LOGO */
+        .header-bottom-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 50px;
+            background-color: #ffffff;
+        }
+
+        .nav-links-sub {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links-sub a {
+            color: #334155;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 300;
+            padding: 12px 0;
+            display: inline-block;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .nav-links-sub a:hover, .nav-links-sub a.active {
+            color: #003d7c;
+            font-weight: 400;
+        }
+
+        .nav-links-sub a.active::after, .nav-links-sub a:hover::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #ef7c00;
+        }
+
+        /* BAR CARIAN DI NAV BARIS BAWAH */
+        .nav-search-box {
+            display: flex;
+            align-items: center;
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 20px;
+            padding: 4px 12px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-search-box:focus-within {
+            background: #ffffff;
+            border-color: #003d7c;
+            box-shadow: 0 0 0 3px rgba(0, 61, 124, 0.1);
+        }
+
+        .nav-search-box input {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 0.82rem;
+            color: #334155;
+            width: 150px;
+        }
+
+        .nav-search-box button {
+            background: transparent;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+            padding: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-search-box button:hover {
+            color: #003d7c;
+        }
+
+        .user-dropdown-container {
+            position: relative;
+            display: inline-block;
+        }
+        .user-dropdown-btn {
+            background: transparent;
+            color: #ffffff;
+            border: none;
+            font-size: 0.88rem;
+            font-weight: 400;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: background 0.2s ease;
+        }
+        .user-dropdown-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .user-avatar-small {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid #ffffff;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            margin-top: 8px;
+            background-color: #ffffff;
+            min-width: 200px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            overflow: hidden;
+            z-index: 1000;
+            border: 1px solid #e2e8f0;
+        }
+        .dropdown-menu.show {
+            display: block;
+        }
+        .dropdown-menu a, .dropdown-menu button {
+            color: #1e293b;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            width: 100%;
+            box-sizing: border-box;
+            border: none;
+            background: none;
+            text-align: left;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .dropdown-menu a:hover, .dropdown-menu button:hover {
+            background-color: #f1f5f9;
+        }
+        .dropdown-menu .logout-item {
+            color: #ef4444;
+            border-top: 1px solid #e2e8f0;
+        }
+        .dropdown-menu .logout-item:hover {
+            background-color: #fef2f2;
+        }
+
+        /* LENCANA TERKINI HITAM EXACT SEPERTI GAMBAR */
+        .badge-new {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: #000000;
+            color: #ffffff;
+            font-size: 0.65rem;
             font-weight: 700;
             padding: 3px 8px;
-            border-radius: 4px;
-            display: inline-block;
-            margin-bottom: 8px;
+            border-radius: 0;
             text-transform: uppercase;
+            z-index: 2;
+            letter-spacing: 0.5px;
         }
 
-        /* PAKSA GRID KUNCI SAIZ KAD SAMA DENGAN INDEX.HTML */
-        .cards-grid-fixed {
-            display: flex !important;
-            flex-wrap: wrap !important;
-            justify-content: center !important;
-            gap: 25px !important;
-            width: 100% !important;
-        }
-
-        .cards-grid-fixed .card {
-            flex: 0 0 calc(33.333% - 20px) !important;
-            max-width: 360px !important;
-            min-width: 280px !important;
-            box-sizing: border-box !important;
-        }
-
-        @media screen and (max-width: 900px) {
-            .cards-grid-fixed .card {
-                flex: 0 0 calc(50% - 20px) !important;
-            }
-        }
-
-        @media screen and (max-width: 600px) {
-            .cards-grid-fixed .card {
-                flex: 0 0 100% !important;
-                max-width: 100% !important;
-            }
-        }
-
-        /* Susunan Bersebelahan untuk Butang Tindakan Kad */
-        .card-actions {
+        /* STRUKTUR KARUSEL SISTEMATIK DI TENGAH */
+        .carousel-wrapper-container {
+            position: relative;
+            width: 100%;
+            max-width: 1050px;
+            margin: 0 auto;
             display: flex;
-            gap: 8px;
-            margin-top: 15px;
+            align-items: center;
         }
 
-        .btn-info {
-            flex: 1;
-            background-color: #4fc1e9;
-            color: #ffffff;
-            padding: 8px 10px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 600;
+        .cards-carousel-container {
+            display: flex !important;
+            flex-direction: row !important;
+            gap: 30px !important;
+            width: 100% !important;
+            overflow-x: auto !important;
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
+            padding: 15px 10px 30px 10px;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .cards-carousel-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* STIL KAD IKLAN IKUT GAMBAR RUJUKAN */
+        .card-ad-style {
+            flex: 0 0 380px !important;
+            max-width: 380px !important;
+            background: #ffffff;
+            border-radius: 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            scroll-snap-align: center;
+            position: relative;
+            overflow: hidden;
+            box-sizing: border-box;
+            margin: 0 auto;
+        }
+
+        .card-ad-image-box {
+            width: 100%;
+            height: 240px;
+            background-color: #0b1d33;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-ad-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 20px;
+        }
+
+        .card-ad-content {
+            padding: 35px 25px 25px 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             text-align: center;
+            flex-grow: 1;
+        }
+
+        /* FONT NAMA KURSUS BOLD + PLUS JAKARTA SANS EXACT */
+        .card-ad-title {
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #0f172a;
+            line-height: 1.35;
+            margin-bottom: 8px;
+            padding: 0 10px;
+        }
+
+        .card-ad-desc {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-bottom: 25px;
+        }
+
+        .card-ad-info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+            font-size: 0.78rem;
+            color: #475569;
+            margin-bottom: 25px;
+            align-items: center;
+        }
+
+        .card-ad-info-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .card-ad-info-item i {
+            color: #475569;
+            font-size: 0.8rem;
+        }
+
+        /* SUSUNAN BUTANG OUTLINE BOX AKUR IKUT RUJUKAN */
+        .card-ad-actions {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-card-ad-apply {
+            min-width: 100px;
+            background-color: #ffffff !important;
+            color: #475569 !important;
+            border: 1px solid #cbd5e1 !important;
+            padding: 6px 18px !important;
+            border-radius: 0 !important;
+            font-size: 0.82rem !important;
+            font-weight: 400 !important;
+            cursor: pointer;
+            text-decoration: none;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
-            border: none;
-            transition: background 0.2s ease;
+            transition: all 0.2s ease;
         }
 
-        .btn-info:hover {
-            background-color: #3bafda;
+        .btn-card-ad-apply:hover {
+            background-color: #f8fafc !important;
+            border-color: #64748b !important;
+            color: #0f172a !important;
         }
 
-        .btn-card-apply {
-            flex: 1;
-            background-color: #5cb85c !important;
-            color: #ffffff !important;
-            padding: 8px 10px !important;
-            border-radius: 4px !important;
-            text-decoration: none !important;
-            font-size: 0.85rem !important;
-            font-weight: 600 !important;
-            text-align: center !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            gap: 5px !important;
-            border: none !important;
-            margin-top: 0 !important;
-            transition: background 0.2s ease;
+        .btn-card-ad-info {
+            min-width: 120px;
+            background-color: #f8fafc !important;
+            color: #334155 !important;
+            border: 1px solid #cbd5e1 !important;
+            padding: 6px 18px !important;
+            border-radius: 0 !important;
+            font-size: 0.82rem !important;
+            font-weight: 400 !important;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
         }
 
-        .btn-card-apply:hover {
-            background-color: #4cae4c !important;
+        .btn-card-ad-info:hover {
+            background-color: #e2e8f0 !important;
+            color: #0f172a !important;
+        }
+
+        /* BUTANG NAVIGASI ANAPANAHS */
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            color: #475569;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .carousel-btn:hover {
+            background-color: #003d7c;
+            color: #ffffff;
+            border-color: #003d7c;
+        }
+
+        .carousel-btn-left {
+            left: -22px;
+        }
+
+        .carousel-btn-right {
+            right: -22px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .header-top-row {
+                padding: 10px 18px !important;
+            }
+            .header-bottom-nav {
+                padding: 0 18px !important;
+                overflow-x: auto;
+            }
+            .logo-img {
+                height: 32px !important;
+            }
+            .header-subtitle, .header-english-title, .header-tagline {
+                font-size: 0.55rem !important;
+            }
+            .nav-links-sub {
+                gap: 15px !important;
+            }
+            .nav-links-sub a {
+                font-size: 0.8rem !important;
+                padding: 10px 0 !important;
+            }
+            .card-ad-style {
+                flex: 0 0 310px !important;
+                max-width: 310px !important;
+            }
+            .carousel-btn-left { left: -10px; }
+            .carousel-btn-right { right: -10px; }
         }
     </style>
 </head>
 <body>
 
-    <header class="navbar">
-        <div class="logo">
-            <img src="logo.png" alt="Logo Portal Kursus" class="logo-img">
-            <span>Portal kursus</span>
+    <!-- CONTAINER HEADER DUA BARIS -->
+    <header class="navbar-header-container">
+        <!-- BARIS ATAS: LOGO MOSTI & PERANAN/LOG MASUK USER -->
+        <div class="header-top-row">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Logo Portal Kursus MOSTI" class="logo-img">
+                <div class="header-title-group">
+                    <span class="header-subtitle">PORTAL KURSUS RASMI</span>
+                    <span class="header-english-title">MINISTRY OF SCIENCE, TECHNOLOGY AND INNOVATION</span>
+                    <span class="header-tagline">SAINS.TEKNOLOGI.INOVASI.BERSAMA</span>
+                </div>
+            </a>
+
+            <div class="header-top-right">
+                <span id="user-nav-container">
+                    <a href="login.html" style="color: #ffffff; text-decoration: none; font-size: 0.85rem;"><i class="fa-solid fa-user"></i> Log Masuk</a>
+                </span>
+            </div>
         </div>
 
-        <div class="menu-toggle" id="mobile-menu" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
+        <!-- BARIS BAWAH: NAVIGASI UTAMA DI BAWAH LOGO & BAR CARIAN -->
+        <div class="header-bottom-nav">
+            <nav>
+                <ul class="nav-links-sub" id="nav-links">
+                    <li><a href="index.html">Utama</a></li>
+                    <li><a href="iklan.html" class="active">Jenis & Iklan Kursus</a></li>
+                    <li><a href="takwim.html">Takwim Kursus</a></li>
+                    <li><a href="mohon.html">Mohon Kursus</a></li>
+                    <li><a href="index.html#contact-section">Hubungi Kami</a></li>
+                </ul>
+            </nav>
+            
+            <!-- BAR CARIAN DI NAV BARIS BAWAH -->
+            <div class="nav-search-box">
+                <input type="text" id="top-nav-search-input" placeholder="Cari di sini..." onkeypress="if(event.key === 'Enter') handleNavSearch()">
+                <button type="button" onclick="handleNavSearch()" title="Cari">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
         </div>
-
-        <nav class="nav-links" id="nav-links">
-            <a href="index.html" class="nav-btn"><i class="fa-solid fa-house"></i> Utama</a>
-            <a href="iklan.html" class="nav-btn active"><i class="fa-solid fa-bullhorn"></i> Jenis & Iklan Kursus</a>
-            <a href="takwim.html" class="nav-btn"><i class="fa-solid fa-calendar-days"></i> Takwim Kursus</a>
-            <a href="mohon.html" class="nav-btn btn-apply"><i class="fa-solid fa-paper-plane"></i> Mohon Kursus</a>
-        </nav>
     </header>
 
     <div class="container page-wrapper">
@@ -129,9 +555,19 @@
             <p>Pilih program latihan kemahiran terbaik untuk meningkatkan potensi anda.</p>
         </div>
 
-        <!-- KONTENA GRID DENGAN SAIZ KAD SAMA MACAM INDEX.HTML -->
-        <div class="cards-grid-fixed" id="main-courses-grid">
-            <div id="dynamic-courses-wrapper" style="display: contents;"></div>
+        <!-- KONTENA KARUSEL DENGAN SCROLL RIGHT & LEFT -->
+        <div class="carousel-wrapper-container">
+            <button class="carousel-btn carousel-btn-left" onclick="scrollCarousel(-1)" title="Scroll Kiri">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            
+            <div class="cards-carousel-container" id="main-courses-grid">
+                <div id="dynamic-courses-wrapper" style="display: contents;"></div>
+            </div>
+
+            <button class="carousel-btn carousel-btn-right" onclick="scrollCarousel(1)" title="Scroll Kanan">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
         </div>
     </div>
 
@@ -140,11 +576,96 @@
     </footer>
 
     <script>
-        function toggleMenu() {
-            const navLinks = document.getElementById('nav-links');
-            const menuToggle = document.getElementById('mobile-menu');
-            navLinks.classList.toggle('active');
-            menuToggle.classList.toggle('active');
+        let currentUser = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const storedUser = sessionStorage.getItem('user') || localStorage.getItem('user');
+            if (storedUser) {
+                try {
+                    currentUser = JSON.parse(storedUser);
+                } catch(e) { console.error(e); }
+            }
+
+            if (!currentUser) {
+                currentUser = {
+                    nama: "Pentadbir MOSTI",
+                    email: "admin@mosti.gov.my",
+                    role: "admin",
+                    gambar: "logo.png"
+                };
+                sessionStorage.setItem('user', JSON.stringify(currentUser));
+                localStorage.setItem('user', JSON.stringify(currentUser));
+            }
+
+            setupNavbar();
+            renderAdminCoursesOnly();
+
+            document.addEventListener('click', (e) => {
+                const dropdown = document.getElementById('userMenuDropdown');
+                const btn = document.getElementById('userMenuBtn');
+                if (dropdown && btn && !btn.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.classList.remove('show');
+                }
+            });
+        });
+
+        /* FUNGSI KAWALAN SCROLL KIRI & KANAN */
+        function scrollCarousel(direction) {
+            const container = document.getElementById('main-courses-grid');
+            const scrollAmount = 410; // Jarak pergerakan scroll kad
+            container.scrollBy({
+                left: direction * scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+
+        /* FUNGSI CARIAN BAR NAVIGASI TOP */
+        function handleNavSearch() {
+            const inputVal = document.getElementById('top-nav-search-input').value.trim();
+            if (inputVal) {
+                window.location.href = `iklan.html?keyword=${encodeURIComponent(inputVal)}`;
+            }
+        }
+
+        function setupNavbar() {
+            const navContainer = document.getElementById('user-nav-container');
+            if (currentUser && navContainer) {
+                const userPhoto = currentUser.gambar || 'https://via.placeholder.com/150';
+                const userName = currentUser.nama || 'Pengguna';
+
+                const adminMenuOption = currentUser.role === 'admin' 
+                    ? `<a href="admin_dashboard.html"><i class="fa-solid fa-user-shield"></i> Peranan Admin</a>` 
+                    : '';
+
+                navContainer.innerHTML = `
+                    <div class="user-dropdown-container">
+                        <button id="userMenuBtn" onclick="toggleUserDropdown()" class="user-dropdown-btn">
+                            <img src="${userPhoto}" alt="Avatar" class="user-avatar-small" id="navUserAvatar">
+                            <span>${userName}</span>
+                            <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem;"></i>
+                        </button>
+                        <div id="userMenuDropdown" class="dropdown-menu">
+                            <a href="user_dashboard.html"><i class="fa-solid fa-id-card"></i> User Dashboard</a>
+                            ${adminMenuOption}
+                            <a href="tukar_kata_laluan.html"><i class="fa-solid fa-key"></i> Tukar Kata Laluan</a>
+                            <button onclick="handleLogout()" class="logout-item"><i class="fa-solid fa-right-from-bracket"></i> Log Keluar</button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userMenuDropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('show');
+            }
+        }
+
+        function handleLogout() {
+            sessionStorage.removeItem('user');
+            localStorage.removeItem('user');
+            window.location.href = 'login.html';
         }
 
         async function renderAdminCoursesOnly() {
@@ -193,36 +714,51 @@
                 return;
             }
 
-            // Paparkan HANYA kursus yang ditambah/dikemaskini admin
+            // Paparkan HANYA kursus mengikut gaya gambar rujukan
             let htmlContent = '';
             customCourses.forEach((item) => {
                 const img = item.gambar_url || 'logo.png';
-                const bidangVal = item.bidang || 'PEMBANGUNAN DIRI DAN SAHSIAH';
+                const tarikhVal = item.tarikh || '6 November 2026';
+                const tempatVal = item.tempat || 'DEWAN PERHIMPUNAN MOSTI, ARAS 1, BLOK C7';
+                const masaVal = item.masa || 'Akan dimaklumkan kelak';
+                const descVal = item.penerangan || 'ok';
+                const idVal = item.id || '';
 
                 htmlContent += `
-                    <div class="card">
-                        <span class="badge-new"><i class="fa-solid fa-sparkles"></i> Terkini</span>
-                        <div style="width: 100%; aspect-ratio: 2550 / 3300; border-radius: 6px; overflow: hidden;">
-                            <img src="${img}" alt="${item.tajuk}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                    <div class="card-ad-style">
+                        <span class="badge-new">TERKINI</span>
+                        <div class="card-ad-image-box">
+                            <img src="${img}" alt="${item.tajuk}">
                         </div>
-                        <h3 style="font-size: 1.1rem; margin: 12px 0 8px 0; color: #1e293b;">${item.tajuk}</h3>
-                        <p style="margin: 4px 0 8px 0; font-size: 0.9rem; color: #059669; font-weight: 700;">${bidangVal}</p>
-                        <p style="margin: 4px 0; font-size: 0.9rem;"><strong>Tempoh:</strong> ${item.tarikh || '-'}</p>
-                        <p style="margin: 4px 0; font-size: 0.9rem;"><strong>Lokasi:</strong> ${item.tempat || '-'}</p>
-                        <p style="margin: 4px 0; font-size: 0.9rem;"><strong>Masa:</strong> ${item.masa || '-'}</p>
-                        <hr style="margin: 15px 0; border: 0; border-top: 1px solid #eee;">
-                        <div class="card-actions">
-                            <a href="maklumat_lanjut.html?id=${encodeURIComponent(item.id || '')}&kursus=${encodeURIComponent(item.tajuk)}" class="btn-info">Maklumat Lanjut &raquo;</a>
-                            <a href="mohon.html?kursus=${encodeURIComponent(item.tajuk)}" class="btn-primary btn-card-apply"><i class="fa-solid fa-pen-to-square"></i> Mohon</a>
+                        <div class="card-ad-content">
+                            <div class="card-ad-title">"${item.tajuk}"</div>
+                            <div class="card-ad-desc">${descVal}</div>
+                            
+                            <div class="card-ad-info-list">
+                                <div class="card-ad-info-item">
+                                    <i class="fa-regular fa-calendar"></i>
+                                    <span>${tarikhVal}</span>
+                                </div>
+                                <div class="card-ad-info-item">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    <span>${tempatVal}</span>
+                                </div>
+                                <div class="card-ad-info-item">
+                                    <i class="fa-regular fa-clock"></i>
+                                    <span>${masaVal}</span>
+                                </div>
+                            </div>
+                            
+                            <div class="card-ad-actions">
+                                <a href="mohon.html?kursus=${encodeURIComponent(item.tajuk)}" class="btn-card-ad-apply">Mohon</a>
+                                <a href="maklumat_lanjut.html?id=${encodeURIComponent(idVal)}&kursus=${encodeURIComponent(item.tajuk)}" class="btn-card-ad-info">Maklumat Lanjut</a>
+                            </div>
                         </div>
                     </div>
                 `;
             });
             wrapper.innerHTML = htmlContent;
         }
-
-        // Jalankan SERTA-MERTA sebaik sahaja DOM siap diproses
-        document.addEventListener('DOMContentLoaded', renderAdminCoursesOnly);
 
         // Kemaskini automatik sekiranya admin menambah/memadam kursus dari tab lain
         window.addEventListener('storage', (e) => {

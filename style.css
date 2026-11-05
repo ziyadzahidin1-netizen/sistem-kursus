@@ -29,11 +29,11 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgba(44, 62, 80, 0.98);
+    background-color: rgba(24, 39, 57, 0.98);
     backdrop-filter: blur(8px);
     padding: 15px 20px;
     color: #fff;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 10px rgba(209, 202, 202, 0.2);
     z-index: 1000; /* Lapisan teratas supaya tidak bertindih */
 }
 
@@ -66,7 +66,7 @@ body {
 
 .nav-btn {
     text-decoration: none;
-    color: #ecf0f1;
+    color: #fefefe;
     padding: 8px 14px;
     border-radius: 6px;
     font-size: 0.9rem;
@@ -81,7 +81,7 @@ body {
 }
 
 .nav-btn:hover, .nav-btn.active {
-    background-color: #34495e;
+    background-color: #153252;
     color: #ffffff;
 }
 
@@ -175,7 +175,7 @@ body {
     max-width: 90%;
     background: rgba(52, 152, 219, 0.2);
     border: 1px solid rgba(52, 152, 219, 0.6);
-    color: #5dade2;
+    color: #fefbff;
     padding: 6px 18px;
     border-radius: 20px;
     font-size: 0.85rem;

@@ -25,7 +25,7 @@
 
         /* HEADER DUA BARIS */
         .navbar-header-container {
-            background-color: #003d7c !important; /* Warna biru gelap */
+            background-color: #0c2847 !important; /* Warna biru gelap */
             border-bottom: 1px solid #002b58;
             position: sticky;
             top: 0;
@@ -221,6 +221,31 @@
             gap: 16px;
         }
 
+        /* BUTANG HERO KIRI & KANAN TERTRANSPARAN (PETAK KOTAK & TULISAN PUTIH) */
+        .btn-hero-box {
+            background: transparent !important;
+            color: #ffffff !important;
+            padding: 12px 26px !important;
+            border-radius: 0px !important;
+            font-size: 0.92rem !important;
+            font-weight: 600 !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            border: 1.5px solid #ffffff !important;
+            box-shadow: none !important;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+
+        .btn-hero-box:hover {
+            background: rgba(255, 255, 255, 0.2) !important;
+            color: #ffffff !important;
+            border-color: #ffffff !important;
+            transform: translateY(-3px);
+        }
+
+        /* BUTANG UTAMA UMUM (UNTUK BAHAGIAN LAIN) */
         .btn-modern-primary {
             background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
             color: #ffffff !important;
@@ -243,38 +268,12 @@
             background: linear-gradient(135deg, #0369a1 0%, #075985 100%) !important;
         }
 
-        .btn-modern-secondary {
-            background: rgba(255, 255, 255, 0.12) !important;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            color: #ffffff !important;
-            padding: 12px 26px !important;
-            border-radius: 30px !important;
-            font-weight: 600 !important;
-            font-size: 0.92rem !important;
-            text-decoration: none !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            gap: 8px !important;
-            border: 1.5px solid rgba(255, 255, 255, 0.5) !important;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15) !important;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        }
-
-        .btn-modern-secondary:hover {
-            background: #ffffff !important;
-            color: #003d7c !important;
-            border-color: #ffffff !important;
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3) !important;
-        }
-
-        /* REKA BENTUK KAD KURSUS SEBIJI MACAM GAMBAR NUS */
+        /* REKA BENTUK KAD KURSUS NUS */
         .cards-grid-fixed {
             display: flex !important;
             flex-wrap: wrap !important;
             justify-content: center !important;
-            gap: 0px !important; /* Rapat rapat seperti NUS */
+            gap: 0px !important;
             width: 100% !important;
             max-width: 1140px;
             margin: 0 auto;
@@ -299,7 +298,6 @@
             transform: translateY(-4px) !important;
         }
 
-        /* BAHAGIAN GAMBAR KAD NUS */
         .card-img-wrapper {
             width: 100%;
             height: 280px;
@@ -320,7 +318,6 @@
             transform: scale(1.05);
         }
 
-        /* Lencana Terkini */
         .badge-nus {
             position: absolute;
             top: 15px;
@@ -336,7 +333,6 @@
             z-index: 2;
         }
 
-        /* KANDUNGAN KAD DENGAN WARNA WARNI PEPEJAL (SOLID COLORS) NUS */
         .card-body-nus {
             padding: 40px 35px 45px 35px !important;
             flex-grow: 1;
@@ -347,15 +343,14 @@
             color: #ffffff;
         }
 
-        /* WARNA PEPEJAL TEPAT SEPERTI GAMBAR CONTOH NUS */
         .card:nth-child(3n+1) .card-body-nus {
-            background-color: #ffffff !important; /* Warna Jingga Terang NUS (Kad Kiri) */
+            background-color: #ffffff !important;
         }
         .card:nth-child(3n+2) .card-body-nus {
-            background-color: #b73365 !important; /* Warna Magenta / Merah Jambuk Nus (Kad Kanan) */
+            background-color: #fffefe !important;
         }
         .card:nth-child(3n+3) .card-body-nus {
-            background-color: #003366 !important; /* Warna Biru Pekat NUS */
+            background-color: #ffffff !important;
         }
 
         .card-title-nus {
@@ -393,7 +388,6 @@
             gap: 6px;
         }
 
-        /* BUTANG OUTLINE SEBIJI MACAM NUS (Learn More) */
         .btn-nus-outline {
             display: inline-block !important;
             align-self: center;
@@ -413,22 +407,13 @@
             color: #1e293b !important;
         }
 
-        /* BAHAGIAN FOOTER GAYA NUS */
         .nus-style-footer {
-            background-color: #003366;
+            background-color: #dddde7;
             color: #121111;
             padding: 60px 20px 40px 20px;
             text-align: center;
             font-family: 'Open Sans', sans-serif;
             position: relative;
-        }
-
-        .nus-footer-title {
-            font-size: 1.45rem;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 25px;
-            letter-spacing: 0.3px;
         }
 
         .nus-footer-info {
@@ -437,7 +422,7 @@
             align-items: center;
             gap: 12px;
             font-size: 0.92rem;
-            color: #cbd5e1;
+            color: #000000;
             margin-bottom: 35px;
             line-height: 1.6;
         }
@@ -451,7 +436,7 @@
         }
 
         .nus-footer-info-item i {
-            color: #ffffff;
+            color: #09042f;
             font-size: 1.1rem;
             margin-top: 3px;
         }
@@ -481,7 +466,7 @@
 
         .nus-social-btn:hover {
             background-color: #ef7c00;
-            color: #ffffff;
+            color: #0e1b44;
             transform: translateY(-3px);
         }
 
@@ -510,7 +495,7 @@
         }
 
         .nus-footer-links a:hover {
-            color: #ffffff;
+            color: #10135b;
             text-decoration: underline;
         }
 
@@ -534,7 +519,6 @@
             background-color: #ef7c00;
         }
 
-        /* Panel Editor Admin */
         .admin-editor-panel {
             background: #ffffff;
             border: 2px solid #2563eb;
@@ -653,12 +637,16 @@
             max-width: 1000px;
             margin: 0 auto;
         }
+        
+        /* FONT TAJUK CARIAN KURSUS SAMA JUGA */
         .dtims-search-title {
-            font-size: 1.5rem;
-            font-weight: 400;
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            font-size: 1.8rem !important;
+            font-weight: 600 !important;
             margin-bottom: 20px;
             color: #ffffff;
         }
+        
         .dtims-input-group {
             margin-bottom: 12px;
         }
@@ -709,7 +697,6 @@
             background-color: #1d4ed8;
         }
 
-        /* GAYA USER DROPDOWN MENU */
         .user-dropdown-container {
             position: relative;
             display: inline-block;
@@ -782,7 +769,6 @@
             background-color: #fef2f2;
         }
 
-        /* GAYA JADUAL PENGURUSAN PERMOHONAN ADMIN */
         .admin-table {
             width: 100%;
             border-collapse: collapse;
@@ -829,6 +815,138 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 0.8rem;
+        }
+
+        /* BAHAGIAN ABOUT SECTION MODEN NUS-STYLE */
+        .content-section {
+            padding: 60px 20px;
+        }
+
+        .about-modern-container {
+            max-width: 1140px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .about-modern-left {
+            flex: 1 1 450px;
+        }
+
+        /* PENEPATAN KESELURUHAN FONT TAJUK (MENGENAI MOSTI, KURSUS AKAN DATANG TERKINI, HUBUNGI KAMI) */
+        .about-title-large, 
+        .section-title h2, 
+        .nus-footer-title {
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            font-size: 1.6rem !important;
+            font-weight: 600 !important;
+            color: #0c2847 !important;
+            margin: 0 0 20px 0 !important;
+            letter-spacing: -0.5px !important;
+        }
+
+        .nus-footer-title {
+            font-size: 1.6rem !important;
+        }
+
+        .about-desc-text {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #475569;
+            margin-bottom: 16px;
+            font-weight: 300;
+        }
+
+        .stats-mini-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .stat-box {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 14px 18px;
+            border-radius: 4px;
+            text-align: left;
+        }
+
+        .stat-box h4 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #003d7c;
+            margin: 0 0 4px 0;
+        }
+
+        .stat-box p {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin: 0;
+            font-weight: 400;
+        }
+
+        .about-links-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 25px;
+        }
+
+        .about-link-item {
+            color: #ef7c00;
+            font-size: 1.05rem;
+            font-weight: 400;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s ease;
+        }
+
+        .about-link-item:hover {
+            color: #003d7c;
+            text-decoration: underline;
+        }
+
+        .about-modern-right {
+            flex: 1 1 480px;
+        }
+
+        .about-features-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 0px;
+            padding: 20px 35px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+        }
+
+        .feature-item-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 22px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .feature-item-row:last-child {
+            border-bottom: none;
+        }
+
+        .feature-icon-check {
+            color: #0b3c5d;
+            font-size: 1.35rem;
+            flex-shrink: 0;
+        }
+
+        .feature-text-content {
+            font-size: 1.25rem;
+            font-weight: 300;
+            color: #334155;
+            line-height: 1.4;
         }
 
         @media screen and (max-width: 768px) {
@@ -891,14 +1009,12 @@
                 margin: 0 auto !important;
             }
 
-            .hero-buttons .btn-modern-primary, 
-            .hero-buttons .btn-modern-secondary {
+            .hero-buttons .btn-hero-box {
                 width: 100% !important;
                 box-sizing: border-box !important;
                 text-align: center !important;
                 padding: 12px 18px !important;
                 font-size: 0.88rem !important;
-                border-radius: 30px !important;
                 margin: 0 !important;
                 display: flex !important;
                 align-items: center !important;
@@ -947,6 +1063,23 @@
 
             .scroll-top-btn {
                 right: 15px;
+            }
+
+            .about-modern-container {
+                flex-direction: column;
+                gap: 25px;
+            }
+
+            .about-title-large, .section-title h2, .nus-footer-title {
+                font-size: 1.8rem !important;
+            }
+
+            .about-features-card {
+                padding: 15px 20px;
+            }
+
+            .feature-text-content {
+                font-size: 1rem;
             }
         }
     </style>
@@ -1005,8 +1138,8 @@
             <p>Tingkatkan kemahiran anda menerusi program dan latihan terkini kami.</p>
             
             <div class="hero-buttons">
-                <a href="#about-section" class="btn-modern-primary">Ketahui Mengenai MOSTI <i class="fa-solid fa-arrow-down"></i></a>
-                <a href="iklan.html" class="btn-modern-secondary">Lihat Kursus Terkini <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="#about-section" class="btn-hero-box">Ketahui Mengenai MOSTI <i class="fa-solid fa-arrow-down"></i></a>
+                <a href="iklan.html" class="btn-hero-box">Lihat Kursus Terkini <i class="fa-solid fa-arrow-right"></i></a>
             </div>
         </div>
 
@@ -1091,71 +1224,67 @@
     </section>
 
     <!-- ABOUT SECTION -->
-    <section id="about-section" class="content-section">
-        <div class="container">
-            <div class="section-title">
-                <h2>Mengenai MOSTI</h2>
-            </div>
+    <section id="about-section" class="content-section" style="background-color: #fcfcfc;">
+        <div class="about-modern-container">
+            <!-- KANDUNGAN KIRI -->
+            <div class="about-modern-left">
+                <h2 class="about-title-large">Mengenai MOSTI</h2>
+                <p class="about-desc-text">
+                    Kementerian Sains, Teknologi dan Inovasi (MOSTI) ialah kementerian di bawah Kerajaan Malaysia yang bertanggungjawab menerajui pembangunan sains, teknologi, inovasi (STI) dan ekonomi (STIE).
+                </p>
 
-            <div class="about-grid">
-                <div class="about-text">
-                    <h3>Kementerian Sains Teknologi dan Inovasi (MOSTI)</h3>
-                    <p>
-                        Kementerian Sains, Teknologi dan Inovasi (MOSTI) ialah kementerian di bawah Kerajaan Malaysia yang bertanggungjawab menerajui pembangunan sains, teknologi, inovasi (STI) dan ekonomi (STIE).
-                    </p>
-                    <p>
-                        Memperkasa ekosistem syarikat pemula (startup), bioteknologi, keselamatan siber, nanoteknologi, dan teknologi angkasa.
-                    </p>
-
-                    <div class="stats-mini-grid">
-                        <div class="stat-box">
-                            <div>
-                                <h4 id="stat-kursus">...</h4>
-                                <p>Jumlah Kursus</p>
-                            </div>
-                        </div>
-                        <div class="stat-box">
-                            <div>
-                                <h4 id="stat-bidang">...</h4>
-                                <p>Jumlah Bidang</p>
-                            </div>
-                        </div>
-                        <div class="stat-box">
-                            <div>
-                                <h4 id="stat-peserta">...</h4>
-                                <p>Peserta</p>
-                            </div>
-                        </div>
-                        <div class="stat-box">
-                            <div>
-                                <h4 id="stat-pusat">...</h4>
-                                <p>Pusat Latihan</p>
-                            </div>
-                        </div>
+                <!-- STATISTIK BILANGAN -->
+                <div class="stats-mini-grid">
+                    <div class="stat-box">
+                        <h4 id="stat-kursus">1</h4>
+                        <p>Jumlah Kursus</p>
+                    </div>
+                    <div class="stat-box">
+                        <h4 id="stat-bidang">1</h4>
+                        <p>Jumlah Bidang</p>
+                    </div>
+                    <div class="stat-box">
+                        <h4 id="stat-peserta">0</h4>
+                        <p>Peserta</p>
+                    </div>
+                    <div class="stat-box">
+                        <h4 id="stat-pusat">1</h4>
+                        <p>Pusat Latihan</p>
                     </div>
                 </div>
 
-                <div class="about-card-box">
-                    <div class="card-info">
-                        <h4>Visi Kami</h4>
-                        <p>Negara Berteknologi Tinggi Melalui STIE.</p>
-                    </div>
+                <div class="about-links-group">
+                    <a href="iklan.html" class="about-link-item">Undergraduate <i class="fa-solid fa-chevron-right"></i></a>
+                    <a href="takwim.html" class="about-link-item">Graduate <i class="fa-solid fa-chevron-right"></i></a>
+                </div>
+            </div>
 
-                    <div class="card-info highlight">
-                        <h4>Misi Kami</h4>
-                        <p>Menerajui STIE untuk cabaran negara, kesejahteraan masyarakat, dan pembangunan mampan.</p>
+            <!-- KANDUNGAN KANAN -->
+            <div class="about-modern-right">
+                <div class="about-features-card">
+                    <div class="feature-item-row">
+                        <i class="fa-solid fa-check feature-icon-check"></i>
+                        <span class="feature-text-content">Visi Kami: Negara Berteknologi Tinggi Melalui STIE.</span>
+                    </div>
+                    <div class="feature-item-row">
+                        <i class="fa-solid fa-check feature-icon-check"></i>
+                        <span class="feature-text-content">Misi Kami: Menerajui STIE untuk cabaran negara, kesejahteraan masyarakat, dan pembangunan mampan.</span>
+                    </div>
+                    <div class="feature-item-row">
+                        <i class="fa-solid fa-check feature-icon-check"></i>
+                        <span class="feature-text-content">Memperkasa ekosistem syarikat pemula (startup), bioteknologi, keselamatan siber, nanoteknologi, dan teknologi angkasa.</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- KURSUS AKAN DATANG TERKINI (KAD GAYA NUS SEBIJI SEPERTI DALAM GAMBAR CONTOH) -->
+    <!-- KURSUS AKAN DATANG TERKINI -->
     <section id="services-section" class="content-section bg-light">
         <div class="container">
             <div class="section-title">
                 <h2>Kursus Akan Datang Terkini</h2>
-                <p>Sertai program latihan, bengkel, dan majlis rasmi terkini yang dianjurkan oleh MOSTI.</p>
+                <p style="margin-top: 10px;">Sertai program latihan, bengkel, dan majlis rasmi terkini yang dianjurkan oleh MOSTI.</p>
             </div>
 
             <!-- PANEL MODE EDITOR ADMIN -->
@@ -1267,7 +1396,7 @@
     <!-- FOOTER / HUBUNGI KAMI GAYA NUS -->
     <footer id="contact-section">
         <div class="nus-style-footer">
-            <h2 class="nus-footer-title">Kementerian Sains, Teknologi dan Inovasi</h2>
+            <h2 class="nus-footer-title">Hubungi Kami</h2>
             
             <div class="nus-footer-info">
                 <div class="nus-footer-info-item">
@@ -1286,12 +1415,7 @@
 
             <div class="nus-social-icons">
                 <a href="#" class="nus-social-btn" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="#" class="nus-social-btn" title="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
                 <a href="#" class="nus-social-btn" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#" class="nus-social-btn" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-                <a href="#" class="nus-social-btn" title="Telegram"><i class="fa-brands fa-telegram"></i></a>
-                <a href="#" class="nus-social-btn" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
-                <a href="#" class="nus-social-btn" title="WeChat"><i class="fa-brands fa-weixin"></i></a>
             </div>
         </div>
 
@@ -1528,7 +1652,6 @@
             }
         }
 
-        /* SUSUNAN KAD GAYA NUS SEBIJI */
         function renderCoursesToUI(coursesList) {
             const container = document.getElementById('courses-container');
             if (!container) return;
