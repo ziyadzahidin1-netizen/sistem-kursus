@@ -30,16 +30,15 @@
             color: #1e293b;
         }
 
-        /* HEADER DUA BARIS (SAMA MACAM MOHON.HTML & INDEX.HTML) */
+        /* HEADER DUA BARIS */
         .navbar-header-container {
-            background-color: #0c2847 !important; /* Warna biru gelap */
+            background-color: #0c2847 !important;
             border-bottom: 1px solid #002b58;
             position: sticky;
             top: 0;
             z-index: 1000;
         }
 
-        /* BARIS ATAS: LOGO (KIRI) & LINK PROFIL/LOG MASUK (KANAN) */
         .header-top-row {
             display: flex;
             justify-content: space-between;
@@ -100,7 +99,6 @@
             font-size: 0.85rem;
         }
 
-        /* BARIS BAWAH: NAVIGASI UTAMA DI BAWAH LOGO */
         .header-bottom-nav {
             display: flex;
             justify-content: space-between;
@@ -145,7 +143,6 @@
             background-color: #ef7c00;
         }
 
-        /* BAR CARIAN DI NAV BARIS BAWAH */
         .nav-search-box {
             display: flex;
             align-items: center;
@@ -186,7 +183,6 @@
             color: #003d7c;
         }
 
-        /* USER DROPDOWN SAMA MACAM MOHON.HTML */
         .user-dropdown-container {
             position: relative;
             display: inline-block;
@@ -259,7 +255,6 @@
             background-color: #fef2f2;
         }
 
-        /* HEADER BANNER DASHBOARD */
         .user-header-banner {
             background: linear-gradient(135deg, #0c2847 0%, #003d7c 100%);
             color: white;
@@ -281,7 +276,6 @@
         .stat-item .number { font-size: 1.8rem; font-weight: 600; color: #ef7c00; }
         .stat-item .label { font-size: 0.82rem; color: #cbd5e1; font-weight: 300; margin-top: 2px; }
 
-        /* TAB NAVIGASI UTAMA */
         .main-tabs-nav {
             background-color: #ffffff;
             border-bottom: 1px solid #e2e8f0;
@@ -348,9 +342,8 @@
         .btn-green-submit { background-color: #10b981; color: white; border: none; padding: 12px 24px; border-radius: 4px; font-weight: 600; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.88rem; text-transform: uppercase; transition: background 0.25s; }
         .btn-green-submit:hover { background-color: #059669; }
 
-        /* BUTANG AKTIVITI SIJIL */
         .btn-cert {
-            background-color: #8b5cf6;
+            background-color: #ef7c00;
             color: white;
             border: none;
             padding: 6px 12px;
@@ -363,7 +356,7 @@
             font-weight: 600;
             transition: background 0.2s;
         }
-        .btn-cert:hover { background-color: #7c3aed; }
+        .btn-cert:hover { background-color: #d96d00; }
 
         .custom-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         .custom-table th { text-align: left; padding: 12px 16px; font-size: 0.85rem; background-color: #f8fafc; border-bottom: 2px solid #e2e8f0; color: #475569; font-weight: 600; }
@@ -371,7 +364,7 @@
         .btn-action-del { background-color: #ef4444; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; transition: background 0.2s; }
         .btn-action-del:hover { background-color: #dc2626; }
 
-        /* MODAL OVERLAY & CONTAINER TEMPLATE SIJIL SENDIRI */
+        /* MODAL OVERLAY & CONTAINER SIJIL */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -388,55 +381,12 @@
         .cert-modal-body {
             background: #ffffff;
             width: 100%;
-            max-width: 850px;
+            max-width: 750px;
+            max-height: 90vh;
+            overflow-y: auto;
             border-radius: 8px;
-            overflow: hidden;
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
             position: relative;
-        }
-
-        /* GAMBAR SIJIL SENDIRI SEBAGAI BACKGROUND */
-        .cert-container-print {
-            width: 800px;
-            height: 565px; /* Nisbah A4 Landskap */
-            margin: 20px auto;
-            text-align: center;
-            background: url('sijil_template.png') no-repeat center center;
-            background-size: contain;
-            color: #1e293b;
-            font-family: 'Georgia', serif;
-            position: relative;
-            box-sizing: border-box;
-        }
-
-        .cert-recipient-name {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #0c2847;
-            padding-top: 150px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .cert-user-ic {
-            font-size: 0.95rem;
-            color: #475569;
-            margin-top: 5px;
-            font-weight: 600;
-        }
-
-        .cert-course-name {
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: #003d7c;
-            margin-top: 35px;
-            padding: 0 40px;
-        }
-
-        .cert-date {
-            font-size: 0.95rem;
-            color: #334155;
-            margin-top: 15px;
         }
 
         .cert-actions {
@@ -448,19 +398,69 @@
             border-top: 1px solid #e2e8f0;
         }
 
+        /* KAWALAN CETAKAN (PRINT CSS) UNTUK FAIL GAMBAR SIJIL.JPG */
+        @page {
+            margin: 0; 
+        }
+
         @media print {
-            body * { visibility: hidden; }
-            #certPrintArea, #certPrintArea * { visibility: visible; }
-            #certPrintArea { 
-                position: absolute; 
-                left: 0; top: 0; 
-                width: 100%; 
-                height: 100%; 
-                margin: 0; 
-                -webkit-print-color-adjust: exact; 
-                print-color-adjust: exact;
+            body * { 
+                visibility: hidden !important; 
             }
-            .cert-actions { display: none; }
+            
+            .modal-overlay, 
+            .modal-overlay *, 
+            #certPrintArea, 
+            #certPrintArea * { 
+                visibility: visible !important; 
+            }
+
+            .modal-overlay {
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                background: transparent !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+            }
+
+            .cert-modal-body {
+                box-shadow: none !important;
+                border: none !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                overflow: visible !important;
+                background: transparent !important;
+            }
+
+            #certPrintArea { 
+                position: relative !important;
+                left: 0 !important; 
+                top: 0 !important; 
+                width: 100% !important; 
+                margin: 0 auto !important; 
+                border: none !important;
+                padding: 0 !important;
+                background: transparent !important;
+            }
+
+            #certImageDisplay {
+                width: 100% !important;
+                max-width: 100% !important;
+                height: auto !important;
+                display: block !important;
+            }
+
+            .cert-actions { 
+                display: none !important; 
+            }
         }
 
         @media screen and (max-width: 900px) { 
@@ -480,9 +480,8 @@
 </head>
 <body>
 
-    <!-- CONTAINER HEADER DUA BARIS (SAMA MACAM MOHON.HTML & INDEX.HTML) -->
+    <!-- CONTAINER HEADER DUA BARIS -->
     <header class="navbar-header-container">
-        <!-- BARIS ATAS: LOGO MOSTI & PERANAN/LOG MASUK USER -->
         <div class="header-top-row">
             <a href="index.html" class="logo">
                 <img src="logo.png" alt="Logo Portal Kursus MOSTI" class="logo-img">
@@ -500,7 +499,6 @@
             </div>
         </div>
 
-        <!-- BARIS BAWAH: NAVIGASI UTAMA DI BAWAH LOGO & BAR CARIAN -->
         <div class="header-bottom-nav">
             <nav>
                 <ul class="nav-links-sub" id="nav-links">
@@ -512,7 +510,6 @@
                 </ul>
             </nav>
             
-            <!-- BAR CARIAN DI NAV BARIS BAWAH -->
             <div class="nav-search-box">
                 <input type="text" id="top-nav-search-input" placeholder="Cari di sini..." onkeypress="if(event.key === 'Enter') handleNavSearch()">
                 <button type="button" onclick="handleNavSearch()" title="Cari">
@@ -764,7 +761,7 @@
             </div>
         </div>
 
-        <!-- BAHAGIAN 2: SENARAI PERMOHONAN (SEJARAH PERMOHONAN) -->
+        <!-- BAHAGIAN 2: SENARAI PERMOHONAN -->
         <div id="tab-senarai" class="tab-content">
             <div class="form-card">
                 <div class="form-card-header">
@@ -811,14 +808,11 @@
         </div>
     </div>
 
-    <!-- MODAL POPUP SIJIL (TEMPLATE GAMBAR SENDIRI) -->
+    <!-- MODAL POPUP SIJIL - MEMAPARKAN FAIL SIJIL.JPG SEBIJI SEBIJI -->
     <div id="certModal" class="modal-overlay">
         <div class="cert-modal-body">
-            <div id="certPrintArea" class="cert-container-print">
-                <div class="cert-recipient-name" id="certUserName">-</div>
-                <div class="cert-user-ic">NO. MYKAD: <span id="certUserIC">-</span></div>
-                <div class="cert-course-name" id="certCourseTitle">-</div>
-                <div class="cert-date">Tarikh: <span id="certDate">-</span></div>
+            <div id="certPrintArea" style="text-align: center; background: #ffffff; padding: 15px;">
+                <img id="certImageDisplay" src="sijil.jpg" alt="Sijil JPG" style="max-width: 100%; height: auto; display: block; margin: 0 auto; border: 1px solid #cbd5e1;">
             </div>
 
             <div class="cert-actions">
@@ -861,7 +855,6 @@
             });
         });
 
-        /* FUNGSI CARIAN BAR NAVIGASI TOP */
         function handleNavSearch() {
             const inputVal = document.getElementById('top-nav-search-input').value.trim();
             if (inputVal) {
@@ -1156,12 +1149,10 @@
 
             list.forEach((item, index) => {
                 let statusBadge = '';
-                let isPassed = false;
 
                 if (item.status === 'Berjaya' || item.status === 'Lulus' || item.status === 'Hadir') {
                     statusBadge = '<span style="background-color:#10b981; color:white; padding:4px 12px; border-radius:20px; font-size:0.78rem; font-weight:600;">' + (item.status === 'Berjaya' ? 'Lulus' : item.status) + '</span>';
                     countBerjaya++;
-                    isPassed = true;
                 } else if (item.status === 'Tidak Berjaya' || item.status === 'Tidak Lulus') {
                     statusBadge = '<span style="background-color:#ef4444; color:white; padding:4px 12px; border-radius:20px; font-size:0.78rem; font-weight:600;">Tidak Lulus</span>';
                     countGagal++;
@@ -1178,12 +1169,11 @@
                     formattedDateTime = item.tarikh;
                 }
 
-                // Hanya tunjukkan Butang Sijil jika status LULUS
-                let certBtnHtml = isPassed ? `
-                    <button class="btn-cert" onclick="openCertModal('${item.id || index}')" title="Jana Sijil Penyertaan">
-                        <i class="fa-solid fa-award"></i> Sijil
+                let certBtnHtml = `
+                    <button class="btn-cert" onclick="openCertModal('${item.id || index}')" title="Paparkan Sijil JPG">
+                        <i class="fa-solid fa-certificate"></i> Sijil
                     </button>
-                ` : '<span style="color:#94a3b8; font-size:0.82rem;">-</span>';
+                `;
 
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
@@ -1203,31 +1193,10 @@
             document.getElementById('statTidakBerjaya').innerText = countGagal;
         }
 
-        /* FUNGSI KENDALIKAN MODAL SIJIL TEMPLATE SENDIRI */
+        /* FUNGSI PAPAR FAIL GAMBAR SIJIL.JPG APABILA TEKAN BUTANG SIJIL */
         function openCertModal(appIdOrIndex) {
-            const item = globalUserApplications.find((a, idx) => String(a.id) === String(appIdOrIndex) || String(idx) === String(appIdOrIndex));
-            
-            if (!item) {
-                alert('Data kursus tidak dijumpai.');
-                return;
-            }
-
-            const userName = (currentUser ? currentUser.nama : '') || item.nama_pemohon || item.nama || 'PENGGUNA';
-            const userIC = (currentUser ? currentUser.ic : '') || item.ic || item.user_ic || '-';
-            const courseTitle = (item.kod_kursus ? item.kod_kursus + ' - ' : '') + (item.nama_kursus || item.kursus || 'KURSUS');
-            
-            let dateStr = '-';
-            if (item.created_at) {
-                dateStr = new Date(item.created_at).toLocaleDateString('ms-MY', { day: 'numeric', month: 'long', year: 'numeric' });
-            } else if (item.tarikh) {
-                dateStr = item.tarikh;
-            }
-
-            document.getElementById('certUserName').innerText = userName;
-            document.getElementById('certUserIC').innerText = userIC;
-            document.getElementById('certCourseTitle').innerText = courseTitle;
-            document.getElementById('certDate').innerText = dateStr;
-
+            const certImg = document.getElementById('certImageDisplay');
+            certImg.src = 'sijil.jpg'; 
             document.getElementById('certModal').classList.add('show');
         }
 
