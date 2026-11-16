@@ -783,6 +783,12 @@
                         <span>Peg. Pentadbir Perolehan</span>
                     </a>
                 </li>
+                <li>
+                    <a class="sidebar-link" onclick="switchTab('folder-perakuan-tab', this)">
+                        <i class="fa-solid fa-folder-open"></i>
+                        <span>Folder Kertas Perakuan</span>
+                    </a>
+                </li>
             </ul>
         </aside>
 
@@ -972,7 +978,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2" style="font-weight: bold; text-transform: uppercase;">
-                                        KONTIGENSI (<input type="number" step="0.1" min="0" id="input_peratus_kontigensi" class="gov-input" style="width: 50px; text-align: center; padding: 2px; font-weight: bold;" value="0" oninput="kiraKosKeseluruhan()">%)
+                                        KONTIGENSI (<input type="number" step="0.1" min="0" id="input_peratus_kontigensi" name="peratus_kontigensi" class="gov-input" style="width: 50px; text-align: center; padding: 2px; font-weight: bold;" value="0" oninput="kiraKosKeseluruhan()">%)
                                     </td>
                                     <td style="text-align: right;">
                                         <input type="text" id="kos_kontigensi" class="gov-input" style="text-align: right; font-weight: bold; background-color: #f1f5f9;" value="0.00" readonly>
@@ -1163,12 +1169,15 @@
                 <!-- 6. BAHAGIAN KERTAS PERAKUAN -->
                 <div id="sub-kertas-perakuan" class="admin-card sub-tab-content" style="display: none;">
                     
-                    <div class="no-print" style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; background: #e0f2fe; padding: 12px 16px; border-radius: 4px; border: 1px solid #bae6fd;">
+                    <div class="no-print" style="margin-bottom: 15px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; background: #e0f2fe; padding: 12px 16px; border-radius: 4px; border: 1px solid #bae6fd;">
                         <div>
                             <b>Status Workflow: </b> 
                             <span id="workflow-status-badge" class="badge-status badge-draft">DRAFT / BELUM DIHANTAR</span>
+                            <div id="kertas-perakuan-saved-info" style="font-size: 0.78rem; color: #0369a1; margin-top: 4px;"></div>
                         </div>
-                        <div style="display: flex; gap: 8px;">
+                        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                            <button type="button" class="gov-btn gov-btn-primary" style="background-color: #0284c7; border-color: #0284c7;" onclick="simpanKertasPerakuan(true)"><i class="fa-solid fa-floppy-disk"></i> SIMPAN KERTAS PERAKUAN</button>
+                            <button type="button" class="gov-btn" style="background-color: #fef3c7; border-color: #f59e0b; color: #92400e; font-weight: 600;" onclick="bukaFolderKertasPerakuan()"><i class="fa-solid fa-folder-open"></i> LIHAT FOLDER SIMPANAN</button>
                             <button type="button" class="gov-btn gov-btn-success" onclick="hantarKePerolehan()"><i class="fa-solid fa-paper-plane"></i> HANTAR KE PEG. PEROLEHAN</button>
                             <button type="button" class="gov-btn gov-btn-primary" onclick="janaWordBPSM()"><i class="fa-solid fa-file-word"></i> MUAT TURUN WORD (.DOCX)</button>
                             <button type="button" class="gov-btn gov-btn-primary" onclick="window.print()"><i class="fa-solid fa-print"></i> PRINT / PDF</button>
@@ -1177,31 +1186,31 @@
                     </div>
 
                     <!-- CONTAINER KERTAS PERAKUAN SEBIJI MACAM FORMAT DOKUMEN WORD RASMI -->
-                    <div class="perakuan-doc-container">
+                    <div class="perakuan-doc-container" id="perakuan-doc-container">
                         
                         <!-- HEADER RUJUKAN & TARIKH -->
                         <div class="perakuan-header-info">
-                            <div>Rujukan: MOSTI.500-8/2/1 Jld. 18 ( &nbsp;&nbsp;&nbsp; )</div>
-                            <div>Tarikh: &nbsp;&nbsp;&nbsp;&nbsp; Disember 2025</div>
+                            <div>Rujukan: <span id="doc_rujukan_text" contenteditable="true" oninput="autoSimpanKertasPerakuan()">MOSTI.500-8/2/1 Jld. 18 ( &nbsp;&nbsp;&nbsp; )</span></div>
+                            <div>Tarikh: <span id="doc_tarikh_atas_text" contenteditable="true" oninput="autoSimpanKertasPerakuan()">&nbsp;&nbsp;&nbsp;&nbsp; Disember 2025</span></div>
                         </div>
 
                         <!-- JADUAL ATAS MAKLUMAT HEADER -->
                         <table class="perakuan-top-box">
                             <tr>
                                 <td style="width: 25%;">BAHAGIAN/AGENSI</td>
-                                <td style="width: 75%; font-weight: normal;">BAHAGIAN PENGURUSAN SUMBER MANUSIA (BPSM)</td>
+                                <td style="width: 75%; font-weight: normal;" id="doc_bahagian_agensi" contenteditable="true" oninput="autoSimpanKertasPerakuan()">BAHAGIAN PENGURUSAN SUMBER MANUSIA (BPSM)</td>
                             </tr>
                             <tr>
                                 <td>TAJUK</td>
-                                <td style="font-weight: normal;" id="doc_header_tajuk">-</td>
+                                <td style="font-weight: normal;" id="doc_header_tajuk" contenteditable="true" oninput="autoSimpanKertasPerakuan()">-</td>
                             </tr>
                             <tr>
                                 <td>TARIKH</td>
-                                <td style="font-weight: normal;" id="doc_header_tarikh">-</td>
+                                <td style="font-weight: normal;" id="doc_header_tarikh" contenteditable="true" oninput="autoSimpanKertasPerakuan()">-</td>
                             </tr>
                             <tr>
                                 <td>LOKASI</td>
-                                <td style="font-weight: normal;" id="doc_header_lokasi">-</td>
+                                <td style="font-weight: normal;" id="doc_header_lokasi" contenteditable="true" oninput="autoSimpanKertasPerakuan()">-</td>
                             </tr>
                         </table>
 
@@ -1214,7 +1223,7 @@
                             <tr>
                                 <td style="font-weight: bold;">1. OBJEKTIF</td>
                                 <td>
-                                    <div id="doc_objektif_list">-</div>
+                                    <div id="doc_objektif_list" contenteditable="true" oninput="autoSimpanKertasPerakuan()">-</div>
                                 </td>
                             </tr>
                             <tr>
@@ -1230,7 +1239,7 @@
                                             <td style="border-right: 1px solid #000; border-bottom: 1px solid #000; border-left: none;">
                                                 Peserta:<br><br>
                                                 <b>Jumlah Keseluruhan:</b><br>
-                                                <span id="doc_jumlah_peserta_all">0</span> orang
+                                                <span id="doc_jumlah_peserta_all" contenteditable="true" oninput="autoSimpanKertasPerakuan()">0</span> orang
                                             </td>
                                             <td style="border-right: 1px solid #000; border-bottom: 1px solid #000; padding: 0;">
                                                 <table style="width: 100%; border-collapse: collapse; font-size: 8.5pt;">
@@ -1245,7 +1254,7 @@
                                             </td>
                                             <td style="border-bottom: 1px solid #000; border-right: none;">
                                                 <u>Penceramah/ Fasilitator Penjawat Awam:</u><br>
-                                                <span id="doc_penceramah_text">-</span>
+                                                <span id="doc_penceramah_text" contenteditable="true" oninput="autoSimpanKertasPerakuan()">-</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -1253,8 +1262,8 @@
                                                 Sumber Peruntukan
                                             </td>
                                             <td colspan="2" style="border-bottom: none; border-right: none;">
-                                                <span id="doc_sumber_peruntukan">Peruntukan Belanja Mengurus BPSM</span><br>
-                                                <b>Baki:</b>
+                                                <span id="doc_sumber_peruntukan" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Peruntukan Belanja Mengurus BPSM</span><br>
+                                                <b>Baki:</b> <span id="doc_baki_peruntukan" contenteditable="true" oninput="autoSimpanKertasPerakuan()"></span>
                                             </td>
                                         </tr>
                                     </table>
@@ -1270,14 +1279,16 @@
                                     <table style="width: 100%; border-collapse: collapse; border: none;">
                                         <tr>
                                             <td style="width: 65%; border-right: 1px solid #000; border-bottom: none; border-left: none; border-top: none;">
-                                                <div id="doc_syor_text">
+                                                <div id="doc_syor_text" contenteditable="true" oninput="autoSimpanKertasPerakuan()">
                                                     (a) Mesyuarat Jawatankuasa Latihan telah bersetuju dengan pelaksanaan program ini.<br><br>
                                                     (b) Tuan dengan ini dimohon untuk mempertimbang dan memutuskan cadangan kos penganjuran program.
                                                 </div>
                                             </td>
                                             <td style="width: 35%; border-bottom: none; border-right: none; border-top: none; text-align: center; vertical-align: bottom; padding-bottom: 15px;">
-                                                <b>ROSLEEZAM BIN JAMAUDIN<br>KPSU(PSM)PO</b><br><br>
-                                                <b>Tarikh: &nbsp;&nbsp;&nbsp; Disember 2025</b>
+                                                <div id="doc_penyedia_text" contenteditable="true" oninput="autoSimpanKertasPerakuan()">
+                                                    <b>ROSLEEZAM BIN JAMAUDIN<br>KPSU(PSM)PO</b><br><br>
+                                                    <b>Tarikh: &nbsp;&nbsp;&nbsp; Disember 2025</b>
+                                                </div>
                                             </td>
                                         </tr>
                                     </table>
@@ -1289,8 +1300,8 @@
                         <div style="page-break-before: always; margin-top: 30px;"></div>
 
                         <div class="perakuan-header-info">
-                            <div>Rujukan: MOSTI.500-8/2/1 Jld. 18 ( &nbsp;&nbsp;&nbsp; )</div>
-                            <div>Tarikh: &nbsp;&nbsp;&nbsp;&nbsp; Disember 2025</div>
+                            <div>Rujukan: <span id="doc_rujukan_text_2" contenteditable="true" oninput="autoSimpanKertasPerakuan()">MOSTI.500-8/2/1 Jld. 18 ( &nbsp;&nbsp;&nbsp; )</span></div>
+                            <div>Tarikh: <span id="doc_tarikh_atas_text_2" contenteditable="true" oninput="autoSimpanKertasPerakuan()">&nbsp;&nbsp;&nbsp;&nbsp; Disember 2025</span></div>
                         </div>
 
                         <table class="perakuan-top-box">
@@ -1316,7 +1327,7 @@
                             SENARAI SEMAK PERMOHONAN MENGANJUR KURSUS/BENGKEL/SEMINAR
                         </div>
 
-                        <table class="perakuan-table">
+                        <table class="perakuan-table" id="doc_senarai_semak_table">
                             <thead>
                                 <tr style="font-weight: bold; text-align: center; background-color: #808080; color: #fff;">
                                     <td style="width: 6%;">Bil</td>
@@ -1326,14 +1337,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr><td style="text-align:center;">1</td><td>Kertas Cadangan/Pertimbangan <span style="color:red; font-weight:bold;">(wajib)</span></td><td style="text-align:center; font-weight:bold;">Ada</td><td style="text-align:center;">-</td></tr>
-                                <tr><td style="text-align:center;">2</td><td>Senarai Anggaran Kos <span style="color:red; font-weight:bold;">(wajib)</span></td><td style="text-align:center; font-weight:bold;">Ada</td><td style="text-align:center;">Lampiran B</td></tr>
-                                <tr><td style="text-align:center;">3</td><td>Senarai Bilangan Peserta <span style="color:red; font-weight:bold;">(wajib)</span></td><td style="text-align:center; font-weight:bold;">Ada</td><td style="text-align:center;">Lampiran A</td></tr>
-                                <tr><td style="text-align:center;">4</td><td>Jadual Bengkel dan Modul</td><td style="text-align:center; font-weight:bold;">Ada</td><td style="text-align:center;">Lampiran C</td></tr>
-                                <tr><td style="text-align:center;">5</td><td>Salinan Permohonan Tempat di ILA <span style="color:red; font-weight:bold;">(wajib)</span></td><td style="text-align:center; font-weight:bold;">Ada</td><td style="text-align:center;">-</td></tr>
-                                <tr><td style="text-align:center;">6</td><td>Jadual Bengkel dan Penceramah <span style="color:red; font-weight:bold;">(wajib)</span></td><td style="text-align:center; font-weight:bold;">Tidak Berkenaan</td><td style="text-align:center;">-</td></tr>
-                                <tr><td style="text-align:center;">7</td><td>Profil Syarikat</td><td style="text-align:center; font-weight:bold;">Tidak Berkenaan</td><td style="text-align:center;">-</td></tr>
-                                <tr><td style="text-align:center;">8</td><td>Sebutharga Pembekal / Brosur / Hotel</td><td style="text-align:center; font-weight:bold;">Ada</td><td style="text-align:center;">-</td></tr>
+                                <tr><td style="text-align:center;">1</td><td>Kertas Cadangan/Pertimbangan <span style="color:red; font-weight:bold;">(wajib)</span></td><td style="text-align:center; font-weight:bold;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Ada</td><td style="text-align:center;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">-</td></tr>
+                                <tr><td style="text-align:center;">2</td><td>Senarai Anggaran Kos <span style="color:red; font-weight:bold;">(wajib)</span></td><td style="text-align:center; font-weight:bold;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Ada</td><td style="text-align:center;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Lampiran B</td></tr>
+                                <tr><td style="text-align:center;">3</td><td>Senarai Bilangan Peserta <span style="color:red; font-weight:bold;">(wajib)</span></td><td style="text-align:center; font-weight:bold;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Ada</td><td style="text-align:center;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Lampiran A</td></tr>
+                                <tr><td style="text-align:center;">4</td><td>Jadual Bengkel dan Modul</td><td style="text-align:center; font-weight:bold;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Ada</td><td style="text-align:center;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Lampiran C</td></tr>
+                                <tr><td style="text-align:center;">5</td><td>Salinan Permohonan Tempat di ILA <span style="color:red; font-weight:bold;">(wajib)</span></td><td style="text-align:center; font-weight:bold;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Ada</td><td style="text-align:center;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">-</td></tr>
+                                <tr><td style="text-align:center;">6</td><td>Jadual Bengkel dan Penceramah <span style="color:red; font-weight:bold;">(wajib)</span></td><td style="text-align:center; font-weight:bold;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Tidak Berkenaan</td><td style="text-align:center;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">-</td></tr>
+                                <tr><td style="text-align:center;">7</td><td>Profil Syarikat</td><td style="text-align:center; font-weight:bold;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Tidak Berkenaan</td><td style="text-align:center;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">-</td></tr>
+                                <tr><td style="text-align:center;">8</td><td>Sebutharga Pembekal / Brosur / Hotel</td><td style="text-align:center; font-weight:bold;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Ada</td><td style="text-align:center;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">-</td></tr>
                             </tbody>
                         </table>
 
@@ -1514,6 +1525,53 @@
                 </div>
             </div>
 
+            <!-- TAB 3: FOLDER KERTAS PERAKUAN TERSIMPAN (MENGIKUT EMAIL ADMIN) -->
+            <div id="folder-perakuan-tab" class="tab-section">
+                <div class="gov-banner-header" style="background-color: #0c2847;">
+                    <i class="fa-solid fa-folder-open" style="color: #ef7c00; margin-right: 8px;"></i> FOLDER SIMPANAN KERTAS PERAKUAN
+                </div>
+
+                <div class="admin-card">
+                    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; background: #f1f5f9; padding: 12px 16px; border: 1px solid #cbd5e1; border-radius: 4px; margin-bottom: 18px;">
+                        <div>
+                            <div style="font-size: 0.88rem; color: #0c2847;">
+                                <i class="fa-solid fa-envelope" style="color: #ef7c00;"></i> <b>Akaun Admin Log Masuk:</b> <span id="folder-current-email">-</span>
+                            </div>
+                            <div style="font-size: 0.78rem; color: #475569; margin-top: 2px;">
+                                Semua Kertas Perakuan yang disimpan akan masuk ke dalam folder ini dan boleh dibuka semula pada bila-bila masa.
+                            </div>
+                        </div>
+                        <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
+                            <select id="folder-filter-mode" class="gov-input" style="width: auto; font-size: 0.82rem; padding: 6px 10px;" onchange="renderFolderKertasPerakuan()">
+                                <option value="mine">Kertas Saya Sahaja (Ikut E-mel Log Masuk)</option>
+                                <option value="all">Semua Kertas Perakuan Admin</option>
+                            </select>
+                            <input type="text" id="folder-search-input" class="gov-input" style="width: 200px; font-size: 0.82rem; padding: 6px 10px;" placeholder="Cari tajuk / e-mel..." oninput="renderFolderKertasPerakuan()">
+                        </div>
+                    </div>
+
+                    <div style="overflow-x: auto;">
+                        <table class="gov-data-table" id="jadual-folder-perakuan">
+                            <thead>
+                                <tr>
+                                    <th style="width: 40px;">Bil.</th>
+                                    <th>Tajuk Program / PPK</th>
+                                    <th style="width: 120px;">Tarikh PPK</th>
+                                    <th style="width: 110px;">Jumlah Kos (RM)</th>
+                                    <th style="width: 190px;">Disimpan Oleh (E-mel)</th>
+                                    <th style="width: 140px;">Masa Disimpan</th>
+                                    <th style="width: 130px;">Status</th>
+                                    <th style="width: 220px;">Tindakan</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-folder-perakuan">
+                                <!-- Dijana secara dinamik oleh renderFolderKertasPerakuan() -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </div>
 
@@ -1527,7 +1585,7 @@
         let signaturePad = null;
         let currentUser = null;
 
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             const storedUser = sessionStorage.getItem('user') || localStorage.getItem('user');
             if (storedUser) {
                 try {
@@ -1538,15 +1596,17 @@
             setupNavbar();
 
             loadApplications();
-            loadModuleData('maklumat_kursus');
-            loadModuleData('anggaran_kos');
-            loadModuleData('senarai_peserta');
-            loadModuleData('jadual_kadar');
-            loadModuleData('upload_dokumen');
+            await loadModuleData('maklumat_kursus');
+            await loadModuleData('anggaran_kos');
+            await loadModuleData('senarai_peserta');
+            await loadModuleData('jadual_kadar');
+            await loadModuleData('upload_dokumen');
 
             initSignaturePad();
+            await muatKertasPerakuanTersimpan();
             checkWorkflowStatus();
             setupAutoSaveListeners();
+            renderFolderKertasPerakuan();
 
             document.addEventListener('click', (e) => {
                 const dropdown = document.getElementById('userMenuDropdown');
@@ -1638,7 +1698,11 @@
             links.forEach(link => link.classList.remove('active'));
 
             document.getElementById(tabId).classList.add('active');
-            element.classList.add('active');
+            if (element) element.classList.add('active');
+
+            if (tabId === 'folder-perakuan-tab') {
+                renderFolderKertasPerakuan();
+            }
 
             if (tabId === 'perolehan-tab' && signaturePad) {
                 setTimeout(() => {
@@ -1651,7 +1715,12 @@
             }
         }
 
-        function switchSubTab(subTabId, element) {
+        function bukaFolderKertasPerakuan() {
+            const folderLink = document.querySelectorAll('.sidebar-link')[2];
+            switchTab('folder-perakuan-tab', folderLink);
+        }
+
+        async function switchSubTab(subTabId, element) {
             const subTabs = document.querySelectorAll('.sub-tab-content');
             subTabs.forEach(sub => sub.style.display = 'none');
 
@@ -1659,20 +1728,24 @@
             tabItems.forEach(item => item.classList.remove('active'));
 
             document.getElementById(subTabId).style.display = 'block';
-            element.classList.add('active');
+            if (element) element.classList.add('active');
 
             if (subTabId === 'sub-kertas-perakuan') {
                 janaKertasPerakuanRasmi();
+                await muatKertasPerakuanTersimpan();
+                checkWorkflowStatus();
             }
         }
 
         function hantarKePerolehan() {
+            simpanKertasPerakuan(false);
             const statusData = {
                 status: 'pending',
                 tarikhHantar: new Date().toLocaleString('ms-MY')
             };
             localStorage.setItem('kertas_perakuan_workflow', JSON.stringify(statusData));
-            alert('Kertas Perakuan telah berjaya dihantar ke Pegawai Pentadbir Perolehan untuk pengesahan!');
+            simpanKeFolderAdmin();
+            alert('Kertas Perakuan telah berjaya disimpan & dihantar ke Pegawai Pentadbir Perolehan untuk pengesahan!');
             checkWorkflowStatus();
         }
 
@@ -1707,6 +1780,8 @@
             alert('Kertas Perakuan telah berjaya disahkan dan di-tick pada petak Ulasan SUB(W) dan Keputusan PBM!');
 
             checkWorkflowStatus();
+            simpanKertasPerakuan(false);
+            simpanKeFolderAdmin();
 
             const latihanLink = document.querySelectorAll('.sidebar-link')[0];
             switchTab('latihan-tab', latihanLink);
@@ -1802,6 +1877,358 @@
             });
 
             localStorage.setItem(`admin_modul_${moduleName}`, JSON.stringify(dataObject));
+        }
+
+        /* ---------------- FUNGSI FOLDER SIMPANAN KERTAS PERAKUAN MENGIKUT EMAIL ADMIN ---------------- */
+        function getAdminEmailAktif() {
+            if (currentUser && currentUser.email) return currentUser.email.trim().toLowerCase();
+            if (currentUser && currentUser.emel) return currentUser.emel.trim().toLowerCase();
+            if (currentUser && currentUser.nama) return currentUser.nama.trim();
+            return 'admin@mosti.gov.my';
+        }
+
+        function simpanKeFolderAdmin() {
+            const adminEmail = getAdminEmailAktif();
+            const adminNama = (currentUser && currentUser.nama) ? currentUser.nama : adminEmail;
+            const tajuk = document.getElementById('auto_nama_ppk')?.value?.trim() || document.getElementById('doc_header_tajuk')?.innerText?.trim() || 'Kertas Perakuan Tanpa Tajuk';
+            const tarikhPPK = document.getElementById('doc_header_tarikh')?.innerText?.trim() || '-';
+            const lokasi = document.getElementById('doc_header_lokasi')?.innerText?.trim() || '-';
+            const jumlahKos = document.getElementById('kos_digenapkan')?.value || document.getElementById('auto_jumlah_kos')?.value || '0.00';
+
+            const workflowRaw = localStorage.getItem('kertas_perakuan_workflow');
+            let statusText = 'DRAFT';
+            if (workflowRaw) {
+                try {
+                    const wf = JSON.parse(workflowRaw);
+                    if (wf.status === 'pending') statusText = 'DALAM SEMAKAN';
+                    else if (wf.status === 'verified') statusText = 'DISAHKAN';
+                } catch(e) {}
+            }
+
+            const rekodId = (tajuk.toLowerCase().replace(/[^a-z0-9]/g, '_') || 'dokumen') + '__' + adminEmail;
+
+            const snapshotLengkap = {
+                id: rekodId,
+                adminEmail: adminEmail,
+                adminNama: adminNama,
+                tajuk: tajuk,
+                tarikhPPK: tarikhPPK,
+                lokasi: lokasi,
+                jumlahKos: jumlahKos,
+                status: statusText,
+                masaSimpan: new Date().toLocaleString('ms-MY'),
+                modulMaklumat: localStorage.getItem('admin_modul_maklumat_kursus') || '{}',
+                modulKos: localStorage.getItem('admin_modul_anggaran_kos') || '{}',
+                modulPeserta: localStorage.getItem('admin_modul_senarai_peserta') || '{}',
+                modulLokasi: localStorage.getItem('admin_modul_jadual_kadar') || '{}',
+                kertasPerakuan: localStorage.getItem('admin_kertas_perakuan_saved') || '{}',
+                workflow: workflowRaw || null
+            };
+
+            let folderSenarai = [];
+            try {
+                folderSenarai = JSON.parse(localStorage.getItem('admin_folder_kertas_perakuan') || '[]');
+            } catch (e) { folderSenarai = []; }
+
+            const existingIndex = folderSenarai.findIndex(item => item.id === rekodId);
+            if (existingIndex >= 0) {
+                folderSenarai[existingIndex] = snapshotLengkap;
+            } else {
+                folderSenarai.unshift(snapshotLengkap);
+            }
+
+            localStorage.setItem('admin_folder_kertas_perakuan', JSON.stringify(folderSenarai));
+            renderFolderKertasPerakuan();
+        }
+
+        function renderFolderKertasPerakuan() {
+            const adminEmail = getAdminEmailAktif();
+            const labelEmail = document.getElementById('folder-current-email');
+            if (labelEmail) labelEmail.innerText = adminEmail;
+
+            const tbody = document.getElementById('tbody-folder-perakuan');
+            if (!tbody) return;
+
+            let folderSenarai = [];
+            try {
+                folderSenarai = JSON.parse(localStorage.getItem('admin_folder_kertas_perakuan') || '[]');
+            } catch (e) { folderSenarai = []; }
+
+            const filterMode = document.getElementById('folder-filter-mode')?.value || 'mine';
+            const searchQuery = (document.getElementById('folder-search-input')?.value || '').toLowerCase().trim();
+
+            const ditapis = folderSenarai.filter(item => {
+                const matchOwner = (filterMode === 'all') || ((item.adminEmail || '').toLowerCase() === adminEmail.toLowerCase());
+                const matchSearch = !searchQuery ||
+                    (item.tajuk || '').toLowerCase().includes(searchQuery) ||
+                    (item.adminEmail || '').toLowerCase().includes(searchQuery) ||
+                    (item.lokasi || '').toLowerCase().includes(searchQuery);
+                return matchOwner && matchSearch;
+            });
+
+            if (ditapis.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" style="text-align: center; padding: 30px; color: #64748b;">
+                            <i class="fa-solid fa-folder-open" style="font-size: 2rem; color: #94a3b8; margin-bottom: 8px;"></i><br>
+                            Tiada Kertas Perakuan tersimpan di dalam folder untuk paparan ini.<br>
+                            <small>Sila pergi ke <b>Peg. Pentadbir Latihan &gt; Kertas Perakuan</b> dan klik butang <b>SIMPAN KERTAS PERAKUAN</b>.</small>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = ditapis.map((item, idx) => {
+                let badgeClass = 'badge-draft';
+                if (item.status === 'DALAM SEMAKAN') badgeClass = 'badge-pending';
+                if (item.status === 'DISAHKAN') badgeClass = 'badge-approved';
+
+                return `
+                    <tr>
+                        <td style="text-align: center;">${idx + 1}</td>
+                        <td style="font-weight: 600; color: #0c2847;">${item.tajuk}</td>
+                        <td style="text-align: center;">${item.tarikhPPK}</td>
+                        <td style="text-align: right; font-weight: 600;">${item.jumlahKos}</td>
+                        <td>
+                            <div style="font-weight: 500; color: #1e293b;">${item.adminEmail}</div>
+                            <div style="font-size: 0.75rem; color: #64748b;">${item.adminNama || ''}</div>
+                        </td>
+                        <td style="text-align: center; font-size: 0.8rem;">${item.masaSimpan}</td>
+                        <td style="text-align: center;"><span class="badge-status ${badgeClass}">${item.status}</span></td>
+                        <td style="text-align: center; white-space: nowrap;">
+                            <button type="button" class="gov-btn gov-btn-primary" style="padding: 5px 10px; font-size: 0.78rem;" onclick="bukaRekodDariFolder('${encodeURIComponent(item.id)}')">
+                                <i class="fa-solid fa-eye"></i> Buka
+                            </button>
+                            <button type="button" class="gov-btn" style="padding: 5px 10px; font-size: 0.78rem; color: #dc2626; border-color: #fca5a5;" onclick="padamRekodDariFolder('${encodeURIComponent(item.id)}')">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        async function bukaRekodDariFolder(encodedId) {
+            const rekodId = decodeURIComponent(encodedId);
+            let folderSenarai = [];
+            try {
+                folderSenarai = JSON.parse(localStorage.getItem('admin_folder_kertas_perakuan') || '[]');
+            } catch (e) { folderSenarai = []; }
+
+            const item = folderSenarai.find(x => x.id === rekodId);
+            if (!item) {
+                alert('Rekod Kertas Perakuan tidak dijumpai.');
+                return;
+            }
+
+            if (item.modulMaklumat) localStorage.setItem('admin_modul_maklumat_kursus', item.modulMaklumat);
+            if (item.modulKos) localStorage.setItem('admin_modul_anggaran_kos', item.modulKos);
+            if (item.modulPeserta) localStorage.setItem('admin_modul_senarai_peserta', item.modulPeserta);
+            if (item.modulLokasi) localStorage.setItem('admin_modul_jadual_kadar', item.modulLokasi);
+            if (item.kertasPerakuan) localStorage.setItem('admin_kertas_perakuan_saved', item.kertasPerakuan);
+            if (item.workflow) {
+                localStorage.setItem('kertas_perakuan_workflow', item.workflow);
+            } else {
+                localStorage.removeItem('kertas_perakuan_workflow');
+            }
+
+            await loadModuleData('maklumat_kursus');
+            await loadModuleData('anggaran_kos');
+            await loadModuleData('senarai_peserta');
+            await loadModuleData('jadual_kadar');
+            await muatKertasPerakuanTersimpan();
+            checkWorkflowStatus();
+
+            const latihanLink = document.querySelectorAll('.sidebar-link')[0];
+            switchTab('latihan-tab', latihanLink);
+            switchSubTab('sub-kertas-perakuan', document.querySelectorAll('.gov-tab-item')[5]);
+        }
+
+        function padamRekodDariFolder(encodedId) {
+            if (!confirm('Adakah anda pasti ingin memadam Kertas Perakuan ini daripada folder simpanan?')) return;
+            const rekodId = decodeURIComponent(encodedId);
+            let folderSenarai = [];
+            try {
+                folderSenarai = JSON.parse(localStorage.getItem('admin_folder_kertas_perakuan') || '[]');
+            } catch (e) { folderSenarai = []; }
+
+            folderSenarai = folderSenarai.filter(x => x.id !== rekodId);
+            localStorage.setItem('admin_folder_kertas_perakuan', JSON.stringify(folderSenarai));
+            renderFolderKertasPerakuan();
+        }
+
+        /* ---------------- FUNGSI SIMPAN & MUAT KERTAS PERAKUAN SUPAYA TAK HILANG ---------------- */
+        let autoSavePerakuanTimer = null;
+        function autoSimpanKertasPerakuan() {
+            clearTimeout(autoSavePerakuanTimer);
+            autoSavePerakuanTimer = setTimeout(() => {
+                simpanKertasPerakuan(false);
+            }, 400);
+        }
+
+        async function simpanKertasPerakuan(showAlert = true) {
+            const semakRows = [];
+            const semakTrs = document.querySelectorAll('#doc_senarai_semak_table tbody tr');
+            semakTrs.forEach(tr => {
+                if (tr.cells.length >= 4) {
+                    semakRows.push({
+                        status: tr.cells[2].innerHTML,
+                        catatan: tr.cells[3].innerHTML
+                    });
+                }
+            });
+
+            const kertasPerakuanData = {
+                rujukan: document.getElementById('doc_rujukan_text')?.innerHTML || '',
+                tarikhAtas: document.getElementById('doc_tarikh_atas_text')?.innerHTML || '',
+                rujukan2: document.getElementById('doc_rujukan_text_2')?.innerHTML || '',
+                tarikhAtas2: document.getElementById('doc_tarikh_atas_text_2')?.innerHTML || '',
+                bahagianAgensi: document.getElementById('doc_bahagian_agensi')?.innerHTML || '',
+                tajuk: document.getElementById('doc_header_tajuk')?.innerHTML || '',
+                tarikh: document.getElementById('doc_header_tarikh')?.innerHTML || '',
+                lokasi: document.getElementById('doc_header_lokasi')?.innerHTML || '',
+                objektifHtml: document.getElementById('doc_objektif_list')?.innerHTML || '',
+                jumlahPeserta: document.getElementById('doc_jumlah_peserta_all')?.innerHTML || '',
+                tbodyKosHtml: document.getElementById('doc_tbody_kos')?.innerHTML || '',
+                penceramahHtml: document.getElementById('doc_penceramah_text')?.innerHTML || '',
+                sumberPeruntukan: document.getElementById('doc_sumber_peruntukan')?.innerHTML || '',
+                bakiPeruntukan: document.getElementById('doc_baki_peruntukan')?.innerHTML || '',
+                syorHtml: document.getElementById('doc_syor_text')?.innerHTML || '',
+                penyediaHtml: document.getElementById('doc_penyedia_text')?.innerHTML || '',
+                senaraiSemak: semakRows,
+                workflow: localStorage.getItem('kertas_perakuan_workflow') || null,
+                masaSimpan: new Date().toLocaleString('ms-MY')
+            };
+
+            // Simpan kekal dalam localStorage
+            localStorage.setItem('admin_kertas_perakuan_saved', JSON.stringify(kertasPerakuanData));
+
+            // Juga simpan semua modul borang berkaitan supaya sentiasa selari
+            const forms = ['form-maklumat-kursus', 'form-anggaran-kos', 'form-senarai-peserta', 'form-jadual-kadar'];
+            forms.forEach(fid => {
+                const f = document.getElementById(fid);
+                if (f) saveToLocalStorage(f, fid.replace('form-', '').replace(/-/g, '_'));
+            });
+
+            // Simpan juga dalam Folder Kertas Perakuan mengikut e-mel admin
+            simpanKeFolderAdmin();
+
+            const infoEl = document.getElementById('kertas-perakuan-saved-info');
+            if (infoEl) {
+                infoEl.innerHTML = `<i class="fa-solid fa-circle-check"></i> Tersimpan di Folder (${getAdminEmailAktif()}) pada: ${kertasPerakuanData.masaSimpan}`;
+            }
+
+            // Cuba hantar ke API backend jika tersedia
+            try {
+                await fetch('/api/admin/latihan-modul/kertas_perakuan', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(kertasPerakuanData)
+                });
+            } catch (e) {
+                // Kekal selamat dalam localStorage walaupun offline/tiada server
+            }
+
+            if (showAlert) {
+                alert(`Kertas Perakuan berjaya disimpan ke dalam Folder Kertas Perakuan (${getAdminEmailAktif()})!`);
+            }
+        }
+
+        async function muatKertasPerakuanTersimpan() {
+            let savedData = null;
+
+            const localStr = localStorage.getItem('admin_kertas_perakuan_saved');
+            if (localStr) {
+                try {
+                    savedData = JSON.parse(localStr);
+                } catch (e) { console.error(e); }
+            }
+
+            if (!savedData) {
+                try {
+                    const res = await fetch('/api/admin/latihan-modul/kertas_perakuan');
+                    if (res.ok) {
+                        const apiData = await res.json();
+                        if (apiData && Object.keys(apiData).length > 0) {
+                            savedData = apiData;
+                            localStorage.setItem('admin_kertas_perakuan_saved', JSON.stringify(savedData));
+                        }
+                    }
+                } catch (e) {}
+            }
+
+            if (!savedData) return;
+
+            if (savedData.rujukan && document.getElementById('doc_rujukan_text')) {
+                document.getElementById('doc_rujukan_text').innerHTML = savedData.rujukan;
+            }
+            if (savedData.tarikhAtas && document.getElementById('doc_tarikh_atas_text')) {
+                document.getElementById('doc_tarikh_atas_text').innerHTML = savedData.tarikhAtas;
+            }
+            if (savedData.rujukan2 && document.getElementById('doc_rujukan_text_2')) {
+                document.getElementById('doc_rujukan_text_2').innerHTML = savedData.rujukan2;
+            }
+            if (savedData.tarikhAtas2 && document.getElementById('doc_tarikh_atas_text_2')) {
+                document.getElementById('doc_tarikh_atas_text_2').innerHTML = savedData.tarikhAtas2;
+            }
+            if (savedData.bahagianAgensi && document.getElementById('doc_bahagian_agensi')) {
+                document.getElementById('doc_bahagian_agensi').innerHTML = savedData.bahagianAgensi;
+            }
+            if (savedData.tajuk && savedData.tajuk !== '-') {
+                ['doc_header_tajuk', 'doc_header_tajuk_2', 'doc_header_tajuk_3'].forEach(id => {
+                    if (document.getElementById(id)) document.getElementById(id).innerHTML = savedData.tajuk;
+                });
+            }
+            if (savedData.tarikh && savedData.tarikh !== '-') {
+                ['doc_header_tarikh', 'doc_header_tarikh_2', 'doc_header_tarikh_3'].forEach(id => {
+                    if (document.getElementById(id)) document.getElementById(id).innerHTML = savedData.tarikh;
+                });
+            }
+            if (savedData.lokasi && savedData.lokasi !== '-') {
+                ['doc_header_lokasi', 'doc_header_lokasi_2', 'doc_header_lokasi_3'].forEach(id => {
+                    if (document.getElementById(id)) document.getElementById(id).innerHTML = savedData.lokasi;
+                });
+            }
+            if (savedData.objektifHtml && savedData.objektifHtml !== '-' && document.getElementById('doc_objektif_list')) {
+                document.getElementById('doc_objektif_list').innerHTML = savedData.objektifHtml;
+            }
+            if (savedData.jumlahPeserta && document.getElementById('doc_jumlah_peserta_all')) {
+                document.getElementById('doc_jumlah_peserta_all').innerHTML = savedData.jumlahPeserta;
+            }
+            if (savedData.tbodyKosHtml && document.getElementById('doc_tbody_kos')) {
+                document.getElementById('doc_tbody_kos').innerHTML = savedData.tbodyKosHtml;
+            }
+            if (savedData.penceramahHtml && savedData.penceramahHtml !== '-' && document.getElementById('doc_penceramah_text')) {
+                document.getElementById('doc_penceramah_text').innerHTML = savedData.penceramahHtml;
+            }
+            if (savedData.sumberPeruntukan && document.getElementById('doc_sumber_peruntukan')) {
+                document.getElementById('doc_sumber_peruntukan').innerHTML = savedData.sumberPeruntukan;
+            }
+            if (savedData.bakiPeruntukan !== undefined && document.getElementById('doc_baki_peruntukan')) {
+                document.getElementById('doc_baki_peruntukan').innerHTML = savedData.bakiPeruntukan;
+            }
+            if (savedData.syorHtml && document.getElementById('doc_syor_text')) {
+                document.getElementById('doc_syor_text').innerHTML = savedData.syorHtml;
+            }
+            if (savedData.penyediaHtml && document.getElementById('doc_penyedia_text')) {
+                document.getElementById('doc_penyedia_text').innerHTML = savedData.penyediaHtml;
+            }
+            if (Array.isArray(savedData.senaraiSemak)) {
+                const semakTrs = document.querySelectorAll('#doc_senarai_semak_table tbody tr');
+                savedData.senaraiSemak.forEach((item, idx) => {
+                    if (semakTrs[idx] && semakTrs[idx].cells.length >= 4) {
+                        semakTrs[idx].cells[2].innerHTML = item.status;
+                        semakTrs[idx].cells[3].innerHTML = item.catatan;
+                    }
+                });
+            }
+            if (savedData.workflow && !localStorage.getItem('kertas_perakuan_workflow')) {
+                localStorage.setItem('kertas_perakuan_workflow', savedData.workflow);
+            }
+            if (savedData.masaSimpan && document.getElementById('kertas-perakuan-saved-info')) {
+                document.getElementById('kertas-perakuan-saved-info').innerHTML = `<i class="fa-solid fa-circle-check"></i> Tersimpan di Folder (${getAdminEmailAktif()}) pada: ${savedData.masaSimpan}`;
+            }
         }
 
         function kiraKosPeserta() {
@@ -1989,6 +2416,8 @@
                     (b) ${syorText}
                 `;
             }
+
+            autoSimpanKertasPerakuan();
         }
 
         function janaWordBPSM() {
@@ -2255,6 +2684,27 @@
             saveToLocalStorage(document.getElementById('form-maklumat-kursus'), 'maklumat_kursus');
         }
 
+        function renderKosTable(perihalList, rmList) {
+            const tbody = document.getElementById('tbody-kos-perihal');
+            if (!tbody || !perihalList || perihalList.length === 0) return;
+            tbody.innerHTML = '';
+
+            perihalList.forEach((perihal, idx) => {
+                const rmVal = (rmList && rmList[idx] !== undefined) ? rmList[idx] : '0.00';
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="text-align: center;"><input type="checkbox" class="kos-check"></td>
+                    <td>
+                        <input type="text" name="kos_perihal[]" class="gov-input input-kos-perihal" style="max-width: 100%; font-weight: bold;" value="${perihal}" placeholder="Perihal Bayaran..." oninput="janaKertasPerakuanRasmi(); saveToLocalStorage(document.getElementById('form-anggaran-kos'), 'anggaran_kos');">
+                    </td>
+                    <td style="text-align: right; vertical-align: bottom;">
+                        <input type="number" step="0.01" name="kos_rm[]" class="gov-input class-kos-rm" style="text-align: right; width: 100%;" value="${rmVal}" oninput="kiraKosKeseluruhan(); saveToLocalStorage(document.getElementById('form-anggaran-kos'), 'anggaran_kos');">
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
         function tambahPerihalKos() {
             const tbody = document.getElementById('tbody-kos-perihal');
             const tr = document.createElement('tr');
@@ -2283,6 +2733,34 @@
             checkboxes.forEach(cb => cb.closest('tr').remove());
             kiraKosKeseluruhan();
             saveToLocalStorage(document.getElementById('form-anggaran-kos'), 'anggaran_kos');
+        }
+
+        function renderPesertaTable(data) {
+            const tbody = document.querySelector('#jadual-peserta-kadar tbody');
+            if (!tbody || !data.peserta_nama || !Array.isArray(data.peserta_nama) || data.peserta_nama.length === 0) return;
+            tbody.innerHTML = '';
+
+            data.peserta_nama.forEach((nama, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="text-align: center;"><input type="checkbox" class="peserta-check"></td>
+                    <td style="text-align: center;">${idx + 1}</td>
+                    <td><input type="text" name="peserta_nama[]" class="gov-input" style="width: 100%;" value="${nama || ''}" placeholder="Nama Peserta"></td>
+                    <td><input type="text" name="peserta_jabatan[]" class="gov-input" style="width: 100%;" value="${data.peserta_jabatan?.[idx] || ''}" placeholder="Jabatan / Agensi"></td>
+                    <td><input type="text" name="peserta_gred[]" class="gov-input" style="width: 100%; text-align: center;" value="${data.peserta_gred?.[idx] || ''}" placeholder="Gred"></td>
+                    <td><input type="number" step="0.01" name="peserta_emakan[]" class="gov-input" style="width: 100%; text-align: right;" value="${data.peserta_emakan?.[idx] || '0.00'}" oninput="kiraKosPeserta()"></td>
+                    <td><input type="number" step="0.01" name="peserta_ehotel[]" class="gov-input" style="width: 100%; text-align: right;" value="${data.peserta_ehotel?.[idx] || '0.00'}" oninput="kiraKosPeserta()"></td>
+                    <td><input type="number" step="0.01" name="peserta_sst[]" class="gov-input" style="width: 100%; text-align: right;" value="${data.peserta_sst?.[idx] || '0.00'}" oninput="kiraKosPeserta()"></td>
+                    <td><input type="number" step="0.01" name="peserta_jkelayakan[]" class="gov-input" style="width: 100%; text-align: right; background-color:#f1f5f9;" value="0.00" readonly></td>
+                    <td><input type="number" name="peserta_malam[]" class="gov-input" style="width: 100%; text-align: center;" value="${data.peserta_malam?.[idx] || '0'}" oninput="kiraKosPeserta()"></td>
+                    <td><input type="number" step="0.01" name="peserta_jkelayakan3malam[]" class="gov-input" style="width: 100%; text-align: right; background-color:#f1f5f9;" value="0.00" readonly></td>
+                    <td><input type="text" name="peserta_bilik[]" class="gov-input" style="width: 100%; text-align: center;" value="${data.peserta_bilik?.[idx] || ''}" placeholder="Single/Twin"></td>
+                    <td><input type="number" step="0.01" name="peserta_pakej[]" class="gov-input" style="width: 100%; text-align: right;" value="${data.peserta_pakej?.[idx] || '0.00'}" oninput="kiraKosPeserta()"></td>
+                    <td><input type="number" name="peserta_hotelxday[]" class="gov-input" style="width: 100%; text-align: center;" value="${data.peserta_hotelxday?.[idx] || '0'}" oninput="kiraKosPeserta()"></td>
+                    <td><input type="number" step="0.01" name="peserta_jtawaran[]" class="gov-input class-peserta-jtawaran" style="width: 100%; text-align: right; background-color:#f1f5f9;" value="0.00" readonly></td>
+                `;
+                tbody.appendChild(tr);
+            });
         }
 
         function tambahPesertaBaris() {
@@ -2380,8 +2858,16 @@
                     }
                 }
 
+                if (moduleName === 'anggaran_kos' && data.kos_perihal && Array.isArray(data.kos_perihal)) {
+                    renderKosTable(data.kos_perihal, data.kos_rm);
+                }
+
+                if (moduleName === 'senarai_peserta' && data.peserta_nama && Array.isArray(data.peserta_nama)) {
+                    renderPesertaTable(data);
+                }
+
                 Object.keys(data).forEach(key => {
-                    if (key === 'objektif' || key.startsWith('urusetia_')) return;
+                    if (key === 'objektif' || key.startsWith('urusetia_') || key === 'kos_perihal' || key === 'kos_rm' || key.startsWith('peserta_')) return;
 
                     const inputs = document.querySelectorAll(`[name="${key}"], [name="${key}[]"]`);
                     if (inputs.length > 0) {
@@ -2411,6 +2897,7 @@
             event.preventDefault();
             const form = event.target;
             saveToLocalStorage(form, moduleName);
+            simpanKertasPerakuan(false);
 
             const formData = new FormData(form);
             const dataObject = {};

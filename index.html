@@ -17,22 +17,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* ASAS FONT KORPORAT NIPIS */
         body, button, input, select, textarea {
             font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif !important;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* HEADER DUA BARIS */
         .navbar-header-container {
-            background-color: #0c2847 !important; /* Warna biru gelap */
+            background-color: #0c2847 !important;
             border-bottom: 1px solid #002b58;
             position: sticky;
             top: 0;
             z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
         }
 
-        /* BARIS ATAS: LOGO (KIRI) & LINK PROFIL/LOG MASUK (KANAN) */
         .header-top-row {
             display: flex;
             justify-content: space-between;
@@ -89,11 +87,31 @@
         .header-top-right {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             font-size: 0.85rem;
         }
 
-        /* BARIS BAWAH: NAVIGASI UTAMA DI BAWAH LOGO */
+        /* Butang Hamburger (Sembunyi pada Desktop) */
+        .mobile-hamburger-btn {
+            display: none;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+            width: 38px;
+            height: 38px;
+            border-radius: 6px;
+            font-size: 1.15rem;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .mobile-hamburger-btn:hover {
+            background: #ef7c00;
+            border-color: #ef7c00;
+        }
+
         .header-bottom-nav {
             display: flex;
             justify-content: space-between;
@@ -115,7 +133,7 @@
             color: #334155;
             text-decoration: none;
             font-size: 0.9rem;
-            font-weight: 300;
+            font-weight: 400;
             padding: 12px 0;
             display: inline-block;
             transition: all 0.2s ease;
@@ -124,7 +142,7 @@
 
         .nav-links-sub a:hover, .nav-links-sub a.active {
             color: #003d7c;
-            font-weight: 400;
+            font-weight: 600;
         }
 
         .nav-links-sub a.active::after, .nav-links-sub a:hover::after {
@@ -137,7 +155,6 @@
             background-color: #ef7c00;
         }
 
-        /* BAR CARIAN DI NAV BARIS BAWAH */
         .nav-search-box {
             display: flex;
             align-items: center;
@@ -178,7 +195,6 @@
             color: #003d7c;
         }
 
-        /* HERO SECTION */
         .hero {
             position: relative;
             min-height: 80vh;
@@ -194,6 +210,7 @@
         .hero-content {
             margin-top: 0 !important;
             transform: translateY(-10px);
+            padding: 0 16px;
         }
 
         .hero-content h1 {
@@ -221,7 +238,6 @@
             gap: 16px;
         }
 
-        /* BUTANG HERO KIRI & KANAN TERTRANSPARAN (PETAK KOTAK & TULISAN PUTIH) */
         .btn-hero-box {
             background: transparent !important;
             color: #ffffff !important;
@@ -245,7 +261,6 @@
             transform: translateY(-3px);
         }
 
-        /* BUTANG UTAMA UMUM (UNTUK BAHAGIAN LAIN) */
         .btn-modern-primary {
             background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
             color: #ffffff !important;
@@ -268,7 +283,6 @@
             background: linear-gradient(135deg, #0369a1 0%, #075985 100%) !important;
         }
 
-        /* REKA BENTUK KAD KURSUS NUS */
         .cards-grid-fixed {
             display: flex !important;
             flex-wrap: wrap !important;
@@ -404,7 +418,23 @@
 
         .btn-nus-outline:hover {
             background: #101010 !important;
-            color: #1e293b !important;
+            color: #ffffff !important;
+        }
+
+        .btn-nus-closed {
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            align-self: center;
+            border: 1.5px solid #dc2626 !important;
+            color: #dc2626 !important;
+            background: #fee2e2 !important;
+            padding: 8px 24px !important;
+            font-size: 0.85rem !important;
+            font-weight: 600 !important;
+            border-radius: 0px !important;
+            cursor: not-allowed !important;
         }
 
         .nus-style-footer {
@@ -495,7 +525,7 @@
         }
 
         .nus-footer-links a:hover {
-            color: #10135b;
+            color: #ffffff;
             text-decoration: underline;
         }
 
@@ -534,6 +564,8 @@
             border-bottom: 2px solid #e2e8f0;
             padding-bottom: 12px;
             margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         .admin-badge {
             background: #dc2626;
@@ -595,7 +627,7 @@
         .admin-controls-card {
             margin-top: 15px;
             padding-top: 15px;
-            border-top: 1px dashed rgba(255,255,255,0.3);
+            border-top: 1px dashed rgba(0,0,0,0.15);
             display: flex;
             justify-content: center;
             gap: 10px;
@@ -637,8 +669,6 @@
             max-width: 1000px;
             margin: 0 auto;
         }
-        
-        /* FONT TAJUK CARIAN KURSUS SAMA JUGA */
         .dtims-search-title {
             font-family: 'Plus Jakarta Sans', sans-serif !important;
             font-size: 1.8rem !important;
@@ -646,7 +676,6 @@
             margin-bottom: 20px;
             color: #ffffff;
         }
-        
         .dtims-input-group {
             margin-bottom: 12px;
         }
@@ -660,7 +689,6 @@
             outline: none;
             background-color: #ffffff;
         }
-        
         .dtims-select-dropdown {
             width: 100%;
             padding: 10px 14px;
@@ -673,12 +701,10 @@
             cursor: pointer;
             box-sizing: border-box;
         }
-        
         .dtims-select-dropdown option {
             padding: 8px;
             font-size: 13px;
         }
-
         .btn-dtims-search {
             background-color: #2563eb;
             color: #ffffff;
@@ -736,7 +762,7 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.15);
             border-radius: 8px;
             overflow: hidden;
-            z-index: 1000;
+            z-index: 1001;
             border: 1px solid #e2e8f0;
         }
         .dropdown-menu.show {
@@ -817,7 +843,6 @@
             font-size: 0.8rem;
         }
 
-        /* BAHAGIAN ABOUT SECTION MODEN NUS-STYLE */
         .content-section {
             padding: 60px 20px;
         }
@@ -836,7 +861,6 @@
             flex: 1 1 450px;
         }
 
-        /* PENEPATAN KESELURUHAN FONT TAJUK (MENGENAI MOSTI, KURSUS AKAN DATANG TERKINI, HUBUNGI KAMI) */
         .about-title-large, 
         .section-title h2, 
         .nus-footer-title {
@@ -846,10 +870,6 @@
             color: #0c2847 !important;
             margin: 0 0 20px 0 !important;
             letter-spacing: -0.5px !important;
-        }
-
-        .nus-footer-title {
-            font-size: 1.6rem !important;
         }
 
         .about-desc-text {
@@ -949,146 +969,304 @@
             line-height: 1.4;
         }
 
+        /* =========================================================
+           SUSUNAN RESPONSIF MOBILE (<= 768px) - SAIZ LEBIH KOMPAK
+           ========================================================= */
         @media screen and (max-width: 768px) {
             .header-top-row {
-                padding: 10px 18px !important;
+                padding: 7px 12px !important;
+                gap: 6px;
             }
-            .header-bottom-nav {
-                padding: 0 18px !important;
-                overflow-x: auto;
+            .logo {
+                gap: 7px !important;
+                max-width: 70%;
             }
             .logo-img {
-                height: 32px !important;
+                height: 26px !important;
+                flex-shrink: 0;
             }
-            .header-subtitle, .header-english-title, .header-tagline {
-                font-size: 0.55rem !important;
+            .header-title-group {
+                padding-left: 7px !important;
+                line-height: 1.1 !important;
+                overflow: hidden;
             }
+            .header-subtitle {
+                font-size: 0.45rem !important;
+            }
+            .header-english-title {
+                font-size: 0.48rem !important;
+                line-height: 1.15;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            .header-tagline {
+                font-size: 0.42rem !important;
+            }
+
+            .header-top-right {
+                gap: 8px !important;
+            }
+
+            /* Butang Hamburger lebih kecil */
+            .mobile-hamburger-btn {
+                display: flex !important;
+                width: 30px !important;
+                height: 30px !important;
+                font-size: 0.95rem !important;
+                border-radius: 5px !important;
+            }
+
+            /* Avatar pengguna lebih kecil */
+            .user-avatar-small {
+                width: 24px !important;
+                height: 24px !important;
+            }
+            .user-dropdown-btn span {
+                display: none;
+            }
+            .user-dropdown-btn {
+                padding: 2px !important;
+                gap: 4px !important;
+            }
+
+            /* Menu Dropdown Mobile lebih padat */
+            .header-bottom-nav {
+                display: none;
+                flex-direction: column !important;
+                align-items: stretch !important;
+                padding: 10px 14px 14px 14px !important;
+                background-color: #ffffff;
+                border-top: 1px solid #e2e8f0;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+                gap: 10px;
+            }
+            .header-bottom-nav.mobile-open {
+                display: flex !important;
+                animation: slideDownNav 0.2s ease-out;
+            }
+
+            @keyframes slideDownNav {
+                from { opacity: 0; transform: translateY(-6px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+
             .nav-links-sub {
-                gap: 15px !important;
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 2px !important;
+                width: 100%;
+            }
+            .nav-links-sub li {
+                width: 100%;
+                border-bottom: 1px solid #f1f5f9;
+            }
+            .nav-links-sub li:last-child {
+                border-bottom: none;
             }
             .nav-links-sub a {
-                font-size: 0.8rem !important;
-                padding: 10px 0 !important;
+                display: flex !important;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+                font-size: 0.84rem !important;
+                padding: 8px 4px !important;
+                box-sizing: border-box;
+            }
+            .nav-links-sub a.active::after, .nav-links-sub a:hover::after {
+                display: none;
+            }
+            .nav-links-sub a.active {
+                background-color: #f8fafc;
+                border-left: 3px solid #ef7c00;
+                padding-left: 10px !important;
             }
 
+            /* Kotak carian slim dalam menu mobile */
+            .nav-search-box {
+                width: 100% !important;
+                box-sizing: border-box;
+                padding: 5px 10px !important;
+                border-radius: 6px !important;
+            }
+            .nav-search-box input {
+                width: 100% !important;
+                font-size: 0.82rem !important;
+            }
+
+            /* Hero Section Mobile lebih ringkas */
             .hero {
-                padding-top: 40px !important;
+                padding-top: 35px !important;
+                min-height: 62vh !important;
             }
-            
             .hero-badge {
-                display: inline-block !important;
-                font-size: 0.75rem !important;
-                padding: 5px 14px !important;
+                font-size: 0.68rem !important;
+                padding: 4px 10px !important;
+            }
+            .hero-content h1 {
+                font-size: 1.38rem !important;
+                line-height: 1.28 !important;
+                margin-bottom: 10px !important;
+            }
+            .hero-content p {
+                font-size: 0.82rem !important;
+                line-height: 1.45 !important;
                 margin-bottom: 18px !important;
-                border-radius: 20px !important;
-                letter-spacing: 0.5px !important;
-            }
-
-            .hero h1 {
-                font-size: 1.75rem !important;
-                line-height: 1.3 !important;
-                margin-bottom: 14px !important;
-            }
-
-            .hero p {
-                font-size: 0.9rem !important;
-                line-height: 1.5 !important;
-                margin-bottom: 25px !important;
-                max-width: 90% !important;
+                max-width: 92% !important;
                 margin-left: auto !important;
                 margin-right: auto !important;
-                opacity: 0.95 !important;
             }
-
             .hero-buttons {
                 display: flex !important;
                 flex-direction: column !important;
-                gap: 12px !important;
+                gap: 8px !important;
                 width: 100% !important;
-                max-width: 290px !important;
+                max-width: 240px !important;
                 margin: 0 auto !important;
             }
-
             .hero-buttons .btn-hero-box {
                 width: 100% !important;
                 box-sizing: border-box !important;
                 text-align: center !important;
-                padding: 12px 18px !important;
-                font-size: 0.88rem !important;
+                padding: 9px 14px !important;
+                font-size: 0.8rem !important;
                 margin: 0 !important;
                 display: flex !important;
                 align-items: center !important;
                 justify-content: center !important;
-                gap: 8px !important;
+                gap: 6px !important;
             }
 
-            .scroll-down-indicator {
-                margin-top: 30px !important;
-                font-size: 0.75rem !important;
-                opacity: 0.8 !important;
-            }
-
+            /* Carian Kursus & Seksyen Kandungan lebih padat */
             .dtims-search-section {
-                padding: 28px 18px !important;
+                padding: 24px 14px !important;
             }
             .dtims-search-title {
-                font-size: 1.25rem !important;
-                margin-bottom: 15px !important;
+                font-size: 1.3rem !important;
+                margin-bottom: 14px !important;
             }
             .dtims-input, .dtims-select-dropdown {
-                padding: 10px 12px !important;
-                font-size: 13.5px !important;
+                padding: 8px 10px !important;
+                font-size: 0.82rem !important;
             }
             .btn-dtims-search {
-                width: 100% !important;
-                justify-content: center !important;
-                padding: 11px !important;
+                padding: 8px 18px !important;
+                font-size: 0.82rem !important;
             }
 
             .content-section {
-                padding: 30px 18px !important;
+                padding: 30px 14px !important;
+            }
+            .about-title-large, .section-title h2, .nus-footer-title {
+                font-size: 1.28rem !important;
+                margin-bottom: 12px !important;
+            }
+            .about-desc-text {
+                font-size: 0.88rem !important;
+                line-height: 1.5 !important;
+            }
+            .stats-mini-grid {
+                gap: 10px !important;
+                margin-top: 16px !important;
+            }
+            .stat-box {
+                padding: 10px 12px !important;
+            }
+            .stat-box h4 {
+                font-size: 1.25rem !important;
+            }
+            .stat-box p {
+                font-size: 0.75rem !important;
             }
 
+            /* Kad Kursus Mobile */
             .cards-grid-fixed .card {
                 flex: 0 0 100% !important;
                 max-width: 100% !important;
+                min-width: 100% !important;
             }
-            
+            .card-img-wrapper {
+                height: 200px !important;
+            }
+            .card-body-nus {
+                padding: 20px 16px 24px 16px !important;
+            }
+            .card-title-nus {
+                font-size: 1.15rem !important;
+                margin-bottom: 10px !important;
+            }
+            .card-desc-nus {
+                font-size: 0.82rem !important;
+                margin-bottom: 16px !important;
+            }
+            .card-meta-nus {
+                font-size: 0.78rem !important;
+                gap: 10px !important;
+                margin-bottom: 16px !important;
+                padding-top: 12px !important;
+            }
+            .btn-nus-outline, .btn-nus-closed {
+                padding: 7px 20px !important;
+                font-size: 0.8rem !important;
+            }
+
             .editor-form-grid {
                 grid-template-columns: 1fr !important;
             }
             .editor-form-grid .full-width {
                 grid-column: span 1 !important;
             }
-
-            .scroll-top-btn {
-                right: 15px;
+            .date-picker-group {
+                flex-direction: column;
+                align-items: stretch;
             }
-
             .about-modern-container {
                 flex-direction: column;
-                gap: 25px;
+                gap: 20px;
             }
-
-            .about-title-large, .section-title h2, .nus-footer-title {
-                font-size: 1.8rem !important;
+            .about-modern-left, .about-modern-right {
+                flex: 1 1 100% !important;
+                width: 100%;
             }
-
             .about-features-card {
-                padding: 15px 20px;
+                padding: 12px 16px !important;
+            }
+            .feature-item-row {
+                padding: 14px 0 !important;
+                gap: 12px !important;
+            }
+            .feature-icon-check {
+                font-size: 1.1rem !important;
+            }
+            .feature-text-content {
+                font-size: 0.88rem !important;
             }
 
-            .feature-text-content {
-                font-size: 1rem;
+            /* Footer Mobile */
+            .nus-style-footer {
+                padding: 35px 14px 25px 14px !important;
+            }
+            .nus-footer-info {
+                font-size: 0.82rem !important;
+                margin-bottom: 20px !important;
+            }
+            .nus-footer-bottom {
+                font-size: 0.75rem !important;
+                padding: 15px 12px !important;
+            }
+            .scroll-top-btn {
+                position: static;
+                margin: 12px auto 0 auto;
+                width: 30px !important;
+                height: 30px !important;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- CONTAINER HEADER DUA BARIS -->
     <header class="navbar-header-container">
-        <!-- BARIS ATAS: LOGO MOSTI & PERANAN/LOG MASUK USER -->
         <div class="header-top-row">
             <a href="index.html" class="logo">
                 <img src="logo.png" alt="Logo Portal Kursus MOSTI" class="logo-img">
@@ -1103,24 +1281,26 @@
                 <span id="user-nav-container">
                     <a href="login.html" style="color: #ffffff; text-decoration: none; font-size: 0.85rem;"><i class="fa-solid fa-user"></i> Log Masuk</a>
                 </span>
+                <!-- Butang Hamburger Mobile -->
+                <button type="button" id="mobile-menu-btn" class="mobile-hamburger-btn" onclick="toggleMobileNav()" aria-label="Buka Menu Navigasi" aria-expanded="false">
+                    <i class="fa-solid fa-bars" id="hamburger-icon"></i>
+                </button>
             </div>
         </div>
 
-        <!-- BARIS BAWAH: NAVIGASI UTAMA DI BAWAH LOGO & BAR CARIAN -->
-        <div class="header-bottom-nav">
+        <div class="header-bottom-nav" id="mobile-nav-drawer">
             <nav>
                 <ul class="nav-links-sub" id="nav-links">
-                    <li><a href="index.html" class="active">Utama</a></li>
-                    <li><a href="iklan.html">Jenis & Iklan Kursus</a></li>
-                    <li><a href="takwim.html">Takwim Kursus</a></li>
-                    <li><a href="mohon.html">Mohon Kursus</a></li>
-                    <li><a href="#contact-section">Hubungi Kami</a></li>
+                    <li><a href="index.html" class="active" onclick="closeMobileNav()">Utama</a></li>
+                    <li><a href="iklan.html" onclick="closeMobileNav()">Jenis & Iklan Kursus</a></li>
+                    <li><a href="takwim.html" onclick="closeMobileNav()">Takwim Kursus</a></li>
+                    <li><a href="mohon.html" onclick="closeMobileNav()">Mohon Kursus</a></li>
+                    <li><a href="#contact-section" onclick="closeMobileNav()">Hubungi Kami</a></li>
                 </ul>
             </nav>
             
-            <!-- BAR CARIAN DI NAV BARIS BAWAH -->
             <div class="nav-search-box">
-                <input type="text" id="top-nav-search-input" placeholder="Cari di sini..." onkeypress="if(event.key === 'Enter') handleNavSearch()">
+                <input type="text" id="top-nav-search-input" placeholder="Cari kursus di sini..." onkeypress="if(event.key === 'Enter') handleNavSearch()">
                 <button type="button" onclick="handleNavSearch()" title="Cari">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
@@ -1128,7 +1308,6 @@
         </div>
     </header>
 
-    <!-- HERO SECTION -->
     <section id="hero-section" class="hero">
         <div class="hero-overlay"></div>
         <div class="hero-content">
@@ -1149,7 +1328,6 @@
         </a>
     </section>
 
-    <!-- BAHAGIAN PENGURUSAN PERMOHONAN KHAS UNTUK ADMIN -->
     <section id="admin-applications-section" class="content-section" style="display: none; background-color: #f8fafc;">
         <div class="container">
             <div class="admin-editor-panel" style="border-color: #dc2626;">
@@ -1176,16 +1354,13 @@
                                 <th>Tindakan Admin</th>
                             </tr>
                         </thead>
-                        <tbody id="adminApplicationsTableBody">
-                            <!-- Data Permohonan Dimuatkan Secara Dinamik -->
-                        </tbody>
+                        <tbody id="adminApplicationsTableBody"></tbody>
                     </table>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CARIAN KURSUS -->
     <section class="dtims-search-section">
         <div class="dtims-search-container">
             <h2 class="dtims-search-title">Carian Kursus</h2>
@@ -1223,17 +1398,14 @@
         </div>
     </section>
 
-    <!-- ABOUT SECTION -->
     <section id="about-section" class="content-section" style="background-color: #fcfcfc;">
         <div class="about-modern-container">
-            <!-- KANDUNGAN KIRI -->
             <div class="about-modern-left">
                 <h2 class="about-title-large">Mengenai MOSTI</h2>
                 <p class="about-desc-text">
                     Kementerian Sains, Teknologi dan Inovasi (MOSTI) ialah kementerian di bawah Kerajaan Malaysia yang bertanggungjawab menerajui pembangunan sains, teknologi, inovasi (STI) dan ekonomi (STIE).
                 </p>
 
-                <!-- STATISTIK BILANGAN -->
                 <div class="stats-mini-grid">
                     <div class="stat-box">
                         <h4 id="stat-kursus">1</h4>
@@ -1259,7 +1431,6 @@
                 </div>
             </div>
 
-            <!-- KANDUNGAN KANAN -->
             <div class="about-modern-right">
                 <div class="about-features-card">
                     <div class="feature-item-row">
@@ -1279,7 +1450,6 @@
         </div>
     </section>
 
-    <!-- KURSUS AKAN DATANG TERKINI -->
     <section id="services-section" class="content-section bg-light">
         <div class="container">
             <div class="section-title">
@@ -1287,11 +1457,15 @@
                 <p style="margin-top: 10px;">Sertai program latihan, bengkel, dan majlis rasmi terkini yang dianjurkan oleh MOSTI.</p>
             </div>
 
-            <!-- PANEL MODE EDITOR ADMIN -->
             <div id="admin-editor-section" class="admin-editor-panel" style="display: none;">
                 <div class="admin-editor-header">
                     <h3><i class="fa-solid fa-pen-to-square"></i> Mode Editor Admin (Tambah / Edit Kursus)</h3>
-                    <span class="admin-badge"><i class="fa-solid fa-user-shield"></i> Akses Admin</span>
+                    <div>
+                        <a href="edit_kursus.html" class="btn-admin-save" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; margin-right: 8px; background-color: #f59e0b;">
+                            <i class="fa-solid fa-list-check"></i> Edit Semua Kursus
+                        </a>
+                        <span class="admin-badge"><i class="fa-solid fa-user-shield"></i> Akses Admin</span>
+                    </div>
                 </div>
                 <form id="admin-course-form" onsubmit="handleAdminSaveCourse(event)">
                     <input type="hidden" id="editor-course-id">
@@ -1344,6 +1518,11 @@
                             <input type="text" id="editor-tempat" class="editor-input" placeholder="Contoh: Dewan Perhimpunan MOSTI" required>
                         </div>
 
+                        <div>
+                            <label for="editor-tarikh-tutup">Tarikh Tutup Permohonan</label>
+                            <input type="date" id="editor-tarikh-tutup" class="editor-input" required>
+                        </div>
+
                         <div class="full-width">
                             <label for="editor-penerangan">Penerangan Ringkas</label>
                             <textarea id="editor-penerangan" class="editor-input" style="height: 70px;" placeholder="Penerangan ringkas kursus..." required></textarea>
@@ -1382,18 +1561,15 @@
                 </form>
             </div>
 
-            <!-- KONTENA FLEX GRID KAD NUS SEBIJI SEPERTI RUJUKAN -->
-            <div class="cards-grid-fixed" id="courses-container">
-                <!-- Data Admin Dimuat Secara Dinamik -->
-            </div>
+            <div class="cards-grid-fixed" id="courses-container"></div>
 
-            <div style="text-align: center; margin-top: 40px;">
+            <div style="text-align: center; margin-top: 40px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
                 <a href="iklan.html" class="btn-modern-primary" style="background: #003d7c !important;"><i class="fa-solid fa-list"></i> Lihat Semua Kursus Di Iklan</a>
+                <a href="edit_kursus.html" id="btn-edit-semua-kursus" class="btn-modern-primary" style="background: #f59e0b !important; display: none;"><i class="fa-solid fa-pen-to-square"></i> Edit Semua Kursus</a>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER / HUBUNGI KAMI GAYA NUS -->
     <footer id="contact-section">
         <div class="nus-style-footer">
             <h2 class="nus-footer-title">Hubungi Kami</h2>
@@ -1433,7 +1609,6 @@
         </div>
     </footer>
 
-    <!-- PAUTAN PADA FAIL SCRIPT.JS -->
     <script src="script.js"></script>
 
     <script>
@@ -1468,16 +1643,54 @@
                 loadDashboardStats();
             }
 
+            // Tutup dropdown user & menu mobile jika klik di luar kawasan
             document.addEventListener('click', (e) => {
                 const dropdown = document.getElementById('userMenuDropdown');
                 const btn = document.getElementById('userMenuBtn');
                 if (dropdown && btn && !btn.contains(e.target) && !dropdown.contains(e.target)) {
                     dropdown.classList.remove('show');
                 }
+
+                const navDrawer = document.getElementById('mobile-nav-drawer');
+                const hamburgerBtn = document.getElementById('mobile-menu-btn');
+                if (navDrawer && hamburgerBtn && navDrawer.classList.contains('mobile-open')) {
+                    if (!navDrawer.contains(e.target) && !hamburgerBtn.contains(e.target)) {
+                        closeMobileNav();
+                    }
+                }
             });
         });
 
-        /* FUNGSI CARIAN BAR NAVIGASI TOP */
+        // Fungsi Buka/Tutup Menu Hamburger Mobile
+        function toggleMobileNav() {
+            const navDrawer = document.getElementById('mobile-nav-drawer');
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+            const hamburgerBtn = document.getElementById('mobile-menu-btn');
+            if (!navDrawer) return;
+
+            const isOpen = navDrawer.classList.toggle('mobile-open');
+            hamburgerBtn.setAttribute('aria-expanded', isOpen);
+            if (isOpen) {
+                hamburgerIcon.classList.remove('fa-bars');
+                hamburgerIcon.classList.add('fa-xmark');
+            } else {
+                hamburgerIcon.classList.remove('fa-xmark');
+                hamburgerIcon.classList.add('fa-bars');
+            }
+        }
+
+        function closeMobileNav() {
+            const navDrawer = document.getElementById('mobile-nav-drawer');
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+            const hamburgerBtn = document.getElementById('mobile-menu-btn');
+            if (navDrawer && navDrawer.classList.contains('mobile-open')) {
+                navDrawer.classList.remove('mobile-open');
+                hamburgerBtn.setAttribute('aria-expanded', 'false');
+                hamburgerIcon.classList.remove('fa-xmark');
+                hamburgerIcon.classList.add('fa-bars');
+            }
+        }
+
         function handleNavSearch() {
             const inputVal = document.getElementById('top-nav-search-input').value.trim();
             if (inputVal) {
@@ -1529,13 +1742,16 @@
         function checkAdminMode() {
             const adminSection = document.getElementById('admin-editor-section');
             const adminAppSection = document.getElementById('admin-applications-section');
+            const btnEditSemua = document.getElementById('btn-edit-semua-kursus');
             if (currentUser && currentUser.role === 'admin') {
                 if (adminSection) adminSection.style.display = 'block';
                 if (adminAppSection) adminAppSection.style.display = 'block';
+                if (btnEditSemua) btnEditSemua.style.display = 'inline-flex';
                 loadAllUserApplicationsForAdmin();
             } else {
                 if (adminSection) adminSection.style.display = 'none';
                 if (adminAppSection) adminAppSection.style.display = 'none';
+                if (btnEditSemua) btnEditSemua.style.display = 'none';
             }
         }
 
@@ -1652,6 +1868,54 @@
             }
         }
 
+        function parseMalayOrIsoDate(dateStr) {
+            if (!dateStr) return null;
+            const str = String(dateStr).trim();
+
+            const isoMatch = str.match(/^(\d{4})-(\d{2})-(\d{2})/);
+            if (isoMatch) {
+                return new Date(Number(isoMatch[1]), Number(isoMatch[2]) - 1, Number(isoMatch[3]), 0, 0, 0, 0);
+            }
+
+            const dmyMatch = str.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
+            if (dmyMatch) {
+                return new Date(Number(dmyMatch[3]), Number(dmyMatch[2]) - 1, Number(dmyMatch[1]), 0, 0, 0, 0);
+            }
+
+            const bulanMap = {
+                januari: 0, februari: 1, mac: 2, april: 3, mei: 4, jun: 5,
+                julai: 6, ogos: 7, september: 8, oktober: 9, november: 10, disember: 11
+            };
+            const textMatch = str.toLowerCase().match(/(\d{1,2})\s+(januari|februari|mac|april|mei|jun|julai|ogos|september|oktober|november|disember)\s+(\d{4})/);
+            if (textMatch) {
+                return new Date(Number(textMatch[3]), bulanMap[textMatch[2]], Number(textMatch[1]), 0, 0, 0, 0);
+            }
+
+            return null;
+        }
+
+        function isCourseClosed(courseOrDate) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            if (typeof courseOrDate === 'string') {
+                const d = parseMalayOrIsoDate(courseOrDate);
+                return d ? today >= d : false;
+            }
+
+            if (courseOrDate && typeof courseOrDate === 'object') {
+                if (courseOrDate.tarikh_tutup) {
+                    const closeDate = parseMalayOrIsoDate(courseOrDate.tarikh_tutup);
+                    if (closeDate && today >= closeDate) return true;
+                }
+                if (courseOrDate.tarikh) {
+                    const eventDate = parseMalayOrIsoDate(courseOrDate.tarikh);
+                    if (eventDate && today > eventDate) return true;
+                }
+            }
+            return false;
+        }
+
         function renderCoursesToUI(coursesList) {
             const container = document.getElementById('courses-container');
             if (!container) return;
@@ -1680,11 +1944,20 @@
 
                 const courseImg = item.gambar_url || 'logo.png';
                 const descText = item.penerangan || 'Penerangan lanjut bagi program latihan dan kemahiran yang ditawarkan oleh MOSTI.';
+                const closed = isCourseClosed(item);
+                const parsedClose = parseMalayOrIsoDate(item.tarikh_tutup);
+                const tarikhTutupPaparan = parsedClose 
+                    ? parsedClose.toLocaleDateString('ms-MY', { day: 'numeric', month: 'short', year: 'numeric' }) 
+                    : '-';
+
+                const applyActionBtn = closed
+                    ? `<button type="button" class="btn-nus-closed" disabled title="Permohonan sudah ditutup"><i class="fa-solid fa-lock"></i> Permohonan Ditutup</button>`
+                    : `<a href="mohon.html?kursus=${encodeURIComponent(item.tajuk)}" class="btn-nus-outline">Mohon</a>`;
 
                 const cardHTML = `
                     <div class="card">
                         <div class="card-img-wrapper">
-                            <span class="badge-nus">TERKINI</span>
+                            <span class="badge-nus" style="${closed ? 'background-color: #dc2626;' : ''}">${closed ? 'DITUTUP' : 'TERKINI'}</span>
                             <img src="${courseImg}" alt="${item.tajuk}">
                         </div>
                         <div class="card-body-nus">
@@ -1695,10 +1968,11 @@
                                     <span><i class="fa-regular fa-calendar"></i> ${item.tarikh || '-'}</span>
                                     <span><i class="fa-solid fa-location-dot"></i> ${item.tempat || '-'}</span>
                                     <span><i class="fa-regular fa-clock"></i> ${item.masa || '-'}</span>
+                                    <span style="color: #dc2626; font-weight: 600;">Tutup: ${tarikhTutupPaparan}</span>
                                 </div>
                             </div>
                             <div>
-                                <a href="mohon.html?kursus=${encodeURIComponent(item.tajuk)}" class="btn-nus-outline">Mohon</a>
+                                ${applyActionBtn}
                                 ${adminControls}
                             </div>
                         </div>
@@ -1743,38 +2017,16 @@
         }
 
         function goToIklanPageWithSearch() {
-            const keyword = document.getElementById('dtims-keyword').value.trim().toLowerCase();
+            const keyword = document.getElementById('dtims-keyword').value.trim();
             const bidang = document.getElementById('dtims-bidang-select').value.trim();
 
-            const matchedCourse = allCurrentCourses.find(course => {
-                const matchesBidang = bidang ? (course.bidang && course.bidang.toUpperCase() === bidang.toUpperCase()) : true;
-                const matchesKeyword = keyword ? (
-                    (course.tajuk && course.tajuk.toLowerCase().includes(keyword)) ||
-                    (course.penerangan && course.penerangan.toLowerCase().includes(keyword))
-                ) : true;
-
-                return matchesBidang && matchesKeyword;
-            });
-
-            if (matchedCourse) {
-                if (matchedCourse.id) {
-                    window.location.href = `maklumat_lanjut.html?id=${encodeURIComponent(matchedCourse.id)}&kursus=${encodeURIComponent(matchedCourse.tajuk)}`;
-                } else {
-                    window.location.href = `maklumat_lanjut.html?kursus=${encodeURIComponent(matchedCourse.tajuk)}`;
-                }
-            } else {
-                let targetUrl = 'iklan.html';
+            if (bidang || keyword) {
                 const params = new URLSearchParams();
-
-                if (keyword) params.append('keyword', keyword);
                 if (bidang) params.append('bidang', bidang);
-
-                const queryString = params.toString();
-                if (queryString) {
-                    targetUrl += '?' + queryString;
-                }
-
-                window.location.href = targetUrl;
+                if (keyword) params.append('keyword', keyword);
+                window.location.href = `maklumat_lanjut.html?${params.toString()}`;
+            } else {
+                window.location.href = 'iklan.html';
             }
         }
 
@@ -1788,6 +2040,7 @@
             const dateTamatVal = document.getElementById('editor-tarikh-tamat').value;
             const masa = document.getElementById('editor-masa').value.trim();
             const tempat = document.getElementById('editor-tempat').value.trim();
+            const tarikh_tutup = document.getElementById('editor-tarikh-tutup').value;
             const penerangan = document.getElementById('editor-penerangan').value.trim();
             const objektif = document.getElementById('editor-objektif').value.trim();
             const penyelaras_nama = document.getElementById('editor-penyelaras-nama').value.trim();
@@ -1803,6 +2056,7 @@
                 tarikh, 
                 tarikh_mula: dateMulaVal,
                 tarikh_tamat: dateTamatVal,
+                tarikh_tutup,
                 masa, 
                 tempat, 
                 penerangan, 
@@ -1844,6 +2098,7 @@
             document.getElementById('editor-tarikh-tamat').value = item.tarikh_tamat || '';
             document.getElementById('editor-masa').value = item.masa || '';
             document.getElementById('editor-tempat').value = item.tempat || '';
+            document.getElementById('editor-tarikh-tutup').value = item.tarikh_tutup || '';
             document.getElementById('editor-penerangan').value = item.penerangan || '';
             document.getElementById('editor-objektif').value = item.objektif || '';
             document.getElementById('editor-penyelaras-nama').value = item.penyelaras_nama || '';

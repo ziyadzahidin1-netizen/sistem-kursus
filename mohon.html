@@ -17,22 +17,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* ASAS FONT KORPORAT NIPIS */
         body, button, input, select, textarea {
             font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif !important;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* HEADER DUA BARIS (SAMA MACAM INDEX.HTML) */
         .navbar-header-container {
-            background-color: #0c2847 !important; /* Warna biru gelap */
+            background-color: #0c2847 !important;
             border-bottom: 1px solid #002b58;
             position: sticky;
             top: 0;
             z-index: 1000;
         }
 
-        /* BARIS ATAS: LOGO (KIRI) & LINK PROFIL/LOG MASUK (KANAN) */
         .header-top-row {
             display: flex;
             justify-content: space-between;
@@ -93,7 +90,6 @@
             font-size: 0.85rem;
         }
 
-        /* BARIS BAWAH: NAVIGASI UTAMA DI BAWAH LOGO */
         .header-bottom-nav {
             display: flex;
             justify-content: space-between;
@@ -137,7 +133,6 @@
             background-color: #ef7c00;
         }
 
-        /* BAR CARIAN DI NAV BARIS BAWAH */
         .nav-search-box {
             display: flex;
             align-items: center;
@@ -178,7 +173,6 @@
             color: #003d7c;
         }
 
-        /* USER DROPDOWN SAMA MACAM INDEX */
         .user-dropdown-container {
             position: relative;
             display: inline-block;
@@ -251,7 +245,6 @@
             background-color: #fef2f2;
         }
 
-        /* MAIN LAYOUT - STIL MINIMALIS NUS (FULL DESKTOP) */
         .auth-wrapper {
             max-width: 1280px;
             margin: 50px auto 80px auto;
@@ -287,7 +280,25 @@
             font-weight: 300;
         }
 
-        /* FORM GRID & INPUT STYLING */
+        .closed-notice-banner {
+            display: none;
+            background-color: #fef2f2;
+            border: 1px solid #f87171;
+            border-left: 5px solid #dc2626;
+            color: #991b1b;
+            padding: 16px 20px;
+            border-radius: 4px;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .closed-notice-banner i {
+            font-size: 1.3rem;
+            color: #dc2626;
+        }
+
         .form-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -359,7 +370,6 @@
             color: #0c2847;
         }
 
-        /* CUSTOM SELECT ARROW */
         .input-icon-wrapper select {
             background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%3a64748b' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
             background-repeat: no-repeat;
@@ -368,7 +378,6 @@
             padding-right: 40px;
         }
 
-        /* SUBMIT BUTTON */
         .btn-submit {
             background-color: #0c2847;
             color: #ffffff;
@@ -394,8 +403,10 @@
         }
 
         .btn-submit:disabled {
-            background-color: #94a3b8;
+            background-color: #dc2626;
+            color: #ffffff;
             cursor: not-allowed;
+            opacity: 0.85;
         }
 
         @media screen and (max-width: 768px) {
@@ -424,9 +435,7 @@
 </head>
 <body>
 
-    <!-- CONTAINER HEADER DUA BARIS -->
     <header class="navbar-header-container">
-        <!-- BARIS ATAS: LOGO MOSTI & PERANAN/LOG MASUK USER -->
         <div class="header-top-row">
             <a href="index.html" class="logo">
                 <img src="logo.png" alt="Logo Portal Kursus MOSTI" class="logo-img">
@@ -444,7 +453,6 @@
             </div>
         </div>
 
-        <!-- BARIS BAWAH: NAVIGASI UTAMA DI BAWAH LOGO & BAR CARIAN -->
         <div class="header-bottom-nav">
             <nav>
                 <ul class="nav-links-sub" id="nav-links">
@@ -456,7 +464,6 @@
                 </ul>
             </nav>
             
-            <!-- BAR CARIAN DI NAV BARIS BAWAH -->
             <div class="nav-search-box">
                 <input type="text" id="top-nav-search-input" placeholder="Cari di sini..." onkeypress="if(event.key === 'Enter') handleNavSearch()">
                 <button type="button" onclick="handleNavSearch()" title="Cari">
@@ -466,12 +473,19 @@
         </div>
     </header>
 
-    <!-- Main Container Permohonan - Full Desktop Box -->
     <main class="auth-wrapper">
         <div class="auth-card permohonan-card">
             <div class="auth-header">
                 <h2>Borang Permohonan Kursus</h2>
                 <p>Maklumat anda diisi secara automatik berdasarkan akaun anda</p>
+            </div>
+
+            <div id="closed-notice-banner" class="closed-notice-banner">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <div>
+                    <strong>Permohonan sudah ditutup.</strong>
+                    <span id="closed-notice-detail">Tarikh tutup permohonan bagi kursus ini telah tamat. Sila pilih kursus lain yang masih dibuka.</span>
+                </div>
             </div>
 
             <form id="courseForm" onsubmit="handleApply(event)" class="form-grid">
@@ -492,11 +506,19 @@
                     </div>
                 </div>
 
-                <div class="form-group full-width">
+                <div class="form-group">
                     <label for="app-email">Alamat E-mel</label>
                     <div class="input-icon-wrapper">
                         <i class="fa-solid fa-envelope"></i>
                         <input type="email" id="app-email" readonly placeholder="E-mel">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="app-penyelia-email">E-mel Penyelia</label>
+                    <div class="input-icon-wrapper">
+                        <i class="fa-solid fa-envelope-open-text"></i>
+                        <input type="email" id="app-penyelia-email" placeholder="Contoh: penyelia@mosti.gov.my" required>
                     </div>
                 </div>
 
@@ -596,7 +618,7 @@
                     <label for="course-select">Pilih Kursus Permohonan</label>
                     <div class="input-icon-wrapper">
                         <i class="fa-solid fa-graduation-cap"></i>
-                        <select id="course-select" required>
+                        <select id="course-select" onchange="checkSelectedCourseStatus(true)" required>
                             <option value="">-- Sila Pilih Kursus --</option>
                         </select>
                     </div>
@@ -614,6 +636,7 @@
     <script src="script.js"></script>
     <script>
         let currentUser = null;
+        let allCoursesData = [];
 
         document.addEventListener('DOMContentLoaded', () => {
             const storedUser = sessionStorage.getItem('user') || localStorage.getItem('user');
@@ -647,7 +670,6 @@
             });
         });
 
-        /* FUNGSI CARIAN BAR NAVIGASI TOP */
         function handleNavSearch() {
             const inputVal = document.getElementById('top-nav-search-input').value.trim();
             if (inputVal) {
@@ -696,6 +718,86 @@
             window.location.href = 'login.html';
         }
 
+        function parseMalayOrIsoDate(dateStr) {
+            if (!dateStr) return null;
+            const str = String(dateStr).trim();
+
+            const isoMatch = str.match(/^(\d{4})-(\d{2})-(\d{2})/);
+            if (isoMatch) {
+                return new Date(Number(isoMatch[1]), Number(isoMatch[2]) - 1, Number(isoMatch[3]), 0, 0, 0, 0);
+            }
+
+            const dmyMatch = str.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
+            if (dmyMatch) {
+                return new Date(Number(dmyMatch[3]), Number(dmyMatch[2]) - 1, Number(dmyMatch[1]), 0, 0, 0, 0);
+            }
+
+            const bulanMap = {
+                januari: 0, februari: 1, mac: 2, april: 3, mei: 4, jun: 5,
+                julai: 6, ogos: 7, september: 8, oktober: 9, november: 10, disember: 11
+            };
+            const textMatch = str.toLowerCase().match(/(\d{1,2})\s+(januari|februari|mac|april|mei|jun|julai|ogos|september|oktober|november|disember)\s+(\d{4})/);
+            if (textMatch) {
+                return new Date(Number(textMatch[3]), bulanMap[textMatch[2]], Number(textMatch[1]), 0, 0, 0, 0);
+            }
+
+            return null;
+        }
+
+        function isCourseClosed(courseOrDate) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            if (typeof courseOrDate === 'string') {
+                const d = parseMalayOrIsoDate(courseOrDate);
+                return d ? today >= d : false;
+            }
+
+            if (courseOrDate && typeof courseOrDate === 'object') {
+                if (courseOrDate.tarikh_tutup) {
+                    const closeDate = parseMalayOrIsoDate(courseOrDate.tarikh_tutup);
+                    if (closeDate && today >= closeDate) return true;
+                }
+                if (courseOrDate.tarikh) {
+                    const eventDate = parseMalayOrIsoDate(courseOrDate.tarikh);
+                    if (eventDate && today > eventDate) return true;
+                }
+            }
+            return false;
+        }
+
+        function checkSelectedCourseStatus(showPopupAlert = true) {
+            const selectEl = document.getElementById('course-select');
+            const bannerEl = document.getElementById('closed-notice-banner');
+            const detailEl = document.getElementById('closed-notice-detail');
+            const btnSubmit = document.getElementById('btn-submit');
+
+            const selectedTitle = selectEl.value;
+            const courseObj = allCoursesData.find(c => (c.tajuk || c.title) === selectedTitle);
+
+            if (courseObj && isCourseClosed(courseObj)) {
+                const parsedClose = parseMalayOrIsoDate(courseObj.tarikh_tutup || courseObj.tarikh);
+                const formattedClose = parsedClose 
+                    ? parsedClose.toLocaleDateString('ms-MY', { day: 'numeric', month: 'long', year: 'numeric' })
+                    : (courseObj.tarikh_tutup || courseObj.tarikh);
+
+                detailEl.textContent = ` Tarikh tutup permohonan bagi "${selectedTitle}" (${formattedClose}) telah tamat.`;
+                bannerEl.style.display = 'flex';
+                btnSubmit.disabled = true;
+                btnSubmit.innerHTML = '<i class="fa-solid fa-lock"></i> Permohonan Sudah Ditutup';
+
+                if (showPopupAlert) {
+                    alert('Permohonan sudah ditutup.');
+                }
+                return true;
+            } else {
+                bannerEl.style.display = 'none';
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = 'Hantar Permohonan <i class="fa-solid fa-paper-plane"></i>';
+                return false;
+            }
+        }
+
         async function loadAdminCoursesDropdown() {
             const selectEl = document.getElementById('course-select');
             if (!selectEl) return;
@@ -706,8 +808,15 @@
                 const response = await fetch('/api/kursus');
                 if (response.ok) {
                     customCourses = await response.json();
+                } else {
+                    customCourses = JSON.parse(localStorage.getItem('custom_courses')) || [];
                 }
-            } catch (e) { console.warn('Gagal muat dari API server', e); }
+            } catch (e) { 
+                console.warn('Gagal muat dari API server', e);
+                customCourses = JSON.parse(localStorage.getItem('custom_courses')) || [];
+            }
+
+            allCoursesData = customCourses;
 
             if (customCourses.length > 0) {
                 const addedTitles = new Set();
@@ -715,9 +824,11 @@
                     const title = item.tajuk || item.title;
                     if (title && !addedTitles.has(title)) {
                         addedTitles.add(title);
+                        const closed = isCourseClosed(item);
                         const opt = document.createElement('option');
                         opt.value = title;
-                        opt.textContent = title;
+                        opt.textContent = closed ? `${title} (Permohonan Ditutup)` : title;
+                        if (closed) opt.disabled = true;
                         selectEl.appendChild(opt);
                     }
                 });
@@ -727,6 +838,7 @@
             const selectedParam = urlParams.get('kursus');
             if (selectedParam) {
                 selectEl.value = decodeURIComponent(selectedParam);
+                checkSelectedCourseStatus(true);
             }
         }
 
@@ -747,6 +859,10 @@
         async function handleApply(e) {
             e.preventDefault();
 
+            if (checkSelectedCourseStatus(true)) {
+                return;
+            }
+
             const btnSubmit = document.getElementById('btn-submit');
             btnSubmit.disabled = true;
             btnSubmit.innerHTML = 'Menghantar Permohonan... <i class="fa-solid fa-spinner fa-spin"></i>';
@@ -758,6 +874,7 @@
                 nama: document.getElementById('app-name').value,
                 ic: icVal,
                 email: document.getElementById('app-email').value,
+                emel_penyelia: document.getElementById('app-penyelia-email').value,
                 jawatan: document.getElementById('app-jawatan').value,
                 gred: document.getElementById('app-gred').value,
                 jabatan: document.getElementById('app-jabatan').value,
@@ -766,7 +883,6 @@
                 kursus: kursusVal
             };
 
-            // Simpan secara tempatan (Local Storage Backup)
             try {
                 let allGlobalApps = JSON.parse(localStorage.getItem('all_global_applications')) || [];
                 const newAppObj = {
@@ -776,6 +892,7 @@
                     nama_pemohon: formData.nama,
                     nama: formData.nama,
                     email: formData.email,
+                    emel_penyelia: formData.emel_penyelia,
                     jawatan: formData.jawatan,
                     gred: formData.gred,
                     jabatan: formData.jabatan,
@@ -796,7 +913,6 @@
                 localStorage.setItem('user_applications_' + icVal, JSON.stringify(userApps));
             } catch(err) { console.error("Ralat LocalStorage:", err); }
 
-            // Hantar ke Backend API
             try {
                 const response = await fetch('/api/mohon', {
                     method: 'POST',

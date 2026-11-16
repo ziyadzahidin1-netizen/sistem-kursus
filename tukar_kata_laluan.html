@@ -65,6 +65,10 @@
         .btn-change-pwd:hover {
             background-color: #1d4ed8;
         }
+        .btn-change-pwd:disabled {
+            background-color: #94a3b8;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -89,6 +93,9 @@
                 <div class="form-group-custom">
                     <label for="oldPwd">Kata Laluan Semasa</label>
                     <input type="password" id="oldPwd" class="form-input-custom" required placeholder="Masukkan kata laluan semasa">
+                    <div style="text-align: right; margin-top: 6px;">
+                        <a href="reset_password.html" style="font-size: 0.85rem; color: #2563eb; text-decoration: none;">Lupa kata laluan semasa? Hantar pautan ke e-mel</a>
+                    </div>
                 </div>
                 <div class="form-group-custom">
                     <label for="newPwd">Kata Laluan Baharu</label>
@@ -98,24 +105,59 @@
                     <label for="confirmPwd">Sahkan Kata Laluan Baharu</label>
                     <input type="password" id="confirmPwd" class="form-input-custom" required minlength="6" placeholder="Ulang kata laluan baharu">
                 </div>
-                <button type="submit" class="btn-change-pwd"><i class="fa-solid fa-check"></i> Kemaskini Kata Laluan</button>
+                <button type="submit" id="btn-submit" class="btn-change-pwd"><i class="fa-solid fa-check"></i> Kemaskini Kata Laluan</button>
             </form>
         </div>
     </div>
 
     <script>
-        function handleChangePassword(e) {
+        async function handleChangePassword(e) {
             e.preventDefault();
-            const newPwd = document.getElementById('newPwd').value;
+            const oldPassword = document.getElementById('oldPwd').value;
+            const newPassword = document.getElementById('newPwd').value;
             const confirmPwd = document.getElementById('confirmPwd').value;
+            const btn = document.getElementById('btn-submit');
 
-            if (newPwd !== confirmPwd) {
+            if (newPassword !== confirmPwd) {
                 alert('Ralat: Kata laluan baharu dan pengesahan kata laluan tidak padan!');
                 return;
             }
 
-            alert('Kata laluan anda berjaya dikemaskini!');
-            window.location.href = 'user_dashboard.html';
+            const userData = localStorage.getItem('user') || sessionStorage.getItem('user');
+            if (!userData) {
+                alert('Sesi tamat. Sila log masuk semula.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const user = JSON.parse(userData);
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengemaskini...';
+
+            try {
+                const res = await fetch('/api/change-password', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: user.email,
+                        oldPassword,
+                        newPassword
+                    })
+                });
+                const data = await res.json();
+
+                if (res.ok) {
+                    alert(data.message);
+                    window.location.href = 'user_dashboard.html';
+                } else {
+                    alert('Ralat: ' + (data.error || 'Gagal mengemas kini kata laluan.'));
+                }
+            } catch (err) {
+                alert('Ralat sambungan ke server: ' + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> Kemaskini Kata Laluan';
+            }
         }
     </script>
 </body>

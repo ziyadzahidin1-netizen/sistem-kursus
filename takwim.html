@@ -268,7 +268,6 @@
             padding: 0 20px;
         }
 
-        /* PENEPATAN KESELURUHAN FONT TAJUK SEBIJI INDEX.HTML */
         .about-title-large, 
         .section-title h2, 
         .nus-footer-title,
@@ -288,15 +287,38 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
 
+        /* DROPDOWN PILIHAN BULAN & TAHUN DI KALENDAR */
+        .calendar-date-selector-group {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .calendar-select-dropdown {
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            font-size: 1.05rem !important;
+            font-weight: 600 !important;
+            color: #0c2847;
+            background-color: #ffffff;
+            border: 1px solid #cbd5e1;
+            padding: 6px 12px;
+            cursor: pointer;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .calendar-select-dropdown:hover,
+        .calendar-select-dropdown:focus {
+            border-color: #0c2847;
+            box-shadow: 0 0 0 3px rgba(12, 40, 71, 0.1);
+        }
+
         /* FULLCALENDAR */
         .fc {
             font-family: 'Plus Jakarta Sans', sans-serif !important;
         }
         .fc .fc-toolbar-title {
-            font-size: 1.25rem !important;
-            font-weight: 600 !important;
-            color: #0c2847;
-            letter-spacing: -0.3px;
+            display: none !important; /* Sembunyikan tajuk statik asal kerana diganti dropdown */
         }
         .fc .fc-button-primary {
             background-color: #0c2847 !important;
@@ -350,6 +372,10 @@
             }
             .page-title {
                 font-size: 1.8rem !important;
+            }
+            .calendar-select-dropdown {
+                font-size: 0.9rem !important;
+                padding: 5px 8px;
             }
         }
     </style>
@@ -411,8 +437,14 @@
     <!-- Script Inisialisasi Kalendar Dinamik -->
     <script>
         let currentUser = null;
+        let calendar = null;
 
-        document.addEventListener('DOMContentLoaded', function() {
+        const BULAN_MELAYU = [
+            "Januari", "Februari", "Mac", "April", "Mei", "Jun",
+            "Julai", "Ogos", "September", "Oktober", "November", "Disember"
+        ];
+
+        document.addEventListener('DOMContentLoaded', async function() {
             const storedUser = sessionStorage.getItem('user') || localStorage.getItem('user');
             if (storedUser) {
                 try {
@@ -433,14 +465,15 @@
 
             setupNavbar();
 
-            var calendarEl = document.getElementById('calendar');
+            const calendarEl = document.getElementById('calendar');
+            const todayIso = new Date().toISOString().split('T')[0];
 
-            var calendar = new FullCalendar.Calendar(calendarEl, {
+            calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
-                initialDate: '2026-01-01',
+                initialDate: todayIso,
                 locale: 'ms',
                 headerToolbar: {
-                    left: 'title',
+                    left: '', // Dikosongkan untuk diisi dengan Dropdown Bulan & Tahun
                     center: '',
                     right: 'today prev,next'
                 },
@@ -448,22 +481,38 @@
                     today: 'Hari Ini'
                 },
                 dayHeaderFormat: { weekday: 'short' },
-                events: getCoursesAsCalendarEvents(),
+                events: await fetchAndFormatCalendarEvents(),
+                datesSet: function(dateInfo) {
+                    // Segerakkan nilai dropdown setiap kali tarikh kalendar berubah
+                    syncDropdownWithCalendar(dateInfo.view.currentStart);
+                },
                 eventClick: function(info) {
                     if (info.event.url) {
                         window.location.href = info.event.url;
                         info.jsEvent.preventDefault();
+                    }
+                },
+                eventDidMount: function(info) {
+                    const tempat = info.event.extendedProps.tempat;
+                    const masa = info.event.extendedProps.masa;
+                    if (tempat || masa) {
+                        info.el.title = `${info.event.title}\nTempat: ${tempat || '-'}\nMasa: ${masa || '-'}`;
                     }
                 }
             });
 
             calendar.render();
 
-            // Kemaskini automatik sekiranya admin menambah/memadam kursus dari tab lain
-            window.addEventListener('storage', function(e) {
+            // Bina Dropdown Bulan & Tahun di bahagian kiri toolbar kalendar
+            injectCalendarDateDropdowns();
+
+            // 1. Kemaskini automatik melalui Realtime Server-Sent Events (SSE)
+            initCalendarRealtimeListener();
+
+            // 2. Kemaskini automatik sekiranya localStorage berubah di tab lain
+            window.addEventListener('storage', async function(e) {
                 if (e.key === 'custom_courses') {
-                    calendar.removeAllEvents();
-                    calendar.addEventSource(getCoursesAsCalendarEvents());
+                    await refreshCalendarEvents();
                 }
             });
 
@@ -475,6 +524,109 @@
                 }
             });
         });
+
+        /* BINA DROPDOWN BULAN & TAHUN DI TOOLBAR KIRI KALENDAR */
+        function injectCalendarDateDropdowns() {
+            const leftToolbarChunk = document.querySelector('#calendar .fc-toolbar-chunk:first-child');
+            if (!leftToolbarChunk) return;
+
+            const currentViewDate = calendar.getDate();
+            const currentMonth = currentViewDate.getMonth();
+            const currentYear = currentViewDate.getFullYear();
+
+            const selectorWrapper = document.createElement('div');
+            selectorWrapper.className = 'calendar-date-selector-group';
+
+            // Dropdown Bulan
+            const monthSelect = document.createElement('select');
+            monthSelect.id = 'cal-month-select';
+            monthSelect.className = 'calendar-select-dropdown';
+            monthSelect.setAttribute('aria-label', 'Pilih Bulan');
+
+            BULAN_MELAYU.forEach((namaBulan, index) => {
+                const opt = document.createElement('option');
+                opt.value = index;
+                opt.textContent = namaBulan;
+                if (index === currentMonth) opt.selected = true;
+                monthSelect.appendChild(opt);
+            });
+
+            // Dropdown Tahun (5 tahun lepas hingga 5 tahun akan datang)
+            const yearSelect = document.createElement('select');
+            yearSelect.id = 'cal-year-select';
+            yearSelect.className = 'calendar-select-dropdown';
+            yearSelect.setAttribute('aria-label', 'Pilih Tahun');
+
+            const startYear = new Date().getFullYear() - 5;
+            const endYear = new Date().getFullYear() + 5;
+            for (let y = startYear; y <= endYear; y++) {
+                const opt = document.createElement('option');
+                opt.value = y;
+                opt.textContent = y;
+                if (y === currentYear) opt.selected = true;
+                yearSelect.appendChild(opt);
+            }
+
+            // Tukar paparan kalendar apabila pengguna memilih bulan atau tahun
+            const handleDateDropdownChange = () => {
+                const selectedMonth = parseInt(monthSelect.value, 10);
+                const selectedYear = parseInt(yearSelect.value, 10);
+                const targetDate = new Date(selectedYear, selectedMonth, 1);
+                calendar.gotoDate(targetDate);
+            };
+
+            monthSelect.addEventListener('change', handleDateDropdownChange);
+            yearSelect.addEventListener('change', handleDateDropdownChange);
+
+            selectorWrapper.appendChild(monthSelect);
+            selectorWrapper.appendChild(yearSelect);
+            leftToolbarChunk.appendChild(selectorWrapper);
+        }
+
+        /* SEGERAKKAN DROPDOWN APABILA TEKAN BUTANG PREV / NEXT / HARI INI */
+        function syncDropdownWithCalendar(currentDate) {
+            const monthSelect = document.getElementById('cal-month-select');
+            const yearSelect = document.getElementById('cal-year-select');
+            if (!monthSelect || !yearSelect || !currentDate) return;
+
+            const m = currentDate.getMonth();
+            const y = currentDate.getFullYear();
+
+            monthSelect.value = m;
+
+            // Tambah tahun jika tiada dalam senarai dropdown
+            if (!Array.from(yearSelect.options).some(opt => parseInt(opt.value, 10) === y)) {
+                const newOpt = document.createElement('option');
+                newOpt.value = y;
+                newOpt.textContent = y;
+                yearSelect.appendChild(newOpt);
+            }
+            yearSelect.value = y;
+        }
+
+        /* FUNGSI REALTIME SSE UNTUK TAKWIM */
+        function initCalendarRealtimeListener() {
+            if (!!window.EventSource) {
+                const eventSource = new EventSource('/api/events');
+                eventSource.onmessage = async function(e) {
+                    try {
+                        const data = JSON.parse(e.data);
+                        if (data.type === 'COURSE_UPDATED') {
+                            await refreshCalendarEvents();
+                        }
+                    } catch (err) {
+                        console.error('Ralat SSE Takwim:', err);
+                    }
+                };
+            }
+        }
+
+        async function refreshCalendarEvents() {
+            if (!calendar) return;
+            const updatedEvents = await fetchAndFormatCalendarEvents();
+            calendar.removeAllEvents();
+            calendar.addEventSource(updatedEvents);
+        }
 
         /* FUNGSI CARIAN BAR NAVIGASI TOP */
         function handleNavSearch() {
@@ -525,13 +677,14 @@
             window.location.href = 'login.html';
         }
 
-        // Fungsi Penukar Format Tarikh Bahasa Melayu/Text kepada YYYY-MM-DD
-        function parseToIsoDate(dateStr) {
+        // Penukar Format Tarikh Teks (cth: "6 November 2026" atau "20 - 22 Ogos 2026") kepada { start, end }
+        function parseDateRangeToIso(dateStr) {
             if (!dateStr) return null;
 
-            // Jika sudah dalam format YYYY-MM-DD
-            if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr.trim())) {
-                return dateStr.trim();
+            const cleanInput = dateStr.trim();
+
+            if (/^\d{4}-\d{2}-\d{2}$/.test(cleanInput)) {
+                return { start: cleanInput, end: cleanInput };
             }
 
             const monthMap = {
@@ -549,53 +702,72 @@
                 'disember': '12', 'dis': '12', 'dec': '12'
             };
 
-            const cleanStr = dateStr.toLowerCase().replace(/[\,\.\:]/g, '');
+            const cleanStr = cleanInput.toLowerCase().replace(/[\,\.\:]/g, '');
             const yearMatch = cleanStr.match(/\b(20\d{2})\b/);
             const year = yearMatch ? yearMatch[1] : new Date().getFullYear().toString();
 
-            let foundMonth = null;
-            for (let [mName, mNum] of Object.entries(monthMap)) {
-                if (cleanStr.includes(mName)) {
-                    foundMonth = mNum;
-                    break;
+            const foundMonths = [];
+            const words = cleanStr.split(/[\s\-–]+/);
+            for (const w of words) {
+                if (monthMap[w]) {
+                    foundMonths.push(monthMap[w]);
                 }
             }
 
-            const dayMatch = cleanStr.match(/\b(\d{1,2})\b/);
-            const day = dayMatch ? dayMatch[1].padStart(2, '0') : '01';
+            if (foundMonths.length === 0) return null;
 
-            if (foundMonth) {
-                return `${year}-${foundMonth}-${day}`;
+            const dayMatches = cleanStr.replace(/\b20\d{2}\b/g, '').match(/\b(\d{1,2})\b/g);
+            if (!dayMatches || dayMatches.length === 0) return null;
+
+            const startDay = dayMatches[0].padStart(2, '0');
+            const startMonth = foundMonths[0];
+            const startDate = `${year}-${startMonth}-${startDay}`;
+
+            let endDate = startDate;
+            if (dayMatches.length > 1) {
+                const endDay = dayMatches[dayMatches.length - 1].padStart(2, '0');
+                const endMonth = foundMonths.length > 1 ? foundMonths[foundMonths.length - 1] : startMonth;
+                endDate = `${year}-${endMonth}-${endDay}`;
             }
 
-            return null;
+            return { start: startDate, end: endDate };
         }
 
-        // Memuatkan Acara Dinamik dari LocalStorage
-        function getCoursesAsCalendarEvents() {
-            let customCourses = [];
+        // Ambil data kursus dari API (/api/kursus) dengan fallback ke localStorage
+        async function fetchAndFormatCalendarEvents() {
+            let courses = [];
+
             try {
-                customCourses = JSON.parse(localStorage.getItem('custom_courses')) || [];
-            } catch(e) {
-                customCourses = [];
+                const response = await fetch('/api/kursus');
+                if (response.ok) {
+                    courses = await response.json();
+                    localStorage.setItem('custom_courses', JSON.stringify(courses));
+                } else {
+                    courses = JSON.parse(localStorage.getItem('custom_courses')) || [];
+                }
+            } catch (e) {
+                console.warn('Gagal mengambil data API kursus, menggunakan cache tempatan:', e);
+                courses = JSON.parse(localStorage.getItem('custom_courses')) || [];
             }
 
             const events = [];
 
-            customCourses.forEach(item => {
+            courses.forEach(item => {
                 let startDate = item.tarikh_mula || item.startDate;
                 let endDate = item.tarikh_tamat || item.endDate;
 
-                // Jika tarikh hanya disimpan dalam teks (cth: "20 - 22 Ogos 2026")
                 if (!startDate && item.tarikh) {
-                    startDate = parseToIsoDate(item.tarikh);
+                    const parsed = parseDateRangeToIso(item.tarikh);
+                    if (parsed) {
+                        startDate = parsed.start;
+                        endDate = parsed.end;
+                    }
                 }
 
                 if (startDate) {
-                    // Jika ada tarikh tamat untuk acara pelbagai hari, tambah 1 hari supaya FullCalendar memaparkannya dengan betul
-                    let formattedEndDate = endDate;
+                    let formattedEndDate = undefined;
                     if (endDate && endDate !== startDate) {
-                        let endD = new Date(endDate);
+                        let endD = new Date(endDate + 'T00:00:00');
                         endD.setDate(endD.getDate() + 1);
                         formattedEndDate = endD.toISOString().split('T')[0];
                     }
@@ -603,9 +775,9 @@
                     events.push({
                         title: item.tajuk,
                         start: startDate,
-                        end: formattedEndDate || undefined,
+                        end: formattedEndDate,
                         url: `mohon.html?kursus=${encodeURIComponent(item.tajuk)}`,
-                        color: '#0c2847', // Warna tema Portal
+                        color: '#0c2847',
                         extendedProps: {
                             tempat: item.tempat || '',
                             masa: item.masa || ''

@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengurusan & Edit Semua Kursus - Portal Kursus MOSTI</title>
+    
+    <!-- Pautan ke Fail CSS Asing -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Google Fonts: Plus Jakarta Sans & Open Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body, button, input, select, textarea {
+            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif !important;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .navbar-header-container {
+            background-color: #0c2847 !important;
+            border-bottom: 1px solid #002b58;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 50px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 44px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .header-title-group {
+            display: flex;
+            flex-direction: column;
+            text-transform: uppercase;
+            color: #ffffff;
+            line-height: 1.15;
+            border-left: 1px solid rgba(255, 255, 255, 0.3);
+            padding-left: 12px;
+        }
+
+        .header-subtitle {
+            font-size: 0.65rem;
+            letter-spacing: 0.5px;
+            font-weight: 300;
+            color: #cbd5e1;
+        }
+
+        .header-english-title {
+            font-size: 0.72rem;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+            color: #ffffff;
+        }
+
+        .header-tagline {
+            font-size: 0.58rem;
+            letter-spacing: 0.8px;
+            margin-top: 1px;
+            font-weight: 300;
+            color: #ef7c00;
+        }
+
+        .header-top-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 0.85rem;
+        }
+
+        .header-bottom-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 50px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .nav-links-sub {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links-sub a {
+            color: #334155;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 300;
+            padding: 12px 0;
+            display: inline-block;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .nav-links-sub a:hover, .nav-links-sub a.active {
+            color: #003d7c;
+            font-weight: 400;
+        }
+
+        .nav-links-sub a.active::after, .nav-links-sub a:hover::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #ef7c00;
+        }
+
+        .content-section {
+            padding: 40px 20px 60px 20px;
+        }
+
+        .section-title h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            font-size: 1.6rem !important;
+            font-weight: 600 !important;
+            color: #0c2847 !important;
+            margin: 0 0 10px 0 !important;
+        }
+
+        .admin-editor-panel {
+            background: #ffffff;
+            border: 2px solid #2563eb;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.1);
+        }
+
+        .admin-editor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .admin-badge {
+            background: #dc2626;
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 400;
+        }
+
+        .editor-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .editor-form-grid .full-width {
+            grid-column: span 2;
+        }
+
+        .editor-form-grid label {
+            font-weight: 400;
+            margin-bottom: 5px;
+            display: block;
+            color: #1e293b;
+        }
+
+        .editor-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .date-picker-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .editor-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-admin-save {
+            background-color: #2563eb;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 400;
+        }
+
+        .btn-admin-cancel {
+            background-color: #64748b;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .preview-img {
+            max-height: 200px;
+            aspect-ratio: 2550 / 3300;
+            width: auto;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .cards-grid-fixed {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            justify-content: center !important;
+            gap: 20px !important;
+            width: 100% !important;
+            max-width: 1140px;
+            margin: 0 auto;
+        }
+
+        .cards-grid-fixed .card {
+            flex: 0 0 calc(50% - 10px) !important;
+            max-width: calc(50% - 10px) !important;
+            min-width: 300px !important;
+            box-sizing: border-box !important;
+            border-radius: 4px !important;
+            overflow: hidden !important;
+            border: 1px solid #e2e8f0 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            padding: 0 !important;
+            background: #ffffff !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+        }
+
+        .card-img-wrapper {
+            width: 100%;
+            height: 240px;
+            overflow: hidden;
+            position: relative;
+            background-color: #0f172a;
+        }
+
+        .card-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .badge-nus {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #ffffff;
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            text-transform: uppercase;
+            z-index: 2;
+        }
+
+        .card-body-nus {
+            padding: 25px 25px 30px 25px !important;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: center;
+            background-color: #ffffff !important;
+        }
+
+        .card-title-nus {
+            font-family: 'Open Sans', sans-serif !important;
+            font-size: 1.25rem !important;
+            font-weight: 600 !important;
+            line-height: 1.35 !important;
+            color: #000000 !important;
+            margin: 0 0 12px 0 !important;
+        }
+
+        .card-desc-nus {
+            font-size: 0.9rem !important;
+            line-height: 1.5 !important;
+            color: #334155 !important;
+            margin-bottom: 18px !important;
+            font-weight: 300 !important;
+        }
+
+        .card-meta-nus {
+            font-size: 0.82rem;
+            color: #475569;
+            margin-bottom: 18px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 12px;
+        }
+
+        .admin-controls-card {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-card-edit {
+            background-color: #f59e0b;
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.88rem;
+        }
+
+        .btn-card-delete {
+            background-color: #ef4444;
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.88rem;
+        }
+
+        .filter-bar-box {
+            max-width: 1140px;
+            margin: 0 auto 25px auto;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .nus-footer-bottom {
+            background-color: #002244;
+            padding: 20px 20px;
+            text-align: center;
+            font-size: 0.82rem;
+            color: #94a3b8;
+        }
+
+        @media screen and (max-width: 768px) {
+            .header-top-row { padding: 10px 18px !important; }
+            .header-bottom-nav { padding: 0 18px !important; overflow-x: auto; }
+            .cards-grid-fixed .card { flex: 0 0 100% !important; max-width: 100% !important; }
+            .editor-form-grid { grid-template-columns: 1fr !important; }
+            .editor-form-grid .full-width { grid-column: span 1 !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar-header-container">
+        <div class="header-top-row">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Logo Portal Kursus MOSTI" class="logo-img">
+                <div class="header-title-group">
+                    <span class="header-subtitle">PORTAL KURSUS RASMI</span>
+                    <span class="header-english-title">MINISTRY OF SCIENCE, TECHNOLOGY AND INNOVATION</span>
+                    <span class="header-tagline">SAINS.TEKNOLOGI.INOVASI.BERSAMA</span>
+                </div>
+            </a>
+            <div class="header-top-right">
+                <a href="index.html" style="color: #ffffff; text-decoration: none; font-size: 0.85rem;"><i class="fa-solid fa-arrow-left"></i> Kembali Ke Utama</a>
+            </div>
+        </div>
+
+        <div class="header-bottom-nav">
+            <nav>
+                <ul class="nav-links-sub">
+                    <li><a href="index.html">Utama</a></li>
+                    <li><a href="iklan.html">Jenis & Iklan Kursus</a></li>
+                    <li><a href="takwim.html">Takwim Kursus</a></li>
+                    <li><a href="mohon.html">Mohon Kursus</a></li>
+                    <li><a href="edit_kursus.html" class="active">Edit Semua Kursus</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="content-section bg-light">
+        <div class="container" style="max-width: 1140px; margin: 0 auto;">
+            <div class="section-title" style="text-align: center; margin-bottom: 30px;">
+                <h2>Pengurusan & Edit Semua Kursus (<span id="total-courses-count">0</span>)</h2>
+                <p>Tambah kursus baharu, kemas kini maklumat atau padam mana-mana kursus dalam senarai di bawah.</p>
+            </div>
+
+            <!-- PANEL MODE EDITOR ADMIN -->
+            <div id="admin-editor-section" class="admin-editor-panel">
+                <div class="admin-editor-header">
+                    <h3><i class="fa-solid fa-pen-to-square"></i> Mode Editor Admin (Tambah / Edit Kursus)</h3>
+                    <span class="admin-badge"><i class="fa-solid fa-user-shield"></i> Akses Admin</span>
+                </div>
+                <form id="admin-course-form" onsubmit="handleAdminSaveCourse(event)">
+                    <input type="hidden" id="editor-course-id">
+                    <div class="editor-form-grid">
+                        <div>
+                            <label for="editor-tajuk">Nama / Tajuk Kursus</label>
+                            <input type="text" id="editor-tajuk" class="editor-input" placeholder="Contoh: Kursus AI" required>
+                        </div>
+
+                        <div>
+                            <label for="editor-bidang">Jenis Bidang Kursus</label>
+                            <select id="editor-bidang" class="editor-input" required>
+                                <option value="" disabled selected>-- Pilih Bidang Kursus --</option>
+                                <option value="PEMBANGUNAN DIRI DAN SAHSIAH">PEMBANGUNAN DIRI DAN SAHSIAH</option>
+                                <option value="BAHASA">BAHASA</option>
+                                <option value="MANDATORI">MANDATORI</option>
+                                <option value="KEPIMPINAN">KEPIMPINAN</option>
+                                <option value="KOMUNIKASI">KOMUNIKASI</option>
+                                <option value="TEKNOLOGI MAKLUMAT DAN AI">TEKNOLOGI MAKLUMAT DAN AI</option>
+                                <option value="PENGURUSAN PROJEK">PENGURUSAN PROJEK</option>
+                                <option value="KEWANGAN DAN PEROLEHAN">KEWANGAN DAN PEROLEHAN</option>
+                                <option value="KESELAMATAN DAN KESIHATAN PEKERJAAN (OSH)">KESELAMATAN DAN KESIHATAN PEKERJAAN (OSH)</option>
+                                <option value="INNOVASI DAN KREATIVITI">INNOVASI DAN KREATIVITI</option>
+                                <option value="PENGURUSAN STRATEGIK">PENGURUSAN STRATEGIK</option>
+                                <option value="ETIKA DAN INTEGRITI">ETIKA DAN INTEGRITI</option>
+                                <option value="PENGURUSAN SUMBER MANUSIA">PENGURUSAN SUMBER MANUSIA</option>
+                                <option value="DASAR PUBLIK DAN PENTADBIRAN">DASAR PUBLIK DAN PENTADBIRAN</option>
+                                <option value="PROTOKOL DAN MAJLIS RASMI">PROTOKOL DAN MAJLIS RASMI</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="editor-tarikh">Tarikh Kursus</label>
+                            <div class="date-picker-group">
+                                <input type="date" id="editor-tarikh-mula" class="editor-input" onchange="autoFormatDateText()">
+                                <span>hingga</span>
+                                <input type="date" id="editor-tarikh-tamat" class="editor-input" onchange="autoFormatDateText()">
+                            </div>
+                            <input type="text" id="editor-tarikh" class="editor-input" style="margin-top: 5px;" placeholder="Contoh: 20 - 22 Ogos 2026" required>
+                        </div>
+
+                        <div>
+                            <label for="editor-masa">Masa / Waktu Kursus</label>
+                            <input type="text" id="editor-masa" class="editor-input" placeholder="Contoh: 8:30 Pagi - 4:30 Petang">
+                        </div>
+
+                        <div>
+                            <label for="editor-tempat">Lokasi / Tempat</label>
+                            <input type="text" id="editor-tempat" class="editor-input" placeholder="Contoh: Dewan Perhimpunan MOSTI" required>
+                        </div>
+
+                        <div class="full-width">
+                            <label for="editor-penerangan">Penerangan Ringkas</label>
+                            <textarea id="editor-penerangan" class="editor-input" style="height: 70px;" placeholder="Penerangan ringkas kursus..." required></textarea>
+                        </div>
+                        
+                        <div class="full-width">
+                            <label for="editor-objektif">Objektif Kursus (Gunakan baris baharu untuk setiap objektif)</label>
+                            <textarea id="editor-objektif" class="editor-input" style="height: 90px;" placeholder="1. Meningkatkan kemahiran peserta&#10;2. Memahami konsep utama"></textarea>
+                        </div>
+
+                        <div>
+                            <label for="editor-penyelaras-nama">Nama Penyelaras</label>
+                            <input type="text" id="editor-penyelaras-nama" class="editor-input" placeholder="Contoh: Puan Nurul Huda Binti Ahmad">
+                        </div>
+                        <div>
+                            <label for="editor-penyelaras-emel">Emel Penyelaras</label>
+                            <input type="email" id="editor-penyelaras-emel" class="editor-input" placeholder="penyelaras@mosti.gov.my">
+                        </div>
+                        <div class="full-width">
+                            <label for="editor-penyelaras-telefon">No. Telefon Penyelaras</label>
+                            <input type="text" id="editor-penyelaras-telefon" class="editor-input" placeholder="03-8885 8000">
+                        </div>
+
+                        <div class="full-width">
+                            <label for="editor-gambar-file">Muat Naik Gambar Kursus (Fail atau URL)</label>
+                            <input type="file" id="editor-gambar-file" class="editor-input" accept="image/*" onchange="previewSelectedImage(event)">
+                            <p style="margin: 5px 0; font-size: 12px; color: #64748b;">Atau masukkan URL gambar secara terus:</p>
+                            <input type="text" id="editor-gambar-url" class="editor-input" placeholder="https://example.com/gambar.jpg">
+                            <img id="img-preview" class="preview-img" alt="Pratonton Gambar">
+                        </div>
+                    </div>
+                    <div class="editor-actions">
+                        <button type="submit" id="btn-save-editor" class="btn-admin-save"><i class="fa-solid fa-floppy-disk"></i> Simpan Kursus</button>
+                        <button type="button" onclick="resetEditorForm()" class="btn-admin-cancel">Batal</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- CARIAN PANTAS UNTUK EDIT -->
+            <div class="filter-bar-box">
+                <input type="text" id="search-edit-keyword" class="editor-input" style="flex: 2;" placeholder="Cari tajuk, tempat atau penerangan kursus..." onkeyup="filterAllCourses()">
+                <select id="search-edit-bidang" class="editor-input" style="flex: 1;" onchange="filterAllCourses()">
+                    <option value="">-- Semua Bidang --</option>
+                    <option value="PEMBANGUNAN DIRI DAN SAHSIAH">PEMBANGUNAN DIRI DAN SAHSIAH</option>
+                    <option value="BAHASA">BAHASA</option>
+                    <option value="MANDATORI">MANDATORI</option>
+                    <option value="KEPIMPINAN">KEPIMPINAN</option>
+                    <option value="KOMUNIKASI">KOMUNIKASI</option>
+                    <option value="TEKNOLOGI MAKLUMAT DAN AI">TEKNOLOGI MAKLUMAT DAN AI</option>
+                    <option value="PENGURUSAN PROJEK">PENGURUSAN PROJEK</option>
+                    <option value="KEWANGAN DAN PEROLEHAN">KEWANGAN DAN PEROLEHAN</option>
+                    <option value="KESELAMATAN DAN KESIHATAN PEKERJAAN (OSH)">KESELAMATAN DAN KESIHATAN PEKERJAAN (OSH)</option>
+                    <option value="INNOVASI DAN KREATIVITI">INNOVASI DAN KREATIVITI</option>
+                    <option value="PENGURUSAN STRATEGIK">PENGURUSAN STRATEGIK</option>
+                    <option value="ETIKA DAN INTEGRITI">ETIKA DAN INTEGRITI</option>
+                    <option value="PENGURUSAN SUMBER MANUSIA">PENGURUSAN SUMBER MANUSIA</option>
+                    <option value="DASAR PUBLIK DAN PENTADBIRAN">DASAR PUBLIK DAN PENTADBIRAN</option>
+                    <option value="PROTOKOL DAN MAJLIS RASMI">PROTOKOL DAN MAJLIS RASMI</option>
+                </select>
+            </div>
+
+            <!-- SENARAI SEMUA KURSUS -->
+            <div class="cards-grid-fixed" id="all-courses-container"></div>
+        </div>
+    </section>
+
+    <footer class="nus-footer-bottom">
+        <p>&copy; 2026 Kementerian Sains, Teknologi dan Inovasi (MOSTI). Hak Cipta Terpelihara.</p>
+    </footer>
+
+    <script>
+        let base64ImageString = "";
+        let allCurrentCourses = [];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const storedUser = sessionStorage.getItem('user') || localStorage.getItem('user');
+            let currentUser = null;
+            if (storedUser) {
+                try { currentUser = JSON.parse(storedUser); } catch(e) {}
+            }
+            if (!currentUser || currentUser.role !== 'admin') {
+                alert('Akses terhad kepada Admin sahaja.');
+                window.location.href = 'index.html';
+                return;
+            }
+            loadAllCourses();
+        });
+
+        function autoFormatDateText() {
+            const dateMulaVal = document.getElementById('editor-tarikh-mula').value;
+            const dateTamatVal = document.getElementById('editor-tarikh-tamat').value;
+            const tarikhInput = document.getElementById('editor-tarikh');
+
+            if (!dateMulaVal) return;
+
+            const bulanMalay = ["Januari", "Februari", "Mac", "April", "Mei", "Jun", "Julai", "Ogos", "September", "Oktober", "November", "Disember"];
+            const dMula = new Date(dateMulaVal);
+            const dayMula = dMula.getDate();
+            const monthMula = bulanMalay[dMula.getMonth()];
+            const yearMula = dMula.getFullYear();
+
+            if (!dateTamatVal || dateMulaVal === dateTamatVal) {
+                tarikhInput.value = `${dayMula} ${monthMula} ${yearMula}`;
+            } else {
+                const dTamat = new Date(dateTamatVal);
+                const dayTamat = dTamat.getDate();
+                const monthTamat = bulanMalay[dTamat.getMonth()];
+                const yearTamat = dTamat.getFullYear();
+
+                if (monthMula === monthTamat && yearMula === yearTamat) {
+                    tarikhInput.value = `${dayMula} - ${dayTamat} ${monthMula} ${yearMula}`;
+                } else if (yearMula === yearTamat) {
+                    tarikhInput.value = `${dayMula} ${monthMula} - ${dayTamat} ${monthTamat} ${yearTamat}`;
+                } else {
+                    tarikhInput.value = `${dayMula} ${monthMula} ${yearMula} - ${dayTamat} ${monthTamat} ${yearTamat}`;
+                }
+            }
+        }
+
+        function previewSelectedImage(event) {
+            const file = event.target.files[0];
+            const preview = document.getElementById('img-preview');
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    base64ImageString = e.target.result;
+                    preview.src = base64ImageString;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        async function loadAllCourses() {
+            try {
+                const response = await fetch('/api/kursus');
+                if (response.ok) {
+                    allCurrentCourses = await response.json();
+                } else {
+                    allCurrentCourses = [];
+                }
+            } catch (e) {
+                console.warn('Gagal memuatkan kursus daripada backend:', e);
+                allCurrentCourses = [];
+            }
+            document.getElementById('total-courses-count').textContent = allCurrentCourses.length;
+            renderAllCourses(allCurrentCourses);
+        }
+
+        function renderAllCourses(coursesList) {
+            const container = document.getElementById('all-courses-container');
+            container.innerHTML = '';
+
+            if (!coursesList || coursesList.length === 0) {
+                container.innerHTML = `<p style="text-align:center; color:#64748b; width:100%; padding:30px;">Tiada kursus dijumpai.</p>`;
+                return;
+            }
+
+            coursesList.forEach((item, idx) => {
+                const courseImg = item.gambar_url || 'logo.png';
+                const descText = item.penerangan || '-';
+
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-img-wrapper">
+                        <span class="badge-nus">#${idx + 1} &bull; ${item.bidang || 'UMUM'}</span>
+                        <img src="${courseImg}" alt="${item.tajuk}">
+                    </div>
+                    <div class="card-body-nus">
+                        <div>
+                            <h3 class="card-title-nus">${item.tajuk}</h3>
+                            <p class="card-desc-nus">${descText}</p>
+                            <div class="card-meta-nus">
+                                <span><i class="fa-regular fa-calendar"></i> ${item.tarikh || '-'}</span>
+                                <span><i class="fa-solid fa-location-dot"></i> ${item.tempat || '-'}</span>
+                                <span><i class="fa-regular fa-clock"></i> ${item.masa || '-'}</span>
+                            </div>
+                        </div>
+                        <div class="admin-controls-card">
+                            <button class="btn-card-edit" type="button"><i class="fa-solid fa-pen"></i> Edit</button>
+                            <button class="btn-card-delete" type="button"><i class="fa-solid fa-trash"></i> Padam</button>
+                        </div>
+                    </div>
+                `;
+
+                card.querySelector('.btn-card-edit').addEventListener('click', () => triggerEditCourse(item));
+                card.querySelector('.btn-card-delete').addEventListener('click', () => handleDeleteCourse(item.id));
+                container.appendChild(card);
+            });
+        }
+
+        function filterAllCourses() {
+            const keyword = document.getElementById('search-edit-keyword').value.toLowerCase().trim();
+            const bidang = document.getElementById('search-edit-bidang').value;
+
+            const filtered = allCurrentCourses.filter(course => {
+                const matchesKeyword = !keyword ||
+                    (course.tajuk && course.tajuk.toLowerCase().includes(keyword)) ||
+                    (course.penerangan && course.penerangan.toLowerCase().includes(keyword)) ||
+                    (course.tempat && course.tempat.toLowerCase().includes(keyword));
+                const matchesBidang = !bidang || (course.bidang && course.bidang.toUpperCase() === bidang.toUpperCase());
+                return matchesKeyword && matchesBidang;
+            });
+
+            renderAllCourses(filtered);
+        }
+
+        async function handleAdminSaveCourse(e) {
+            e.preventDefault();
+            const id = document.getElementById('editor-course-id').value;
+            const tajuk = document.getElementById('editor-tajuk').value.trim();
+            const bidang = document.getElementById('editor-bidang').value;
+            const tarikh = document.getElementById('editor-tarikh').value.trim();
+            const dateMulaVal = document.getElementById('editor-tarikh-mula').value;
+            const dateTamatVal = document.getElementById('editor-tarikh-tamat').value;
+            const masa = document.getElementById('editor-masa').value.trim();
+            const tempat = document.getElementById('editor-tempat').value.trim();
+            const penerangan = document.getElementById('editor-penerangan').value.trim();
+            const objektif = document.getElementById('editor-objektif').value.trim();
+            const penyelaras_nama = document.getElementById('editor-penyelaras-nama').value.trim();
+            const penyelaras_emel = document.getElementById('editor-penyelaras-emel').value.trim();
+            const penyelaras_telefon = document.getElementById('editor-penyelaras-telefon').value.trim();
+            const urlImgInput = document.getElementById('editor-gambar-url').value.trim();
+
+            const finalGambarUrl = base64ImageString || urlImgInput || 'logo.png';
+
+            const payload = {
+                tajuk,
+                bidang: bidang || "PEMBANGUNAN DIRI DAN SAHSIAH",
+                tarikh,
+                tarikh_mula: dateMulaVal,
+                tarikh_tamat: dateTamatVal,
+                masa,
+                tempat,
+                penerangan,
+                objektif,
+                penyelaras_nama,
+                penyelaras_emel,
+                penyelaras_telefon,
+                gambar_url: finalGambarUrl
+            };
+
+            try {
+                const method = id ? 'PUT' : 'POST';
+                const url = id ? `/api/kursus/${id}` : '/api/kursus';
+                const res = await fetch(url, {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (res.ok) {
+                    alert(id ? 'Kursus berjaya dikemas kini di pangkalan data!' : 'Kursus baharu berjaya ditambah ke pangkalan data!');
+                    resetEditorForm();
+                    loadAllCourses();
+                } else {
+                    const errData = await res.json();
+                    alert('Gagal menyimpan kursus: ' + (errData.error || 'Ralat tidak diketahui'));
+                }
+            } catch (err) {
+                alert('Ralat ketersambungan server backend: ' + err.message);
+            }
+        }
+
+        function triggerEditCourse(item) {
+            document.getElementById('editor-course-id').value = item.id || '';
+            document.getElementById('editor-tajuk').value = item.tajuk || '';
+            document.getElementById('editor-bidang').value = item.bidang || 'PEMBANGUNAN DIRI DAN SAHSIAH';
+            document.getElementById('editor-tarikh').value = item.tarikh || '';
+            document.getElementById('editor-tarikh-mula').value = item.tarikh_mula || '';
+            document.getElementById('editor-tarikh-tamat').value = item.tarikh_tamat || '';
+            document.getElementById('editor-masa').value = item.masa || '';
+            document.getElementById('editor-tempat').value = item.tempat || '';
+            document.getElementById('editor-penerangan').value = item.penerangan || '';
+            document.getElementById('editor-objektif').value = item.objektif || '';
+            document.getElementById('editor-penyelaras-nama').value = item.penyelaras_nama || '';
+            document.getElementById('editor-penyelaras-emel').value = item.penyelaras_emel || '';
+            document.getElementById('editor-penyelaras-telefon').value = item.penyelaras_telefon || '';
+            document.getElementById('editor-gambar-url').value = item.gambar_url || '';
+
+            if (item.gambar_url) {
+                const preview = document.getElementById('img-preview');
+                preview.src = item.gambar_url;
+                preview.style.display = 'block';
+            }
+
+            document.getElementById('btn-save-editor').innerHTML = '<i class="fa-solid fa-pen-to-square"></i> Kemas Kini Kursus';
+            document.getElementById('admin-editor-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        async function handleDeleteCourse(id) {
+            if (!confirm('Adakah anda pasti mahu memadam kursus ini?')) return;
+            if (id) {
+                try {
+                    const res = await fetch(`/api/kursus/${id}`, { method: 'DELETE' });
+                    if (res.ok) {
+                        alert('Kursus berjaya dipadam daripada pangkalan data!');
+                        loadAllCourses();
+                    } else {
+                        alert('Gagal memadam kursus dari server.');
+                    }
+                } catch (e) {
+                    console.warn('Gagal memadam dari server API:', e);
+                }
+            }
+        }
+
+        function resetEditorForm() {
+            document.getElementById('editor-course-id').value = '';
+            document.getElementById('admin-course-form').reset();
+            document.getElementById('img-preview').style.display = 'none';
+            base64ImageString = "";
+            document.getElementById('btn-save-editor').innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Kursus';
+        }
+    </script>
+</body>
+</html>

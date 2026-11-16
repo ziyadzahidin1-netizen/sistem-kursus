@@ -277,6 +277,7 @@
             display: grid;
             grid-template-columns: 360px 1fr;
             gap: 0;
+            margin-bottom: 40px;
         }
 
         .details-sidebar {
@@ -537,7 +538,7 @@
         </div>
     </header>
 
-    <div class="details-wrapper">
+    <div class="details-wrapper" id="details-list-container">
         <div class="details-card">
             
             <!-- Ruangan Kiri: Gambar & Ringkasan -->
@@ -657,7 +658,57 @@
             const urlParams = new URLSearchParams(window.location.search);
             const courseParam = urlParams.get('kursus');
             const idParam = urlParams.get('id');
+            const bidangParam = urlParams.get('bidang');
+            const keywordParam = urlParams.get('keyword');
 
+            // Ambil semua data dari localStorage dan API
+            let storedCustom = [];
+            try {
+                storedCustom = JSON.parse(localStorage.getItem('custom_courses')) || [];
+            } catch(e) {}
+
+            let apiCourses = [];
+            try {
+                const response = await fetch('/api/kursus');
+                if (response.ok) {
+                    apiCourses = await response.json();
+                }
+            } catch (e) {
+                console.error("Gagal mengambil data dari API:", e);
+            }
+
+            // Gabungkan senarai kursus tanpa duplikasi
+            let allCourses = [...storedCustom];
+            apiCourses.forEach(apiItem => {
+                const exists = allCourses.some(c => 
+                    (c.id && apiItem.id && c.id === apiItem.id) || 
+                    (c.tajuk && apiItem.tajuk && c.tajuk.toLowerCase() === apiItem.tajuk.toLowerCase())
+                );
+                if (!exists) {
+                    allCourses.push(apiItem);
+                }
+            });
+
+            // JIKA CARIAN MENGIKUT BIDANG ATAU KATA KUNCI DARI INDEX.HTML (PAPAR SEMUA YANG SEPADAN)
+            if (bidangParam || keywordParam) {
+                const targetBidang = bidangParam ? bidangParam.toUpperCase().trim() : '';
+                const targetKeyword = keywordParam ? keywordParam.toLowerCase().trim() : '';
+
+                const matchedList = allCourses.filter(c => {
+                    const matchBidang = !targetBidang || (c.bidang && c.bidang.toUpperCase().trim() === targetBidang);
+                    const matchKeyword = !targetKeyword || 
+                        (c.tajuk && c.tajuk.toLowerCase().includes(targetKeyword)) ||
+                        (c.penerangan && c.penerangan.toLowerCase().includes(targetKeyword)) ||
+                        (c.tempat && c.tempat.toLowerCase().includes(targetKeyword)) ||
+                        (c.bidang && c.bidang.toLowerCase().includes(targetKeyword));
+                    return matchBidang && matchKeyword;
+                });
+
+                renderMultipleCourses(matchedList, targetBidang || keywordParam);
+                return;
+            }
+
+            // JIKA PAPAR SATU KURSUS TERTENTU (DARI LINK IKLAN.HTML)
             if (!courseParam && !idParam) {
                 document.getElementById('course-title').innerText = "Kursus Tidak Dijumpai";
                 return;
@@ -667,37 +718,149 @@
             document.getElementById('course-title').innerText = decodedTitle;
             document.getElementById('btn-apply-link').href = "mohon.html?kursus=" + encodeURIComponent(decodedTitle);
 
-            // 1. UTAMAKAN KURSUS DARIPADA LOCALSTORAGE (HASIL EDIT ADMIN)
-            let storedCustom = [];
-            try {
-                storedCustom = JSON.parse(localStorage.getItem('custom_courses')) || [];
-            } catch(e) {}
-
-            let matchedCustom = storedCustom.find(c => 
-                (idParam && c.id === idParam) || 
+            let matchedCourse = allCourses.find(c => 
+                (idParam && String(c.id) === String(idParam)) || 
                 (c.tajuk && c.tajuk.toLowerCase() === decodedTitle.toLowerCase())
             );
 
-            if (matchedCustom) {
-                populateUI(matchedCustom);
+            if (matchedCourse) {
+                populateUI(matchedCourse);
+            }
+        });
+
+        /* FUNGSI PAPAR BANYAK KURSUS MENGIKUT BIDANG / CARIAN */
+        function renderMultipleCourses(coursesList, searchLabel) {
+            const container = document.getElementById('details-list-container');
+            if (!container) return;
+
+            if (!coursesList || coursesList.length === 0) {
+                container.innerHTML = `
+                    <div class="details-card" style="display: block; padding: 50px 30px; text-align: center;">
+                        <i class="fa-solid fa-folder-open" style="font-size: 3rem; color: #cbd5e1; margin-bottom: 15px;"></i>
+                        <h2 style="font-weight: 400; color: #1e293b; margin-bottom: 10px;">Tiada Kursus Ditemui</h2>
+                        <p style="color: #64748b; margin-bottom: 25px;">Tiada kursus berdaftar di bawah carian / bidang "<strong>${searchLabel}</strong>" buat masa ini.</p>
+                        <a href="index.html" class="btn-back" style="display: inline-flex; width: auto; padding: 12px 24px;"><i class="fa-solid fa-arrow-left"></i> Kembali Ke Utama</a>
+                    </div>
+                `;
                 return;
             }
 
-            // 2. JIKA TIADA DALAM LOCALSTORAGE, SEMAK API BACKEND / SUPABASE
-            try {
-                const response = await fetch('/api/kursus');
-                if (response.ok) {
-                    const courses = await response.json();
-                    const matchedDb = courses.find(c => (idParam && c.id === idParam) || (c.tajuk && c.tajuk.toLowerCase() === decodedTitle.toLowerCase()));
-                    if (matchedDb) {
-                        populateUI(matchedDb);
-                        return;
+            let htmlOutput = `
+                <div style="margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                    <div>
+                        <h2 style="margin: 0; font-size: 1.35rem; font-weight: 500; color: #0c2847;">Senarai Kursus: <span style="color: #10b981; text-transform: uppercase;">${searchLabel}</span></h2>
+                        <p style="margin: 4px 0 0 0; font-size: 0.9rem; color: #64748b;">Memaparkan ${coursesList.length} kursus yang berkaitan.</p>
+                    </div>
+                    <a href="index.html" class="btn-back" style="flex: none; padding: 10px 20px;"><i class="fa-solid fa-arrow-left"></i> Kembali Ke Utama</a>
+                </div>
+            `;
+
+            coursesList.forEach(data => {
+                const titleVal = data.tajuk || 'Maklumat Kursus';
+                const bidangVal = data.bidang || 'PEMBANGUNAN DIRI DAN SAHSIAH';
+                const dateVal = data.tarikh || data.date || '-';
+                const timeVal = data.masa || data.time || '-';
+                const locationVal = data.tempat || data.location || '-';
+                const descVal = data.penerangan || data.desc || 'Tiada maklumat penerangan lanjut bagi kursus ini buat masa ini.';
+                const imgVal = data.gambar_url || data.img || 'logo.png';
+
+                let objHtml = `
+                    <li>Meningkatkan pengetahuan dan kompetensi peserta secara teori dan praktikal.</li>
+                    <li>Memperkasa kemahiran yang relevan dengan keperluan semasa perkhidmatan awam.</li>
+                    <li>Membina keyakinan dan profesionalisme dalam pelaksanaan tugas harian.</li>
+                `;
+                let rawObj = data.objektif || data.objectives;
+                if (rawObj) {
+                    let arr = Array.isArray(rawObj) ? rawObj : rawObj.split('\n');
+                    const filteredArr = arr.filter(item => item.trim());
+                    if (filteredArr.length > 0) {
+                        objHtml = filteredArr.map(item => `<li>${item.trim()}</li>`).join('');
                     }
                 }
-            } catch (e) {
-                console.error("Gagal mengambil data dari API:", e);
-            }
-        });
+
+                const coordName = data.penyelaras_nama || data.coordinator || 'Puan Nurul Huda Binti Ahmad';
+                const coordEmail = data.penyelaras_emel || data.email || 'penyelaras@mosti.gov.my';
+                const coordPhone = data.penyelaras_telefon || data.phone || '03-8885 8000 (Ext: 1234)';
+
+                htmlOutput += `
+                    <div class="details-card">
+                        <div class="details-sidebar">
+                            <img src="${imgVal}" alt="${titleVal}" class="details-header-img">
+                            <div class="meta-info-container">
+                                <div class="meta-item">
+                                    <i class="fa-solid fa-bookmark" style="color: #10b981;"></i>
+                                    <div>
+                                        <p style="color: #10b981; font-weight: 600; font-size: 0.92rem; text-transform: uppercase;">${bidangVal}</p>
+                                    </div>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                    <div>
+                                        <h4>Tarikh / Tempoh</h4>
+                                        <p>${dateVal}</p>
+                                    </div>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fa-solid fa-clock"></i>
+                                    <div>
+                                        <h4>Waktu / Masa</h4>
+                                        <p>${timeVal}</p>
+                                    </div>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    <div>
+                                        <h4>Lokasi / Tempat</h4>
+                                        <p>${locationVal}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="details-content">
+                            <div>
+                                <h1 class="details-title">${titleVal}</h1>
+
+                                <div class="details-section">
+                                    <h3><i class="fa-solid fa-align-left" style="color: #0c2847;"></i> Penerangan Program</h3>
+                                    <p>${descVal}</p>
+                                </div>
+
+                                <div class="details-section">
+                                    <h3><i class="fa-solid fa-bullseye" style="color: #0c2847;"></i> Objektif Kursus</h3>
+                                    <ul>${objHtml}</ul>
+                                </div>
+
+                                <div class="details-section">
+                                    <h3><i class="fa-solid fa-user-gear" style="color: #0c2847;"></i> Penyelaras Kursus</h3>
+                                    <div class="coordinator-card">
+                                        <div class="coordinator-item">
+                                            <i class="fa-solid fa-user"></i>
+                                            <span><strong>Nama:</strong> <span>${coordName}</span></span>
+                                        </div>
+                                        <div class="coordinator-item">
+                                            <i class="fa-solid fa-envelope"></i>
+                                            <span><strong>Emel:</strong> <a href="mailto:${coordEmail}"><span>${coordEmail}</span></a></span>
+                                        </div>
+                                        <div class="coordinator-item">
+                                            <i class="fa-solid fa-phone"></i>
+                                            <span><strong>No. Telefon:</strong> <span>${coordPhone}</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="details-actions">
+                                <a href="iklan.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Kembali Ke Iklan</a>
+                                <a href="mohon.html?kursus=${encodeURIComponent(titleVal)}" class="btn-apply-now"><i class="fa-solid fa-paper-plane"></i> Mohon Kursus Ini Sekarang</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = htmlOutput;
+        }
 
         /* FUNGSI CARIAN BAR NAVIGASI TOP */
         function handleNavSearch() {

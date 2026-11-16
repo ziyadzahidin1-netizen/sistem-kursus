@@ -63,6 +63,9 @@
                         <input type="password" id="login-password" placeholder="••••••••" required>
                         <i class="fa-regular fa-eye toggle-pass" onclick="togglePassword('login-password', this)"></i>
                     </div>
+                    <div style="text-align: right; margin-top: 6px;">
+                        <a href="reset_password.html" style="font-size: 0.85rem; color: #2563eb; text-decoration: none; font-weight: 500;">Lupa Kata Laluan?</a>
+                    </div>
                 </div>
 
                 <!-- Secret Key untuk Admin -->
@@ -149,12 +152,11 @@
                         sessionStorage.setItem('user', JSON.stringify(data.user));
                         localStorage.setItem('user', JSON.stringify(data.user));
 
-                        // Semak peranan dan lencongkan ke halaman yang sepadan
-if (data.user && data.user.role === 'admin') {
-    window.location.href = 'index.html'; // Admin terus ke index.html
-} else {
-    window.location.href = 'index.html'; // User biasa terus ke index.html
-}
+                        if (data.user && data.user.role === 'admin') {
+                            window.location.href = 'index.html';
+                        } else {
+                            window.location.href = 'index.html';
+                        }
                     } else {
                         alert('Gagal log masuk: ' + (data.error || 'Maklumat tidak sah.'));
                     }

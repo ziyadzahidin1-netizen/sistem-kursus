@@ -73,6 +73,36 @@
             border-radius: 6px;
             font-size: 0.9rem;
         }
+        .ulasan-box {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-width: 190px;
+        }
+        .input-ulasan {
+            width: 100%;
+            padding: 6px 8px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-family: inherit;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+        .btn-save-ulasan {
+            background-color: #0284c7;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            align-self: flex-start;
+        }
+        .btn-save-ulasan:hover {
+            background-color: #0369a1;
+        }
     </style>
 </head>
 <body style="background-color: #f8fafc;">
@@ -96,6 +126,7 @@
                         <th>Nama Kursus</th>
                         <th>Tarikh Mohon</th>
                         <th>Status</th>
+                        <th>Ulasan Admin</th>
                         <th>Tindakan Admin</th>
                     </tr>
                 </thead>
@@ -166,7 +197,7 @@
                 tbody.innerHTML = '';
 
                 if (appList.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:20px;">Tiada permohonan daripada pengguna setakat ini.</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:20px;">Tiada permohonan daripada pengguna setakat ini.</td></tr>';
                     return;
                 }
 
@@ -177,6 +208,7 @@
                         '<span style="background-color:#f59e0b; color:white; padding:4px 8px; border-radius:4px; font-weight:700;">Dalam Proses</span>');
 
                     let formattedDate = item.created_at ? new Date(item.created_at).toLocaleDateString('ms-MY') : '-';
+                    let ulasanSemasa = item.ulasan_admin || item.ulasan || '';
 
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
@@ -187,6 +219,14 @@
                         <td>${formattedDate}</td>
                         <td>${statusBadge}</td>
                         <td>
+                            <div class="ulasan-box">
+                                <textarea id="ulasan_${item.id}" class="input-ulasan" rows="2" placeholder="Tulis ulasan admin...">${ulasanSemasa}</textarea>
+                                <button class="btn-save-ulasan" onclick="saveAdminUlasan('${item.id}')" title="Simpan Ulasan">
+                                    <i class="fa-solid fa-floppy-disk"></i> Simpan
+                                </button>
+                            </div>
+                        </td>
+                        <td>
                             <button class="btn-approve" onclick="updateAppStatus('${item.id}', 'Berjaya')" title="Luluskan"><i class="fa-solid fa-check"></i></button>
                             <button class="btn-reject" onclick="updateAppStatus('${item.id}', 'Tidak Berjaya')" title="Tolak"><i class="fa-solid fa-xmark"></i></button>
                             <button class="btn-delete-app" onclick="deleteUserApp('${item.id}')" title="Padam"><i class="fa-solid fa-trash"></i></button>
@@ -195,26 +235,81 @@
                     tbody.appendChild(tr);
                 });
             } catch (err) {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:red;">Ralat memuatkan data.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; color:red;">Ralat memuatkan data.</td></tr>';
+            }
+        }
+
+        async function saveAdminUlasan(id) {
+            const textarea = document.getElementById(`ulasan_${id}`);
+            const ulasanText = textarea ? textarea.value.trim() : '';
+
+            try {
+                const res = await fetch(`/api/admin/applications/${id}/ulasan`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ ulasan_admin: ulasanText, ulasan: ulasanText })
+                });
+
+                if (!res.ok) {
+                    const errData = await res.json().catch(() => ({}));
+                    throw new Error(errData.error || 'Gagal menyimpan ulasan ke pelayan.');
+                }
+
+                // Kemaskini ulasan dalam localStorage global jika wujud
+                let allGlobalApps = JSON.parse(localStorage.getItem('all_global_applications')) || [];
+                const appIndex = allGlobalApps.findIndex(a => String(a.id) === String(id));
+                if (appIndex !== -1) {
+                    allGlobalApps[appIndex].ulasan_admin = ulasanText;
+                    allGlobalApps[appIndex].ulasan = ulasanText;
+                    localStorage.setItem('all_global_applications', JSON.stringify(allGlobalApps));
+
+                    const userIc = allGlobalApps[appIndex].ic || allGlobalApps[appIndex].user_ic;
+                    if (userIc) {
+                        let userKey = 'user_applications_' + userIc;
+                        let userApps = JSON.parse(localStorage.getItem(userKey)) || [];
+                        const userAppIdx = userApps.findIndex(a => String(a.id) === String(id));
+                        if (userAppIdx !== -1) {
+                            userApps[userAppIdx].ulasan_admin = ulasanText;
+                            userApps[userAppIdx].ulasan = ulasanText;
+                            localStorage.setItem(userKey, JSON.stringify(userApps));
+                        }
+                    }
+                }
+
+                alert('Ulasan admin berjaya disimpan!');
+                loadAllApplications();
+            } catch (err) {
+                alert('Ralat menyimpan ulasan: ' + err.message);
             }
         }
 
         async function updateAppStatus(id, newStatus) {
+            const textarea = document.getElementById(`ulasan_${id}`);
+            const ulasanText = textarea ? textarea.value.trim() : '';
+
             try {
-                await fetch(`/api/admin/applications/${id}/status`, {
+                const res = await fetch(`/api/admin/applications/${id}/status`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ status: newStatus })
+                    body: JSON.stringify({ status: newStatus, ulasan_admin: ulasanText, ulasan: ulasanText })
                 });
+
+                if (!res.ok) {
+                    const errData = await res.json().catch(() => ({}));
+                    throw new Error(errData.error || 'Gagal mengemaskini status di pelayan.');
+                }
 
                 // Kemaskini dalam localStorage global jika wujud
                 let allGlobalApps = JSON.parse(localStorage.getItem('all_global_applications')) || [];
                 const appIndex = allGlobalApps.findIndex(a => String(a.id) === String(id));
                 if (appIndex !== -1) {
                     allGlobalApps[appIndex].status = newStatus;
+                    if (ulasanText) {
+                        allGlobalApps[appIndex].ulasan_admin = ulasanText;
+                        allGlobalApps[appIndex].ulasan = ulasanText;
+                    }
                     localStorage.setItem('all_global_applications', JSON.stringify(allGlobalApps));
                     
-                    // Kemaskini rekod tempatan pengguna sekiranya dikemaskini pada peranti yang sama
                     const userIc = allGlobalApps[appIndex].ic || allGlobalApps[appIndex].user_ic;
                     if (userIc) {
                         let userKey = 'user_applications_' + userIc;
@@ -222,6 +317,10 @@
                         const userAppIdx = userApps.findIndex(a => String(a.id) === String(id));
                         if (userAppIdx !== -1) {
                             userApps[userAppIdx].status = newStatus;
+                            if (ulasanText) {
+                                userApps[userAppIdx].ulasan_admin = ulasanText;
+                                userApps[userAppIdx].ulasan = ulasanText;
+                            }
                             localStorage.setItem(userKey, JSON.stringify(userApps));
                         }
                     }
@@ -229,16 +328,29 @@
 
                 alert('Status permohonan berjaya dikemaskini!');
                 loadAllApplications();
-            } catch (err) { alert('Ralat: ' + err.message); }
+            } catch (err) {
+                alert('Ralat: ' + err.message);
+            }
         }
 
         async function deleteUserApp(id) {
             if (!confirm('Pasti mahu memadam permohonan ini?')) return;
             try {
-                await fetch(`/api/admin/applications/${id}`, { method: 'DELETE' });
+                const res = await fetch(`/api/admin/applications/${id}`, { method: 'DELETE' });
+                if (!res.ok) {
+                    const errData = await res.json().catch(() => ({}));
+                    throw new Error(errData.error || 'Gagal memadam rekod.');
+                }
+
+                let allGlobalApps = JSON.parse(localStorage.getItem('all_global_applications')) || [];
+                allGlobalApps = allGlobalApps.filter(a => String(a.id) !== String(id));
+                localStorage.setItem('all_global_applications', JSON.stringify(allGlobalApps));
+
                 alert('Permohonan berjaya dipadam!');
                 loadAllApplications();
-            } catch (err) { alert('Ralat: ' + err.message); }
+            } catch (err) {
+                alert('Ralat: ' + err.message);
+            }
         }
     </script>
 </body>

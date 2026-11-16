@@ -23,7 +23,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* TUKAR FONT TAJUK UTAMA KEPADA PLUS JAKARTA SANS (SAMA SEPERTI INDEX.HTML) */
         .section-title h2 {
             font-family: 'Plus Jakarta Sans', sans-serif !important;
             font-size: 1.6rem !important;
@@ -35,14 +34,13 @@
 
         /* HEADER DUA BARIS */
         .navbar-header-container {
-            background-color: #0c2847 !important; /* Warna biru gelap */
+            background-color: #0c2847 !important;
             border-bottom: 1px solid #002b58;
             position: sticky;
             top: 0;
             z-index: 1000;
         }
 
-        /* BARIS ATAS: LOGO (KIRI) & LINK PROFIL/LOG MASUK (KANAN) */
         .header-top-row {
             display: flex;
             justify-content: space-between;
@@ -103,7 +101,6 @@
             font-size: 0.85rem;
         }
 
-        /* BARIS BAWAH: NAVIGASI UTAMA DI BAWAH LOGO */
         .header-bottom-nav {
             display: flex;
             justify-content: space-between;
@@ -147,7 +144,6 @@
             background-color: #ef7c00;
         }
 
-        /* BAR CARIAN DI NAV BARIS BAWAH */
         .nav-search-box {
             display: flex;
             align-items: center;
@@ -260,7 +256,6 @@
             background-color: #fef2f2;
         }
 
-        /* LENCANA TERKINI HITAM EXACT SEPERTI GAMBAR */
         .badge-new {
             position: absolute;
             top: 15px;
@@ -276,48 +271,37 @@
             letter-spacing: 0.5px;
         }
 
-        /* STRUKTUR KARUSEL SISTEMATIK DI TENGAH */
+        /* SUSUNAN GRID TEPAT 3 KAD SEBARIS (SCROLL KE BAWAH) */
         .carousel-wrapper-container {
             position: relative;
             width: 100%;
-            max-width: 1050px;
+            max-width: 1200px;
             margin: 0 auto;
-            display: flex;
-            align-items: center;
         }
 
         .cards-carousel-container {
-            display: flex !important;
-            flex-direction: row !important;
-            gap: 30px !important;
+            display: grid !important;
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 25px !important;
             width: 100% !important;
-            overflow-x: auto !important;
-            scroll-behavior: smooth;
-            scroll-snap-type: x mandatory;
-            padding: 15px 10px 30px 10px;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+            padding: 15px 15px 40px 15px;
+            box-sizing: border-box;
+            overflow-x: visible !important;
         }
 
-        .cards-carousel-container::-webkit-scrollbar {
-            display: none;
-        }
-
-        /* STIL KAD IKLAN IKUT GAMBAR RUJUKAN */
         .card-ad-style {
-            flex: 0 0 380px !important;
-            max-width: 380px !important;
+            width: 100% !important;
+            max-width: 100% !important;
             background: #ffffff;
             border-radius: 0;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             border: 1px solid #e2e8f0;
             display: flex;
             flex-direction: column;
-            scroll-snap-align: center;
             position: relative;
             overflow: hidden;
             box-sizing: border-box;
-            margin: 0 auto;
+            margin: 0;
         }
 
         .card-ad-image-box {
@@ -347,7 +331,6 @@
             flex-grow: 1;
         }
 
-        /* FONT NAMA KURSUS BOLD + PLUS JAKARTA SANS EXACT */
         .card-ad-title {
             font-family: 'Plus Jakarta Sans', sans-serif !important;
             font-size: 1.25rem;
@@ -387,12 +370,12 @@
             font-size: 0.8rem;
         }
 
-        /* SUSUNAN BUTANG OUTLINE BOX AKUR IKUT RUJUKAN */
         .card-ad-actions {
             display: flex;
             gap: 10px;
             width: 100%;
             justify-content: center;
+            margin-top: auto;
         }
 
         .btn-card-ad-apply {
@@ -418,6 +401,23 @@
             color: #0f172a !important;
         }
 
+        .btn-card-ad-closed {
+            min-width: 130px;
+            background-color: #fee2e2 !important;
+            color: #dc2626 !important;
+            border: 1px solid #fca5a5 !important;
+            padding: 6px 14px !important;
+            border-radius: 0 !important;
+            font-size: 0.8rem !important;
+            font-weight: 600 !important;
+            cursor: not-allowed !important;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
         .btn-card-ad-info {
             min-width: 120px;
             background-color: #f8fafc !important;
@@ -440,39 +440,11 @@
             color: #0f172a !important;
         }
 
-        /* BUTANG NAVIGASI ANAPANAHS */
-        .carousel-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 44px;
-            height: 44px;
-            background-color: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 50%;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 10;
-            color: #475569;
-            font-size: 1rem;
-            transition: all 0.2s ease;
-        }
-
-        .carousel-btn:hover {
-            background-color: #003d7c;
-            color: #ffffff;
-            border-color: #003d7c;
-        }
-
-        .carousel-btn-left {
-            left: -22px;
-        }
-
-        .carousel-btn-right {
-            right: -22px;
+        /* Responsif untuk Tablet (2 kad sebaris) */
+        @media screen and (max-width: 992px) {
+            .cards-carousel-container {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
         }
 
         @media screen and (max-width: 768px) {
@@ -496,20 +468,19 @@
                 font-size: 0.8rem !important;
                 padding: 10px 0 !important;
             }
-            .card-ad-style {
-                flex: 0 0 310px !important;
-                max-width: 310px !important;
+        }
+
+        /* Responsif untuk Telefon Pintar (1 kad sebaris) */
+        @media screen and (max-width: 640px) {
+            .cards-carousel-container {
+                grid-template-columns: 1fr !important;
             }
-            .carousel-btn-left { left: -10px; }
-            .carousel-btn-right { right: -10px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- CONTAINER HEADER DUA BARIS -->
     <header class="navbar-header-container">
-        <!-- BARIS ATAS: LOGO MOSTI & PERANAN/LOG MASUK USER -->
         <div class="header-top-row">
             <a href="index.html" class="logo">
                 <img src="logo.png" alt="Logo Portal Kursus MOSTI" class="logo-img">
@@ -527,7 +498,6 @@
             </div>
         </div>
 
-        <!-- BARIS BAWAH: NAVIGASI UTAMA DI BAWAH LOGO & BAR CARIAN -->
         <div class="header-bottom-nav">
             <nav>
                 <ul class="nav-links-sub" id="nav-links">
@@ -539,7 +509,6 @@
                 </ul>
             </nav>
             
-            <!-- BAR CARIAN DI NAV BARIS BAWAH -->
             <div class="nav-search-box">
                 <input type="text" id="top-nav-search-input" placeholder="Cari di sini..." onkeypress="if(event.key === 'Enter') handleNavSearch()">
                 <button type="button" onclick="handleNavSearch()" title="Cari">
@@ -555,19 +524,10 @@
             <p>Pilih program latihan kemahiran terbaik untuk meningkatkan potensi anda.</p>
         </div>
 
-        <!-- KONTENA KARUSEL DENGAN SCROLL RIGHT & LEFT -->
         <div class="carousel-wrapper-container">
-            <button class="carousel-btn carousel-btn-left" onclick="scrollCarousel(-1)" title="Scroll Kiri">
-                <i class="fa-solid fa-chevron-left"></i>
-            </button>
-            
             <div class="cards-carousel-container" id="main-courses-grid">
                 <div id="dynamic-courses-wrapper" style="display: contents;"></div>
             </div>
-
-            <button class="carousel-btn carousel-btn-right" onclick="scrollCarousel(1)" title="Scroll Kanan">
-                <i class="fa-solid fa-chevron-right"></i>
-            </button>
         </div>
     </div>
 
@@ -609,17 +569,6 @@
             });
         });
 
-        /* FUNGSI KAWALAN SCROLL KIRI & KANAN */
-        function scrollCarousel(direction) {
-            const container = document.getElementById('main-courses-grid');
-            const scrollAmount = 410; // Jarak pergerakan scroll kad
-            container.scrollBy({
-                left: direction * scrollAmount,
-                behavior: 'smooth'
-            });
-        }
-
-        /* FUNGSI CARIAN BAR NAVIGASI TOP */
         function handleNavSearch() {
             const inputVal = document.getElementById('top-nav-search-input').value.trim();
             if (inputVal) {
@@ -668,12 +617,59 @@
             window.location.href = 'login.html';
         }
 
+        function parseMalayOrIsoDate(dateStr) {
+            if (!dateStr) return null;
+            const str = String(dateStr).trim();
+
+            const isoMatch = str.match(/^(\d{4})-(\d{2})-(\d{2})/);
+            if (isoMatch) {
+                return new Date(Number(isoMatch[1]), Number(isoMatch[2]) - 1, Number(isoMatch[3]), 0, 0, 0, 0);
+            }
+
+            const dmyMatch = str.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
+            if (dmyMatch) {
+                return new Date(Number(dmyMatch[3]), Number(dmyMatch[2]) - 1, Number(dmyMatch[1]), 0, 0, 0, 0);
+            }
+
+            const bulanMap = {
+                januari: 0, februari: 1, mac: 2, april: 3, mei: 4, jun: 5,
+                julai: 6, ogos: 7, september: 8, oktober: 9, november: 10, disember: 11
+            };
+            const textMatch = str.toLowerCase().match(/(\d{1,2})\s+(januari|februari|mac|april|mei|jun|julai|ogos|september|oktober|november|disember)\s+(\d{4})/);
+            if (textMatch) {
+                return new Date(Number(textMatch[3]), bulanMap[textMatch[2]], Number(textMatch[1]), 0, 0, 0, 0);
+            }
+
+            return null;
+        }
+
+        function isCourseClosed(courseOrDate) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            if (typeof courseOrDate === 'string') {
+                const d = parseMalayOrIsoDate(courseOrDate);
+                return d ? today >= d : false;
+            }
+
+            if (courseOrDate && typeof courseOrDate === 'object') {
+                if (courseOrDate.tarikh_tutup) {
+                    const closeDate = parseMalayOrIsoDate(courseOrDate.tarikh_tutup);
+                    if (closeDate && today >= closeDate) return true;
+                }
+                if (courseOrDate.tarikh) {
+                    const eventDate = parseMalayOrIsoDate(courseOrDate.tarikh);
+                    if (eventDate && today > eventDate) return true;
+                }
+            }
+            return false;
+        }
+
         async function renderAdminCoursesOnly() {
             const wrapper = document.getElementById('dynamic-courses-wrapper');
             let customCourses = [];
 
             try {
-                // 1. UTAMAKAN MENGAMBIL DATA KURSUS DARIPADA BACKEND API (DATABASE)
                 const response = await fetch('/api/kursus');
                 if (response.ok) {
                     customCourses = await response.json();
@@ -681,11 +677,9 @@
                     customCourses = JSON.parse(localStorage.getItem('custom_courses')) || [];
                 }
             } catch(e) {
-                // Fallback ke localStorage sekiranya tiada sambungan
                 customCourses = JSON.parse(localStorage.getItem('custom_courses')) || [];
             }
 
-            // Membaca parameter carian sekiranya dihantar melalui halaman utama
             const urlParams = new URLSearchParams(window.location.search);
             const keywordParam = urlParams.get('keyword')?.toLowerCase().trim();
             const bidangParam = urlParams.get('bidang')?.toUpperCase().trim();
@@ -703,10 +697,9 @@
                 });
             }
 
-            // Jika tiada kursus yang ditambah oleh admin / ditemui
             if (!customCourses || customCourses.length === 0) {
                 wrapper.innerHTML = `
-                    <div style="width: 100%; text-align: center; padding: 50px 20px; color: #64748b;">
+                    <div style="grid-column: 1 / -1; width: 100%; text-align: center; padding: 50px 20px; color: #64748b;">
                         <i class="fa-solid fa-folder-open" style="font-size: 3rem; margin-bottom: 15px; color: #cbd5e1;"></i>
                         <h3>Tiada Kursus Ditawarkan Buat Masa Ini</h3>
                     </div>
@@ -714,19 +707,35 @@
                 return;
             }
 
-            // Paparkan HANYA kursus mengikut gaya gambar rujukan
             let htmlContent = '';
             customCourses.forEach((item) => {
                 const img = item.gambar_url || 'logo.png';
-                const tarikhVal = item.tarikh || '6 November 2026';
-                const tempatVal = item.tempat || 'DEWAN PERHIMPUNAN MOSTI, ARAS 1, BLOK C7';
+                const tarikhVal = item.tarikh || '-';
+                const tempatVal = item.tempat || '-';
                 const masaVal = item.masa || 'Akan dimaklumkan kelak';
-                const descVal = item.penerangan || 'ok';
+                const descVal = item.penerangan || '-';
                 const idVal = item.id || '';
+
+                const closed = isCourseClosed(item);
+                const parsedCloseDate = parseMalayOrIsoDate(item.tarikh_tutup);
+                const tarikhTutupFormatted = parsedCloseDate 
+                    ? parsedCloseDate.toLocaleDateString('ms-MY', { day: 'numeric', month: 'long', year: 'numeric' })
+                    : null;
+
+                const tarikhTutupInfoHtml = tarikhTutupFormatted ? `
+                    <div class="card-ad-info-item" style="color: ${closed ? '#dc2626' : '#d97706'}; font-weight: 600;">
+                        <i class="fa-solid fa-hourglass-end" style="color: ${closed ? '#dc2626' : '#d97706'};"></i>
+                        <span>Tutup Permohonan: ${tarikhTutupFormatted}</span>
+                    </div>
+                ` : '';
+
+                const applyButtonHtml = closed 
+                    ? `<button type="button" class="btn-card-ad-closed" disabled title="Permohonan sudah ditutup"><i class="fa-solid fa-lock"></i> Permohonan Ditutup</button>`
+                    : `<a href="mohon.html?kursus=${encodeURIComponent(item.tajuk)}" class="btn-card-ad-apply">Mohon</a>`;
 
                 htmlContent += `
                     <div class="card-ad-style">
-                        <span class="badge-new">TERKINI</span>
+                        <span class="badge-new" style="${closed ? 'background-color: #dc2626;' : ''}">${closed ? 'DITUTUP' : 'TERKINI'}</span>
                         <div class="card-ad-image-box">
                             <img src="${img}" alt="${item.tajuk}">
                         </div>
@@ -747,10 +756,11 @@
                                     <i class="fa-regular fa-clock"></i>
                                     <span>${masaVal}</span>
                                 </div>
+                                ${tarikhTutupInfoHtml}
                             </div>
                             
                             <div class="card-ad-actions">
-                                <a href="mohon.html?kursus=${encodeURIComponent(item.tajuk)}" class="btn-card-ad-apply">Mohon</a>
+                                ${applyButtonHtml}
                                 <a href="maklumat_lanjut.html?id=${encodeURIComponent(idVal)}&kursus=${encodeURIComponent(item.tajuk)}" class="btn-card-ad-info">Maklumat Lanjut</a>
                             </div>
                         </div>
@@ -760,7 +770,6 @@
             wrapper.innerHTML = htmlContent;
         }
 
-        // Kemaskini automatik sekiranya admin menambah/memadam kursus dari tab lain
         window.addEventListener('storage', (e) => {
             if (e.key === 'custom_courses') {
                 renderAdminCoursesOnly();
@@ -769,3 +778,4 @@
     </script>
 </body>
 </html>
+```[cite: 1]
