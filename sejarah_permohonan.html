@@ -189,8 +189,10 @@
                     appList = await res.json();
                 }
 
-                // Backup LocalStorage jika server memulangkan tatasusunan kosong
-                if (!appList || appList.length === 0) {
+                // Selaraskan localStorage dengan data sebenar daripada server jika wujud
+                if (appList && appList.length > 0) {
+                    localStorage.setItem('all_global_applications', JSON.stringify(appList));
+                } else {
                     appList = JSON.parse(localStorage.getItem('all_global_applications')) || [];
                 }
 

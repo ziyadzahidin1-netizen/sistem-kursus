@@ -25,6 +25,11 @@ app.use(express.static(path.join(__dirname)));
 // Array Simpanan Memori (Fallback jika Supabase tiada/gagal)
 let memoryApplications = [];
 
+// Helper semak format UUID yang sah
+function isValidUUID(id) {
+    return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(String(id || ''));
+}
+
 // Helper untuk dapatkan Supabase Client dengan selamat tanpa crash
 function getSupabase() {
     const supabaseUrl = process.env.SUPABASE_URL;
@@ -267,7 +272,6 @@ app.post('/api/login', async function(req, res) {
 // =========================================================================
 // 3.1 API LUPA & RESET KATA LALUAN (HANTAR KE E-MEL BERDAFTAR)
 // =========================================================================
-
 app.post('/api/forgot-password', async (req, res) => {
     try {
         const supabase = getSupabase();
@@ -339,6 +343,9 @@ app.post('/api/forgot-password', async (req, res) => {
                     sender: { name: "Portal MOSTI", email: process.env.SENDER_EMAIL },
                     to: [{ email: user.email, name: user.nama || 'Pengguna' }],
                     subject: 'Tetapan Semula Kata Laluan - Portal Kursus',
+                    headers: {
+                        "X-Mailin-Track-Links": "0"
+                    },
                     htmlContent: htmlContent
                 })
             });
@@ -449,17 +456,39 @@ app.post('/api/change-password', async (req, res) => {
 });
 
 // =========================================================================
-// 4. API PENGURUSAN KURSUS
+// 4. API PENGURUSAN KURSUS (DENGAN SERVER CACHE UNTUK PRESTASI PANTAS)
 // =========================================================================
+let coursesCache = null;
+let coursesCacheTime = 0;
+const CACHE_TTL_MS = 60 * 1000; // Simpan cache selama 60 saat
+
+function clearCoursesCache() {
+    coursesCache = null;
+    coursesCacheTime = 0;
+}
+
 app.get('/api/kursus', async (req, res) => {
     try {
+        // Pulangkan cache segera jika masih sah (< 1ms)
+        if (coursesCache && (Date.now() - coursesCacheTime < CACHE_TTL_MS)) {
+            return res.status(200).json(coursesCache);
+        }
+
         const supabase = getSupabase();
         if (!supabase) return res.status(500).json({ error: 'Tetapan Supabase tidak dijumpai.' });
 
-        const { data, error } = await supabase.from('courses').select('*').order('created_at', { ascending: false });
+        // Tarik lajur yang diperlukan sahaja untuk mengecilkan saiz payload
+        const { data, error } = await supabase
+            .from('courses')
+            .select('id, tajuk, tarikh, tarikh_tutup, tempat, masa, penerangan, gambar_url, bidang, created_at')
+            .order('created_at', { ascending: false });
+
         if (error) return res.status(500).json({ error: error.message });
 
-        return res.status(200).json(data || []);
+        coursesCache = data || [];
+        coursesCacheTime = Date.now();
+
+        return res.status(200).json(coursesCache);
     } catch (error) {
         return res.status(500).json({ error: 'Ralat Server: ' + error.message });
     }
@@ -471,7 +500,7 @@ app.post('/api/kursus', async (req, res) => {
         if (!supabase) return res.status(500).json({ error: 'Tetapan Supabase tidak dijumpai.' });
 
         const { 
-            tajuk, tarikh, tarikh_mula, tarikh_tamat, tempat, penerangan, 
+            tajuk, tarikh, tarikh_mula, tarikh_tamat, tarikh_tutup, tempat, penerangan, 
             gambar_url, bidang, masa, objektif, penyelaras_nama, 
             penyelaras_emel, penyelaras_telefon 
         } = req.body || {};
@@ -481,7 +510,7 @@ app.post('/api/kursus', async (req, res) => {
         }
 
         const rawData = { 
-            tajuk, tarikh, tarikh_mula, tarikh_tamat, tempat, penerangan, 
+            tajuk, tarikh, tarikh_mula, tarikh_tamat, tarikh_tutup, tempat, penerangan, 
             gambar_url, bidang, masa, objektif, penyelaras_nama, 
             penyelaras_emel, penyelaras_telefon 
         };
@@ -494,6 +523,7 @@ app.post('/api/kursus', async (req, res) => {
             return res.status(500).json({ error: error.message });
         }
 
+        clearCoursesCache();
         broadcastEvent({ type: 'COURSE_UPDATED' });
         return res.status(201).json({ message: 'Kursus berjaya ditambah!', data });
     } catch (error) {
@@ -508,13 +538,13 @@ app.put('/api/kursus/:id', async (req, res) => {
 
         const { id } = req.params;
         const { 
-            tajuk, tarikh, tarikh_mula, tarikh_tamat, tempat, penerangan, 
+            tajuk, tarikh, tarikh_mula, tarikh_tamat, tarikh_tutup, tempat, penerangan, 
             gambar_url, bidang, masa, objektif, penyelaras_nama, 
             penyelaras_emel, penyelaras_telefon 
         } = req.body || {};
 
         const rawData = { 
-            tajuk, tarikh, tarikh_mula, tarikh_tamat, tempat, penerangan, 
+            tajuk, tarikh, tarikh_mula, tarikh_tamat, tarikh_tutup, tempat, penerangan, 
             gambar_url, bidang, masa, objektif, penyelaras_nama, 
             penyelaras_emel, penyelaras_telefon 
         };
@@ -527,6 +557,7 @@ app.put('/api/kursus/:id', async (req, res) => {
             return res.status(500).json({ error: error.message });
         }
 
+        clearCoursesCache();
         broadcastEvent({ type: 'COURSE_UPDATED' });
         return res.status(200).json({ message: 'Kursus berjaya dikemas kini!', data });
     } catch (error) {
@@ -547,6 +578,7 @@ app.delete('/api/kursus/:id', async (req, res) => {
             return res.status(500).json({ error: error.message });
         }
 
+        clearCoursesCache();
         broadcastEvent({ type: 'COURSE_UPDATED' });
         return res.status(200).json({ message: 'Kursus berjaya dipadam!' });
     } catch (error) {
@@ -585,8 +617,9 @@ app.post('/api/mohon', async function(req, res) {
             }
         }
 
+        // Gunakan UUID sebenar supaya serasi dengan lajur uuid Supabase
         const newRecord = {
-            id: Date.now().toString(),
+            id: crypto.randomUUID(),
             ic: String(ic).trim(),
             user_ic: String(ic).trim(),
             nama_pemohon: nama,
@@ -657,7 +690,7 @@ app.post('/api/mohon', async function(req, res) {
 
         broadcastEvent({ type: 'APPLICATION_UPDATED' });
 
-        return res.status(200).json({ status: 'success', message: 'Permohonan diterima dan rekod telah disimpan!' });
+        return res.status(200).json({ status: 'success', message: 'Permohonan diterima dan rekod telah disimpan!', data: newRecord });
     } catch (error) {
         return res.status(500).json({ error: 'Ralat Server: ' + error.message });
     }
@@ -699,7 +732,8 @@ app.put('/api/admin/applications/:id/status', async (req, res) => {
         }
 
         const supabase = getSupabase();
-        if (supabase) {
+        // Hanya hantar ke Supabase jika id berformat UUID sah supaya tidak ralat syntax
+        if (supabase && isValidUUID(id)) {
             const updatePayload = { status: status };
             if (teksUlasan !== undefined) {
                 updatePayload.ulasan_admin = teksUlasan;
@@ -732,7 +766,8 @@ app.put('/api/admin/applications/:id/ulasan', async (req, res) => {
         }
 
         const supabase = getSupabase();
-        if (supabase) {
+        // Hanya hantar ke Supabase jika id berformat UUID sah supaya tidak ralat syntax
+        if (supabase && isValidUUID(id)) {
             const { error } = await supabase
                 .from('applications')
                 .update({ ulasan_admin: teksUlasan })
@@ -755,7 +790,8 @@ app.delete('/api/admin/applications/:id', async (req, res) => {
         memoryApplications = memoryApplications.filter(a => String(a.id) !== String(id));
 
         const supabase = getSupabase();
-        if (supabase) {
+        // Hanya padam di Supabase jika id berformat UUID sah
+        if (supabase && isValidUUID(id)) {
             const { error } = await supabase.from('applications').delete().eq('id', id);
             if (error) return res.status(500).json({ error: error.message });
         }

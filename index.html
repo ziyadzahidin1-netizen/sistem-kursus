@@ -17,18 +17,29 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
+        /* =========================================================
+           TUKAR GAMBAR BACKGROUND HOME ANDA DI SINI (1 TEMPAT SAHAJA)
+           Pastikan fail .jpg berada dalam folder yang sama dengan index.html
+           ========================================================= */
+        :root {
+            --hero-bg-image: url('back.jpg');
+        }
+
         body, button, input, select, textarea {
             font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif !important;
             -webkit-font-smoothing: antialiased;
         }
 
+        /* =========================================================
+           GAYA NAVBAR (LATAR PUTIH + SUSUNAN MENU & FONT ASAL)
+           ========================================================= */
         .navbar-header-container {
-            background-color: #0c2847 !important;
-            border-bottom: 1px solid #002b58;
+            background-color: #ffffff !important;
+            border-bottom: 1px solid #e2e8f0;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
 
         .header-top-row {
@@ -36,7 +47,8 @@
             justify-content: space-between;
             align-items: center;
             padding: 10px 50px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid #f1f5f9;
+            background-color: #08082c;
         }
 
         .logo {
@@ -58,7 +70,7 @@
             text-transform: uppercase;
             color: #ffffff;
             line-height: 1.15;
-            border-left: 1px solid rgba(255, 255, 255, 0.3);
+            border-left: 1px solid #cbd5e1;
             padding-left: 12px;
         }
 
@@ -66,7 +78,7 @@
             font-size: 0.65rem;
             letter-spacing: 0.5px;
             font-weight: 300;
-            color: #cbd5e1;
+            color: #fcfeff;
         }
 
         .header-english-title {
@@ -94,9 +106,9 @@
         /* Butang Hamburger (Sembunyi pada Desktop) */
         .mobile-hamburger-btn {
             display: none;
-            background: rgba(255, 255, 255, 0.12);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            color: #ffffff;
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            color: #003d7c;
             width: 38px;
             height: 38px;
             border-radius: 6px;
@@ -110,8 +122,10 @@
         .mobile-hamburger-btn:hover {
             background: #ef7c00;
             border-color: #ef7c00;
+            color: #ffffff;
         }
 
+        /* Baris Navigasi Bawah (100% Gaya & Susunan Asal) */
         .header-bottom-nav {
             display: flex;
             justify-content: space-between;
@@ -155,6 +169,7 @@
             background-color: #ef7c00;
         }
 
+        /* Kotak Carian Asal */
         .nav-search-box {
             display: flex;
             align-items: center;
@@ -195,72 +210,145 @@
             color: #003d7c;
         }
 
+        /* =========================================================
+           HERO SECTION (SUSUN ATUR KIRI & LATAR DIGITAL BIRU)
+           ========================================================= */
         .hero {
             position: relative;
-            min-height: 80vh;
+            min-height: 76vh;
+            background: linear-gradient(90deg, rgba(6, 20, 46, 0.94) 0%, rgba(10, 32, 70, 0.78) 50%, rgba(10, 32, 70, 0.35) 100%), 
+                        var(--hero-bg-image) center right / cover no-repeat !important;
+            background-color: #071936 !important;
             display: flex !important;
             flex-direction: column !important;
-            justify-content: flex-start !important;
-            align-items: center !important;
-            padding-top: 110px !important;
-            text-align: center !important;
+            justify-content: center !important;
+            align-items: flex-start !important;
+            padding: 70px 80px 90px 80px !important;
+            text-align: left !important;
             box-sizing: border-box !important;
         }
 
+        .hero-overlay {
+            display: none !important;
+        }
+
         .hero-content {
-            margin-top: 0 !important;
-            transform: translateY(-10px);
-            padding: 0 16px;
+            max-width: 620px;
+            margin: 0 !important;
+            padding: 0 !important;
+            transform: none !important;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background-color: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            padding: 5px 14px;
+            border-radius: 20px;
+            margin-bottom: 18px;
+            text-transform: uppercase;
         }
 
         .hero-content h1 {
             font-family: 'Plus Jakarta Sans', sans-serif !important;
-            font-size: 2.75rem !important;
+            font-size: 3.1rem !important;
             font-weight: 800 !important;
             color: #ffffff !important;
             letter-spacing: -0.8px;
-            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
-            margin-bottom: 14px;
-            line-height: 1.2;
+            text-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+            margin: 0 0 16px 0 !important;
+            line-height: 1.15 !important;
         }
 
         .hero-content p {
             font-size: 1.05rem !important;
             font-weight: 300 !important;
             color: #e2e8f0 !important;
-            margin-bottom: 28px;
+            margin: 0 0 30px 0 !important;
+            line-height: 1.6;
         }
 
         .hero-buttons {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
-            gap: 16px;
+            gap: 14px;
+            flex-wrap: wrap;
         }
 
-        .btn-hero-box {
-            background: transparent !important;
+        /* Butang Utama Oren */
+        .btn-hero-orange {
+            background-color: #ef7c00 !important;
             color: #ffffff !important;
-            padding: 12px 26px !important;
-            border-radius: 0px !important;
-            font-size: 0.92rem !important;
+            padding: 12px 24px !important;
+            border-radius: 4px !important;
+            font-size: 0.9rem !important;
             font-weight: 600 !important;
             text-decoration: none !important;
             display: inline-flex !important;
             align-items: center !important;
             gap: 8px !important;
-            border: 1.5px solid #ffffff !important;
+            border: 1.5px solid #ef7c00 !important;
+            transition: all 0.25s ease !important;
+        }
+
+        .btn-hero-orange:hover {
+            background-color: #d96b00 !important;
+            border-color: #d96b00 !important;
+            transform: translateY(-2px);
+        }
+
+        /* Butang Kedua Outline Putih */
+        .btn-hero-box {
+            background: rgba(15, 23, 42, 0.35) !important;
+            color: #ffffff !important;
+            padding: 12px 24px !important;
+            border-radius: 4px !important;
+            font-size: 0.9rem !important;
+            font-weight: 600 !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            border: 1.5px solid rgba(255, 255, 255, 0.85) !important;
             box-shadow: none !important;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            transition: all 0.25s ease !important;
         }
 
         .btn-hero-box:hover {
-            background: rgba(255, 255, 255, 0.2) !important;
+            background: rgba(255, 255, 255, 0.18) !important;
             color: #ffffff !important;
             border-color: #ffffff !important;
-            transform: translateY(-3px);
+            transform: translateY(-2px);
         }
 
+        .scroll-down-indicator {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: rgba(255, 255, 255, 0.85) !important;
+            font-size: 0.78rem;
+            text-decoration: none;
+            z-index: 2;
+        }
+
+        .scroll-down-indicator:hover {
+            color: #ef7c00 !important;
+        }
+
+        /* =========================================================
+           GAYA SEKSYEN LAIN (KEKAL SEPERTI ASAL)
+           ========================================================= */
         .btn-modern-primary {
             background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
             color: #ffffff !important;
@@ -575,38 +663,6 @@
             font-size: 0.85rem;
             font-weight: 400;
         }
-        .editor-form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-        .editor-form-grid .full-width {
-            grid-column: span 2;
-        }
-        .editor-form-grid label {
-            font-weight: 400;
-            margin-bottom: 5px;
-            display: block;
-            color: #1e293b;
-        }
-        .editor-input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            font-size: 14px;
-            box-sizing: border-box;
-        }
-        .date-picker-group {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-        .editor-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
         .btn-admin-save {
             background-color: #2563eb;
             color: white;
@@ -616,52 +672,9 @@
             cursor: pointer;
             font-weight: 400;
         }
-        .btn-admin-cancel {
-            background-color: #64748b;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-        .admin-controls-card {
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px dashed rgba(0,0,0,0.15);
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-        .btn-card-edit {
-            background-color: #f59e0b;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.85rem;
-        }
-        .btn-card-delete {
-            background-color: #ef4444;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.85rem;
-        }
-        .preview-img {
-            max-height: 200px;
-            aspect-ratio: 2550 / 3300;
-            width: auto;
-            object-fit: cover;
-            border-radius: 6px;
-            margin-top: 5px;
-            display: none;
-        }
 
         .dtims-search-section {
-            background-color: #4b6b82;
+            background-color: #ffffff;
             padding: 35px 20px;
             color: #ffffff;
         }
@@ -670,11 +683,12 @@
             margin: 0 auto;
         }
         .dtims-search-title {
-            font-family: 'Plus Jakarta Sans', sans-serif !important;
-            font-size: 1.8rem !important;
-            font-weight: 600 !important;
-            margin-bottom: 20px;
-            color: #ffffff;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 1.6rem !important;
+    font-weight: 600 !important;
+    color: #0c2847 !important; /* Warna biru gelap sama seperti 'Mengenai MOSTI' */
+    margin: 0 0 20px 0 !important;
+    letter-spacing: -0.5px !important;
         }
         .dtims-input-group {
             margin-bottom: 12px;
@@ -723,33 +737,34 @@
             background-color: #1d4ed8;
         }
 
+        /* User Dropdown Pada Latar Putih */
         .user-dropdown-container {
             position: relative;
             display: inline-block;
         }
         .user-dropdown-btn {
-            background: transparent;
+            background: #09042f;
             color: #ffffff;
-            border: none;
+            border: 1px solid #24426a;
             font-size: 0.88rem;
             font-weight: 400;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 4px 8px;
-            border-radius: 4px;
+            padding: 4px 10px;
+            border-radius: 20px;
             transition: background 0.2s ease;
         }
         .user-dropdown-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
+           background: rgba(255, 255, 255, 0.18) !important;
         }
         .user-avatar-small {
             width: 28px;
             height: 28px;
             border-radius: 50%;
             object-fit: cover;
-            border: 1px solid #ffffff;
+            border: 1px solid #cbd5e1;
         }
         .dropdown-menu {
             display: none;
@@ -864,7 +879,7 @@
         .about-title-large, 
         .section-title h2, 
         .nus-footer-title {
-            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            font-family: 'Open Sans', sans-serif !important;
             font-size: 1.6rem !important;
             font-weight: 600 !important;
             color: #0c2847 !important;
@@ -970,7 +985,7 @@
         }
 
         /* =========================================================
-           SUSUNAN RESPONSIF MOBILE (<= 768px) - SAIZ LEBIH KOMPAK
+           SUSUNAN RESPONSIF MOBILE (<= 768px)
            ========================================================= */
         @media screen and (max-width: 768px) {
             .header-top-row {
@@ -1009,7 +1024,6 @@
                 gap: 8px !important;
             }
 
-            /* Butang Hamburger lebih kecil */
             .mobile-hamburger-btn {
                 display: flex !important;
                 width: 30px !important;
@@ -1018,7 +1032,6 @@
                 border-radius: 5px !important;
             }
 
-            /* Avatar pengguna lebih kecil */
             .user-avatar-small {
                 width: 24px !important;
                 height: 24px !important;
@@ -1031,7 +1044,6 @@
                 gap: 4px !important;
             }
 
-            /* Menu Dropdown Mobile lebih padat */
             .header-bottom-nav {
                 display: none;
                 flex-direction: column !important;
@@ -1083,7 +1095,6 @@
                 padding-left: 10px !important;
             }
 
-            /* Kotak carian slim dalam menu mobile */
             .nav-search-box {
                 width: 100% !important;
                 box-sizing: border-box;
@@ -1095,50 +1106,45 @@
                 font-size: 0.82rem !important;
             }
 
-            /* Hero Section Mobile lebih ringkas */
+            /* Hero Section Mobile (Otomatik ikut --hero-bg-image) */
             .hero {
-                padding-top: 35px !important;
+                padding: 40px 20px 65px 20px !important;
                 min-height: 62vh !important;
+                background: linear-gradient(180deg, rgba(6, 20, 46, 0.92) 0%, rgba(10, 32, 70, 0.82) 100%), 
+                            var(--hero-bg-image) center center / cover no-repeat !important;
             }
             .hero-badge {
-                font-size: 0.68rem !important;
+                font-size: 0.65rem !important;
                 padding: 4px 10px !important;
+                margin-bottom: 12px !important;
             }
             .hero-content h1 {
-                font-size: 1.38rem !important;
-                line-height: 1.28 !important;
-                margin-bottom: 10px !important;
+                font-size: 1.65rem !important;
+                line-height: 1.25 !important;
+                margin-bottom: 12px !important;
             }
             .hero-content p {
-                font-size: 0.82rem !important;
-                line-height: 1.45 !important;
-                margin-bottom: 18px !important;
-                max-width: 92% !important;
-                margin-left: auto !important;
-                margin-right: auto !important;
+                font-size: 0.85rem !important;
+                line-height: 1.5 !important;
+                margin-bottom: 20px !important;
             }
             .hero-buttons {
-                display: flex !important;
                 flex-direction: column !important;
-                gap: 8px !important;
-                width: 100% !important;
-                max-width: 240px !important;
-                margin: 0 auto !important;
+                align-items: stretch !important;
+                gap: 10px !important;
+                max-width: 250px;
             }
+            .hero-buttons .btn-hero-orange,
             .hero-buttons .btn-hero-box {
-                width: 100% !important;
-                box-sizing: border-box !important;
-                text-align: center !important;
-                padding: 9px 14px !important;
-                font-size: 0.8rem !important;
-                margin: 0 !important;
-                display: flex !important;
-                align-items: center !important;
                 justify-content: center !important;
-                gap: 6px !important;
+                padding: 10px 16px !important;
+                font-size: 0.82rem !important;
+            }
+            .scroll-down-indicator {
+                font-size: 0.7rem !important;
+                bottom: 12px !important;
             }
 
-            /* Carian Kursus & Seksyen Kandungan lebih padat */
             .dtims-search-section {
                 padding: 24px 14px !important;
             }
@@ -1180,7 +1186,6 @@
                 font-size: 0.75rem !important;
             }
 
-            /* Kad Kursus Mobile */
             .cards-grid-fixed .card {
                 flex: 0 0 100% !important;
                 max-width: 100% !important;
@@ -1211,16 +1216,6 @@
                 font-size: 0.8rem !important;
             }
 
-            .editor-form-grid {
-                grid-template-columns: 1fr !important;
-            }
-            .editor-form-grid .full-width {
-                grid-column: span 1 !important;
-            }
-            .date-picker-group {
-                flex-direction: column;
-                align-items: stretch;
-            }
             .about-modern-container {
                 flex-direction: column;
                 gap: 20px;
@@ -1243,7 +1238,6 @@
                 font-size: 0.88rem !important;
             }
 
-            /* Footer Mobile */
             .nus-style-footer {
                 padding: 35px 14px 25px 14px !important;
             }
@@ -1279,7 +1273,7 @@
 
             <div class="header-top-right">
                 <span id="user-nav-container">
-                    <a href="login.html" style="color: #ffffff; text-decoration: none; font-size: 0.85rem;"><i class="fa-solid fa-user"></i> Log Masuk</a>
+                    <a href="login.html" style="color: #003d7c; text-decoration: none; font-size: 0.85rem;"><i class="fa-solid fa-user"></i> Log Masuk</a>
                 </span>
                 <!-- Butang Hamburger Mobile -->
                 <button type="button" id="mobile-menu-btn" class="mobile-hamburger-btn" onclick="toggleMobileNav()" aria-label="Buka Menu Navigasi" aria-expanded="false">
@@ -1317,7 +1311,7 @@
             <p>Tingkatkan kemahiran anda menerusi program dan latihan terkini kami.</p>
             
             <div class="hero-buttons">
-                <a href="#about-section" class="btn-hero-box">Ketahui Mengenai MOSTI <i class="fa-solid fa-arrow-down"></i></a>
+                <a href="#about-section" class="btn-hero-box">Ketahui Mengenai MOSTI <i class="fa-solid fa-arrow-right"></i></a>
                 <a href="iklan.html" class="btn-hero-box">Lihat Kursus Terkini <i class="fa-solid fa-arrow-right"></i></a>
             </div>
         </div>
@@ -1398,7 +1392,7 @@
         </div>
     </section>
 
-    <section id="about-section" class="content-section" style="background-color: #fcfcfc;">
+    <section id="about-section" class="content-section" style="background-color: #f7fcfd;">
         <div class="about-modern-container">
             <div class="about-modern-left">
                 <h2 class="about-title-large">Mengenai MOSTI</h2>
@@ -1450,123 +1444,23 @@
         </div>
     </section>
 
-    <section id="services-section" class="content-section bg-light">
+    <section id="services-section" class="content-section bg-white"
         <div class="container">
             <div class="section-title">
                 <h2>Kursus Akan Datang Terkini</h2>
                 <p style="margin-top: 10px;">Sertai program latihan, bengkel, dan majlis rasmi terkini yang dianjurkan oleh MOSTI.</p>
             </div>
 
-            <div id="admin-editor-section" class="admin-editor-panel" style="display: none;">
-                <div class="admin-editor-header">
-                    <h3><i class="fa-solid fa-pen-to-square"></i> Mode Editor Admin (Tambah / Edit Kursus)</h3>
-                    <div>
-                        <a href="edit_kursus.html" class="btn-admin-save" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; margin-right: 8px; background-color: #f59e0b;">
-                            <i class="fa-solid fa-list-check"></i> Edit Semua Kursus
-                        </a>
-                        <span class="admin-badge"><i class="fa-solid fa-user-shield"></i> Akses Admin</span>
-                    </div>
-                </div>
-                <form id="admin-course-form" onsubmit="handleAdminSaveCourse(event)">
-                    <input type="hidden" id="editor-course-id">
-                    <div class="editor-form-grid">
-                        <div>
-                            <label for="editor-tajuk">Nama / Tajuk Kursus</label>
-                            <input type="text" id="editor-tajuk" class="editor-input" placeholder="Contoh: Kursus AI" required>
-                        </div>
-
-                        <div>
-                            <label for="editor-bidang">Jenis Bidang Kursus</label>
-                            <select id="editor-bidang" class="editor-input" required>
-                                <option value="" disabled selected>-- Pilih Bidang Kursus --</option>
-                                <option value="PEMBANGUNAN DIRI DAN SAHSIAH">PEMBANGUNAN DIRI DAN SAHSIAH</option>
-                                <option value="BAHASA">BAHASA</option>
-                                <option value="MANDATORI">MANDATORI</option>
-                                <option value="KEPIMPINAN">KEPIMPINAN</option>
-                                <option value="KOMUNIKASI">KOMUNIKASI</option>
-                                <option value="TEKNOLOGI MAKLUMAT DAN AI">TEKNOLOGI MAKLUMAT DAN AI</option>
-                                <option value="PENGURUSAN PROJEK">PENGURUSAN PROJEK</option>
-                                <option value="KEWANGAN DAN PEROLEHAN">KEWANGAN DAN PEROLEHAN</option>
-                                <option value="KESELAMATAN DAN KESIHATAN PEKERJAAN (OSH)">KESELAMATAN DAN KESIHATAN PEKERJAAN (OSH)</option>
-                                <option value="INNOVASI DAN KREATIVITI">INNOVASI DAN KREATIVITI</option>
-                                <option value="PENGURUSAN STRATEGIK">PENGURUSAN STRATEGIK</option>
-                                <option value="ETIKA DAN INTEGRITI">ETIKA DAN INTEGRITI</option>
-                                <option value="PENGURUSAN SUMBER MANUSIA">PENGURUSAN SUMBER MANUSIA</option>
-                                <option value="DASAR PUBLIK DAN PENTADBIRAN">DASAR PUBLIK DAN PENTADBIRAN</option>
-                                <option value="PROTOKOL DAN MAJLIS RASMI">PROTOKOL DAN MAJLIS RASMI</option>
-                            </select>
-                        </div>
-                        
-                        <div>
-                            <label for="editor-tarikh">Tarikh Kursus</label>
-                            <div class="date-picker-group">
-                                <input type="date" id="editor-tarikh-mula" class="editor-input" onchange="autoFormatDateText()">
-                                <span>hingga</span>
-                                <input type="date" id="editor-tarikh-tamat" class="editor-input" onchange="autoFormatDateText()">
-                            </div>
-                            <input type="text" id="editor-tarikh" class="editor-input" style="margin-top: 5px;" placeholder="Contoh: 20 - 22 Ogos 2026" required>
-                            <small style="font-size: 11px; color: #64748b;">Gunakan pemilih tarikh di atas atau taip secara manual format tarikh.</small>
-                        </div>
-
-                        <div>
-                            <label for="editor-masa">Masa / Waktu Kursus</label>
-                            <input type="text" id="editor-masa" class="editor-input" placeholder="Contoh: 8:30 Pagi - 4:30 Petang">
-                        </div>
-
-                        <div>
-                            <label for="editor-tempat">Lokasi / Tempat</label>
-                            <input type="text" id="editor-tempat" class="editor-input" placeholder="Contoh: Dewan Perhimpunan MOSTI" required>
-                        </div>
-
-                        <div>
-                            <label for="editor-tarikh-tutup">Tarikh Tutup Permohonan</label>
-                            <input type="date" id="editor-tarikh-tutup" class="editor-input" required>
-                        </div>
-
-                        <div class="full-width">
-                            <label for="editor-penerangan">Penerangan Ringkas</label>
-                            <textarea id="editor-penerangan" class="editor-input" style="height: 70px;" placeholder="Penerangan ringkas kursus..." required></textarea>
-                        </div>
-                        
-                        <div class="full-width">
-                            <label for="editor-objektif">Objektif Kursus (Gunakan baris baharu untuk setiap objektif)</label>
-                            <textarea id="editor-objektif" class="editor-input" style="height: 90px;" placeholder="1. Meningkatkan kemahiran peserta&#10;2. Memahami konsep utama"></textarea>
-                        </div>
-
-                        <div>
-                            <label for="editor-penyelaras-nama">Nama Penyelaras</label>
-                            <input type="text" id="editor-penyelaras-nama" class="editor-input" placeholder="Contoh: Puan Nurul Huda Binti Ahmad">
-                        </div>
-                        <div>
-                            <label for="editor-penyelaras-emel">Emel Penyelaras</label>
-                            <input type="email" id="editor-penyelaras-emel" class="editor-input" placeholder="penyelaras@mosti.gov.my">
-                        </div>
-                        <div class="full-width">
-                            <label for="editor-penyelaras-telefon">No. Telefon Penyelaras</label>
-                            <input type="text" id="editor-penyelaras-telefon" class="editor-input" placeholder="03-8885 8000">
-                        </div>
-
-                        <div class="full-width">
-                            <label for="editor-gambar-file">Muat Naik Gambar Kursus (Fail atau URL)</label>
-                            <input type="file" id="editor-gambar-file" class="editor-input" accept="image/*" onchange="previewSelectedImage(event)">
-                            <p style="margin: 5px 0; font-size: 12px; color: #64748b;">Atau masukkan URL gambar secara terus:</p>
-                            <input type="text" id="editor-gambar-url" class="editor-input" placeholder="https://example.com/gambar.jpg">
-                            <img id="img-preview" class="preview-img" alt="Pratonton Gambar">
-                        </div>
-                    </div>
-                    <div class="editor-actions">
-                        <button type="submit" id="btn-save-editor" class="btn-admin-save"><i class="fa-solid fa-floppy-disk"></i> Simpan Kursus</button>
-                        <button type="button" onclick="resetEditorForm()" class="btn-admin-cancel">Batal</button>
-                    </div>
-                </form>
-            </div>
-
             <div class="cards-grid-fixed" id="courses-container"></div>
 
-            <div style="text-align: center; margin-top: 40px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
-                <a href="iklan.html" class="btn-modern-primary" style="background: #003d7c !important;"><i class="fa-solid fa-list"></i> Lihat Semua Kursus Di Iklan</a>
-                <a href="edit_kursus.html" id="btn-edit-semua-kursus" class="btn-modern-primary" style="background: #f59e0b !important; display: none;"><i class="fa-solid fa-pen-to-square"></i> Edit Semua Kursus</a>
-            </div>
+            <div style="text-align: center; margin-top: 40px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+    <a href="iklan.html" class="btn-nus-outline" style="display: inline-flex !important; align-items: center; gap: 8px;">
+        <i class="fa-solid fa-list"></i> Lihat Semua Kursus Di Iklan
+    </a>
+    <a href="edit_kursus.html" id="btn-edit-semua-kursus" class="btn-nus-outline" style="display: none; align-items: center; gap: 8px; border-color: #d97706 !important; color: #b45309 !important;">
+        <i class="fa-solid fa-pen-to-square"></i> Edit Semua Kursus
+    </a>
+</div>
         </div>
     </section>
 
@@ -1590,8 +1484,8 @@
             </div>
 
             <div class="nus-social-icons">
-                <a href="#" class="nus-social-btn" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="#" class="nus-social-btn" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.facebook.com/officialmosti/?locale=ms_MY" class="nus-social-btn" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/officialmosti/?hl=en" class="nus-social-btn" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
             </div>
         </div>
 
@@ -1613,7 +1507,6 @@
 
     <script>
         let currentUser = null;
-        let base64ImageString = "";
         let allCurrentCourses = [];
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -1643,7 +1536,6 @@
                 loadDashboardStats();
             }
 
-            // Tutup dropdown user & menu mobile jika klik di luar kawasan
             document.addEventListener('click', (e) => {
                 const dropdown = document.getElementById('userMenuDropdown');
                 const btn = document.getElementById('userMenuBtn');
@@ -1661,7 +1553,6 @@
             });
         });
 
-        // Fungsi Buka/Tutup Menu Hamburger Mobile
         function toggleMobileNav() {
             const navDrawer = document.getElementById('mobile-nav-drawer');
             const hamburgerIcon = document.getElementById('hamburger-icon');
@@ -1740,16 +1631,13 @@
         }
 
         function checkAdminMode() {
-            const adminSection = document.getElementById('admin-editor-section');
             const adminAppSection = document.getElementById('admin-applications-section');
             const btnEditSemua = document.getElementById('btn-edit-semua-kursus');
             if (currentUser && currentUser.role === 'admin') {
-                if (adminSection) adminSection.style.display = 'block';
                 if (adminAppSection) adminAppSection.style.display = 'block';
                 if (btnEditSemua) btnEditSemua.style.display = 'inline-flex';
                 loadAllUserApplicationsForAdmin();
             } else {
-                if (adminSection) adminSection.style.display = 'none';
                 if (adminAppSection) adminAppSection.style.display = 'none';
                 if (btnEditSemua) btnEditSemua.style.display = 'none';
             }
@@ -1822,52 +1710,6 @@
             } catch (err) { alert('Ralat: ' + err.message); }
         }
 
-        function autoFormatDateText() {
-            const dateMulaVal = document.getElementById('editor-tarikh-mula').value;
-            const dateTamatVal = document.getElementById('editor-tarikh-tamat').value;
-            const tarikhInput = document.getElementById('editor-tarikh');
-
-            if (!dateMulaVal) return;
-
-            const bulanMalay = ["Januari", "Februari", "Mac", "April", "Mei", "Jun", "Julai", "Ogos", "September", "Oktober", "November", "Disember"];
-
-            const dMula = new Date(dateMulaVal);
-            const dayMula = dMula.getDate();
-            const monthMula = bulanMalay[dMula.getMonth()];
-            const yearMula = dMula.getFullYear();
-
-            if (!dateTamatVal || dateMulaVal === dateTamatVal) {
-                tarikhInput.value = `${dayMula} ${monthMula} ${yearMula}`;
-            } else {
-                const dTamat = new Date(dateTamatVal);
-                const dayTamat = dTamat.getDate();
-                const monthTamat = bulanMalay[dTamat.getMonth()];
-                const yearTamat = dTamat.getFullYear();
-
-                if (monthMula === monthTamat && yearMula === yearTamat) {
-                    tarikhInput.value = `${dayMula} - ${dayTamat} ${monthMula} ${yearMula}`;
-                } else if (yearMula === yearTamat) {
-                    tarikhInput.value = `${dayMula} ${monthMula} - ${dayTamat} ${monthTamat} ${yearTamat}`;
-                } else {
-                    tarikhInput.value = `${dayMula} ${monthMula} ${yearMula} - ${dayTamat} ${monthTamat} ${yearTamat}`;
-                }
-            }
-        }
-
-        function previewSelectedImage(event) {
-            const file = event.target.files[0];
-            const preview = document.getElementById('img-preview');
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    base64ImageString = e.target.result;
-                    preview.src = base64ImageString;
-                    preview.style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
         function parseMalayOrIsoDate(dateStr) {
             if (!dateStr) return null;
             const str = String(dateStr).trim();
@@ -1934,14 +1776,6 @@
             const displayCourses = coursesList.slice(0, 2);
 
             displayCourses.forEach((item) => {
-                const isAdmin = currentUser && currentUser.role === 'admin';
-                const adminControls = (isAdmin && item.id) ? `
-                    <div class="admin-controls-card">
-                        <button class="btn-card-edit" onclick='triggerEditCourse(${JSON.stringify(item)})'><i class="fa-solid fa-pen"></i> Edit</button>
-                        <button class="btn-card-delete" onclick="handleDeleteCourse('${item.id}')"><i class="fa-solid fa-trash"></i> Padam</button>
-                    </div>
-                ` : '';
-
                 const courseImg = item.gambar_url || 'logo.png';
                 const descText = item.penerangan || 'Penerangan lanjut bagi program latihan dan kemahiran yang ditawarkan oleh MOSTI.';
                 const closed = isCourseClosed(item);
@@ -1968,12 +1802,11 @@
                                     <span><i class="fa-regular fa-calendar"></i> ${item.tarikh || '-'}</span>
                                     <span><i class="fa-solid fa-location-dot"></i> ${item.tempat || '-'}</span>
                                     <span><i class="fa-regular fa-clock"></i> ${item.masa || '-'}</span>
-                                    <span style="color: #dc2626; font-weight: 600;">Tutup: ${tarikhTutupPaparan}</span>
+                                    <span style="color: #dc2626; font-weight: 600;"> ${tarikhTutupPaparan}</span>
                                 </div>
                             </div>
                             <div>
                                 ${applyActionBtn}
-                                ${adminControls}
                             </div>
                         </div>
                     </div>
@@ -2028,118 +1861,6 @@
             } else {
                 window.location.href = 'iklan.html';
             }
-        }
-
-        async function handleAdminSaveCourse(e) {
-            e.preventDefault();
-            const id = document.getElementById('editor-course-id').value;
-            const tajuk = document.getElementById('editor-tajuk').value.trim();
-            const bidang = document.getElementById('editor-bidang').value;
-            const tarikh = document.getElementById('editor-tarikh').value.trim();
-            const dateMulaVal = document.getElementById('editor-tarikh-mula').value;
-            const dateTamatVal = document.getElementById('editor-tarikh-tamat').value;
-            const masa = document.getElementById('editor-masa').value.trim();
-            const tempat = document.getElementById('editor-tempat').value.trim();
-            const tarikh_tutup = document.getElementById('editor-tarikh-tutup').value;
-            const penerangan = document.getElementById('editor-penerangan').value.trim();
-            const objektif = document.getElementById('editor-objektif').value.trim();
-            const penyelaras_nama = document.getElementById('editor-penyelaras-nama').value.trim();
-            const penyelaras_emel = document.getElementById('editor-penyelaras-emel').value.trim();
-            const penyelaras_telefon = document.getElementById('editor-penyelaras-telefon').value.trim();
-            const urlImgInput = document.getElementById('editor-gambar-url').value.trim();
-
-            const finalGambarUrl = base64ImageString || urlImgInput || 'logo.png';
-
-            const payload = {
-                tajuk, 
-                bidang: bidang || "PEMBANGUNAN DIRI DAN SAHSIAH",
-                tarikh, 
-                tarikh_mula: dateMulaVal,
-                tarikh_tamat: dateTamatVal,
-                tarikh_tutup,
-                masa, 
-                tempat, 
-                penerangan, 
-                objektif,
-                penyelaras_nama, 
-                penyelaras_emel, 
-                penyelaras_telefon,
-                gambar_url: finalGambarUrl
-            };
-
-            try {
-                const method = id ? 'PUT' : 'POST';
-                const url = id ? `/api/kursus/${id}` : '/api/kursus';
-                const res = await fetch(url, {
-                    method: method,
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                if (res.ok) {
-                    alert(id ? 'Kursus berjaya dikemas kini di pangkalan data!' : 'Kursus baharu berjaya ditambah ke pangkalan data!');
-                    resetEditorForm();
-                    loadAdminCoursesOnly();
-                } else {
-                    const errData = await res.json();
-                    alert('Gagal menyimpan kursus: ' + (errData.error || 'Ralat tidak diketahui'));
-                }
-            } catch (err) {
-                alert('Ralat ketersambungan server backend: ' + err.message);
-            }
-        }
-
-        function triggerEditCourse(item) {
-            document.getElementById('editor-course-id').value = item.id || '';
-            document.getElementById('editor-tajuk').value = item.tajuk || '';
-            document.getElementById('editor-bidang').value = item.bidang || 'PEMBANGUNAN DIRI DAN SAHSIAH';
-            document.getElementById('editor-tarikh').value = item.tarikh || '';
-            document.getElementById('editor-tarikh-mula').value = item.tarikh_mula || '';
-            document.getElementById('editor-tarikh-tamat').value = item.tarikh_tamat || '';
-            document.getElementById('editor-masa').value = item.masa || '';
-            document.getElementById('editor-tempat').value = item.tempat || '';
-            document.getElementById('editor-tarikh-tutup').value = item.tarikh_tutup || '';
-            document.getElementById('editor-penerangan').value = item.penerangan || '';
-            document.getElementById('editor-objektif').value = item.objektif || '';
-            document.getElementById('editor-penyelaras-nama').value = item.penyelaras_nama || '';
-            document.getElementById('editor-penyelaras-emel').value = item.penyelaras_emel || '';
-            document.getElementById('editor-penyelaras-telefon').value = item.penyelaras_telefon || '';
-            document.getElementById('editor-gambar-url').value = item.gambar_url || '';
-            
-            if (item.gambar_url) {
-                const preview = document.getElementById('img-preview');
-                preview.src = item.gambar_url;
-                preview.style.display = 'block';
-            }
-
-            document.getElementById('btn-save-editor').innerHTML = '<i class="fa-solid fa-pen-to-square"></i> Kemas Kini Kursus';
-            document.getElementById('admin-editor-section').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        async function handleDeleteCourse(id) {
-            if (!confirm('Adakah anda pasti mahu memadam kursus ini?')) return;
-
-            if (id) {
-                try {
-                    const res = await fetch(`/api/kursus/${id}`, { method: 'DELETE' });
-                    if (res.ok) {
-                        alert('Kursus berjaya dipadam daripada pangkalan data!');
-                        loadAdminCoursesOnly();
-                    } else {
-                        alert('Gagal memadam kursus dari server.');
-                    }
-                } catch (e) {
-                    console.warn('Gagal memadam dari server API:', e);
-                }
-            }
-        }
-
-        function resetEditorForm() {
-            document.getElementById('editor-course-id').value = '';
-            document.getElementById('admin-course-form').reset();
-            document.getElementById('img-preview').style.display = 'none';
-            base64ImageString = "";
-            document.getElementById('btn-save-editor').innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Kursus';
         }
     </script>
 </body>

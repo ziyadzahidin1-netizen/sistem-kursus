@@ -665,39 +665,27 @@
             return false;
         }
 
-        async function renderAdminCoursesOnly() {
+        function buildCoursesHtml(customCourses) {
             const wrapper = document.getElementById('dynamic-courses-wrapper');
-            let customCourses = [];
-
-            try {
-                const response = await fetch('/api/kursus');
-                if (response.ok) {
-                    customCourses = await response.json();
-                } else {
-                    customCourses = JSON.parse(localStorage.getItem('custom_courses')) || [];
-                }
-            } catch(e) {
-                customCourses = JSON.parse(localStorage.getItem('custom_courses')) || [];
-            }
-
             const urlParams = new URLSearchParams(window.location.search);
             const keywordParam = urlParams.get('keyword')?.toLowerCase().trim();
             const bidangParam = urlParams.get('bidang')?.toUpperCase().trim();
 
+            let filteredCourses = customCourses || [];
+
             if (keywordParam || bidangParam) {
-                customCourses = customCourses.filter(item => {
+                filteredCourses = filteredCourses.filter(item => {
                     const matchesKeyword = !keywordParam || 
                         (item.tajuk && item.tajuk.toLowerCase().includes(keywordParam)) ||
                         (item.penerangan && item.penerangan.toLowerCase().includes(keywordParam)) ||
                         (item.tempat && item.tempat.toLowerCase().includes(keywordParam));
 
                     const matchesBidang = !bidangParam || (item.bidang && item.bidang.toUpperCase() === bidangParam);
-
                     return matchesKeyword && matchesBidang;
                 });
             }
 
-            if (!customCourses || customCourses.length === 0) {
+            if (filteredCourses.length === 0) {
                 wrapper.innerHTML = `
                     <div style="grid-column: 1 / -1; width: 100%; text-align: center; padding: 50px 20px; color: #64748b;">
                         <i class="fa-solid fa-folder-open" style="font-size: 3rem; margin-bottom: 15px; color: #cbd5e1;"></i>
@@ -707,8 +695,7 @@
                 return;
             }
 
-            let htmlContent = '';
-            customCourses.forEach((item) => {
+            const cardsHtml = filteredCourses.map((item) => {
                 const img = item.gambar_url || 'logo.png';
                 const tarikhVal = item.tarikh || '-';
                 const tempatVal = item.tempat || '-';
@@ -733,11 +720,11 @@
                     ? `<button type="button" class="btn-card-ad-closed" disabled title="Permohonan sudah ditutup"><i class="fa-solid fa-lock"></i> Permohonan Ditutup</button>`
                     : `<a href="mohon.html?kursus=${encodeURIComponent(item.tajuk)}" class="btn-card-ad-apply">Mohon</a>`;
 
-                htmlContent += `
+                return `
                     <div class="card-ad-style">
                         <span class="badge-new" style="${closed ? 'background-color: #dc2626;' : ''}">${closed ? 'DITUTUP' : 'TERKINI'}</span>
                         <div class="card-ad-image-box">
-                            <img src="${img}" alt="${item.tajuk}">
+                            <img src="${img}" alt="${item.tajuk}" loading="lazy" decoding="async">
                         </div>
                         <div class="card-ad-content">
                             <div class="card-ad-title">"${item.tajuk}"</div>
@@ -767,15 +754,61 @@
                     </div>
                 `;
             });
-            wrapper.innerHTML = htmlContent;
+
+            wrapper.innerHTML = cardsHtml.join('');
+        }
+
+        async function renderAdminCoursesOnly() {
+            const wrapper = document.getElementById('dynamic-courses-wrapper');
+            const cachedCourses = sessionStorage.getItem('cached_courses');
+
+            // 1. Paparkan data cache serta-merta jika wujud
+            if (cachedCourses) {
+                try {
+                    buildCoursesHtml(JSON.parse(cachedCourses));
+                } catch (e) {}
+            } else {
+                wrapper.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #64748b;">
+                        <i class="fa-solid fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                        <p>Memuatkan senarai kursus...</p>
+                    </div>
+                `;
+            }
+
+            // 2. Tarik data terkini dari pelayan
+            try {
+                const response = await fetch('/api/kursus');
+                if (response.ok) {
+                    const freshCourses = await response.json();
+                    const freshString = JSON.stringify(freshCourses);
+                    
+                    if (freshString !== cachedCourses) {
+                        try {
+                            sessionStorage.setItem('cached_courses', freshString);
+                        } catch (quotaErr) {
+                            // Abaikan jika saiz melebihi had sessionStorage
+                        }
+                        buildCoursesHtml(freshCourses);
+                    }
+                } else if (!cachedCourses) {
+                    const fallback = JSON.parse(localStorage.getItem('custom_courses')) || [];
+                    buildCoursesHtml(fallback);
+                }
+            } catch (e) {
+                if (!cachedCourses) {
+                    const fallback = JSON.parse(localStorage.getItem('custom_courses')) || [];
+                    buildCoursesHtml(fallback);
+                }
+            }
         }
 
         window.addEventListener('storage', (e) => {
             if (e.key === 'custom_courses') {
+                sessionStorage.removeItem('cached_courses');
                 renderAdminCoursesOnly();
             }
         });
     </script>
 </body>
 </html>
-```[cite: 1]

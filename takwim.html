@@ -8,7 +8,7 @@
     <!-- Link CSS Utamakan -->
     <link rel="stylesheet" href="style.css">
     
-    <!-- Google Fonts: Plus Jakarta Sans & Open Sans (Sama seperti index.html) -->
+    <!-- Google Fonts: Plus Jakarta Sans & Open Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -16,14 +16,14 @@
     <!-- FontAwesome untuk Ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- FullCalendar Library (CDN) -->
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+    <!-- FullCalendar Library (CDN dengan defer supaya tidak sekat paparan awal) -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js" defer></script>
 
     <style>
-        /* ASAS FONT KORPORAT NIPIS (SEBIJI INDEX.HTML) */
+        /* ASAS FONT KORPORAT NIPIS */
         * {
             box-sizing: border-box;
-            border-radius: 0px !important; /* Memastikan semua elemen berpenjuru petak tajam */
+            border-radius: 0px !important;
         }
 
         body, button, input, select, textarea {
@@ -33,16 +33,15 @@
             color: #0f172a;
         }
 
-        /* HEADER DUA BARIS (SEBIJI INDEX.HTML) */
+        /* HEADER DUA BARIS */
         .navbar-header-container {
-            background-color: #0c2847 !important; /* Warna biru gelap */
+            background-color: #0c2847 !important;
             border-bottom: 1px solid #002b58;
             position: sticky;
             top: 0;
             z-index: 1000;
         }
 
-        /* BARIS ATAS: LOGO & LINK PROFIL/LOG MASUK (SEBIJI INDEX.HTML) */
         .header-top-row {
             display: flex;
             justify-content: space-between;
@@ -103,7 +102,6 @@
             font-size: 0.85rem;
         }
 
-        /* BARIS BAWAH: NAVIGASI UTAMA (SEBIJI INDEX.HTML) */
         .header-bottom-nav {
             display: flex;
             justify-content: space-between;
@@ -147,7 +145,6 @@
             background-color: #ef7c00;
         }
 
-        /* BAR CARIAN (SEBIJI INDEX.HTML) */
         .nav-search-box {
             display: flex;
             align-items: center;
@@ -188,7 +185,6 @@
             color: #003d7c;
         }
 
-        /* USER DROPDOWN (SEBIJI INDEX.HTML) */
         .user-dropdown-container {
             position: relative;
             display: inline-block;
@@ -261,7 +257,7 @@
             background-color: #fef2f2;
         }
 
-        /* GAYA KANDUNGAN UTAMA & TAJUK (SEBIJI INDEX.HTML) */
+        /* GAYA KANDUNGAN UTAMA & TAJUK */
         .main-container {
             max-width: 1140px;
             margin: 40px auto;
@@ -285,6 +281,7 @@
             border: 1px solid #e2e8f0;
             padding: 24px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            min-height: 600px;
         }
 
         /* DROPDOWN PILIHAN BULAN & TAHUN DI KALENDAR */
@@ -318,7 +315,7 @@
             font-family: 'Plus Jakarta Sans', sans-serif !important;
         }
         .fc .fc-toolbar-title {
-            display: none !important; /* Sembunyikan tajuk statik asal kerana diganti dropdown */
+            display: none !important;
         }
         .fc .fc-button-primary {
             background-color: #0c2847 !important;
@@ -384,7 +381,6 @@
 
     <!-- CONTAINER HEADER DUA BARIS -->
     <header class="navbar-header-container">
-        <!-- BARIS ATAS: LOGO MOSTI & PERANAN/LOG MASUK USER -->
         <div class="header-top-row">
             <a href="index.html" class="logo">
                 <img src="logo.png" alt="Logo Portal Kursus MOSTI" class="logo-img">
@@ -402,7 +398,6 @@
             </div>
         </div>
 
-        <!-- BARIS BAWAH: NAVIGASI UTAMA DI BAWAH LOGO & BAR CARIAN -->
         <div class="header-bottom-nav">
             <nav>
                 <ul class="nav-links-sub" id="nav-links">
@@ -414,7 +409,6 @@
                 </ul>
             </nav>
             
-            <!-- BAR CARIAN DI NAV BARIS BAWAH -->
             <div class="nav-search-box">
                 <input type="text" id="top-nav-search-input" placeholder="Cari di sini..." onkeypress="if(event.key === 'Enter') handleNavSearch()">
                 <button type="button" onclick="handleNavSearch()" title="Cari">
@@ -444,7 +438,7 @@
             "Julai", "Ogos", "September", "Oktober", "November", "Disember"
         ];
 
-        document.addEventListener('DOMContentLoaded', async function() {
+        document.addEventListener('DOMContentLoaded', function() {
             const storedUser = sessionStorage.getItem('user') || localStorage.getItem('user');
             if (storedUser) {
                 try {
@@ -468,12 +462,16 @@
             const calendarEl = document.getElementById('calendar');
             const todayIso = new Date().toISOString().split('T')[0];
 
+            // 1. Ambil acara dari cache terlebih dahulu supaya kalendar muncul 0ms tanpa menunggu API
+            const cachedRaw = sessionStorage.getItem('cached_takwim');
+            const initialEvents = cachedRaw ? formatCoursesToEvents(JSON.parse(cachedRaw)) : [];
+
             calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 initialDate: todayIso,
                 locale: 'ms',
                 headerToolbar: {
-                    left: '', // Dikosongkan untuk diisi dengan Dropdown Bulan & Tahun
+                    left: '',
                     center: '',
                     right: 'today prev,next'
                 },
@@ -481,9 +479,8 @@
                     today: 'Hari Ini'
                 },
                 dayHeaderFormat: { weekday: 'short' },
-                events: await fetchAndFormatCalendarEvents(),
+                events: initialEvents,
                 datesSet: function(dateInfo) {
-                    // Segerakkan nilai dropdown setiap kali tarikh kalendar berubah
                     syncDropdownWithCalendar(dateInfo.view.currentStart);
                 },
                 eventClick: function(info) {
@@ -501,17 +498,18 @@
                 }
             });
 
+            // 2. Render kalendar serta-merta
             calendar.render();
-
-            // Bina Dropdown Bulan & Tahun di bahagian kiri toolbar kalendar
             injectCalendarDateDropdowns();
 
-            // 1. Kemaskini automatik melalui Realtime Server-Sent Events (SSE)
+            // 3. Kemas kini acara terkini di latar belakang tanpa sekat UI
+            refreshCalendarEvents();
+
             initCalendarRealtimeListener();
 
-            // 2. Kemaskini automatik sekiranya localStorage berubah di tab lain
             window.addEventListener('storage', async function(e) {
                 if (e.key === 'custom_courses') {
+                    sessionStorage.removeItem('cached_takwim');
                     await refreshCalendarEvents();
                 }
             });
@@ -537,7 +535,6 @@
             const selectorWrapper = document.createElement('div');
             selectorWrapper.className = 'calendar-date-selector-group';
 
-            // Dropdown Bulan
             const monthSelect = document.createElement('select');
             monthSelect.id = 'cal-month-select';
             monthSelect.className = 'calendar-select-dropdown';
@@ -551,7 +548,6 @@
                 monthSelect.appendChild(opt);
             });
 
-            // Dropdown Tahun (5 tahun lepas hingga 5 tahun akan datang)
             const yearSelect = document.createElement('select');
             yearSelect.id = 'cal-year-select';
             yearSelect.className = 'calendar-select-dropdown';
@@ -567,7 +563,6 @@
                 yearSelect.appendChild(opt);
             }
 
-            // Tukar paparan kalendar apabila pengguna memilih bulan atau tahun
             const handleDateDropdownChange = () => {
                 const selectedMonth = parseInt(monthSelect.value, 10);
                 const selectedYear = parseInt(yearSelect.value, 10);
@@ -583,7 +578,6 @@
             leftToolbarChunk.appendChild(selectorWrapper);
         }
 
-        /* SEGERAKKAN DROPDOWN APABILA TEKAN BUTANG PREV / NEXT / HARI INI */
         function syncDropdownWithCalendar(currentDate) {
             const monthSelect = document.getElementById('cal-month-select');
             const yearSelect = document.getElementById('cal-year-select');
@@ -594,7 +588,6 @@
 
             monthSelect.value = m;
 
-            // Tambah tahun jika tiada dalam senarai dropdown
             if (!Array.from(yearSelect.options).some(opt => parseInt(opt.value, 10) === y)) {
                 const newOpt = document.createElement('option');
                 newOpt.value = y;
@@ -604,7 +597,6 @@
             yearSelect.value = y;
         }
 
-        /* FUNGSI REALTIME SSE UNTUK TAKWIM */
         function initCalendarRealtimeListener() {
             if (!!window.EventSource) {
                 const eventSource = new EventSource('/api/events');
@@ -612,6 +604,7 @@
                     try {
                         const data = JSON.parse(e.data);
                         if (data.type === 'COURSE_UPDATED') {
+                            sessionStorage.removeItem('cached_takwim');
                             await refreshCalendarEvents();
                         }
                     } catch (err) {
@@ -624,11 +617,12 @@
         async function refreshCalendarEvents() {
             if (!calendar) return;
             const updatedEvents = await fetchAndFormatCalendarEvents();
-            calendar.removeAllEvents();
-            calendar.addEventSource(updatedEvents);
+            if (updatedEvents) {
+                calendar.removeAllEvents();
+                calendar.addEventSource(updatedEvents);
+            }
         }
 
-        /* FUNGSI CARIAN BAR NAVIGASI TOP */
         function handleNavSearch() {
             const inputVal = document.getElementById('top-nav-search-input').value.trim();
             if (inputVal) {
@@ -677,7 +671,6 @@
             window.location.href = 'login.html';
         }
 
-        // Penukar Format Tarikh Teks (cth: "6 November 2026" atau "20 - 22 Ogos 2026") kepada { start, end }
         function parseDateRangeToIso(dateStr) {
             if (!dateStr) return null;
 
@@ -733,26 +726,10 @@
             return { start: startDate, end: endDate };
         }
 
-        // Ambil data kursus dari API (/api/kursus) dengan fallback ke localStorage
-        async function fetchAndFormatCalendarEvents() {
-            let courses = [];
-
-            try {
-                const response = await fetch('/api/kursus');
-                if (response.ok) {
-                    courses = await response.json();
-                    localStorage.setItem('custom_courses', JSON.stringify(courses));
-                } else {
-                    courses = JSON.parse(localStorage.getItem('custom_courses')) || [];
-                }
-            } catch (e) {
-                console.warn('Gagal mengambil data API kursus, menggunakan cache tempatan:', e);
-                courses = JSON.parse(localStorage.getItem('custom_courses')) || [];
-            }
-
+        function formatCoursesToEvents(courses) {
             const events = [];
 
-            courses.forEach(item => {
+            (courses || []).forEach(item => {
                 let startDate = item.tarikh_mula || item.startDate;
                 let endDate = item.tarikh_tamat || item.endDate;
 
@@ -787,6 +764,36 @@
             });
 
             return events;
+        }
+
+        // Ambil data ringan dari /api/takwim (tanpa gambar Base64)
+        async function fetchAndFormatCalendarEvents() {
+            let courses = null;
+
+            try {
+                const response = await fetch('/api/takwim');
+                if (response.ok) {
+                    courses = await response.json();
+                    const freshString = JSON.stringify(courses);
+                    const cachedString = sessionStorage.getItem('cached_takwim');
+
+                    // Jika data tiada perubahan berbanding cache sedia ada, elak re-render kalendar
+                    if (freshString === cachedString) {
+                        return null;
+                    }
+
+                    try {
+                        sessionStorage.setItem('cached_takwim', freshString);
+                    } catch (e) {}
+                } else {
+                    courses = JSON.parse(localStorage.getItem('custom_courses')) || [];
+                }
+            } catch (e) {
+                console.warn('Gagal mengambil data API takwim, menggunakan cache tempatan:', e);
+                courses = JSON.parse(localStorage.getItem('custom_courses')) || [];
+            }
+
+            return formatCoursesToEvents(courses);
         }
     </script>
 

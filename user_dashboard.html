@@ -358,13 +358,29 @@
         }
         .btn-cert:hover { background-color: #d96d00; }
 
+        .btn-offer {
+            background-color: #003d7c;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            font-size: 0.82rem;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .btn-offer:hover { background-color: #0c2847; }
+
         .custom-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         .custom-table th { text-align: left; padding: 12px 16px; font-size: 0.85rem; background-color: #f8fafc; border-bottom: 2px solid #e2e8f0; color: #475569; font-weight: 600; }
         .custom-table td { padding: 14px 16px; border-bottom: 1px solid #e2e8f0; font-size: 0.9rem; vertical-align: middle; }
         .btn-action-del { background-color: #ef4444; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; transition: background 0.2s; }
         .btn-action-del:hover { background-color: #dc2626; }
 
-        /* MODAL OVERLAY & CONTAINER SIJIL */
+        /* MODAL OVERLAY & CONTAINER SIJIL / SURAT TAWARAN */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -381,8 +397,8 @@
         .cert-modal-body {
             background: #ffffff;
             width: 100%;
-            max-width: 750px;
-            max-height: 90vh;
+            max-width: 820px;
+            max-height: 92vh;
             overflow-y: auto;
             border-radius: 8px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
@@ -396,9 +412,74 @@
             justify-content: flex-end;
             gap: 12px;
             border-top: 1px solid #e2e8f0;
+            position: sticky;
+            bottom: 0;
         }
 
-        /* KAWALAN CETAKAN (PRINT CSS) UNTUK FAIL GAMBAR SIJIL.JPG */
+        /* GAYA KERTAS SURAT RASMI MOSTI (A4 LETTERHEAD) */
+        .official-letter-paper {
+            font-family: Arial, Helvetica, sans-serif !important;
+            color: #000000;
+            background: #ffffff;
+            padding: 35px 45px;
+            text-align: left;
+            line-height: 1.45;
+            font-size: 13px;
+        }
+        .official-letter-paper * {
+            font-family: Arial, Helvetica, sans-serif !important;
+        }
+        .letterhead-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid #000000;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+        .letterhead-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .letterhead-crest {
+            width: 72px;
+            height: auto;
+            object-fit: contain;
+        }
+        .letterhead-ministry {
+            font-size: 12.5px;
+            font-weight: bold;
+            line-height: 1.3;
+        }
+        .letterhead-address {
+            font-size: 10.5px;
+            font-weight: normal;
+            margin-top: 2px;
+        }
+        .letterhead-contact {
+            font-size: 10.5px;
+            text-align: left;
+            line-height: 1.4;
+        }
+        .letter-ref-box {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 16px;
+            font-size: 12.5px;
+        }
+        .letter-details-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0 16px 24px;
+            font-size: 13px;
+        }
+        .letter-details-table td {
+            padding: 4px 6px;
+            vertical-align: top;
+        }
+
+        /* KAWALAN CETAKAN (PRINT CSS) UNTUK SIJIL.JPG & SURAT TAWARAN */
         @page {
             margin: 0; 
         }
@@ -408,25 +489,21 @@
                 visibility: hidden !important; 
             }
             
-            .modal-overlay, 
-            .modal-overlay *, 
-            #certPrintArea, 
-            #certPrintArea * { 
+            .modal-overlay.show, 
+            .modal-overlay.show * { 
                 visibility: visible !important; 
             }
 
-            .modal-overlay {
+            .modal-overlay.show {
                 position: absolute !important;
                 left: 0 !important;
                 top: 0 !important;
                 width: 100% !important;
-                height: 100% !important;
+                height: auto !important;
                 background: transparent !important;
                 padding: 0 !important;
                 margin: 0 !important;
-                display: flex !important;
-                justify-content: center !important;
-                align-items: center !important;
+                display: block !important;
             }
 
             .cert-modal-body {
@@ -434,28 +511,28 @@
                 border: none !important;
                 width: 100% !important;
                 max-width: 100% !important;
+                max-height: none !important;
                 padding: 0 !important;
                 margin: 0 !important;
                 overflow: visible !important;
                 background: transparent !important;
             }
 
-            #certPrintArea { 
+            #certPrintArea, #offerPrintArea { 
                 position: relative !important;
                 left: 0 !important; 
                 top: 0 !important; 
                 width: 100% !important; 
                 margin: 0 auto !important; 
-                border: none !important;
+                background: #ffffff !important;
                 padding: 0 !important;
-                background: transparent !important;
             }
 
-            #certImageDisplay {
+            #certCanvas {
                 width: 100% !important;
                 max-width: 100% !important;
                 height: auto !important;
-                display: block !important;
+                border: none !important;
             }
 
             .cert-actions { 
@@ -475,6 +552,8 @@
             .user-header-banner { padding: 30px 20px; }
             .dashboard-container { padding: 0 20px; }
             .main-tabs-nav { padding: 0 20px; overflow-x: auto; }
+            .official-letter-paper { padding: 20px; }
+            .letterhead-top { flex-direction: column; gap: 10px; }
         }
     </style>
 </head>
@@ -794,11 +873,11 @@
                         <thead>
                             <tr>
                                 <th style="width: 5%;">Bil</th>
-                                <th style="width: 35%;">Kod & Nama Kursus</th>
-                                <th style="width: 20%;">Tarikh & Masa Mohon</th>
-                                <th style="width: 15%;">Status</th>
+                                <th style="width: 30%;">Kod & Nama Kursus</th>
+                                <th style="width: 18%;">Tarikh & Masa Mohon</th>
+                                <th style="width: 12%;">Status</th>
                                 <th style="width: 10%;">Yuran Kursus</th>
-                                <th style="width: 15%;">Aktiviti</th>
+                                <th style="width: 25%;">Aktiviti</th>
                             </tr>
                         </thead>
                         <tbody id="applicationTableBody">
@@ -830,14 +909,17 @@
         </div>
     </div>
 
-    <!-- MODAL POPUP SIJIL - MEMAPARKAN FAIL SIJIL.JPG SEBIJI SEBIJI -->
+    <!-- MODAL POPUP SIJIL PENYERTAAN (MENGGUNAKAN SIJIL.JPG + SUSUNAN MENEGAK BAWAH-BAWAH) -->
     <div id="certModal" class="modal-overlay">
         <div class="cert-modal-body">
             <div id="certPrintArea" style="text-align: center; background: #ffffff; padding: 15px;">
-                <img id="certImageDisplay" src="sijil.jpg" alt="Sijil JPG" style="max-width: 100%; height: auto; display: block; margin: 0 auto; border: 1px solid #cbd5e1;">
+                <canvas id="certCanvas" style="max-width: 100%; height: auto; display: block; margin: 0 auto; border: 1px solid #cbd5e1;"></canvas>
             </div>
 
             <div class="cert-actions">
+                <button class="btn-green-submit" style="width: auto; padding: 10px 20px; text-transform: none;" onclick="downloadCertImage()">
+                    <i class="fa-solid fa-download"></i> Muat Turun JPG
+                </button>
                 <button class="btn-blue-submit" style="width: auto; padding: 10px 20px;" onclick="window.print()">
                     <i class="fa-solid fa-print"></i> Cetak / Simpan PDF
                 </button>
@@ -848,25 +930,169 @@
         </div>
     </div>
 
+    <!-- MODAL POPUP SURAT TAWARAN RASMI MOSTI -->
+    <div id="offerModal" class="modal-overlay">
+        <div class="cert-modal-body">
+            <div id="offerPrintArea" class="official-letter-paper">
+                <!-- KEPALA SURAT RASMI MOSTI -->
+                <div class="letterhead-top">
+                    <div class="letterhead-left">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Coat_of_arms_of_Malaysia.svg/250px-Coat_of_arms_of_Malaysia.svg.png" alt="Jata Negara" class="letterhead-crest">
+                        <div>
+                            <div class="letterhead-ministry">KEMENTERIAN SAINS, TEKNOLOGI DAN INOVASI</div>
+                            <div class="letterhead-address">
+                                ARAS 1-7, BLOK C4 &amp; C5, KOMPLEKS C<br>
+                                PUSAT PENTADBIRAN KERAJAAN PERSEKUTUAN<br>
+                                62662 PUTRAJAYA, MALAYSIA
+                            </div>
+                        </div>
+                    </div>
+                    <div class="letterhead-contact">
+                        <table>
+                            <tr><td>TEL</td><td>: 603 - 8000 8000</td></tr>
+                            <tr><td>FAKS</td><td>: 603 - 8888 9070</td></tr>
+                            <tr><td>Laman Web</td><td>: www.mosti.gov.my</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- RUJUKAN & TARIKH -->
+                <div class="letter-ref-box">
+                    <table>
+                        <tr>
+                            <td>Rujukan Kami</td>
+                            <td>: MOSTI.500-8/2/1 JLD 23 ( &nbsp;&nbsp;&nbsp;&nbsp; )</td>
+                        </tr>
+                        <tr>
+                            <td>Tarikh</td>
+                            <td>: <span id="offerLetterDate">November 2026</span></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- PENERIMA -->
+                <div style="margin-bottom: 14px;">
+                    <strong id="offerRecipientName">SEPERTI DI LAMPIRAN</strong><br>
+                    <span id="offerRecipientUnit" style="font-size: 12px;"></span>
+                </div>
+
+                <p style="margin: 0 0 12px 0;">Tuan/Puan,</p>
+
+                <!-- TAJUK SURAT -->
+                <p style="margin: 0 0 12px 0; font-weight: bold; text-transform: uppercase;">
+                    TAWARAN MENGHADIRI <span id="offerCourseTitle">KURSUS PEMANTAPAN KESETIAUSAHAAN MOSTI TAHUN 2026</span>
+                </p>
+
+                <p style="margin: 0 0 12px 0; text-align: justify;">
+                    Dengan segala hormatnya saya merujuk kepada perkara di atas.
+                </p>
+
+                <p style="margin: 0 0 8px 0; text-align: justify;">
+                    2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dimaklumkan bahawa Kementerian Sains, Teknologi dan Inovasi (MOSTI) akan menganjurkan <strong id="offerCourseBodyTitle">Kursus Pemantapan Kesetiausahaan MOSTI Tahun 2026</strong> seperti ketetapan berikut:
+                </p>
+
+                <!-- BUTIRAN KURSUS -->
+                <table class="letter-details-table">
+                    <tr>
+                        <td style="width: 165px; font-weight: bold;">Tarikh</td>
+                        <td style="width: 15px;">:</td>
+                        <td><strong id="offerCourseDate">20 hingga 23 November 2026</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Tempat</td>
+                        <td>:</td>
+                        <td><strong id="offerCourseVenue">Langkapuri Resort, Langkawi, Kedah</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Masa Pendaftaran</td>
+                        <td>:</td>
+                        <td><strong>3.00 petang</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Jadual Program</td>
+                        <td>:</td>
+                        <td>Lampiran A</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Senarai Peserta</td>
+                        <td>:</td>
+                        <td>Lampiran B</td>
+                    </tr>
+                </table>
+
+                <p style="margin: 0 0 12px 0; text-align: justify;">
+                    3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Untuk makluman, kemudahan makan minum akan disediakan oleh pihak urus setia. Segala tuntutan perjalanan hendaklah dikemukakan melalui Bahagian/Jabatan/Agensi masing-masing dan tertakluk kepada peraturan kewangan semasa yang sedang berkuatkuasa.
+                </p>
+
+                <p style="margin: 0 0 10px 0; text-align: justify;">
+                    4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jika terdapat sebarang pertanyaan lanjut berkaitan perkara ini, Tuan/Puan boleh menghubungi pegawai-pegawai seperti berikut:
+                </p>
+
+                <div style="margin: 0 0 14px 28px;">
+                    <div style="margin-bottom: 8px;">
+                        <strong>Puan Noor Diana Hayati binti Kamudin</strong><br>
+                        E-mel: dyanahayati@mosti.gov.my / No. Tel: 03 - 8885 8226
+                    </div>
+                    <div>
+                        <strong>Cik Wan Nor Suhaida binti Wan Mamat</strong><br>
+                        E-mel: wannorsuhaida@mosti.gov.my / No. Tel: 03 - 8885 8637
+                    </div>
+                </div>
+
+                <p style="margin: 0 0 14px 0; text-align: justify;">
+                    Segala perhatian dan kerjasama Tuan/Puan berhubung perkara ini amatlah dihargai dan didahulukan dengan ucapan terima kasih.
+                </p>
+
+                <p style="margin: 0 0 14px 0;">Sekian.</p>
+
+                <p style="margin: 0 0 28px 0; font-weight: bold; line-height: 1.5;">
+                    “MALAYSIA MADANI”<br>
+                    “BERKHIDMAT UNTUK NEGARA”
+                </p>
+
+                <p style="margin: 0 0 36px 0;">Saya yang menjalankan amanah,</p>
+
+                <div style="line-height: 1.45;">
+                    <strong>(CHAN TAT SENG)</strong><br>
+                    Ketua Penolong Setiausaha<br>
+                    b.p.: Setiausaha<br>
+                    Bahagian Pengurusan Sumber Manusia<br>
+                    Kementerian Sains, Teknologi dan Inovasi<br>
+                    No. Tel.: 03-8885 8388<br>
+                    E-mel: chan@mosti.gov.my
+                </div>
+            </div>
+
+            <div class="cert-actions">
+                <button class="btn-blue-submit" style="width: auto; padding: 10px 20px;" onclick="window.print()">
+                    <i class="fa-solid fa-print"></i> Cetak / Simpan PDF
+                </button>
+                <button class="btn-action-del" style="background-color: #64748b;" onclick="closeOfferModal()">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
     <script>
         let currentUser = null;
         let globalUserApplications = [];
+        let globalCoursesList = [];
         let warisList = [];
 
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             const storedUser = sessionStorage.getItem('user') || localStorage.getItem('user');
             if (storedUser) {
                 try {
                     currentUser = JSON.parse(storedUser);
                     populateUserData();
                     loadEducationRecords();
-                    loadUserApplications();
                 } catch(e) { console.error(e); }
-            } else {
-                loadUserApplications();
             }
 
+            await loadAllCoursesForLookup();
+            loadUserApplications();
             setupNavbar();
 
             document.addEventListener('click', (e) => {
@@ -877,6 +1103,23 @@
                 }
             });
         });
+
+        async function loadAllCoursesForLookup() {
+            try {
+                const res = await fetch('/api/kursus');
+                if (res.ok) {
+                    globalCoursesList = await res.json();
+                }
+            } catch (err) {
+                console.warn('Gagal memuatkan senarai kursus untuk rujukan sijil:', err);
+            }
+        }
+
+        function findCourseDetails(courseTitle) {
+            if (!courseTitle || !globalCoursesList.length) return null;
+            const cleanTarget = String(courseTitle).trim().toLowerCase();
+            return globalCoursesList.find(c => String(c.tajuk || '').trim().toLowerCase() === cleanTarget) || null;
+        }
 
         function handleNavSearch() {
             const inputVal = document.getElementById('top-nav-search-input').value.trim();
@@ -1283,10 +1526,15 @@
                     formattedDateTime = item.tarikh;
                 }
 
-                let certBtnHtml = `
-                    <button class="btn-cert" onclick="openCertModal('${item.id || index}')" title="Paparkan Sijil JPG">
-                        <i class="fa-solid fa-certificate"></i> Sijil
-                    </button>
+                let actionBtnsHtml = `
+                    <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                        <button class="btn-cert" onclick="openCertModal(${index})" title="Paparkan Sijil Penyertaan">
+                            <i class="fa-solid fa-certificate"></i> Sijil
+                        </button>
+                        <button class="btn-offer" onclick="openOfferModal(${index})" title="Paparkan Surat Tawaran">
+                            <i class="fa-solid fa-envelope-open-text"></i> Surat Tawaran
+                        </button>
+                    </div>
                 `;
 
                 const tr = document.createElement('tr');
@@ -1296,7 +1544,7 @@
                     <td><i class="fa-regular fa-clock" style="color:#64748b; margin-right:6px;"></i>${formattedDateTime}</td>
                     <td>${statusBadge}</td>
                     <td>${item.yuran_kursus || 'RM 0.00'}</td>
-                    <td>${certBtnHtml}</td>
+                    <td>${actionBtnsHtml}</td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -1307,15 +1555,162 @@
             document.getElementById('statTidakBerjaya').innerText = countGagal;
         }
 
-        /* FUNGSI PAPAR FAIL GAMBAR SIJIL.JPG APABILA TEKAN BUTANG SIJIL */
-        function openCertModal(appIdOrIndex) {
-            const certImg = document.getElementById('certImageDisplay');
-            certImg.src = 'sijil.jpg'; 
+        /* HELPER UNTUK BALUT TEKS PANJANG & PULANGKAN KEDUDUKAN Y TERAKHIR */
+        function drawWrappedTextFlow(ctx, text, x, startY, maxWidth, lineHeight) {
+            const words = String(text || '').split(' ');
+            let lines = [];
+            let line = '';
+
+            for (let n = 0; n < words.length; n++) {
+                const testLine = line + words[n] + ' ';
+                if (ctx.measureText(testLine).width > maxWidth && n > 0) {
+                    lines.push(line.trim());
+                    line = words[n] + ' ';
+                } else {
+                    line = testLine;
+                }
+            }
+            lines.push(line.trim());
+
+            let currentY = startY;
+            lines.forEach((l) => {
+                ctx.fillText(l, x, currentY);
+                currentY += lineHeight;
+            });
+
+            return currentY;
+        }
+
+        /* FUNGSI LUKIS SIJIL.JPG DENGAN SUSUNAN MENEGAK (BAWAH-BAWAH) SUPAYA LANGSUNG TAK BERTINDIH */
+        function openCertModal(index) {
+            const appItem = globalUserApplications[index] || {};
+            const courseName = appItem.nama_kursus || appItem.kursus || '-';
+            const courseInfo = findCourseDetails(courseName);
+
+            const participantName = (appItem.nama_pemohon || appItem.nama || (currentUser && currentUser.nama) || document.getElementById('profNama')?.value || '-').toUpperCase();
+            const participantIc = (appItem.ic || appItem.user_ic || (currentUser && currentUser.ic) || document.getElementById('profMyKad')?.value || '-').toUpperCase();
+            const courseVenue = ((courseInfo && courseInfo.tempat) || appItem.tempat || 'KEMENTERIAN SAINS, TEKNOLOGI DAN INOVASI (MOSTI), PUTRAJAYA').toUpperCase();
+            
+            let rawDate = (courseInfo && courseInfo.tarikh) || appItem.tarikh || '';
+            if (!rawDate && appItem.created_at) {
+                rawDate = new Date(appItem.created_at).toLocaleDateString('ms-MY', {
+                    day: 'numeric', month: 'long', year: 'numeric'
+                });
+            }
+            const courseDate = (rawDate || '-').toUpperCase();
+
+            const canvas = document.getElementById('certCanvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+
+            img.onload = function() {
+                const w = img.naturalWidth || 2481;
+                const h = img.naturalHeight || 3508;
+                canvas.width = w;
+                canvas.height = h;
+
+                // 1. Isi keseluruhan kanvas dengan warna putih bersih
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, w, h);
+
+                // 2. Lukis bahagian ATAS sijil.jpg (No Siri, Tajuk SIJIL PENYERTAAN, "Dengan ini disahkan bahawa")
+                const headerCutY = h * 0.305;
+                ctx.drawImage(img, 0, 0, w, headerCutY, 0, 0, w, headerCutY);
+
+                // 3. Susun semua maklumat secara MENEGAK (bawah-bawah) dengan jarak sekata
+                ctx.fillStyle = '#000000';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'top';
+
+                let cursorY = h * 0.320;
+                const centerX = w / 2;
+                const maxTextWidth = w * 0.78;
+
+                // NAMA PESERTA
+                ctx.font = `bold ${Math.round(w * 0.025)}px Arial, sans-serif`;
+                cursorY = drawWrappedTextFlow(ctx, participantName, centerX, cursorY, maxTextWidth, Math.round(h * 0.028));
+
+                // NO KP
+                cursorY += h * 0.005;
+                ctx.font = `bold ${Math.round(w * 0.023)}px Arial, sans-serif`;
+                cursorY = drawWrappedTextFlow(ctx, participantIc, centerX, cursorY, maxTextWidth, Math.round(h * 0.026));
+
+                // "telah menyertai"
+                cursorY += h * 0.032;
+                ctx.font = `normal ${Math.round(w * 0.022)}px Arial, sans-serif`;
+                ctx.fillText('telah menyertai', centerX, cursorY);
+                cursorY += h * 0.032;
+
+                // NAMA KURSUS
+                ctx.font = `bold ${Math.round(w * 0.022)}px Arial, sans-serif`;
+                cursorY = drawWrappedTextFlow(ctx, courseName.toUpperCase(), centerX, cursorY, maxTextWidth, Math.round(h * 0.026));
+
+                // "bertempat di"
+                cursorY += h * 0.030;
+                ctx.font = `normal ${Math.round(w * 0.022)}px Arial, sans-serif`;
+                ctx.fillText('bertempat di', centerX, cursorY);
+                cursorY += h * 0.032;
+
+                // TEMPAT KURSUS
+                ctx.font = `bold ${Math.round(w * 0.020)}px Arial, sans-serif`;
+                cursorY = drawWrappedTextFlow(ctx, courseVenue, centerX, cursorY, maxTextWidth, Math.round(h * 0.025));
+
+                // "pada"
+                cursorY += h * 0.030;
+                ctx.font = `normal ${Math.round(w * 0.022)}px Arial, sans-serif`;
+                ctx.fillText('pada', centerX, cursorY);
+                cursorY += h * 0.032;
+
+                // TARIKH KURSUS
+                ctx.font = `bold ${Math.round(w * 0.021)}px Arial, sans-serif`;
+                cursorY = drawWrappedTextFlow(ctx, courseDate, centerX, cursorY, maxTextWidth, Math.round(h * 0.025));
+
+                // 4. Lukis bahagian BAWAH sijil.jpg (Tandatangan OOLI GUNALAN & Logo Malaysia MADANI) di bawah teks terakhir
+                const footerSrcY = h * 0.555;
+                const footerSrcH = h * 0.220;
+                const footerDestY = Math.max(cursorY + (h * 0.045), h * 0.68);
+                ctx.drawImage(img, 0, footerSrcY, w, footerSrcH, 0, footerDestY, w, footerSrcH);
+            };
+
+            img.src = 'sijil.jpg';
             document.getElementById('certModal').classList.add('show');
+        }
+
+        function downloadCertImage() {
+            const canvas = document.getElementById('certCanvas');
+            const link = document.createElement('a');
+            link.download = 'Sijil_Penyertaan_MOSTI.jpg';
+            link.href = canvas.toDataURL('image/jpeg', 0.95);
+            link.click();
         }
 
         function closeCertModal() {
             document.getElementById('certModal').classList.remove('show');
+        }
+
+        /* FUNGSI AUTO-GENERATE SURAT TAWARAN RASMI MOSTI */
+        function openOfferModal(index) {
+            const appItem = globalUserApplications[index] || {};
+            const courseName = appItem.nama_kursus || appItem.kursus || 'KURSUS PEMANTAPAN KESETIAUSAHAAN MOSTI TAHUN 2026';
+            const courseInfo = findCourseDetails(courseName);
+
+            const userName = (appItem.nama_pemohon || appItem.nama || (currentUser && currentUser.nama) || 'SEPERTI DI LAMPIRAN').toUpperCase();
+            const userDept = appItem.jabatan || (currentUser && currentUser.jabatan) || '';
+            const courseDate = (courseInfo && courseInfo.tarikh) || appItem.tarikh || '20 hingga 23 November 2026';
+            const courseVenue = (courseInfo && courseInfo.tempat) || appItem.tempat || 'Langkapuri Resort, Langkawi, Kedah';
+
+            document.getElementById('offerRecipientName').innerText = userName;
+            document.getElementById('offerRecipientUnit').innerText = userDept;
+            document.getElementById('offerCourseTitle').innerText = courseName.toUpperCase();
+            document.getElementById('offerCourseBodyTitle').innerText = courseName;
+            document.getElementById('offerCourseDate').innerText = courseDate;
+            document.getElementById('offerCourseVenue').innerText = courseVenue;
+
+            document.getElementById('offerModal').classList.add('show');
+        }
+
+        function closeOfferModal() {
+            document.getElementById('offerModal').classList.remove('show');
         }
 
         function handlePassportUpload(event) {

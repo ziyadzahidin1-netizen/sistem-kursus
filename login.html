@@ -4,89 +4,623 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log Masuk - Portal Kursus MOSTI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Google Fonts: Plus Jakarta Sans & Open Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    
     <style>
-        .role-select {
-            width: 100%;
-            padding: 10px;
+        :root {
+            --auth-bg-image: url('back.jpg');
+        }
+
+        body, button, input, select, textarea {
+            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif !important;
+            -webkit-font-smoothing: antialiased;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* =========================================================
+           GAYA NAVBAR RASMI (SAMA SEPERTI INDEX.HTML)
+           ========================================================= */
+        .navbar-header-container {
+            background-color: #ffffff !important;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 50px;
+            border-bottom: 1px solid #f1f5f9;
+            background-color: #08082c;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 44px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .header-title-group {
+            display: flex;
+            flex-direction: column;
+            text-transform: uppercase;
+            color: #ffffff;
+            line-height: 1.15;
+            border-left: 1px solid #cbd5e1;
+            padding-left: 12px;
+        }
+
+        .header-subtitle {
+            font-size: 0.65rem;
+            letter-spacing: 0.5px;
+            font-weight: 300;
+            color: #fcfeff;
+        }
+
+        .header-english-title {
+            font-size: 0.72rem;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+            color: #ffffff;
+        }
+
+        .header-tagline {
+            font-size: 0.58rem;
+            letter-spacing: 0.8px;
+            margin-top: 1px;
+            font-weight: 300;
+            color: #ef7c00;
+        }
+
+        .header-top-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.85rem;
+        }
+
+        .top-auth-link {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.08);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .top-auth-link:hover {
+            background: #ef7c00;
+            border-color: #ef7c00;
+            color: #ffffff;
+        }
+
+        .mobile-hamburger-btn {
+            display: none;
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            color: #003d7c;
+            width: 38px;
+            height: 38px;
             border-radius: 6px;
-            border: 1px solid #ccc;
-            background-color: #fff;
-            font-size: 14px;
+            font-size: 1.15rem;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .mobile-hamburger-btn:hover {
+            background: #ef7c00;
+            border-color: #ef7c00;
+            color: #ffffff;
+        }
+
+        .header-bottom-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 50px;
+            background-color: #ffffff;
+        }
+
+        .nav-links-sub {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links-sub a {
+            color: #334155;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            padding: 12px 0;
+            display: inline-block;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .nav-links-sub a:hover, .nav-links-sub a.active {
+            color: #003d7c;
+            font-weight: 600;
+        }
+
+        .nav-links-sub a.active::after, .nav-links-sub a:hover::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #ef7c00;
+        }
+
+        .nav-search-box {
+            display: flex;
+            align-items: center;
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 20px;
+            padding: 4px 12px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-search-box:focus-within {
+            background: #ffffff;
+            border-color: #003d7c;
+            box-shadow: 0 0 0 3px rgba(0, 61, 124, 0.1);
+        }
+
+        .nav-search-box input {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 0.82rem;
+            color: #334155;
+            width: 150px;
+        }
+
+        .nav-search-box button {
+            background: transparent;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+            padding: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-search-box button:hover {
+            color: #003d7c;
+        }
+
+        /* =========================================================
+           UI AUTH TENGAH-TENGAH SKRIN DENGAN BACKGROUND back.jpg
+           ========================================================= */
+        .auth-center-wrapper {
+            min-height: calc(100vh - 108px);
+            background: var(--auth-bg-image) center center / cover no-repeat;
+            background-color: #06142e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 45px 20px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .auth-card-modern {
+            background: #ffffff;
+            width: 100%;
+            max-width: 440px;
+            padding: 40px 38px;
+            border-radius: 4px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+            z-index: 2;
+            box-sizing: border-box;
+        }
+
+        .auth-header-modern {
+            text-align: center;
+            margin-bottom: 26px;
+        }
+
+        .auth-header-modern h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 0 0 6px 0;
+        }
+
+        .auth-header-modern p {
+            font-size: 0.84rem;
+            color: #64748b;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .form-group-modern {
+            margin-bottom: 18px;
+        }
+
+        .form-group-modern label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 6px;
+        }
+
+        .input-container-modern {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-container-modern input,
+        .role-select-modern {
+            width: 100%;
+            padding: 11px 14px;
+            font-size: 0.88rem;
+            color: #1e293b;
+            background-color: #eef4fc;
+            border: 1px solid #d5e2f5;
+            border-radius: 4px;
+            outline: none;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+
+        .role-select-modern {
+            background-color: #ffffff;
+            border: 1px solid #cbd5e1;
+            cursor: pointer;
+        }
+
+        .input-container-modern input:focus,
+        .role-select-modern:focus {
+            border-color: #2563eb;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+
+        .toggle-pass-modern {
+            position: absolute;
+            right: 12px;
+            color: #64748b;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .toggle-pass-modern:hover {
+            color: #0f172a;
+        }
+
+        .forgot-pass-row {
+            text-align: right;
+            margin-top: 6px;
+        }
+
+        .forgot-pass-row a {
+            font-size: 0.78rem;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .forgot-pass-row a:hover {
+            text-decoration: underline;
+        }
+
+        .btn-submit-modern {
+            background-color: #2563eb;
+            color: #ffffff;
+            border: none;
+            width: 100%;
+            padding: 12px 22px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 6px;
+            transition: background-color 0.2s ease, transform 0.15s ease;
+        }
+
+        .btn-submit-modern:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .btn-submit-modern:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .auth-footer-modern {
+            text-align: center;
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid #f1f5f9;
+            font-size: 0.82rem;
+            color: #64748b;
+        }
+
+        .auth-footer-modern a {
+            color: #2563eb;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .auth-footer-modern a:hover {
+            text-decoration: underline;
+        }
+
+        /* =========================================================
+           RESPONSIF MOBILE (<= 768px)
+           ========================================================= */
+        @media screen and (max-width: 768px) {
+            .header-top-row {
+                padding: 7px 12px !important;
+                gap: 6px;
+            }
+            .logo {
+                gap: 7px !important;
+                max-width: 68%;
+            }
+            .logo-img {
+                height: 26px !important;
+                flex-shrink: 0;
+            }
+            .header-title-group {
+                padding-left: 7px !important;
+                line-height: 1.1 !important;
+                overflow: hidden;
+            }
+            .header-subtitle {
+                font-size: 0.45rem !important;
+            }
+            .header-english-title {
+                font-size: 0.48rem !important;
+                line-height: 1.15;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            .header-tagline {
+                font-size: 0.42rem !important;
+            }
+            .top-auth-link {
+                padding: 4px 10px;
+                font-size: 0.75rem;
+            }
+            .mobile-hamburger-btn {
+                display: flex !important;
+                width: 30px !important;
+                height: 30px !important;
+                font-size: 0.95rem !important;
+            }
+            .header-bottom-nav {
+                display: none;
+                flex-direction: column !important;
+                align-items: stretch !important;
+                padding: 10px 14px 14px 14px !important;
+                background-color: #ffffff;
+                border-top: 1px solid #e2e8f0;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+                gap: 10px;
+            }
+            .header-bottom-nav.mobile-open {
+                display: flex !important;
+            }
+            .nav-links-sub {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 2px !important;
+                width: 100%;
+            }
+            .nav-links-sub li {
+                width: 100%;
+                border-bottom: 1px solid #f1f5f9;
+            }
+            .nav-links-sub a {
+                display: flex !important;
+                width: 100%;
+                font-size: 0.84rem !important;
+                padding: 8px 4px !important;
+            }
+            .nav-links-sub a.active::after, .nav-links-sub a:hover::after {
+                display: none;
+            }
+            .nav-search-box {
+                width: 100% !important;
+                box-sizing: border-box;
+            }
+            .nav-search-box input {
+                width: 100% !important;
+            }
+            .auth-center-wrapper {
+                padding: 30px 16px;
+            }
+            .auth-card-modern {
+                padding: 28px 22px;
+            }
         }
     </style>
 </head>
 <body>
-    <header class="navbar">
-        <div class="logo">
-            <img src="logo.png" alt="Logo Portal Kursus" class="logo-img">
-            <span>Portal kursus</span>
+
+    <!-- NAVBAR RASMI SEPERTI INDEX.HTML -->
+    <header class="navbar-header-container">
+        <div class="header-top-row">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Logo Portal Kursus MOSTI" class="logo-img">
+                <div class="header-title-group">
+                    <span class="header-subtitle">PORTAL KURSUS RASMI</span>
+                    <span class="header-english-title">MINISTRY OF SCIENCE, TECHNOLOGY AND INNOVATION</span>
+                    <span class="header-tagline">SAINS.TEKNOLOGI.INOVASI.BERSAMA</span>
+                </div>
+            </a>
+
+            <div class="header-top-right">
+                <a href="register.html" class="top-auth-link"><i class="fa-solid fa-user-plus"></i> Daftar</a>
+                <button type="button" id="mobile-menu-btn" class="mobile-hamburger-btn" onclick="toggleMobileNav()" aria-label="Buka Menu Navigasi" aria-expanded="false">
+                    <i class="fa-solid fa-bars" id="hamburger-icon"></i>
+                </button>
+            </div>
         </div>
-        <ul class="nav-links">
-            <li><a href="index.html" class="nav-btn active"><i class="fa-solid fa-house"></i> Utama</a></li>
-        </ul>
+
+        <div class="header-bottom-nav" id="mobile-nav-drawer">
+            <nav>
+                <ul class="nav-links-sub" id="nav-links">
+                    <li><a href="index.html" onclick="closeMobileNav()">Utama</a></li>
+                    <li><a href="iklan.html" onclick="closeMobileNav()">Jenis & Iklan Kursus</a></li>
+                    <li><a href="takwim.html" onclick="closeMobileNav()">Takwim Kursus</a></li>
+                    <li><a href="mohon.html" onclick="closeMobileNav()">Mohon Kursus</a></li>
+                    <li><a href="index.html#contact-section" onclick="closeMobileNav()">Hubungi Kami</a></li>
+                </ul>
+            </nav>
+            
+            <div class="nav-search-box">
+                <input type="text" id="top-nav-search-input" placeholder="Cari kursus di sini..." onkeypress="if(event.key === 'Enter') handleNavSearch()">
+                <button type="button" onclick="handleNavSearch()" title="Cari">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+        </div>
     </header>
 
-    <main class="auth-wrapper">
-        <div class="auth-card">
-            <div class="auth-header">
-                <div class="auth-icon"></div>
+    <!-- MAIN AUTH SECTION DI TENGAH-TENGAH DENGAN BACKGROUND back.jpg -->
+    <main class="auth-center-wrapper">
+        <div class="auth-card-modern">
+            <div class="auth-header-modern">
                 <h2>Log Masuk Akaun</h2>
                 <p>Sila masukkan maklumat akaun anda untuk log masuk</p>
             </div>
 
             <form id="login-form" onsubmit="handleLogin(event)">
                 <!-- Pilihan Peranan / Role -->
-                <div class="form-group">
+                <div class="form-group-modern">
                     <label for="login-role">Log Masuk Sebagai</label>
-                    <div class="input-container">
-                        <select id="login-role" class="role-select" onchange="toggleLoginRole()" required>
+                    <div class="input-container-modern">
+                        <select id="login-role" class="role-select-modern" onchange="toggleLoginRole()" required>
                             <option value="user">Pengguna Biasa / Peserta</option>
                             <option value="admin">Pentadbir (Admin)</option>
                         </select>
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group-modern">
                     <label for="login-email">E-mel / No. MyKad</label>
-                    <div class="input-container">
+                    <div class="input-container-modern">
                         <input type="text" id="login-email" placeholder="contoh@mosti.gov.my / No. MyKad" required>
                     </div>
                 </div>
 
                 <!-- Kata Laluan untuk User -->
-                <div class="form-group" id="pass-group">
+                <div class="form-group-modern" id="pass-group">
                     <label for="login-password">Kata Laluan</label>
-                    <div class="input-container">
+                    <div class="input-container-modern">
                         <input type="password" id="login-password" placeholder="••••••••" required>
-                        <i class="fa-regular fa-eye toggle-pass" onclick="togglePassword('login-password', this)"></i>
+                        <i class="fa-regular fa-eye toggle-pass-modern" onclick="togglePassword('login-password', this)"></i>
                     </div>
-                    <div style="text-align: right; margin-top: 6px;">
-                        <a href="reset_password.html" style="font-size: 0.85rem; color: #2563eb; text-decoration: none; font-weight: 500;">Lupa Kata Laluan?</a>
+                    <div class="forgot-pass-row">
+                        <a href="reset_password.html">Lupa Kata Laluan?</a>
                     </div>
                 </div>
 
                 <!-- Secret Key untuk Admin -->
-                <div class="form-group" id="secret-key-group" style="display: none;">
+                <div class="form-group-modern" id="secret-key-group" style="display: none;">
                     <label for="login-secret-key">Kunci Rahsia Admin (Secret Key)</label>
-                    <div class="input-container">
+                    <div class="input-container-modern">
                         <input type="password" id="login-secret-key" placeholder="Masukkan Secret Key Admin">
-                        <i class="fa-regular fa-eye toggle-pass" onclick="togglePassword('login-secret-key', this)"></i>
+                        <i class="fa-regular fa-eye toggle-pass-modern" onclick="togglePassword('login-secret-key', this)"></i>
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-block">Log Masuk <i class="fa-solid fa-arrow-right"></i></button>
+                <button type="submit" class="btn-submit-modern">Log Masuk <i class="fa-solid fa-arrow-right"></i></button>
             </form>
 
-            <div class="auth-footer">
+            <div class="auth-footer-modern">
                 Belum mempunyai akaun? <a href="register.html">Daftar Akaun Baru</a>
             </div>
         </div>
     </main>
 
     <script>
+        /* Fungsi Navigasi Mobile & Carian (Sama seperti index.html) */
+        function toggleMobileNav() {
+            const navDrawer = document.getElementById('mobile-nav-drawer');
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+            const hamburgerBtn = document.getElementById('mobile-menu-btn');
+            if (!navDrawer) return;
+
+            const isOpen = navDrawer.classList.toggle('mobile-open');
+            hamburgerBtn.setAttribute('aria-expanded', isOpen);
+            if (isOpen) {
+                hamburgerIcon.classList.remove('fa-bars');
+                hamburgerIcon.classList.add('fa-xmark');
+            } else {
+                hamburgerIcon.classList.remove('fa-xmark');
+                hamburgerIcon.classList.add('fa-bars');
+            }
+        }
+
+        function closeMobileNav() {
+            const navDrawer = document.getElementById('mobile-nav-drawer');
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+            const hamburgerBtn = document.getElementById('mobile-menu-btn');
+            if (navDrawer && navDrawer.classList.contains('mobile-open')) {
+                navDrawer.classList.remove('mobile-open');
+                hamburgerBtn.setAttribute('aria-expanded', 'false');
+                hamburgerIcon.classList.remove('fa-xmark');
+                hamburgerIcon.classList.add('fa-bars');
+            }
+        }
+
+        function handleNavSearch() {
+            const inputVal = document.getElementById('top-nav-search-input').value.trim();
+            if (inputVal) {
+                window.location.href = `iklan.html?keyword=${encodeURIComponent(inputVal)}`;
+            }
+        }
+
+        /* Fungsi Asal Login (TIDAK DIUBAH) */
         function togglePassword(id, icon) {
             const input = document.getElementById(id);
             if (input.type === 'password') {
