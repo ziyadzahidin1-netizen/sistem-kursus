@@ -1563,9 +1563,12 @@
                 });
                 if (res.ok) {
                     const dbList = await res.json();
-                    globalUserApplications = dbList;
-                    // Timpa localStorage dengan keputusan terkini dari Supabase supaya tiada lag status lama
-                    localStorage.setItem('user_applications_' + ic, JSON.stringify(dbList));
+                    if (dbList.length > 0 || localList.length === 0) {
+                        globalUserApplications = dbList;
+                        localStorage.setItem('user_applications_' + ic, JSON.stringify(dbList));
+                    } else {
+                        globalUserApplications = localList;
+                    }
                     renderApplicationTable(globalUserApplications);
                     if (showFeedback) {
                         alert('Status permohonan telah dikemas kini!');
@@ -1621,16 +1624,20 @@
                     ? `<div style="font-size:0.78rem; color:#475569; margin-top:4px;"><i class="fa-solid fa-comment-dots"></i> ${item.ulasan_admin}</div>` 
                     : '';
 
-                let actionBtnsHtml = `
-                    <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-                        <button class="btn-cert" onclick="openCertModal(${index})" title="Paparkan Sijil Penyertaan">
-                            <i class="fa-solid fa-certificate"></i> Sijil
-                        </button>
-                        <button class="btn-offer" onclick="openOfferModal(${index})" title="Paparkan Surat Tawaran">
-                            <i class="fa-solid fa-envelope-open-text"></i> Surat Tawaran
-                        </button>
-                    </div>
-                `;
+                let isApproved = (item.status === 'Berjaya' || item.status === 'Lulus' || item.status === 'Hadir');
+
+                let actionBtnsHtml = isApproved
+                    ? `
+                        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                            <button class="btn-cert" onclick="openCertModal(${index})" title="Paparkan Sijil Penyertaan">
+                                <i class="fa-solid fa-certificate"></i> Sijil
+                            </button>
+                            <button class="btn-offer" onclick="openOfferModal(${index})" title="Paparkan Surat Tawaran">
+                                <i class="fa-solid fa-envelope-open-text"></i> Surat Tawaran
+                            </button>
+                        </div>
+                    `
+                    : `<span style="color: #94a3b8; font-size: 0.85rem;">-</span>`;
 
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
