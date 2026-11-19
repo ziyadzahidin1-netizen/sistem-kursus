@@ -103,6 +103,27 @@
             font-size: 0.85rem;
         }
 
+        /* Gaya Butang Sign In di Bar Atas */
+        .top-auth-link {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.08);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .top-auth-link:hover {
+            background: #ef7c00;
+            border-color: #ef7c00;
+            color: #ffffff;
+        }
+
         /* Butang Hamburger (Sembunyi pada Desktop) */
         .mobile-hamburger-btn {
             display: none;
@@ -683,12 +704,12 @@
             margin: 0 auto;
         }
         .dtims-search-title {
-    font-family: 'Plus Jakarta Sans', sans-serif !important;
-    font-size: 1.6rem !important;
-    font-weight: 600 !important;
-    color: #0c2847 !important; /* Warna biru gelap sama seperti 'Mengenai MOSTI' */
-    margin: 0 0 20px 0 !important;
-    letter-spacing: -0.5px !important;
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            font-size: 1.6rem !important;
+            font-weight: 600 !important;
+            color: #0c2847 !important;
+            margin: 0 0 20px 0 !important;
+            letter-spacing: -0.5px !important;
         }
         .dtims-input-group {
             margin-bottom: 12px;
@@ -737,7 +758,7 @@
             background-color: #1d4ed8;
         }
 
-        /* User Dropdown Pada Latar Putih */
+        /* User Dropdown Pada Latar Gelap */
         .user-dropdown-container {
             position: relative;
             display: inline-block;
@@ -994,7 +1015,7 @@
             }
             .logo {
                 gap: 7px !important;
-                max-width: 70%;
+                max-width: 68%;
             }
             .logo-img {
                 height: 26px !important;
@@ -1022,6 +1043,11 @@
 
             .header-top-right {
                 gap: 8px !important;
+            }
+
+            .top-auth-link {
+                padding: 4px 10px;
+                font-size: 0.75rem;
             }
 
             .mobile-hamburger-btn {
@@ -1273,7 +1299,7 @@
 
             <div class="header-top-right">
                 <span id="user-nav-container">
-                    <a href="login.html" style="color: #003d7c; text-decoration: none; font-size: 0.85rem;"><i class="fa-solid fa-user"></i> Log Masuk</a>
+                    <a href="login.html" class="top-auth-link"><i class="fa-solid fa-user"></i> Sign In</a>
                 </span>
                 <!-- Butang Hamburger Mobile -->
                 <button type="button" id="mobile-menu-btn" class="mobile-hamburger-btn" onclick="toggleMobileNav()" aria-label="Buka Menu Navigasi" aria-expanded="false">
@@ -1444,7 +1470,7 @@
         </div>
     </section>
 
-    <section id="services-section" class="content-section bg-white"
+    <section id="services-section" class="content-section bg-white">
         <div class="container">
             <div class="section-title">
                 <h2>Kursus Akan Datang Terkini</h2>
@@ -1454,13 +1480,13 @@
             <div class="cards-grid-fixed" id="courses-container"></div>
 
             <div style="text-align: center; margin-top: 40px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-    <a href="iklan.html" class="btn-nus-outline" style="display: inline-flex !important; align-items: center; gap: 8px;">
-        <i class="fa-solid fa-list"></i> Lihat Semua Kursus Di Iklan
-    </a>
-    <a href="edit_kursus.html" id="btn-edit-semua-kursus" class="btn-nus-outline" style="display: none; align-items: center; gap: 8px; border-color: #d97706 !important; color: #b45309 !important;">
-        <i class="fa-solid fa-pen-to-square"></i> Edit Semua Kursus
-    </a>
-</div>
+                <a href="iklan.html" class="btn-nus-outline" style="display: inline-flex !important; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-list"></i> Lihat Semua Kursus Di Iklan
+                </a>
+                <a href="edit_kursus.html" id="btn-edit-semua-kursus" class="btn-nus-outline" style="display: none; align-items: center; gap: 8px; border-color: #d97706 !important; color: #b45309 !important;">
+                    <i class="fa-solid fa-pen-to-square"></i> Edit Semua Kursus
+                </a>
+            </div>
         </div>
     </section>
 
@@ -1515,17 +1541,6 @@
                 try {
                     currentUser = JSON.parse(storedUser);
                 } catch(e) { console.error(e); }
-            }
-
-            if (!currentUser) {
-                currentUser = {
-                    nama: "Pentadbir MOSTI",
-                    email: "admin@mosti.gov.my",
-                    role: "admin",
-                    gambar: "logo.png"
-                };
-                sessionStorage.setItem('user', JSON.stringify(currentUser));
-                localStorage.setItem('user', JSON.stringify(currentUser));
             }
 
             setupNavbar();
