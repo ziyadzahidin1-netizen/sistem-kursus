@@ -865,8 +865,11 @@
         <!-- BAHAGIAN 2: SENARAI PERMOHONAN -->
         <div id="tab-senarai" class="tab-content">
             <div class="form-card">
-                <div class="form-card-header">
+                <div class="form-card-header" style="justify-content: space-between;">
                     <div><i class="fa-solid fa-list-check"></i> SEJARAH PERMOHONAN KURSUS</div>
+                    <button type="button" onclick="loadUserApplications(true)" style="background: #003d7c; color: white; border: none; padding: 6px 12px; border-radius: 4px; font-size: 0.78rem; cursor: pointer;">
+                        <i class="fa-solid fa-rotate"></i> Semak Status Terkini
+                    </button>
                 </div>
                 <div class="form-card-body">
                     <table class="custom-table">
@@ -1083,17 +1086,49 @@
 
         document.addEventListener('DOMContentLoaded', async () => {
             const storedUser = sessionStorage.getItem('user') || localStorage.getItem('user');
-            if (storedUser) {
-                try {
-                    currentUser = JSON.parse(storedUser);
-                    populateUserData();
-                    loadEducationRecords();
-                } catch(e) { console.error(e); }
+            if (!storedUser) {
+                window.location.href = 'login.html';
+                return;
             }
 
-            await loadAllCoursesForLookup();
-            loadUserApplications();
-            setupNavbar();
+            try {
+                currentUser = JSON.parse(storedUser);
+                populateUserData();
+                setupNavbar();
+
+                // Muatkan senarai permohonan & kursus secara serentak tanpa menunggu satu sama lain
+                loadUserApplications();
+                loadAllCoursesForLookup();
+                loadEducationRecords();
+
+                // Tarik data profil terkini daripada pangkalan data Supabase
+                if (currentUser.ic) {
+                    const res = await fetch(`/api/user/profile/${encodeURIComponent(currentUser.ic)}?t=${Date.now()}`, {
+                        cache: 'no-store'
+                    });
+                    if (res.ok) {
+                        const freshDbUser = await res.json();
+                        currentUser = { ...currentUser, ...freshDbUser };
+                        sessionStorage.setItem('user', JSON.stringify(currentUser));
+                        localStorage.setItem('user', JSON.stringify(currentUser));
+                        populateUserData();
+                    }
+                }
+            } catch(e) { console.error(e); }
+
+            // Auto-kemaskini apabila pengguna kembali ke tab pelayar ini
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'visible') {
+                    loadUserApplications();
+                }
+            });
+
+            // Auto-semak status permohonan setiap 5 saat supaya keputusan admin keluar pantas tanpa lag
+            setInterval(() => {
+                if (document.visibilityState === 'visible') {
+                    loadUserApplications();
+                }
+            }, 5000);
 
             document.addEventListener('click', (e) => {
                 const dropdown = document.getElementById('userMenuDropdown');
@@ -1171,38 +1206,59 @@
 
         function populateUserData() {
             if (!currentUser) return;
+
+            // 1. Maklumat Peribadi
             document.getElementById('userBannerName').innerText = currentUser.nama || '-';
             document.getElementById('profNama').value = currentUser.nama || '';
             document.getElementById('profMyKad').value = currentUser.ic || '';
             document.getElementById('profEmelRasmi').value = currentUser.email || currentUser.emelRasmi || '';
-
             document.getElementById('profGelaran').value = currentUser.gelaran || '';
-            document.getElementById('profEmelPeribadi').value = currentUser.emelPeribadi || '';
-            document.getElementById('profTelPejabat').value = currentUser.telPejabat || '';
-            document.getElementById('profTelBimbit').value = currentUser.telBimbit || '';
-            document.getElementById('profAlamatRumah').value = currentUser.alamatRumah || '';
-            document.getElementById('profAlamat1').value = currentUser.alamat1 || '';
-            document.getElementById('profAlamat2').value = currentUser.alamat2 || '';
-            document.getElementById('profAlamat3').value = currentUser.alamat3 || '';
+            document.getElementById('profEmelPeribadi').value = currentUser.email_peribadi || currentUser.emelPeribadi || '';
+            document.getElementById('profTelPejabat').value = currentUser.tel_pejabat || currentUser.telPejabat || '';
+            document.getElementById('profTelBimbit').value = currentUser.tel_bimbit || currentUser.telBimbit || '';
+            document.getElementById('profAlamatRumah').value = currentUser.alamat_rumah || currentUser.alamatRumah || '';
+            document.getElementById('profAlamat1').value = currentUser.alamat_1 || currentUser.alamat1 || '';
+            document.getElementById('profAlamat2').value = currentUser.alamat_2 || currentUser.alamat2 || '';
+            document.getElementById('profAlamat3').value = currentUser.alamat_3 || currentUser.alamat3 || '';
             document.getElementById('profPoskod').value = currentUser.poskod || '';
             document.getElementById('profBandar').value = currentUser.bandar || '';
             document.getElementById('profNegeri').value = currentUser.negeri || '';
-            document.getElementById('profSejarahPenyakit').value = currentUser.sejarahPenyakit || '';
+            document.getElementById('profSejarahPenyakit').value = currentUser.sejarah_penyakit || currentUser.sejarahPenyakit || '';
 
             if (currentUser.gambar) {
                 updateAllPassportImages(currentUser.gambar);
             }
 
+            // 2. Maklumat Perkhidmatan
+            document.getElementById('srvJawatan').value = currentUser.jawatan || '';
+            document.getElementById('srvGelaranJawatan').value = currentUser.gelaran_jawatan || currentUser.gelaranJawatan || '';
+            document.getElementById('srvGredSSM').value = currentUser.gred_ssm || currentUser.gredSSM || '';
+            document.getElementById('srvGredSSPA').value = currentUser.gred_sspa || currentUser.gredSSPA || '';
+            document.getElementById('srvTarafJawatan').value = currentUser.taraf_jawatan || currentUser.tarafJawatan || '';
+            document.getElementById('srvTarikhLantikan').value = currentUser.tarikh_lantikan || currentUser.tarikhLantikan || '';
+            document.getElementById('srvKementerian').value = currentUser.kementerian || '';
+            document.getElementById('srvJabatan').value = currentUser.jabatan || '';
+            document.getElementById('srvBahagian').value = currentUser.bahagian || '';
+            document.getElementById('srvAlamat1').value = currentUser.srv_alamat_1 || '';
+            document.getElementById('srvAlamat2').value = currentUser.srv_alamat_2 || '';
+            document.getElementById('srvAlamat3').value = currentUser.srv_alamat_3 || '';
+            document.getElementById('srvPoskod').value = currentUser.srv_poskod || '';
+            document.getElementById('srvBandar').value = currentUser.srv_bandar || '';
+            document.getElementById('srvNegeri').value = currentUser.srv_negeri || '';
+            document.getElementById('srvPenyeliaNama').value = currentUser.penyelia_nama || currentUser.penyeliaNama || '';
+            document.getElementById('srvPenyeliaJawatan').value = currentUser.penyelia_jawatan || currentUser.penyeliaJawatan || '';
+
+            // 3. Maklumat Waris
             document.getElementById('emgNama').value = currentUser.kecemasan_nama || '';
             document.getElementById('emgHubungan').value = currentUser.kecemasan_hubungan || 'Waris Utama';
             document.getElementById('emgTel').value = currentUser.kecemasan_tel || '';
 
-            warisList = currentUser.waris_list || [];
+            warisList = Array.isArray(currentUser.waris_list) ? currentUser.waris_list : [];
             renderWarisTable();
         }
 
         function updateAllPassportImages(imgSrc) {
-            const imgIds = ['userPassportImg', 'userPassportImgPendidikan', 'userPassportImgPerkhidmatan', 'userPassportImgKecemasan'];
+            const imgIds = ['userPassportImg', 'userPassportImgPendidikan', 'userPassportImgPerkhidmatan', 'userPassportImgKecemasan', 'navUserAvatar'];
             imgIds.forEach(id => {
                 const imgEl = document.getElementById(id);
                 if (imgEl) imgEl.src = imgSrc;
@@ -1240,11 +1296,26 @@
                 if (res.ok) {
                     alert('Maklumat Profil Peribadi berjaya disimpan!');
                     if (currentUser) {
-                        Object.assign(currentUser, profilePayload, {
-                            email: profilePayload.emelRasmi
+                        Object.assign(currentUser, {
+                            gelaran: profilePayload.gelaran,
+                            nama: profilePayload.nama,
+                            email: profilePayload.emelRasmi,
+                            email_peribadi: profilePayload.emelPeribadi,
+                            tel_pejabat: profilePayload.telPejabat,
+                            tel_bimbit: profilePayload.telBimbit,
+                            alamat_rumah: profilePayload.alamatRumah,
+                            alamat_1: profilePayload.alamat1,
+                            alamat_2: profilePayload.alamat2,
+                            alamat_3: profilePayload.alamat3,
+                            poskod: profilePayload.poskod,
+                            bandar: profilePayload.bandar,
+                            negeri: profilePayload.negeri,
+                            sejarah_penyakit: profilePayload.sejarahPenyakit,
+                            gambar: profilePayload.gambar
                         });
                         sessionStorage.setItem('user', JSON.stringify(currentUser));
                         localStorage.setItem('user', JSON.stringify(currentUser));
+                        document.getElementById('userBannerName').innerText = currentUser.nama || '-';
                     }
                 } else alert('Gagal menyimpan profil: ' + data.error);
             } catch (err) { alert('Ralat Server: ' + err.message); }
@@ -1280,12 +1351,36 @@
                     body: JSON.stringify(servicePayload)
                 });
                 const data = await res.json();
-                if (res.ok) alert('Maklumat Perkhidmatan berjaya disimpan!');
-                else alert('Gagal menyimpan perkhidmatan: ' + data.error);
+                if (res.ok) {
+                    alert('Maklumat Perkhidmatan berjaya disimpan!');
+                    if (currentUser) {
+                        Object.assign(currentUser, {
+                            jawatan: servicePayload.jawatan,
+                            gelaran_jawatan: servicePayload.gelaranJawatan,
+                            gred_ssm: servicePayload.gredSSM,
+                            gred_sspa: servicePayload.gredSSPA,
+                            taraf_jawatan: servicePayload.tarafJawatan,
+                            tarikh_lantikan: servicePayload.tarikhLantikan,
+                            kementerian: servicePayload.kementerian,
+                            jabatan: servicePayload.jabatan,
+                            bahagian: servicePayload.bahagian,
+                            srv_alamat_1: servicePayload.alamat1,
+                            srv_alamat_2: servicePayload.alamat2,
+                            srv_alamat_3: servicePayload.alamat3,
+                            srv_poskod: servicePayload.poskod,
+                            srv_bandar: servicePayload.bandar,
+                            srv_negeri: servicePayload.negeri,
+                            penyelia_nama: servicePayload.penyeliaNama,
+                            penyelia_jawatan: servicePayload.penyeliaJawatan
+                        });
+                        sessionStorage.setItem('user', JSON.stringify(currentUser));
+                        localStorage.setItem('user', JSON.stringify(currentUser));
+                    }
+                } else alert('Gagal menyimpan perkhidmatan: ' + data.error);
             } catch (err) { alert('Ralat Server: ' + err.message); }
         }
 
-        async function saveEmergencyData() {
+        async function saveEmergencyData(silent = false) {
             const ic = document.getElementById('profMyKad').value;
             const nama = document.getElementById('emgNama').value;
             const hubungan = document.getElementById('emgHubungan').value;
@@ -1299,7 +1394,7 @@
                 });
                 const data = await res.json();
                 if (res.ok) {
-                    alert('Maklumat Waris berjaya disimpan!');
+                    if (!silent) alert('Maklumat Waris berjaya disimpan!');
                     if (currentUser) {
                         currentUser.kecemasan_nama = nama;
                         currentUser.kecemasan_hubungan = hubungan;
@@ -1308,23 +1403,15 @@
                         sessionStorage.setItem('user', JSON.stringify(currentUser));
                         localStorage.setItem('user', JSON.stringify(currentUser));
                     }
-                } else alert('Gagal menyimpan maklumat waris: ' + data.error);
-            } catch (err) {
-                if (currentUser) {
-                    currentUser.kecemasan_nama = nama;
-                    currentUser.kecemasan_hubungan = hubungan;
-                    currentUser.kecemasan_tel = tel;
-                    currentUser.waris_list = warisList;
-                    sessionStorage.setItem('user', JSON.stringify(currentUser));
-                    localStorage.setItem('user', JSON.stringify(currentUser));
-                    alert('Maklumat Waris berjaya disimpan secara tempatan!');
-                } else {
-                    alert('Ralat Server: ' + err.message);
+                } else if (!silent) {
+                    alert('Gagal menyimpan maklumat waris: ' + data.error);
                 }
+            } catch (err) {
+                if (!silent) alert('Ralat Server: ' + err.message);
             }
         }
 
-        function addWarisRecord(e) {
+        async function addWarisRecord(e) {
             e.preventDefault();
             const nama = document.getElementById('newWarisNama').value.trim();
             const hubungan = document.getElementById('newWarisHubungan').value.trim();
@@ -1339,26 +1426,17 @@
                 tel: tel
             });
 
-            if (currentUser) {
-                currentUser.waris_list = warisList;
-                sessionStorage.setItem('user', JSON.stringify(currentUser));
-                localStorage.setItem('user', JSON.stringify(currentUser));
-            }
-
             document.getElementById('addWarisForm').reset();
             renderWarisTable();
-            alert('Maklumat waris berjaya ditambah!');
+            await saveEmergencyData(true);
+            alert('Maklumat waris berjaya ditambah dan disimpan!');
         }
 
-        function deleteWarisRecord(index) {
+        async function deleteWarisRecord(index) {
             if (!confirm('Padam maklumat waris ini?')) return;
             warisList.splice(index, 1);
-            if (currentUser) {
-                currentUser.waris_list = warisList;
-                sessionStorage.setItem('user', JSON.stringify(currentUser));
-                localStorage.setItem('user', JSON.stringify(currentUser));
-            }
             renderWarisTable();
+            await saveEmergencyData(true);
         }
 
         function renderWarisTable() {
@@ -1463,30 +1541,39 @@
             } catch (err) { alert('Ralat: ' + err.message); }
         }
 
-        async function loadUserApplications() {
+        async function loadUserApplications(showFeedback = false) {
             const ic = currentUser ? currentUser.ic : document.getElementById('profMyKad').value;
-            let dbList = [];
+            if (!ic) return;
+
             let localList = [];
+            try {
+                localList = JSON.parse(localStorage.getItem('user_applications_' + ic)) || [];
+            } catch(e) { localList = []; }
 
-            if (ic) {
-                try {
-                    localList = JSON.parse(localStorage.getItem('user_applications_' + ic)) || [];
-                } catch(e) { localList = []; }
+            // Papar data simpanan sementara jika jadual belum pernah dimuatkan
+            if (localList.length > 0 && globalUserApplications.length === 0) {
+                globalUserApplications = localList;
+                renderApplicationTable(globalUserApplications);
             }
 
-            if (ic) {
-                try {
-                    const res = await fetch(`/api/user/applications/${ic}`);
-                    if (res.ok) {
-                        dbList = await res.json();
+            try {
+                // Tarik rekod terkini dari Supabase tanpa cache
+                const res = await fetch(`/api/user/applications/${encodeURIComponent(ic)}?t=${Date.now()}`, {
+                    cache: 'no-store'
+                });
+                if (res.ok) {
+                    const dbList = await res.json();
+                    globalUserApplications = dbList;
+                    // Timpa localStorage dengan keputusan terkini dari Supabase supaya tiada lag status lama
+                    localStorage.setItem('user_applications_' + ic, JSON.stringify(dbList));
+                    renderApplicationTable(globalUserApplications);
+                    if (showFeedback) {
+                        alert('Status permohonan telah dikemas kini!');
                     }
-                } catch (err) { console.error('Gagal fetch Supabase:', err); }
+                }
+            } catch (err) {
+                console.error('Gagal fetch Supabase:', err);
             }
-
-            const combined = [...localList, ...dbList];
-            globalUserApplications = Array.from(new Map(combined.map(item => [(item.id || item.created_at || item.nama_kursus || item.kursus), item])).values());
-
-            renderApplicationTable(globalUserApplications);
         }
 
         function renderApplicationTable(list) {
@@ -1496,6 +1583,10 @@
 
             if (!list || list.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#64748b; padding:20px;">Tiada sejarah permohonan kursus dijumpai.</td></tr>';
+                document.getElementById('statTotalPermohonan').innerText = 0;
+                document.getElementById('statDalamProses').innerText = 0;
+                document.getElementById('statBerjaya').innerText = 0;
+                document.getElementById('statTidakBerjaya').innerText = 0;
                 return;
             }
 
@@ -1526,6 +1617,10 @@
                     formattedDateTime = item.tarikh;
                 }
 
+                let ulasanHtml = item.ulasan_admin 
+                    ? `<div style="font-size:0.78rem; color:#475569; margin-top:4px;"><i class="fa-solid fa-comment-dots"></i> ${item.ulasan_admin}</div>` 
+                    : '';
+
                 let actionBtnsHtml = `
                     <div style="display: flex; gap: 6px; flex-wrap: wrap;">
                         <button class="btn-cert" onclick="openCertModal(${index})" title="Paparkan Sijil Penyertaan">
@@ -1540,7 +1635,7 @@
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>${index + 1}</td>
-                    <td><strong style="color:#003d7c;">${item.kod_kursus || ''}</strong> ${item.nama_kursus || item.kursus || ''}</td>
+                    <td><strong style="color:#003d7c;">${item.kod_kursus || ''}</strong> ${item.nama_kursus || item.kursus || ''}${ulasanHtml}</td>
                     <td><i class="fa-regular fa-clock" style="color:#64748b; margin-right:6px;"></i>${formattedDateTime}</td>
                     <td>${statusBadge}</td>
                     <td>${item.yuran_kursus || 'RM 0.00'}</td>
@@ -1555,7 +1650,6 @@
             document.getElementById('statTidakBerjaya').innerText = countGagal;
         }
 
-        /* HELPER UNTUK BALUT TEKS PANJANG & PULANGKAN KEDUDUKAN Y TERAKHIR */
         function drawWrappedTextFlow(ctx, text, x, startY, maxWidth, lineHeight) {
             const words = String(text || '').split(' ');
             let lines = [];
@@ -1581,7 +1675,6 @@
             return currentY;
         }
 
-        /* FUNGSI LUKIS SIJIL.JPG DENGAN SUSUNAN MENEGAK (BAWAH-BAWAH) SUPAYA LANGSUNG TAK BERTINDIH */
         function openCertModal(index) {
             const appItem = globalUserApplications[index] || {};
             const courseName = appItem.nama_kursus || appItem.kursus || '-';
@@ -1609,15 +1702,12 @@
                 canvas.width = w;
                 canvas.height = h;
 
-                // 1. Isi keseluruhan kanvas dengan warna putih bersih
                 ctx.fillStyle = '#ffffff';
                 ctx.fillRect(0, 0, w, h);
 
-                // 2. Lukis bahagian ATAS sijil.jpg (No Siri, Tajuk SIJIL PENYERTAAN, "Dengan ini disahkan bahawa")
                 const headerCutY = h * 0.305;
                 ctx.drawImage(img, 0, 0, w, headerCutY, 0, 0, w, headerCutY);
 
-                // 3. Susun semua maklumat secara MENEGAK (bawah-bawah) dengan jarak sekata
                 ctx.fillStyle = '#000000';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'top';
@@ -1626,46 +1716,37 @@
                 const centerX = w / 2;
                 const maxTextWidth = w * 0.78;
 
-                // NAMA PESERTA
                 ctx.font = `bold ${Math.round(w * 0.025)}px Arial, sans-serif`;
                 cursorY = drawWrappedTextFlow(ctx, participantName, centerX, cursorY, maxTextWidth, Math.round(h * 0.028));
 
-                // NO KP
                 cursorY += h * 0.005;
                 ctx.font = `bold ${Math.round(w * 0.023)}px Arial, sans-serif`;
                 cursorY = drawWrappedTextFlow(ctx, participantIc, centerX, cursorY, maxTextWidth, Math.round(h * 0.026));
 
-                // "telah menyertai"
                 cursorY += h * 0.032;
                 ctx.font = `normal ${Math.round(w * 0.022)}px Arial, sans-serif`;
                 ctx.fillText('telah menyertai', centerX, cursorY);
                 cursorY += h * 0.032;
 
-                // NAMA KURSUS
                 ctx.font = `bold ${Math.round(w * 0.022)}px Arial, sans-serif`;
                 cursorY = drawWrappedTextFlow(ctx, courseName.toUpperCase(), centerX, cursorY, maxTextWidth, Math.round(h * 0.026));
 
-                // "bertempat di"
                 cursorY += h * 0.030;
                 ctx.font = `normal ${Math.round(w * 0.022)}px Arial, sans-serif`;
                 ctx.fillText('bertempat di', centerX, cursorY);
                 cursorY += h * 0.032;
 
-                // TEMPAT KURSUS
                 ctx.font = `bold ${Math.round(w * 0.020)}px Arial, sans-serif`;
                 cursorY = drawWrappedTextFlow(ctx, courseVenue, centerX, cursorY, maxTextWidth, Math.round(h * 0.025));
 
-                // "pada"
                 cursorY += h * 0.030;
                 ctx.font = `normal ${Math.round(w * 0.022)}px Arial, sans-serif`;
                 ctx.fillText('pada', centerX, cursorY);
                 cursorY += h * 0.032;
 
-                // TARIKH KURSUS
                 ctx.font = `bold ${Math.round(w * 0.021)}px Arial, sans-serif`;
                 cursorY = drawWrappedTextFlow(ctx, courseDate, centerX, cursorY, maxTextWidth, Math.round(h * 0.025));
 
-                // 4. Lukis bahagian BAWAH sijil.jpg (Tandatangan OOLI GUNALAN & Logo Malaysia MADANI) di bawah teks terakhir
                 const footerSrcY = h * 0.555;
                 const footerSrcH = h * 0.220;
                 const footerDestY = Math.max(cursorY + (h * 0.045), h * 0.68);
@@ -1688,7 +1769,6 @@
             document.getElementById('certModal').classList.remove('show');
         }
 
-        /* FUNGSI AUTO-GENERATE SURAT TAWARAN RASMI MOSTI */
         function openOfferModal(index) {
             const appItem = globalUserApplications[index] || {};
             const courseName = appItem.nama_kursus || appItem.kursus || 'KURSUS PEMANTAPAN KESETIAUSAHAAN MOSTI TAHUN 2026';

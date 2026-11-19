@@ -205,7 +205,7 @@ app.post('/api/register', async function(req, res) {
     }
 });
 
-// 3. API LOGIN
+// 3. API LOGIN (PULANGKAN PROFIL PENUH PENGGUNA)
 app.post('/api/login', async function(req, res) {
     try {
         const supabase = getSupabase();
@@ -255,14 +255,15 @@ app.post('/api/login', async function(req, res) {
             }
         }
 
+        const safeUser = { ...user };
+        delete safeUser.password;
+        delete safeUser.reset_token;
+        delete safeUser.reset_token_expiry;
+        safeUser.role = user.role || 'user';
+
         return res.status(200).json({
             message: 'Log masuk berjaya!',
-            user: { 
-                nama: user.nama, 
-                email: user.email, 
-                ic: user.ic, 
-                role: user.role || 'user' 
-            }
+            user: safeUser
         });
     } catch (error) {
         return res.status(500).json({ error: 'Ralat Server Backend: ' + (error.message || 'Ralat tidak diketahui') });
@@ -460,7 +461,7 @@ app.post('/api/change-password', async (req, res) => {
 // =========================================================================
 let coursesCache = null;
 let coursesCacheTime = 0;
-const CACHE_TTL_MS = 60 * 1000; // Simpan cache selama 60 saat
+const CACHE_TTL_MS = 60 * 1000;
 
 function clearCoursesCache() {
     coursesCache = null;
@@ -469,7 +470,6 @@ function clearCoursesCache() {
 
 app.get('/api/kursus', async (req, res) => {
     try {
-        // Pulangkan cache segera jika masih sah (< 1ms)
         if (coursesCache && (Date.now() - coursesCacheTime < CACHE_TTL_MS)) {
             return res.status(200).json(coursesCache);
         }
@@ -477,7 +477,6 @@ app.get('/api/kursus', async (req, res) => {
         const supabase = getSupabase();
         if (!supabase) return res.status(500).json({ error: 'Tetapan Supabase tidak dijumpai.' });
 
-        // Tarik lajur yang diperlukan sahaja untuk mengecilkan saiz payload
         const { data, error } = await supabase
             .from('courses')
             .select('id, tajuk, tarikh, tarikh_tutup, tempat, masa, penerangan, gambar_url, bidang, created_at')
@@ -617,7 +616,6 @@ app.post('/api/mohon', async function(req, res) {
             }
         }
 
-        // Gunakan UUID sebenar supaya serasi dengan lajur uuid Supabase
         const newRecord = {
             id: crypto.randomUUID(),
             ic: String(ic).trim(),
@@ -700,6 +698,7 @@ app.post('/api/mohon', async function(req, res) {
 // 6. API ADMIN: PENGURUSAN PERMOHONAN DARI PELBAGAI USER (TERMASUK ULASAN)
 // =========================================================================
 app.get('/api/admin/applications', async (req, res) => {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
     try {
         const supabase = getSupabase();
         if (supabase) {
@@ -718,7 +717,6 @@ app.get('/api/admin/applications', async (req, res) => {
     }
 });
 
-// Kemaskini Status & Ulasan Admin sekali gus
 app.put('/api/admin/applications/:id/status', async (req, res) => {
     try {
         const { id } = req.params;
@@ -732,7 +730,6 @@ app.put('/api/admin/applications/:id/status', async (req, res) => {
         }
 
         const supabase = getSupabase();
-        // Hanya hantar ke Supabase jika id berformat UUID sah supaya tidak ralat syntax
         if (supabase && isValidUUID(id)) {
             const updatePayload = { status: status };
             if (teksUlasan !== undefined) {
@@ -753,7 +750,6 @@ app.put('/api/admin/applications/:id/status', async (req, res) => {
     }
 });
 
-// Route khas untuk simpan Ulasan Admin
 app.put('/api/admin/applications/:id/ulasan', async (req, res) => {
     try {
         const { id } = req.params;
@@ -766,7 +762,6 @@ app.put('/api/admin/applications/:id/ulasan', async (req, res) => {
         }
 
         const supabase = getSupabase();
-        // Hanya hantar ke Supabase jika id berformat UUID sah supaya tidak ralat syntax
         if (supabase && isValidUUID(id)) {
             const { error } = await supabase
                 .from('applications')
@@ -790,7 +785,6 @@ app.delete('/api/admin/applications/:id', async (req, res) => {
         memoryApplications = memoryApplications.filter(a => String(a.id) !== String(id));
 
         const supabase = getSupabase();
-        // Hanya padam di Supabase jika id berformat UUID sah
         if (supabase && isValidUUID(id)) {
             const { error } = await supabase.from('applications').delete().eq('id', id);
             if (error) return res.status(500).json({ error: error.message });
@@ -867,27 +861,67 @@ app.get('/api/admin/latihan-modul/:moduleName', async (req, res) => {
     }
 });
 
+// =========================================================================
 // 7. API PENGURUSAN DATA PROFIL, PERKHIDMATAN, KECEMASAN & PENDIDIKAN
+// =========================================================================
+
+// GET: Tarik data profil penuh dari Supabase apabila user buka dashboard
+app.get('/api/user/profile/:ic', async (req, res) => {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    try {
+        const supabase = getSupabase();
+        if (!supabase) return res.status(500).json({ error: 'Tetapan Supabase tidak dijumpai.' });
+
+        const cleanIc = String(req.params.ic).trim();
+        const { data, error } = await supabase
+            .from('users')
+            .select('*')
+            .eq('ic', cleanIc)
+            .maybeSingle();
+
+        if (error || !data) {
+            return res.status(404).json({ error: 'Profil pengguna tidak dijumpai.' });
+        }
+
+        delete data.password;
+        delete data.reset_token;
+        delete data.reset_token_expiry;
+
+        return res.status(200).json(data);
+    } catch (error) {
+        return res.status(500).json({ error: 'Ralat Server: ' + error.message });
+    }
+});
+
+// PUT: Simpan Profil Peribadi Lengkap
 app.put('/api/user/profile', async (req, res) => {
     try {
         const supabase = getSupabase();
         if (!supabase) return res.status(500).json({ error: 'Tetapan Supabase tidak dijumpai.' });
 
-        const { ic, nama, emelRasmi, emelPeribadi, telPejabat, telBimbit, alamat1, alamat2, alamat3, poskod, bandar, negeri, gambar } = req.body || {};
+        const { 
+            ic, gelaran, nama, emelRasmi, emelPeribadi, telPejabat, telBimbit, 
+            alamatRumah, alamat1, alamat2, alamat3, poskod, bandar, negeri, 
+            sejarahPenyakit, gambar 
+        } = req.body || {};
+
         if (!ic) return res.status(400).json({ error: 'No. MyKad diperlukan!' });
 
         const rawData = {
+            gelaran,
             nama,
             email: emelRasmi,
             email_peribadi: emelPeribadi,
             tel_pejabat: telPejabat,
             tel_bimbit: telBimbit,
+            alamat_rumah: alamatRumah,
             alamat_1: alamat1,
             alamat_2: alamat2,
             alamat_3: alamat3,
             poskod,
             bandar,
-            negeri
+            negeri,
+            sejarah_penyakit: sejarahPenyakit
         };
         if (gambar) rawData.gambar = gambar;
 
@@ -901,12 +935,18 @@ app.put('/api/user/profile', async (req, res) => {
     }
 });
 
+// PUT: Simpan Maklumat Perkhidmatan Lengkap
 app.put('/api/user/service', async (req, res) => {
     try {
         const supabase = getSupabase();
         if (!supabase) return res.status(500).json({ error: 'Tetapan Supabase tidak dijumpai.' });
 
-        const { ic, jawatan, gelaranJawatan, gredSSM, gredSSPA, tarafJawatan, tarikhLantikan, kementerian, jabatan, bahagian, alamat1, alamat2, alamat3, poskod, bandar, negeri, penyeliaNama, penyeliaJawatan } = req.body || {};
+        const { 
+            ic, jawatan, gelaranJawatan, gredSSM, gredSSPA, tarafJawatan, tarikhLantikan, 
+            kementerian, jabatan, bahagian, alamat1, alamat2, alamat3, poskod, bandar, 
+            negeri, penyeliaNama, penyeliaJawatan 
+        } = req.body || {};
+
         if (!ic) return res.status(400).json({ error: 'No. MyKad diperlukan!' });
 
         const rawData = {
@@ -939,20 +979,26 @@ app.put('/api/user/service', async (req, res) => {
     }
 });
 
+// PUT: Simpan Maklumat Waris Lengkap
 app.put('/api/user/emergency', async (req, res) => {
     try {
         const supabase = getSupabase();
         if (!supabase) return res.status(500).json({ error: 'Tetapan Supabase tidak dijumpai.' });
 
-        const { ic, nama, tel } = req.body || {};
+        const { ic, nama, hubungan, tel, waris_list } = req.body || {};
         if (!ic) return res.status(400).json({ error: 'No. MyKad diperlukan!' });
 
-        const rawData = { kecemasan_nama: nama, kecemasan_tel: tel };
+        const rawData = { 
+            kecemasan_nama: nama, 
+            kecemasan_hubungan: hubungan,
+            kecemasan_tel: tel,
+            waris_list: waris_list
+        };
         const updateData = await filterExistingColumns(supabase, 'users', rawData);
 
         const { error } = await supabase.from('users').update(updateData).eq('ic', String(ic).trim());
         if (error) return res.status(500).json({ error: error.message });
-        return res.status(200).json({ message: 'Maklumat perhubungan kecemasan berjaya dikemas kini!' });
+        return res.status(200).json({ message: 'Maklumat waris berjaya dikemas kini!' });
     } catch (error) {
         return res.status(500).json({ error: 'Ralat Server: ' + error.message });
     }
@@ -1013,7 +1059,12 @@ app.delete('/api/user/education/:id', async (req, res) => {
     }
 });
 
+// GET: Senarai Permohonan User Tanpa Cache Supaya Keputusan Serta-Merta
 app.get('/api/user/applications/:ic', async (req, res) => {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+
     try {
         const supabase = getSupabase();
         const { ic } = req.params;
@@ -1026,7 +1077,9 @@ app.get('/api/user/applications/:ic', async (req, res) => {
                 .or(`ic.eq.${cleanIc},user_ic.eq.${cleanIc}`)
                 .order('created_at', { ascending: false });
 
-            if (!error && data && data.length > 0) return res.status(200).json(data);
+            if (!error && data) {
+                return res.status(200).json(data);
+            }
         }
         
         const userMemData = memoryApplications.filter(a => a.ic === cleanIc || a.user_ic === cleanIc);
