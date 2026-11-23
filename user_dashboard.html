@@ -1563,11 +1563,13 @@
                 });
                 if (res.ok) {
                     const dbList = await res.json();
-                    if (dbList.length > 0 || localList.length === 0) {
+                    if (Array.isArray(dbList) && dbList.length > 0) {
                         globalUserApplications = dbList;
                         localStorage.setItem('user_applications_' + ic, JSON.stringify(dbList));
-                    } else {
+                    } else if (localList.length > 0) {
                         globalUserApplications = localList;
+                    } else {
+                        globalUserApplications = [];
                     }
                     renderApplicationTable(globalUserApplications);
                     if (showFeedback) {

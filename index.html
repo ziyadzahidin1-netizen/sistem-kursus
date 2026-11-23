@@ -1529,7 +1529,7 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=2"></script>
 
     <script>
         let currentUser = null;
@@ -1550,6 +1550,7 @@
             if (typeof loadDashboardStats === 'function') {
                 loadDashboardStats();
             }
+            updatePesertaCount();
 
             document.addEventListener('click', (e) => {
                 const dropdown = document.getElementById('userMenuDropdown');
@@ -1567,6 +1568,32 @@
                 }
             });
         });
+
+        async function updatePesertaCount() {
+            const el = document.getElementById('stat-peserta');
+            if (!el) return;
+
+            try {
+                const resStats = await fetch('/api/stats');
+                if (resStats.ok) {
+                    const data = await resStats.json();
+                    if (data.totalPeserta !== undefined) {
+                        el.innerText = Number(data.totalPeserta).toLocaleString();
+                        return;
+                    }
+                }
+
+                const resApps = await fetch('/api/admin/applications');
+                if (resApps.ok) {
+                    const apps = await resApps.json();
+                    if (Array.isArray(apps)) {
+                        el.innerText = apps.length.toLocaleString();
+                    }
+                }
+            } catch (err) {
+                console.warn('Gagal kemaskini jumlah peserta:', err);
+            }
+        }
 
         function toggleMobileNav() {
             const navDrawer = document.getElementById('mobile-nav-drawer');
@@ -1712,6 +1739,7 @@
 
                 alert('Status permohonan berjaya ditukar kepada ' + newStatus + '!');
                 loadAllUserApplicationsForAdmin();
+                updatePesertaCount();
             } catch (err) { alert('Ralat: ' + err.message); }
         }
 
@@ -1722,6 +1750,7 @@
                 await fetch(`/api/admin/applications/${id}`, { method: 'DELETE' });
                 alert('Permohonan berjaya dipadam secara menyeluruh!');
                 loadAllUserApplicationsForAdmin();
+                updatePesertaCount();
             } catch (err) { alert('Ralat: ' + err.message); }
         }
 

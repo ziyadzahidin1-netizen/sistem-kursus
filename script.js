@@ -25,7 +25,7 @@ async function loadDashboardStats() {
         const statsResponse = await fetch('/api/stats');
         if (statsResponse.ok) {
             const data = await statsResponse.json();
-            if (data.totalPeserta) totalPeserta = data.totalPeserta;
+            if (data.totalPeserta !== undefined) totalPeserta = data.totalPeserta;
         }
     } catch (error) {
         console.warn('Gagal mengambil data dari server:', error);
@@ -62,7 +62,7 @@ function togglePassword(id, icon) {
 }
 
 // ==========================================
-// 3. PERMOHONAN KURSUS VIA NODEMAILER / BREVO (mohon.html)
+// 3. MUAT DATA PENGGUNA (mohon.html)
 // ==========================================
 function loadUserData() {
     const userData = localStorage.getItem('user') || sessionStorage.getItem('user');
@@ -82,67 +82,6 @@ function loadUserData() {
     if (nameInput) nameInput.value = user.nama || user.name || '';
     if (icInput) icInput.value = user.ic || '';
     if (emailInput) emailInput.value = user.email || '';
-}
-
-function setupCourseForm() {
-    const courseForm = document.getElementById('courseForm');
-    const isMohonPage = window.location.pathname.includes('mohon.html');
-
-    if (isMohonPage) {
-        loadUserData();
-
-        if (courseForm) {
-            courseForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-
-                const btnSubmit = document.getElementById('btn-submit');
-                if (btnSubmit) {
-                    btnSubmit.disabled = true;
-                    btnSubmit.innerHTML = 'Menghantar Permohonan... <i class="fa-solid fa-spinner fa-spin"></i>';
-                }
-
-                const formData = {
-                    nama: document.getElementById('app-name')?.value || '',
-                    ic: document.getElementById('app-ic')?.value || '',
-                    email: document.getElementById('app-email')?.value || '',
-                    jawatan: document.getElementById('app-jawatan')?.value || '',
-                    gred: document.getElementById('app-gred')?.value || '',
-                    jabatan: document.getElementById('app-jabatan')?.value || '',
-                    penyakit: document.getElementById('app-penyakit')?.value || '',
-                    pengangkutan: document.getElementById('app-pengangkutan')?.value || '',
-                    kursus: document.getElementById('course-select')?.value || ''
-                };
-
-                try {
-                    const response = await fetch('/api/mohon', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(formData)
-                    });
-
-                    const result = await response.json();
-
-                    if (response.ok) {
-                        alert('Permohonan berjaya dihantar!');
-                        courseForm.reset();
-                        window.location.href = 'user_dashboard.html';
-                    } else {
-                        alert('Gagal menghantar permohonan: ' + (result.error || result.message || 'Sila cuba lagi.'));
-                    }
-                } catch (error) {
-                    console.error('Ralat Server:', error);
-                    alert('Gagal menyambung ke server backend: ' + error.message);
-                } finally {
-                    if (btnSubmit) {
-                        btnSubmit.disabled = false;
-                        btnSubmit.innerHTML = 'Hantar Permohonan <i class="fa-solid fa-paper-plane"></i>';
-                    }
-                }
-            });
-        }
-    }
 }
 
 // ==========================================
@@ -213,6 +152,7 @@ function initRealtimeListener() {
                 if (typeof loadAllApplicationsPage === 'function') loadAllApplicationsPage();
                 if (typeof loadAllApplications === 'function') loadAllApplications();
                 if (typeof loadUserApplications === 'function') loadUserApplications();
+                loadDashboardStats();
             }
         };
 
@@ -227,7 +167,6 @@ function initRealtimeListener() {
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
     loadDashboardStats();
-    setupCourseForm();
     checkAndUpdateUserNav();
     
     // Mulakan Realtime Listener untuk mengemas kini semua pelayar secara automatik
