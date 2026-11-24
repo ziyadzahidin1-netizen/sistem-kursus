@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorotan Aktiviti Kursus - Portal Kursus MOSTI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+            color: #334155;
+        }
+
+        /* Navbar Rasmi Gaya Portal Kerajaan */
+        .sorotan-navbar {
+            background-color: #ffffff;
+            color: #0b1633;
+            padding: 14px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .brand-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #0b1633;
+        }
+
+        .brand-area img {
+            height: 44px;
+        }
+
+        .brand-area span {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+            color: #0b1633;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-nav {
+            background-color: #f8fafc;
+            color: #0b1633;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid #cbd5e1;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-nav:hover {
+            background-color: #0b1633;
+            color: #ffffff;
+            border-color: #0b1633;
+        }
+
+        .btn-admin {
+            background-color: #ef7c00;
+            color: #ffffff;
+            border-color: #ef7c00;
+        }
+
+        .btn-admin:hover {
+            background-color: #d97000;
+            border-color: #d97000;
+        }
+
+        /* Kontena Utama Artikel Gaya MOHE */
+        .article-wrapper {
+            max-width: 1120px;
+            margin: 40px auto 70px auto;
+            padding: 0 24px;
+        }
+
+        /* 1. Tajuk Utama Besar di Atas */
+        .article-main-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 2.35rem;
+            font-weight: 500;
+            line-height: 1.28;
+            color: #162238;
+            margin: 0 0 28px 0;
+        }
+
+        /* 2. Gambar Utama (Hero Image) Lebar Penuh */
+        .article-hero-image {
+            width: 100%;
+            max-height: 600px;
+            overflow: hidden;
+            margin-bottom: 24px;
+            background-color: #f1f5f9;
+            cursor: pointer;
+        }
+
+        .article-hero-image img {
+            width: 100%;
+            height: 100%;
+            max-height: 600px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* 3. Baris Tarikh | Tempat */
+        .article-meta-line {
+            font-size: 0.95rem;
+            color: #64748b;
+            margin-bottom: 22px;
+            font-weight: 400;
+        }
+
+        /* 4. Teks Artikel */
+        .article-body-text {
+            font-size: 1rem;
+            line-height: 1.85;
+            color: #475569;
+            margin-bottom: 40px;
+        }
+
+        .article-body-text p {
+            margin: 0 0 18px 0;
+        }
+
+        /* 5. Galeri Grid 2 Lajur Rapat (Gaya MOHE) */
+        .mohe-gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0;
+            margin-top: 20px;
+        }
+
+        .mohe-gallery-item {
+            position: relative;
+            height: 330px;
+            overflow: hidden;
+            cursor: pointer;
+            background-color: #0f172a;
+        }
+
+        .mohe-gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease, filter 0.3s ease;
+        }
+
+        .mohe-gallery-item:hover img {
+            transform: scale(1.03);
+            filter: brightness(0.85);
+        }
+
+        /* Ikon Kanta Pembesar di Tengah Semasa Hover */
+        .zoom-badge {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.85);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.92);
+            color: #162238;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            opacity: 0;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        .mohe-gallery-item:hover .zoom-badge {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* Bahagian Senarai Sorotan Lain di Bawah */
+        .other-activities-section {
+            max-width: 1120px;
+            margin: 0 auto 70px auto;
+            padding: 35px 24px 0 24px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .other-activities-section h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.25rem;
+            color: #162238;
+            margin: 0 0 20px 0;
+        }
+
+        .other-activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .other-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            transition: box-shadow 0.2s, transform 0.2s;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .other-card:hover {
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .other-card img {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+        }
+
+        .other-card-body {
+            padding: 16px;
+        }
+
+        .other-card-meta {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-bottom: 6px;
+        }
+
+        .other-card-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #162238;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        /* Lightbox Paparan Gambar Penuh */
+        .lightbox-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(6, 15, 35, 0.92);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .lightbox-modal.show {
+            display: flex;
+        }
+
+        .lightbox-modal img {
+            max-width: 92%;
+            max-height: 88vh;
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: #ffffff;
+            color: #0b1633;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        @media screen and (max-width: 768px) {
+            .sorotan-navbar {
+                padding: 12px 16px;
+            }
+            .article-main-title {
+                font-size: 1.65rem;
+            }
+            .mohe-gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            .mohe-gallery-item {
+                height: 240px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="sorotan-navbar">
+        <a href="index.html" class="brand-area">
+            <img src="logo.png" alt="Logo MOSTI">
+            <span>KEMENTERIAN SAINS, TEKNOLOGI DAN INOVASI</span>
+        </a>
+
+        <div class="nav-actions">
+            <a href="edit_sorotan.html" id="adminEditLink" class="btn-nav btn-admin" style="display: none;">
+                <i class="fa-solid fa-plus-circle"></i> Tambah / Edit Sorotan
+            </a>
+            <a href="index.html" class="btn-nav">
+                <i class="fa-solid fa-house"></i> Halaman Utama
+            </a>
+        </div>
+    </header>
+
+    <!-- Paparan Utama Artikel Sorotan Aktiviti -->
+    <main class="article-wrapper" id="mainArticleContainer"></main>
+
+    <!-- Senarai Sorotan Aktiviti Lain (Jika Ada Lebih Daripada 1) -->
+    <section class="other-activities-section" id="otherActivitiesSection" style="display: none;">
+        <h3>Sorotan Aktiviti Lain</h3>
+        <div class="other-activities-grid" id="otherActivitiesGrid"></div>
+    </section>
+
+    <!-- Modal Papar Gambar Besar -->
+    <div id="lightboxModal" class="lightbox-modal" onclick="closeLightbox()">
+        <button type="button" class="lightbox-close" onclick="closeLightbox()"><i class="fa-solid fa-xmark"></i></button>
+        <img id="lightboxImg" src="" alt="Paparan Penuh">
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAdminRole();
+            renderSingleArticlePage();
+        });
+
+        function checkAdminRole() {
+            const storedUser = sessionStorage.getItem('user') || localStorage.getItem('user');
+            if (storedUser) {
+                try {
+                    const user = JSON.parse(storedUser);
+                    if (user && user.role === 'admin') {
+                        document.getElementById('adminEditLink').style.display = 'inline-flex';
+                    }
+                } catch (e) {}
+            }
+        }
+
+        function renderSingleArticlePage() {
+            const mainContainer = document.getElementById('mainArticleContainer');
+            const otherSection = document.getElementById('otherActivitiesSection');
+            const otherGrid = document.getElementById('otherActivitiesGrid');
+            let sorotanList = [];
+
+            try {
+                sorotanList = JSON.parse(localStorage.getItem('mosti_sorotan_aktiviti') || '[]');
+            } catch (e) {}
+
+            // Data sampel lalai jika Admin belum memuat naik sebarang sorotan baharu
+            if (sorotanList.length === 0) {
+                sorotanList = [
+                    {
+                        id: 'default_1',
+                        kursusTajuk: 'Majlis Pelancaran Program Latihan & Pembangunan Bakat STIE MOSTI 2026',
+                        tarikh: '20 November 2026',
+                        tempat: 'Putrajaya',
+                        deskripsi: 'Majlis Pelancaran Program Latihan & Pembangunan Bakat STIE menjadi wadah penghargaan dan pemerkasaan modal insan dalam menyokong usaha Kementerian Sains, Teknologi dan Inovasi (MOSTI) mengangkat martabat inovasi negara.\n\nProgram ini menghimpunkan peserta dari pelbagai agensi kerajaan, institusi penyelidikan dan rakan industri bagi menyertai siri bengkel serta forum berkaitan kecerdasan buatan (AI), teknologi hijau dan transformasi digital.\n\nUsaha memperluas jaringan kerjasama ini selari dengan aspirasi Dasar Sains, Teknologi dan Inovasi Negara (DSTIN) dalam melahirkan tenaga kerja berkemahiran tinggi serta memacu ekonomi berasaskan inovasi.',
+                        images: ['blue.jpg', 'blue.jpg', 'blue.jpg', 'blue.jpg', 'blue.jpg'],
+                        createdAt: 'Terkini'
+                    },
+                    {
+                        id: 'default_2',
+                        kursusTajuk: 'Persidangan Teknologi Digital, Kecerdasan Buatan & Inovasi Kebangsaan',
+                        tarikh: '15 November 2026',
+                        tempat: 'Pusat Latihan MOSTI, Putrajaya',
+                        deskripsi: 'Bengkel intensif dan perkongsian kepakaran bersama pengamal industri teknologi kecerdasan buatan (AI) dan keselamatan siber bagi meningkatkan kecekapan penyampaian perkhidmatan awam.',
+                        images: ['blue.jpg', 'blue.jpg'],
+                        createdAt: 'Terkini'
+                    }
+                ];
+            }
+
+            // Kenal pasti artikel pilihan berdasarkan parameter URL ?id=...
+            const urlParams = new URLSearchParams(window.location.search);
+            const selectedId = urlParams.get('id');
+            let activeIndex = 0;
+
+            if (selectedId) {
+                const foundIndex = sorotanList.findIndex(item => item.id === selectedId);
+                if (foundIndex !== -1) {
+                    activeIndex = foundIndex;
+                }
+            }
+
+            const activeItem = sorotanList[activeIndex];
+            const imgs = (activeItem.images && activeItem.images.length > 0) ? activeItem.images : ['blue.jpg'];
+
+            // Gambar pertama dijadikan Hero Image di bahagian atas
+            const heroImage = imgs[0];
+            // Baki gambar (atau semua gambar jika lebih dari 1) dipaparkan dalam grid 2 lajur di bawah teks
+            const galleryImages = imgs.length > 1 ? imgs.slice(1) : [];
+
+            // Format baris meta: "20 November 2026 | Putrajaya"
+            const metaParts = [];
+            if (activeItem.tarikh) metaParts.push(activeItem.tarikh);
+            if (activeItem.tempat) metaParts.push(activeItem.tempat);
+            const metaLineText = metaParts.join(' | ');
+
+            // Tukar baris baharu (\n) kepada perenggan <p> yang kemas
+            const paragraphsHTML = (activeItem.deskripsi || '')
+                .split(/\n+/)
+                .filter(p => p.trim() !== '')
+                .map(p => `<p>${p}</p>`)
+                .join('');
+
+            // Bina HTML Galeri 2 Lajur di bahagian bawah
+            let galleryHTML = '';
+            if (galleryImages.length > 0) {
+                const itemsHTML = galleryImages.map(imgUrl => `
+                    <div class="mohe-gallery-item" onclick="openLightbox('${imgUrl}')">
+                        <img src="${imgUrl}" alt="${activeItem.kursusTajuk}">
+                        <span class="zoom-badge"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
+                    </div>
+                `).join('');
+                galleryHTML = `<div class="mohe-gallery-grid">${itemsHTML}</div>`;
+            }
+
+            // Paparkan artikel utama
+            mainContainer.innerHTML = `
+                <h1 class="article-main-title">${activeItem.kursusTajuk}</h1>
+
+                <div class="article-hero-image" onclick="openLightbox('${heroImage}')">
+                    <img src="${heroImage}" alt="${activeItem.kursusTajuk}">
+                </div>
+
+                ${metaLineText ? `<div class="article-meta-line">${metaLineText}</div>` : ''}
+
+                <div class="article-body-text">
+                    ${paragraphsHTML}
+                </div>
+
+                ${galleryHTML}
+            `;
+
+            // Paparkan senarai aktiviti lain di bahagian bawah jika wujud lebih daripada 1 rekod
+            const otherItems = sorotanList.filter((_, idx) => idx !== activeIndex);
+            if (otherItems.length > 0) {
+                otherSection.style.display = 'block';
+                otherGrid.innerHTML = otherItems.map(item => {
+                    const thumb = (item.images && item.images.length > 0) ? item.images[0] : 'blue.jpg';
+                    const subMeta = [item.tarikh, item.tempat].filter(Boolean).join(' | ');
+                    return `
+                        <a href="sorotan_aktiviti.html?id=${encodeURIComponent(item.id)}" class="other-card">
+                            <img src="${thumb}" alt="${item.kursusTajuk}">
+                            <div class="other-card-body">
+                                <div class="other-card-meta">${subMeta}</div>
+                                <h4 class="other-card-title">${item.kursusTajuk}</h4>
+                            </div>
+                        </a>
+                    `;
+                }).join('');
+            } else {
+                otherSection.style.display = 'none';
+            }
+        }
+
+        function openLightbox(src) {
+            const modal = document.getElementById('lightboxModal');
+            const img = document.getElementById('lightboxImg');
+            img.src = src;
+            modal.classList.add('show');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightboxModal').classList.remove('show');
+        }
+    </script>
+</body>
+</html>

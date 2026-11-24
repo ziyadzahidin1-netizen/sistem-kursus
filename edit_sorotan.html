@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengurusan Sorotan Aktiviti (Admin) - Portal Kursus MOSTI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+            color: #334155;
+        }
+
+        /* Navbar Rasmi Gaya Portal Kerajaan (Sama dengan sorotan_aktiviti.html) */
+        .top-admin-header {
+            background-color: #ffffff;
+            color: #0b1633;
+            padding: 14px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .brand-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #0b1633;
+        }
+
+        .brand-area img {
+            height: 44px;
+        }
+
+        .brand-area span {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+            color: #0b1633;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-back-home {
+            background-color: #f8fafc;
+            color: #0b1633;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid #cbd5e1;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-back-home:hover {
+            background-color: #0b1633;
+            color: #ffffff;
+            border-color: #0b1633;
+        }
+
+        /* Kontena Utama */
+        .page-container {
+            max-width: 1120px;
+            margin: 40px auto 70px auto;
+            padding: 0 24px;
+        }
+
+        .page-main-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 2.1rem;
+            font-weight: 500;
+            color: #162238;
+            margin: 0 0 8px 0;
+        }
+
+        .page-subtitle {
+            font-size: 0.95rem;
+            color: #64748b;
+            margin: 0 0 32px 0;
+        }
+
+        /* Panel Borang Bersih */
+        .form-section {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 32px;
+            margin-bottom: 45px;
+        }
+
+        .form-section.editing-mode {
+            border-color: #0284c7;
+            box-shadow: 0 4px 20px rgba(2, 132, 199, 0.08);
+        }
+
+        .section-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .section-header-row h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: #162238;
+            margin: 0;
+        }
+
+        .edit-badge {
+            display: none;
+            background-color: #e0f2fe;
+            color: #0369a1;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.92rem;
+            margin-bottom: 8px;
+            color: #162238;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 0.95rem;
+            color: #1e293b;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            border-color: #162238;
+        }
+
+        .upload-box {
+            border: 1.5px dashed #94a3b8;
+            background-color: #f8fafc;
+            border-radius: 6px;
+            padding: 28px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .upload-box:hover {
+            border-color: #162238;
+            background-color: #f1f5f9;
+        }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .preview-item {
+            position: relative;
+            height: 110px;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+
+        .preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .preview-tag {
+            position: absolute;
+            bottom: 4px;
+            left: 4px;
+            background: rgba(15, 23, 42, 0.78);
+            color: #ffffff;
+            font-size: 0.68rem;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .preview-remove {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(220, 38, 38, 0.92);
+            color: #ffffff;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .btn-submit {
+            background-color: #162238;
+            color: #ffffff;
+            border: none;
+            padding: 12px 26px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #0b1633;
+        }
+
+        .btn-submit.update-mode {
+            background-color: #0284c7;
+        }
+
+        .btn-submit.update-mode:hover {
+            background-color: #0369a1;
+        }
+
+        .btn-cancel-edit {
+            display: none;
+            background-color: #f1f5f9;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-cancel-edit:hover {
+            background-color: #e2e8f0;
+            color: #0f172a;
+        }
+
+        /* Senarai Sorotan Sedia Ada (Gaya Grid Bersih MOHE) */
+        .list-section-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #162238;
+            margin: 0 0 20px 0;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .saved-list-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .saved-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            overflow: hidden;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: box-shadow 0.2s;
+        }
+
+        .saved-card:hover {
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+        }
+
+        .saved-card-img-wrap {
+            position: relative;
+            height: 190px;
+            background-color: #f1f5f9;
+        }
+
+        .saved-card-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .img-count-badge {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(15, 23, 42, 0.8);
+            color: #ffffff;
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+
+        .saved-card-body {
+            padding: 18px;
+        }
+
+        .saved-card-meta {
+            font-size: 0.82rem;
+            color: #64748b;
+            margin-bottom: 8px;
+        }
+
+        .saved-card-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: #162238;
+            margin: 0 0 10px 0;
+            line-height: 1.4;
+        }
+
+        .saved-card-desc {
+            font-size: 0.88rem;
+            color: #475569;
+            margin: 0;
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .saved-card-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 18px;
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            gap: 8px;
+        }
+
+        .action-btn-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-view-item {
+            background-color: #ffffff;
+            color: #162238;
+            border: 1px solid #cbd5e1;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-view-item:hover {
+            background-color: #f1f5f9;
+        }
+
+        .btn-edit {
+            background-color: #0284c7;
+            color: #ffffff;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-edit:hover {
+            background-color: #0369a1;
+        }
+
+        .btn-delete {
+            background-color: #ffffff;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-delete:hover {
+            background-color: #fef2f2;
+        }
+
+        @media screen and (max-width: 768px) {
+            .top-admin-header {
+                padding: 12px 16px;
+            }
+            .page-main-title {
+                font-size: 1.6rem;
+            }
+            .form-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="top-admin-header">
+        <a href="index.html" class="brand-area">
+            <img src="logo.png" alt="Logo MOSTI">
+            <span>KEMENTERIAN SAINS, TEKNOLOGI DAN INOVASI</span>
+        </a>
+        <div class="nav-actions">
+            <a href="sorotan_aktiviti.html" class="btn-back-home"><i class="fa-solid fa-eye"></i> Lihat Halaman Umum</a>
+            <a href="index.html" class="btn-back-home"><i class="fa-solid fa-house"></i> Halaman Utama</a>
+        </div>
+    </header>
+
+    <main class="page-container">
+        <h1 class="page-main-title">Pengurusan Sorotan Aktiviti Kursus</h1>
+        <p class="page-subtitle">Tambah sorotan baharu atau kemas kini gambar dan laporan bergambar bagi setiap kursus sedia ada.</p>
+
+        <!-- BORANG TAMBAH / EDIT SOROTAN AKTIVITI -->
+        <section class="form-section" id="formSectionContainer">
+            <div class="section-header-row">
+                <h2 id="formHeadingTitle">Tambah Sorotan Aktiviti Baharu</h2>
+                <span id="editingModeBadge" class="edit-badge"><i class="fa-solid fa-pen-to-square"></i> Mod Kemas Kini</span>
+            </div>
+
+            <form id="sorotanForm" onsubmit="saveSorotanAktiviti(event)">
+                <input type="hidden" id="editingItemId" value="">
+
+                <!-- Dropdown Senarai Kursus Sedia Ada -->
+                <div class="form-group">
+                    <label for="kursusSelect">Pilih Kursus (Auto dari Senarai Kursus Sedia Ada) <span style="color: #dc2626;">*</span></label>
+                    <select id="kursusSelect" class="form-control" required>
+                        <option value="">-- Sedang memuatkan senarai kursus... --</option>
+                    </select>
+                </div>
+
+                <!-- Muat Naik Gambar Aktiviti -->
+                <div class="form-group">
+                    <label>Gambar Aktiviti Kursus (Gambar pertama akan dijadikan Gambar Utama) <span style="color: #dc2626;">*</span></label>
+                    <div class="upload-box" onclick="document.getElementById('gambarInput').click()">
+                        <i class="fa-solid fa-cloud-arrow-up" style="font-size: 2rem; color: #475569; margin-bottom: 8px;"></i>
+                        <p style="margin: 0; font-weight: 600; color: #162238;">Klik di sini untuk muat naik gambar dari komputer anda</p>
+                        <small style="color: #64748b;">Anda boleh memilih lebih daripada satu gambar (Format: JPG, PNG, WEBP)</small>
+                        <input type="file" id="gambarInput" accept="image/*" multiple style="display: none;" onchange="handleImageSelection(event)">
+                    </div>
+                    <div id="imagePreviewGrid" class="preview-grid"></div>
+                </div>
+
+                <!-- Penerangan / Description -->
+                <div class="form-group">
+                    <label for="deskripsiInput">Penerangan / Laporan Artikel Aktiviti <span style="color: #dc2626;">*</span></label>
+                    <textarea id="deskripsiInput" class="form-control" rows="6" placeholder="Masukkan laporan lengkap aktiviti kursus. Gunakan baris baharu (Enter) untuk memisahkan perenggan..." required></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" id="submitBtn" class="btn-submit">
+                        <i class="fa-solid fa-floppy-disk"></i> Simpan &amp; Papar Sorotan Aktiviti
+                    </button>
+                    <button type="button" id="cancelEditBtn" class="btn-cancel-edit" onclick="resetFormToCreateMode()">
+                        Batal Edit
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- SENARAI SOROTAN YANG TELAH DISIMPAN -->
+        <section>
+            <h2 class="list-section-title">Senarai Sorotan Aktiviti Dipaparkan</h2>
+            <div id="savedSorotanContainer" class="saved-list-grid"></div>
+        </section>
+    </main>
+
+    <script>
+        let selectedImagesBase64 = [];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            verifyAdminAccess();
+            loadCourseDropdown();
+            renderSavedSorotanList();
+        });
+
+        function verifyAdminAccess() {
+            const storedUser = sessionStorage.getItem('user') || localStorage.getItem('user');
+            let user = null;
+            if (storedUser) {
+                try { user = JSON.parse(storedUser); } catch (e) {}
+            }
+
+            if (!user || user.role !== 'admin') {
+                alert('Akses Ditolak! Halaman ini hanya untuk kegunaan Admin sahaja.');
+                window.location.href = 'index.html';
+            }
+        }
+
+        async function loadCourseDropdown() {
+            const selectEl = document.getElementById('kursusSelect');
+            let courses = [];
+
+            try {
+                const res = await fetch('/api/kursus');
+                if (res.ok) {
+                    courses = await res.json();
+                }
+            } catch (err) {
+                console.warn('Gagal tarik senarai kursus dari server:', err);
+            }
+
+            selectEl.innerHTML = '<option value="">-- Sila Pilih Kursus --</option>';
+
+            if (courses && courses.length > 0) {
+                courses.forEach((c) => {
+                    const opt = document.createElement('option');
+                    opt.value = c.tajuk;
+                    opt.dataset.tarikh = c.tarikh || '';
+                    opt.dataset.tempat = c.tempat || '';
+                    opt.textContent = `${c.tajuk} ${c.tarikh ? '(' + c.tarikh + ')' : ''}`;
+                    selectEl.appendChild(opt);
+                });
+            } else {
+                const fallbackOption = document.createElement('option');
+                fallbackOption.value = 'Program Latihan & Pembangunan Kemahiran STIE MOSTI';
+                fallbackOption.textContent = 'Program Latihan & Pembangunan Kemahiran STIE MOSTI';
+                selectEl.appendChild(fallbackOption);
+            }
+        }
+
+        function handleImageSelection(event) {
+            const files = Array.from(event.target.files);
+            if (!files.length) return;
+
+            files.forEach((file) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    selectedImagesBase64.push(e.target.result);
+                    renderImagePreviews();
+                };
+                reader.readAsDataURL(file);
+            });
+            event.target.value = '';
+        }
+
+        function renderImagePreviews() {
+            const grid = document.getElementById('imagePreviewGrid');
+            grid.innerHTML = '';
+
+            selectedImagesBase64.forEach((imgSrc, idx) => {
+                const div = document.createElement('div');
+                div.className = 'preview-item';
+                div.innerHTML = `
+                    <img src="${imgSrc}" alt="Pratonton ${idx + 1}">
+                    ${idx === 0 ? '<span class="preview-tag">Gambar Utama</span>' : ''}
+                    <button type="button" class="preview-remove" onclick="removeSelectedImage(${idx})" title="Buang gambar"><i class="fa-solid fa-xmark"></i></button>
+                `;
+                grid.appendChild(div);
+            });
+        }
+
+        function removeSelectedImage(index) {
+            selectedImagesBase64.splice(index, 1);
+            renderImagePreviews();
+        }
+
+        // Fungsi Edit untuk setiap kursus
+        function startEditSorotan(id) {
+            let list = [];
+            try {
+                list = JSON.parse(localStorage.getItem('mosti_sorotan_aktiviti') || '[]');
+            } catch (e) {}
+
+            const targetItem = list.find(item => item.id === id);
+            if (!targetItem) return;
+
+            // Masukkan ID item yang sedang diedit
+            document.getElementById('editingItemId').value = targetItem.id;
+
+            // Pilih kursus dalam dropdown (tambah option jika kursus tiada dalam senarai semasa)
+            const selectEl = document.getElementById('kursusSelect');
+            let optionExists = Array.from(selectEl.options).some(opt => opt.value === targetItem.kursusTajuk);
+            if (!optionExists) {
+                const customOpt = document.createElement('option');
+                customOpt.value = targetItem.kursusTajuk;
+                customOpt.dataset.tarikh = targetItem.tarikh || '';
+                customOpt.dataset.tempat = targetItem.tempat || '';
+                customOpt.textContent = targetItem.kursusTajuk;
+                selectEl.appendChild(customOpt);
+            }
+            selectEl.value = targetItem.kursusTajuk;
+
+            // Isi semula teks penerangan & gambar sedia ada
+            document.getElementById('deskripsiInput').value = targetItem.deskripsi || '';
+            selectedImagesBase64 = Array.isArray(targetItem.images) ? [...targetItem.images] : [];
+            renderImagePreviews();
+
+            // Tukar paparan borang kepada Mod Edit
+            document.getElementById('formSectionContainer').classList.add('editing-mode');
+            document.getElementById('formHeadingTitle').textContent = 'Kemas Kini Sorotan Aktiviti Kursus';
+            document.getElementById('editingModeBadge').style.display = 'inline-block';
+
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.classList.add('update-mode');
+            submitBtn.innerHTML = '<i class="fa-solid fa-check"></i> Kemas Kini Sorotan Aktiviti';
+
+            document.getElementById('cancelEditBtn').style.display = 'inline-block';
+
+            // Skrol lancar ke bahagian atas borang
+            document.getElementById('formSectionContainer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function resetFormToCreateMode() {
+            document.getElementById('sorotanForm').reset();
+            document.getElementById('editingItemId').value = '';
+            selectedImagesBase64 = [];
+            renderImagePreviews();
+
+            document.getElementById('formSectionContainer').classList.remove('editing-mode');
+            document.getElementById('formHeadingTitle').textContent = 'Tambah Sorotan Aktiviti Baharu';
+            document.getElementById('editingModeBadge').style.display = 'none';
+
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.classList.remove('update-mode');
+            submitBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan &amp; Papar Sorotan Aktiviti';
+
+            document.getElementById('cancelEditBtn').style.display = 'none';
+        }
+
+        async function saveSorotanAktiviti(event) {
+            event.preventDefault();
+
+            const editingId = document.getElementById('editingItemId').value;
+            const selectEl = document.getElementById('kursusSelect');
+            const kursusTajuk = selectEl.value;
+            const selectedOption = selectEl.options[selectEl.selectedIndex];
+            const tarikhKursus = selectedOption ? (selectedOption.dataset.tarikh || '') : '';
+            const tempatKursus = selectedOption ? (selectedOption.dataset.tempat || '') : '';
+            const deskripsi = document.getElementById('deskripsiInput').value.trim();
+
+            if (!kursusTajuk) {
+                alert('Sila pilih kursus daripada senarai.');
+                return;
+            }
+
+            if (selectedImagesBase64.length === 0) {
+                alert('Sila muat naik sekurang-kurangnya satu (1) gambar aktiviti.');
+                return;
+            }
+
+            let existingList = [];
+            try {
+                existingList = JSON.parse(localStorage.getItem('mosti_sorotan_aktiviti') || '[]');
+            } catch (e) {}
+
+            if (editingId) {
+                // Kemas kini rekod sedia ada
+                const idx = existingList.findIndex(item => item.id === editingId);
+                if (idx !== -1) {
+                    existingList[idx] = {
+                        ...existingList[idx],
+                        kursusTajuk: kursusTajuk,
+                        tarikh: tarikhKursus || existingList[idx].tarikh,
+                        tempat: tempatKursus || existingList[idx].tempat,
+                        deskripsi: deskripsi,
+                        images: selectedImagesBase64,
+                        updatedAt: new Date().toLocaleDateString('ms-MY', { day: 'numeric', month: 'long', year: 'numeric' })
+                    };
+                }
+                localStorage.setItem('mosti_sorotan_aktiviti', JSON.stringify(existingList));
+
+                try {
+                    await fetch(`/api/sorotan/${encodeURIComponent(editingId)}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(existingList[idx])
+                    });
+                } catch (e) {}
+
+                alert('Sorotan aktiviti berjaya dikemas kini!');
+            } else {
+                // Tambah rekod baharu
+                const newEntry = {
+                    id: 'sorotan_' + Date.now(),
+                    kursusTajuk: kursusTajuk,
+                    tarikh: tarikhKursus,
+                    tempat: tempatKursus,
+                    deskripsi: deskripsi,
+                    images: selectedImagesBase64,
+                    createdAt: new Date().toLocaleDateString('ms-MY', { day: 'numeric', month: 'long', year: 'numeric' })
+                };
+
+                existingList.unshift(newEntry);
+                localStorage.setItem('mosti_sorotan_aktiviti', JSON.stringify(existingList));
+
+                try {
+                    await fetch('/api/sorotan', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(newEntry)
+                    });
+                } catch (e) {}
+
+                alert('Sorotan aktiviti baharu berjaya disimpan!');
+            }
+
+            resetFormToCreateMode();
+            renderSavedSorotanList();
+        }
+
+        function renderSavedSorotanList() {
+            const container = document.getElementById('savedSorotanContainer');
+            let list = [];
+            try {
+                list = JSON.parse(localStorage.getItem('mosti_sorotan_aktiviti') || '[]');
+            } catch (e) {}
+
+            if (list.length === 0) {
+                container.innerHTML = '<p style="color: #64748b; grid-column: 1 / -1;">Belum ada sorotan aktiviti baharu ditambah oleh admin.</p>';
+                return;
+            }
+
+            container.innerHTML = '';
+            list.forEach((item) => {
+                const thumb = (item.images && item.images.length > 0) ? item.images[0] : 'blue.jpg';
+                const totalImg = item.images ? item.images.length : 1;
+                const metaText = [item.tarikh, item.tempat].filter(Boolean).join(' | ');
+
+                const card = document.createElement('div');
+                card.className = 'saved-card';
+                card.innerHTML = `
+                    <div>
+                        <div class="saved-card-img-wrap">
+                            <img src="${thumb}" alt="${item.kursusTajuk}">
+                            <span class="img-count-badge"><i class="fa-regular fa-images"></i> ${totalImg} Gambar</span>
+                        </div>
+                        <div class="saved-card-body">
+                            ${metaText ? `<div class="saved-card-meta">${metaText}</div>` : ''}
+                            <h3 class="saved-card-title">${item.kursusTajuk}</h3>
+                            <p class="saved-card-desc">${item.deskripsi}</p>
+                        </div>
+                    </div>
+                    <div class="saved-card-actions">
+                        <a href="sorotan_aktiviti.html?id=${encodeURIComponent(item.id)}" class="btn-view-item" title="Lihat paparan penuh">
+                            <i class="fa-solid fa-eye"></i> Lihat
+                        </a>
+                        <div class="action-btn-group">
+                            <button type="button" class="btn-edit" onclick="startEditSorotan('${item.id}')">
+                                <i class="fa-solid fa-pen"></i> Edit
+                            </button>
+                            <button type="button" class="btn-delete" onclick="deleteSorotan('${item.id}')">
+                                <i class="fa-solid fa-trash"></i> Padam
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function deleteSorotan(id) {
+            if (!confirm('Adakah anda pasti mahu memadam sorotan aktiviti ini?')) return;
+
+            if (document.getElementById('editingItemId').value === id) {
+                resetFormToCreateMode();
+            }
+
+            let list = JSON.parse(localStorage.getItem('mosti_sorotan_aktiviti') || '[]');
+            list = list.filter(item => item.id !== id);
+            localStorage.setItem('mosti_sorotan_aktiviti', JSON.stringify(list));
+            renderSavedSorotanList();
+        }
+    </script>
+</body>
+</html>

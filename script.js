@@ -154,6 +154,12 @@ function initRealtimeListener() {
                 if (typeof loadUserApplications === 'function') loadUserApplications();
                 loadDashboardStats();
             }
+
+            if (data.type === 'ADMIN_MODULE_UPDATED' && data.module === 'kertas_perakuan') {
+                if (typeof muatKertasPerakuanTersimpan === 'function' && typeof checkWorkflowStatus === 'function') {
+                    muatKertasPerakuanTersimpan().then(() => checkWorkflowStatus());
+                }
+            }
         };
 
         eventSource.onerror = function(err) {

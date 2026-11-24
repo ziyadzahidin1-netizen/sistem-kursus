@@ -35,16 +35,15 @@
             color: #1e293b;
         }
 
-        /* HEADER DUA BARIS (SAMA MACAM MOHON.HTML & INDEX.HTML) */
+        /* HEADER DUA BARIS */
         .navbar-header-container {
-            background-color: #0c2847 !important; /* Warna biru gelap */
+            background-color: #0c2847 !important;
             border-bottom: 1px solid #002b58;
             position: sticky;
             top: 0;
             z-index: 1000;
         }
 
-        /* BARIS ATAS: LOGO (KIRI) & LINK PROFIL/LOG MASUK (KANAN) */
         .header-top-row {
             display: flex;
             justify-content: space-between;
@@ -105,7 +104,17 @@
             font-size: 0.85rem;
         }
 
-        /* BARIS BAWAH: NAVIGASI UTAMA DI BAWAH LOGO */
+        .role-pill-badge {
+            background-color: #ef7c00;
+            color: #ffffff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+        }
+
         .header-bottom-nav {
             display: flex;
             justify-content: space-between;
@@ -150,7 +159,6 @@
             background-color: #ef7c00;
         }
 
-        /* BAR CARIAN DI NAV BARIS BAWAH */
         .nav-search-box {
             display: flex;
             align-items: center;
@@ -191,7 +199,7 @@
             color: #003d7c;
         }
 
-        /* USER DROPDOWN SAMA MACAM MOHON.HTML */
+        /* USER DROPDOWN */
         .user-dropdown-container {
             position: relative;
             display: inline-block;
@@ -271,9 +279,8 @@
             margin-top: 0;
         }
 
-        /* REKA BENTUK SIDEBAR KORPORAT CLEAN */
         .sidebar {
-            width: 260px;
+            width: 265px;
             background-color: #0c2847;
             color: #f8fafc;
             padding: 25px 0;
@@ -295,6 +302,12 @@
             align-items: center;
             gap: 10px;
             margin: 0;
+        }
+
+        .sidebar-role-info {
+            font-size: 0.78rem;
+            color: #cbd5e1;
+            margin-top: 6px;
         }
 
         .sidebar-menu {
@@ -334,7 +347,6 @@
             text-align: center;
         }
 
-        /* KANDUNGAN UTAMA (MAIN CONTENT) */
         .main-content {
             flex-grow: 1;
             padding: 30px 40px;
@@ -349,7 +361,6 @@
             display: block;
         }
 
-        /* KAD UTAMA & PANEL DTIMS GOV STYLE */
         .admin-card {
             background: #ffffff;
             border: 1px solid #eaeaea;
@@ -369,7 +380,76 @@
             margin-bottom: 20px;
             text-transform: uppercase;
             border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
+
+        /* WORKFLOW TRACKER BAR */
+        .workflow-stepper {
+            display: flex;
+            justify-content: space-between;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 14px 20px;
+            margin-bottom: 20px;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .step-item {
+            flex: 1;
+            min-width: 170px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        .step-item.active {
+            background: #eff6ff;
+            border-color: #2563eb;
+            color: #1e3a8a;
+            font-weight: 600;
+        }
+
+        .step-item.done {
+            background: #ecfdf5;
+            border-color: #10b981;
+            color: #065f46;
+            font-weight: 600;
+        }
+
+        .step-item.rejected {
+            background: #fef2f2;
+            border-color: #ef4444;
+            color: #991b1b;
+            font-weight: 600;
+        }
+
+        .step-num {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #cbd5e1;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .step-item.active .step-num { background: #2563eb; }
+        .step-item.done .step-num { background: #10b981; }
+        .step-item.rejected .step-num { background: #ef4444; }
 
         /* BAR NAVIGASI GAYA GOV/DTIMS */
         .gov-tab-bar {
@@ -405,7 +485,6 @@
             font-weight: 500;
         }
 
-        /* GAYA BORANG & JADUAL SYSTEM DTIMS */
         .gov-section-title {
             background-color: #f8fafc;
             border-left: 4px solid #0c2847;
@@ -443,8 +522,8 @@
         }
 
         .gov-form-table td.label-col {
-            font-weight: 400;
-            width: 220px;
+            font-weight: 500;
+            width: 230px;
             color: #334155;
             white-space: nowrap;
         }
@@ -454,7 +533,7 @@
             border: 1px solid #d1d5db;
             border-radius: 4px;
             font-size: 0.88rem;
-            font-weight: 300;
+            font-weight: 400;
             width: 100%;
             max-width: 500px;
             box-sizing: border-box;
@@ -472,7 +551,7 @@
             border: 1px solid #d1d5db;
             border-radius: 4px;
             font-size: 0.88rem;
-            font-weight: 300;
+            font-weight: 400;
             width: 100%;
             max-width: 500px;
             box-sizing: border-box;
@@ -495,7 +574,7 @@
             border: 1px solid #d1d5db;
             padding: 9px 20px;
             font-size: 0.85rem;
-            font-weight: 400;
+            font-weight: 500;
             cursor: pointer;
             border-radius: 4px;
             transition: all 0.2s;
@@ -529,7 +608,6 @@
             color: #ffffff;
         }
 
-        /* JADUAL DATA GOV DTIMS */
         .gov-data-table {
             width: 100%;
             border-collapse: collapse;
@@ -552,10 +630,10 @@
             border: 1px solid #e2e8f0;
             background-color: #fff;
             vertical-align: middle;
-            font-weight: 300;
+            font-weight: 400;
         }
 
-        /* FORMAT CETAK KERTAS PERAKUAN BPSM (PERSAMAAN TEPAT DOKUMEN WORD) */
+        /* FORMAT CETAK KERTAS PERAKUAN BPSM */
         .perakuan-doc-container {
             background-color: #ffffff;
             border: 1px solid #ccc;
@@ -603,7 +681,6 @@
             font-weight: bold;
         }
 
-        /* REKA BENTUK PETAK TICK SEPERTI DOKUMEN WORD RASMI */
         .perakuan-box-row {
             display: flex;
             align-items: center;
@@ -665,36 +742,21 @@
         }
         .badge-pending { background-color: #f59e0b; }
         .badge-approved { background-color: #10b981; }
+        .badge-rejected { background-color: #ef4444; }
         .badge-draft { background-color: #64748b; }
 
         /* STYLES UNTUK PRINTING */
         @media print {
-            header, .sidebar, .gov-tab-bar, .gov-instruction, .gov-btn-group, .no-print, .navbar-header-container {
+            header, .sidebar, .gov-tab-bar, .gov-instruction, .gov-btn-group, .no-print, .navbar-header-container, .workflow-stepper {
                 display: none !important;
             }
-            .admin-wrapper {
-                margin-top: 0;
-            }
-            .main-content {
-                padding: 0;
-            }
-            .admin-card {
-                border: none;
-                box-shadow: none;
-                padding: 0;
-            }
-            .perakuan-doc-container {
-                border: none;
-                padding: 0;
-                width: 100%;
-                max-width: 100%;
-            }
-            body {
-                background-color: #fff;
-            }
+            .admin-wrapper { margin-top: 0; }
+            .main-content { padding: 0; }
+            .admin-card { border: none; box-shadow: none; padding: 0; }
+            .perakuan-doc-container { border: none; padding: 0; width: 100%; max-width: 100%; }
+            body { background-color: #fff; }
         }
 
-        /* RESPONSIVE DESIGN */
         @media screen and (max-width: 900px) {
             .header-top-row { padding: 10px 18px !important; }
             .header-bottom-nav { padding: 0 18px !important; overflow-x: auto; }
@@ -702,32 +764,18 @@
             .header-subtitle, .header-english-title, .header-tagline { font-size: 0.55rem !important; }
             .nav-links-sub { gap: 15px !important; }
             .nav-links-sub a { font-size: 0.8rem !important; padding: 10px 0 !important; }
-            .admin-wrapper {
-                flex-direction: column;
-            }
-            .sidebar {
-                width: 100%;
-            }
-            .main-content {
-                padding: 20px 15px;
-            }
-            .gov-form-table td.label-col {
-                width: 100%;
-                display: block;
-                margin-top: 6px;
-            }
-            .gov-form-table td {
-                display: block;
-                padding: 4px 0;
-            }
+            .admin-wrapper { flex-direction: column; }
+            .sidebar { width: 100%; }
+            .main-content { padding: 20px 15px; }
+            .gov-form-table td.label-col { width: 100%; display: block; margin-top: 6px; }
+            .gov-form-table td { display: block; padding: 4px 0; }
         }
     </style>
 </head>
 <body>
 
-    <!-- CONTAINER HEADER DUA BARIS (SAMA MACAM MOHON.HTML & INDEX.HTML) -->
+    <!-- CONTAINER HEADER DUA BARIS -->
     <header class="navbar-header-container">
-        <!-- BARIS ATAS: LOGO MOSTI & PERANAN/LOG MASUK USER -->
         <div class="header-top-row">
             <a href="index.html" class="logo">
                 <img src="logo.png" alt="Logo Portal Kursus MOSTI" class="logo-img">
@@ -739,13 +787,13 @@
             </a>
 
             <div class="header-top-right">
+                <span id="active-bahagian-badge" class="role-pill-badge">PERANAN: ADMIN</span>
                 <span id="user-nav-container">
                     <a href="login.html" style="color: #ffffff; text-decoration: none; font-size: 0.85rem;"><i class="fa-solid fa-user"></i> Log Masuk</a>
                 </span>
             </div>
         </div>
 
-        <!-- BARIS BAWAH: NAVIGASI UTAMA DI BAWAH LOGO & BAR CARIAN -->
         <div class="header-bottom-nav">
             <nav>
                 <ul class="nav-links-sub" id="nav-links">
@@ -757,7 +805,6 @@
                 </ul>
             </nav>
             
-            <!-- BAR CARIAN DI NAV BARIS BAWAH -->
             <div class="nav-search-box">
                 <input type="text" id="top-nav-search-input" placeholder="Cari di sini..." onkeypress="if(event.key === 'Enter') handleNavSearch()">
                 <button type="button" onclick="handleNavSearch()" title="Cari">
@@ -774,22 +821,40 @@
         <aside class="sidebar">
             <div class="sidebar-header">
                 <h3><i class="fa-solid fa-user-shield"></i> Dashboard Admin</h3>
+                <div class="sidebar-role-info" id="sidebar-role-text">Bahagian: Admin</div>
             </div>
-            <ul class="sidebar-menu">
-                <li>
-                    <a class="sidebar-link active" onclick="switchTab('latihan-tab', this)">
+            <ul class="sidebar-menu" id="sidebar-menu-list">
+                <!-- Peringkat 1: Admin -->
+                <li data-role="admin">
+                    <a class="sidebar-link active" id="nav-latihan" onclick="switchTab('latihan-tab', this)">
                         <i class="fa-solid fa-user-graduate"></i>
-                        <span>Peg. Pentadbir Latihan</span>
+                        <span>1. Peg. Pentadbir Latihan</span>
                     </a>
                 </li>
-                <li>
-                    <a class="sidebar-link" onclick="switchTab('perolehan-tab', this)">
+                <!-- Peringkat 2: SUB (W) PSM -->
+                <li data-role="SUB (W) PSM">
+                    <a class="sidebar-link" id="nav-subw" onclick="switchTab('subw-tab', this)">
+                        <i class="fa-solid fa-stamp"></i>
+                        <span>2. Pengesahan SUB (W) PSM</span>
+                    </a>
+                </li>
+                <!-- Peringkat 3: PEROLEHAN -->
+                <li data-role="PEROLEHAN">
+                    <a class="sidebar-link" id="nav-perolehan" onclick="switchTab('perolehan-tab', this)">
                         <i class="fa-solid fa-file-invoice-dollar"></i>
-                        <span>Peg. Pentadbir Perolehan</span>
+                        <span>3. Peg. Pentadbir Perolehan</span>
                     </a>
                 </li>
-                <li>
-                    <a class="sidebar-link" onclick="switchTab('folder-perakuan-tab', this)">
+                <!-- Peringkat 4: PIHAK BERKUASA -->
+                <li data-role="PIHAK BERKUASA">
+                    <a class="sidebar-link" id="nav-pbm" onclick="switchTab('pbm-tab', this)">
+                        <i class="fa-solid fa-gavel"></i>
+                        <span>4. Kelulusan Pihak Berkuasa</span>
+                    </a>
+                </li>
+                <!-- Folder Simpanan (Untuk Admin) -->
+                <li data-role="admin">
+                    <a class="sidebar-link" id="nav-folder" onclick="switchTab('folder-perakuan-tab', this)">
                         <i class="fa-solid fa-folder-open"></i>
                         <span>Folder Kertas Perakuan</span>
                     </a>
@@ -800,55 +865,70 @@
         <!-- KANDUNGAN UTAMA (MAIN CONTENT) -->
         <main class="main-content">
 
-            <!-- TAB 1: PEGAWAI PENTADBIR LATIHAN -->
+            <!-- PENUNJUK ALIRAN KERJA (WORKFLOW TRACKER 4 PERINGKAT) -->
+            <div class="workflow-stepper no-print" id="workflow-stepper-bar">
+                <div class="step-item" id="step-1">
+                    <div class="step-num">1</div>
+                    <div>
+                        <div>Admin (Latihan)</div>
+                        <small id="step-1-sub">Penyediaan Kertas Perakuan</small>
+                    </div>
+                </div>
+                <div class="step-item" id="step-2">
+                    <div class="step-num">2</div>
+                    <div>
+                        <div>SUB (W) PSM</div>
+                        <small id="step-2-sub">Menunggu</small>
+                    </div>
+                </div>
+                <div class="step-item" id="step-3">
+                    <div class="step-num">3</div>
+                    <div>
+                        <div>Perolehan</div>
+                        <small id="step-3-sub">Menunggu</small>
+                    </div>
+                </div>
+                <div class="step-item" id="step-4">
+                    <div class="step-num">4</div>
+                    <div>
+                        <div>Pihak Berkuasa</div>
+                        <small id="step-4-sub">Menunggu</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- =========================================================================
+                 TAB 1: PERANAN 1 - ADMIN (PEGAWAI PENTADBIR LATIHAN)
+                 ========================================================================= -->
             <div id="latihan-tab" class="tab-section active">
                 
                 <div class="gov-banner-header">
-                    PENGURUSAN PROGRAM PEMBANGUNAN KOMPETENSI / LATIHAN (PENTADBIR LATIHAN)
+                    <span>PENGURUSAN PROGRAM PEMBANGUNAN KOMPETENSI / LATIHAN (ADMIN)</span>
                 </div>
 
-                <!-- SUB-NAVIGASI BAR (SERUPA SISTEM DTIMS KERAJAAN) -->
+                <!-- SUB-NAVIGASI BAR (7 SUB-TAB KEKAL SEPENUHNYA) -->
                 <div class="gov-tab-bar">
-                    <div class="gov-tab-item active" onclick="switchSubTab('sub-isi-maklumat', this)">
-                        REKOD KURSUS
-                    </div>
-                    <div class="gov-tab-item" onclick="switchSubTab('sub-anggaran-kos', this)">
-                        ANGGARAN KOS
-                    </div>
-                    <div class="gov-tab-item" onclick="switchSubTab('sub-senarai-peserta', this)">
-                        SENARAI PESERTA
-                    </div>
-                    <div class="gov-tab-item" onclick="switchSubTab('sub-jadual-kadar', this)">
-                        LOKASI
-                    </div>
-                    <div class="gov-tab-item" onclick="switchSubTab('sub-upload-dokumen', this)">
-                        MUAT NAIK DOKUMEN
-                    </div>
-                    <div class="gov-tab-item" onclick="switchSubTab('sub-senarai-semak', this)">
-                        SENARAI SEMAK
-                    </div>
-                    <div class="gov-tab-item" onclick="switchSubTab('sub-kertas-perakuan', this)">
-                        KERTAS PERAKUAN
-                    </div>
+                    <div class="gov-tab-item active" onclick="switchSubTab('sub-isi-maklumat', this)">REKOD KURSUS</div>
+                    <div class="gov-tab-item" onclick="switchSubTab('sub-anggaran-kos', this)">ANGGARAN KOS</div>
+                    <div class="gov-tab-item" onclick="switchSubTab('sub-senarai-peserta', this)">SENARAI PESERTA</div>
+                    <div class="gov-tab-item" onclick="switchSubTab('sub-jadual-kadar', this)">LOKASI</div>
+                    <div class="gov-tab-item" onclick="switchSubTab('sub-upload-dokumen', this)">MUAT NAIK DOKUMEN</div>
+                    <div class="gov-tab-item" onclick="switchSubTab('sub-senarai-semak', this)">SENARAI SEMAK</div>
+                    <div class="gov-tab-item" onclick="switchSubTab('sub-kertas-perakuan', this)">KERTAS PERAKUAN</div>
                 </div>
 
-                <!-- 1. BAHAGIAN ISI MAKLUMAT REKOD PPK, OBJEKTIF & URUS SETIA -->
+                <!-- 1.1 REKOD KURSUS -->
                 <div id="sub-isi-maklumat" class="admin-card sub-tab-content" style="display: block;">
-                    
                     <div style="background-color:#0c2847; color:#fff; padding:8px 12px; font-weight:600; font-size:0.85rem; margin-bottom:12px; border-radius: 4px;">
                         REKOD PPK
                     </div>
 
                     <div class="gov-instruction">
                         <span style="color:red;">* Mandatori</span><br>
-                        Klik butang 'Tambah' untuk menambah rekod.<br>
-                        Klik butang 'Hapus' untuk menghapus rekod yang telah dipilih.<br>
-                        Klik butang 'Simpan' untuk menyimpan rekod.
+                        Klik butang 'Tambah' untuk menambah rekod. Klik butang 'Hapus' untuk menghapus rekod. Klik butang 'Simpan' untuk menyimpan rekod.
                     </div>
 
                     <form id="form-maklumat-kursus" onsubmit="saveModuleData(event, 'maklumat_kursus')">
-                        
-                        <!-- MAKLUMAT TERPERINCI -->
                         <div class="gov-section-title">MAKLUMAT TERPERINCI REKOD PPK</div>
                         <table class="gov-form-table">
                             <tr>
@@ -899,7 +979,6 @@
                             </tr>
                         </table>
 
-                        <!-- 2. SEKSYEN SENARAI OBJEKTIF -->
                         <div class="gov-section-title">SENARAI OBJEKTIF *</div>
                         <table class="gov-data-table" id="jadual-objektif">
                             <thead>
@@ -909,9 +988,7 @@
                                     <th>Objektif</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <!-- Dihasilkan secara dinamik oleh loadModuleData / JavaScript -->
-                            </tbody>
+                            <tbody></tbody>
                         </table>
 
                         <div class="gov-btn-group" style="justify-content: center; gap: 10px;">
@@ -919,7 +996,6 @@
                             <button type="button" class="gov-btn" onclick="hapusObjektif()">HAPUS</button>
                         </div>
 
-                        <!-- 3. SEKSYEN URUS SETIA PROGRAM PEMBANGUNAN KOMPETENSI -->
                         <div class="gov-section-title">URUS SETIA PROGRAM PEMBANGUNAN KOMPETENSI *</div>
                         <table class="gov-data-table" id="jadual-urusetia">
                             <thead>
@@ -932,9 +1008,7 @@
                                     <th>Email</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <!-- Dihasilkan secara dinamik oleh loadModuleData / JavaScript -->
-                            </tbody>
+                            <tbody></tbody>
                         </table>
 
                         <div class="gov-btn-group" style="justify-content: center; gap: 10px;">
@@ -942,7 +1016,6 @@
                             <button type="button" class="gov-btn" onclick="hapusUrusetia()">HAPUS</button>
                         </div>
 
-                        <!-- BUTANG SIMPAN & KELUAR DI BAWAH SEKALI -->
                         <div class="gov-btn-group" style="justify-content: center; gap: 10px; margin-top: 25px; padding-top: 15px; border-top: 1px solid #cbd5e1;">
                             <button type="submit" class="gov-btn gov-btn-primary"><i class="fa-solid fa-floppy-disk"></i> SIMPAN</button>
                             <button type="button" class="gov-btn" onclick="window.location.reload()"><i class="fa-solid fa-right-from-bracket"></i> KELUAR</button>
@@ -950,7 +1023,7 @@
                     </form>
                 </div>
 
-                <!-- 2. BAHAGIAN ANGGARAN KOS / AGIHAN -->
+                <!-- 1.2 ANGGARAN KOS -->
                 <div id="sub-anggaran-kos" class="admin-card sub-tab-content" style="display: none;">
                     <div style="text-align: center; font-weight: bold; font-size: 1.1rem; margin-bottom: 15px; text-transform: uppercase; background-color: #f8fafc; padding: 10px; border: 1px solid #cbd5e1;">
                         KOS / AGIHAN
@@ -968,40 +1041,28 @@
                             <tbody id="tbody-kos-perihal">
                                 <tr>
                                     <td style="text-align: center;"><input type="checkbox" class="kos-check"></td>
-                                    <td>
-                                        <input type="text" name="kos_perihal[]" class="gov-input input-kos-perihal" style="max-width: 100%; font-weight: bold;" value="" placeholder="Perihal Bayaran..." oninput="janaKertasPerakuanRasmi()">
-                                    </td>
-                                    <td style="text-align: right; vertical-align: bottom;">
-                                        <input type="number" step="0.01" name="kos_rm[]" class="gov-input class-kos-rm" style="text-align: right; width: 100%;" value="0.00" oninput="kiraKosKeseluruhan()">
-                                    </td>
+                                    <td><input type="text" name="kos_perihal[]" class="gov-input input-kos-perihal" style="max-width: 100%; font-weight: bold;" value="" placeholder="Perihal Bayaran..." oninput="janaKertasPerakuanRasmi()"></td>
+                                    <td style="text-align: right; vertical-align: bottom;"><input type="number" step="0.01" name="kos_rm[]" class="gov-input class-kos-rm" style="text-align: right; width: 100%;" value="0.00" oninput="kiraKosKeseluruhan()"></td>
                                 </tr>
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <td colspan="2" style="font-weight: bold; text-transform: uppercase;">JUMLAH</td>
-                                    <td style="text-align: right;">
-                                        <input type="text" id="kos_jumlah_sub" class="gov-input" style="text-align: right; font-weight: bold; background-color: #f1f5f9;" value="0.00" readonly>
-                                    </td>
+                                    <td style="text-align: right;"><input type="text" id="kos_jumlah_sub" class="gov-input" style="text-align: right; font-weight: bold; background-color: #f1f5f9;" value="0.00" readonly></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" style="font-weight: bold; text-transform: uppercase;">
                                         KONTIGENSI (<input type="number" step="0.1" min="0" id="input_peratus_kontigensi" name="peratus_kontigensi" class="gov-input" style="width: 50px; text-align: center; padding: 2px; font-weight: bold;" value="0" oninput="kiraKosKeseluruhan()">%)
                                     </td>
-                                    <td style="text-align: right;">
-                                        <input type="text" id="kos_kontigensi" class="gov-input" style="text-align: right; font-weight: bold; background-color: #f1f5f9;" value="0.00" readonly>
-                                    </td>
+                                    <td style="text-align: right;"><input type="text" id="kos_kontigensi" class="gov-input" style="text-align: right; font-weight: bold; background-color: #f1f5f9;" value="0.00" readonly></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" style="font-weight: bold; text-transform: uppercase;">JUMLAH KESELURUHAN</td>
-                                    <td style="text-align: right;">
-                                        <input type="text" id="kos_jumlah_keseluruhan" class="gov-input" style="text-align: right; font-weight: bold; background-color: #f1f5f9;" value="0.00" readonly>
-                                    </td>
+                                    <td style="text-align: right;"><input type="text" id="kos_jumlah_keseluruhan" class="gov-input" style="text-align: right; font-weight: bold; background-color: #f1f5f9;" value="0.00" readonly></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" style="font-weight: bold; text-transform: uppercase;">JUMLAH KESELURUHAN DIGENAPKAN</td>
-                                    <td style="text-align: right;">
-                                        <input type="text" id="kos_digenapkan" class="gov-input" style="text-align: right; font-weight: bold; background-color: #e2e8f0;" value="0.00" readonly>
-                                    </td>
+                                    <td style="text-align: right;"><input type="text" id="kos_digenapkan" class="gov-input" style="text-align: right; font-weight: bold; background-color: #e2e8f0;" value="0.00" readonly></td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -1018,7 +1079,7 @@
                     </form>
                 </div>
 
-                <!-- 3. BAHAGIAN SENARAI PESERTA -->
+                <!-- 1.3 SENARAI PESERTA -->
                 <div id="sub-senarai-peserta" class="admin-card sub-tab-content" style="display: none;">
                     <div style="text-align: center; font-weight: bold; font-size: 0.95rem; margin-bottom: 12px; background-color: #f8fafc; padding: 10px; border: 1px solid #cbd5e1; text-transform: uppercase;">
                         JADUAL KADAR BAGI PENGINAPAN DAN MAKAN MINUM KURSUS / SENARAI PESERTA<br>
@@ -1098,7 +1159,7 @@
                     </form>
                 </div>
 
-                <!-- 4. BAHAGIAN JADUAL KADAR (MAKLUMAT LOKASI) -->
+                <!-- 1.4 LOKASI -->
                 <div id="sub-jadual-kadar" class="admin-card sub-tab-content" style="display: none;">
                     <div class="gov-section-title">MAKLUMAT LOKASI</div>
 
@@ -1143,12 +1204,10 @@
                     </form>
                 </div>
 
-                <!-- 5. BAHAGIAN MUAT NAIK GAMBAR / PDF MAKLUMAT SYARIKAT -->
+                <!-- 1.5 MUAT NAIK DOKUMEN -->
                 <div id="sub-upload-dokumen" class="admin-card sub-tab-content" style="display: none;">
                     <div class="gov-section-title">5. MUAT NAIK GAMBAR / PDF MAKLUMAT SYARIKAT</div>
-                    <div class="gov-instruction">
-                        * Pilih fail Gambar (JPG/PNG) atau Dokumen (PDF) Profil / Maklumat Syarikat.
-                    </div>
+                    <div class="gov-instruction">* Pilih fail Gambar (JPG/PNG) atau Dokumen (PDF) Profil / Maklumat Syarikat.</div>
 
                     <form id="form-upload-dokumen" onsubmit="saveModuleData(event, 'upload_dokumen')">
                         <table class="gov-form-table">
@@ -1173,11 +1232,11 @@
                     </form>
                 </div>
 
-                <!-- 5B. BAHAGIAN SENARAI SEMAK PERMOHONAN -->
+                <!-- 1.6 SENARAI SEMAK -->
                 <div id="sub-senarai-semak" class="admin-card sub-tab-content" style="display: none;">
                     <div class="gov-section-title">SENARAI SEMAK PERMOHONAN MENGANJUR KURSUS/BENGKEL/SEMINAR</div>
                     <div class="gov-instruction">
-                        * Perkara bertanda <span style="color:red; font-weight:bold;">(wajib)</span> dikekalkan. Klik <b>TAMBAH PERKARA</b> untuk menambah perkara lain secara manual. Maklumat ini akan dikemas kini secara automatik ke dalam Kertas Perakuan.
+                        * Perkara bertanda <span style="color:red; font-weight:bold;">(wajib)</span> dikekalkan. Klik <b>TAMBAH PERKARA</b> untuk menambah perkara lain secara manual.
                     </div>
 
                     <form id="form-senarai-semak" onsubmit="saveModuleData(event, 'senarai_semak')">
@@ -1192,110 +1251,60 @@
                                 </tr>
                             </thead>
                             <tbody id="tbody-input-senarai-semak">
-                                <!-- 7 PERKARA WAJIB DIKEKALKAN -->
                                 <tr data-wajib="1">
                                     <td style="text-align: center;">-</td>
                                     <td style="text-align: center;">1</td>
                                     <td>Kertas Cadangan/Pertimbangan <span style="color:red; font-weight:bold;">(wajib)</span><input type="hidden" name="semak_perkara[]" class="semak-perkara-input" value="Kertas Cadangan/Pertimbangan (wajib)"></td>
-                                    <td>
-                                        <select name="semak_status[]" class="gov-input semak-status-input" onchange="segerakSenaraiSemakKePerakuan()">
-                                            <option value="Ada" selected>Ada</option>
-                                            <option value="Tiada">Tiada</option>
-                                            <option value="Tidak Berkenaan">Tidak Berkenaan</option>
-                                        </select>
-                                    </td>
+                                    <td><select name="semak_status[]" class="gov-input semak-status-input" onchange="segerakSenaraiSemakKePerakuan()"><option value="Ada" selected>Ada</option><option value="Tiada">Tiada</option><option value="Tidak Berkenaan">Tidak Berkenaan</option></select></td>
                                     <td><input type="text" name="semak_catatan[]" class="gov-input semak-catatan-input" value="-" oninput="segerakSenaraiSemakKePerakuan()"></td>
                                 </tr>
                                 <tr data-wajib="1">
                                     <td style="text-align: center;">-</td>
                                     <td style="text-align: center;">2</td>
                                     <td>Senarai Anggaran Kos <span style="color:red; font-weight:bold;">(wajib)</span><input type="hidden" name="semak_perkara[]" class="semak-perkara-input" value="Senarai Anggaran Kos (wajib)"></td>
-                                    <td>
-                                        <select name="semak_status[]" class="gov-input semak-status-input" onchange="segerakSenaraiSemakKePerakuan()">
-                                            <option value="Ada" selected>Ada</option>
-                                            <option value="Tiada">Tiada</option>
-                                            <option value="Tidak Berkenaan">Tidak Berkenaan</option>
-                                        </select>
-                                    </td>
+                                    <td><select name="semak_status[]" class="gov-input semak-status-input" onchange="segerakSenaraiSemakKePerakuan()"><option value="Ada" selected>Ada</option><option value="Tiada">Tiada</option><option value="Tidak Berkenaan">Tidak Berkenaan</option></select></td>
                                     <td><input type="text" name="semak_catatan[]" class="gov-input semak-catatan-input" value="Lampiran A" oninput="segerakSenaraiSemakKePerakuan()"></td>
                                 </tr>
                                 <tr data-wajib="1">
                                     <td style="text-align: center;">-</td>
                                     <td style="text-align: center;">3</td>
                                     <td>Senarai Bilangan Peserta <span style="color:red; font-weight:bold;">(wajib)</span><input type="hidden" name="semak_perkara[]" class="semak-perkara-input" value="Senarai Bilangan Peserta (wajib)"></td>
-                                    <td>
-                                        <select name="semak_status[]" class="gov-input semak-status-input" onchange="segerakSenaraiSemakKePerakuan()">
-                                            <option value="Ada" selected>Ada</option>
-                                            <option value="Tiada">Tiada</option>
-                                            <option value="Tidak Berkenaan">Tidak Berkenaan</option>
-                                        </select>
-                                    </td>
+                                    <td><select name="semak_status[]" class="gov-input semak-status-input" onchange="segerakSenaraiSemakKePerakuan()"><option value="Ada" selected>Ada</option><option value="Tiada">Tiada</option><option value="Tidak Berkenaan">Tidak Berkenaan</option></select></td>
                                     <td><input type="text" name="semak_catatan[]" class="gov-input semak-catatan-input" value="Lampiran C" oninput="segerakSenaraiSemakKePerakuan()"></td>
                                 </tr>
                                 <tr data-wajib="1">
                                     <td style="text-align: center;">-</td>
                                     <td style="text-align: center;">4</td>
                                     <td>Salinan Permohonan Tempat di ILA <span style="color:red; font-weight:bold;">(wajib)</span><input type="hidden" name="semak_perkara[]" class="semak-perkara-input" value="Salinan Permohonan Tempat di ILA (wajib)"></td>
-                                    <td>
-                                        <select name="semak_status[]" class="gov-input semak-status-input" onchange="segerakSenaraiSemakKePerakuan()">
-                                            <option value="Ada" selected>Ada</option>
-                                            <option value="Tiada">Tiada</option>
-                                            <option value="Tidak Berkenaan">Tidak Berkenaan</option>
-                                        </select>
-                                    </td>
+                                    <td><select name="semak_status[]" class="gov-input semak-status-input" onchange="segerakSenaraiSemakKePerakuan()"><option value="Ada" selected>Ada</option><option value="Tiada">Tiada</option><option value="Tidak Berkenaan">Tidak Berkenaan</option></select></td>
                                     <td><input type="text" name="semak_catatan[]" class="gov-input semak-catatan-input" value="-" oninput="segerakSenaraiSemakKePerakuan()"></td>
                                 </tr>
                                 <tr data-wajib="1">
                                     <td style="text-align: center;">-</td>
                                     <td style="text-align: center;">5</td>
                                     <td>Jadual Bengkel dan Penceramah <span style="color:red; font-weight:bold;">(wajib)</span><input type="hidden" name="semak_perkara[]" class="semak-perkara-input" value="Jadual Bengkel dan Penceramah (wajib)"></td>
-                                    <td>
-                                        <select name="semak_status[]" class="gov-input semak-status-input" onchange="segerakSenaraiSemakKePerakuan()">
-                                            <option value="Ada">Ada</option>
-                                            <option value="Tiada">Tiada</option>
-                                            <option value="Tidak Berkenaan" selected>Tidak Berkenaan</option>
-                                        </select>
-                                    </td>
+                                    <td><select name="semak_status[]" class="gov-input semak-status-input" onchange="segerakSenaraiSemakKePerakuan()"><option value="Ada">Ada</option><option value="Tiada">Tiada</option><option value="Tidak Berkenaan" selected>Tidak Berkenaan</option></select></td>
                                     <td><input type="text" name="semak_catatan[]" class="gov-input semak-catatan-input" value="-" oninput="segerakSenaraiSemakKePerakuan()"></td>
                                 </tr>
                                 <tr data-wajib="1">
                                     <td style="text-align: center;">-</td>
                                     <td style="text-align: center;">6</td>
                                     <td>Sumber Peruntukan (Laporan Vot bagi yang menggunakan peruntukan/Jabatan) <span style="color:red; font-weight:bold;">(wajib)</span><input type="hidden" name="semak_perkara[]" class="semak-perkara-input" value="Sumber Peruntukan (Laporan Vot bagi yang menggunakan peruntukan/Jabatan) (wajib)"></td>
-                                    <td>
-                                        <select name="semak_status[]" class="gov-input semak-status-input" onchange="segerakSenaraiSemakKePerakuan()">
-                                            <option value="Ada" selected>Ada</option>
-                                            <option value="Tiada">Tiada</option>
-                                            <option value="Tidak Berkenaan">Tidak Berkenaan</option>
-                                        </select>
-                                    </td>
+                                    <td><select name="semak_status[]" class="gov-input semak-status-input" onchange="segerakSenaraiSemakKePerakuan()"><option value="Ada" selected>Ada</option><option value="Tiada">Tiada</option><option value="Tidak Berkenaan">Tidak Berkenaan</option></select></td>
                                     <td><input type="text" name="semak_catatan[]" class="gov-input semak-catatan-input" value="Peruntukan Generik BPSM Tahun 2026" oninput="segerakSenaraiSemakKePerakuan()"></td>
                                 </tr>
                                 <tr data-wajib="1">
                                     <td style="text-align: center;">-</td>
                                     <td style="text-align: center;">7</td>
                                     <td>Salinan Kelulusan POL <span style="color:red; font-weight:bold;">(wajib)</span><input type="hidden" name="semak_perkara[]" class="semak-perkara-input" value="Salinan Kelulusan POL (wajib)"></td>
-                                    <td>
-                                        <select name="semak_status[]" class="gov-input semak-status-input" onchange="segerakSenaraiSemakKePerakuan()">
-                                            <option value="Ada">Ada</option>
-                                            <option value="Tiada">Tiada</option>
-                                            <option value="Tidak Berkenaan" selected>Tidak Berkenaan</option>
-                                        </select>
-                                    </td>
+                                    <td><select name="semak_status[]" class="gov-input semak-status-input" onchange="segerakSenaraiSemakKePerakuan()"><option value="Ada">Ada</option><option value="Tiada">Tiada</option><option value="Tidak Berkenaan" selected>Tidak Berkenaan</option></select></td>
                                     <td><input type="text" name="semak_catatan[]" class="gov-input semak-catatan-input" value="-" oninput="segerakSenaraiSemakKePerakuan()"></td>
                                 </tr>
-                                <!-- BARIS KOSONG UNTUK ADMIN TAMBAH -->
                                 <tr>
                                     <td style="text-align: center;"><input type="checkbox" class="semak-check"></td>
                                     <td style="text-align: center;">8</td>
                                     <td><input type="text" name="semak_perkara[]" class="gov-input semak-perkara-input" style="max-width: 100%;" value="" placeholder="Masukkan perkara tambahan..." oninput="segerakSenaraiSemakKePerakuan()"></td>
-                                    <td>
-                                        <select name="semak_status[]" class="gov-input semak-status-input" onchange="segerakSenaraiSemakKePerakuan()">
-                                            <option value="Ada">Ada</option>
-                                            <option value="Tiada">Tiada</option>
-                                            <option value="Tidak Berkenaan" selected>Tidak Berkenaan</option>
-                                        </select>
-                                    </td>
+                                    <td><select name="semak_status[]" class="gov-input semak-status-input" onchange="segerakSenaraiSemakKePerakuan()"><option value="Ada">Ada</option><option value="Tiada">Tiada</option><option value="Tidak Berkenaan" selected>Tidak Berkenaan</option></select></td>
                                     <td><input type="text" name="semak_catatan[]" class="gov-input semak-catatan-input" value="-" oninput="segerakSenaraiSemakKePerakuan()"></td>
                                 </tr>
                             </tbody>
@@ -1312,7 +1321,7 @@
                     </form>
                 </div>
 
-                <!-- 6. BAHAGIAN KERTAS PERAKUAN -->
+                <!-- 1.7 KERTAS PERAKUAN -->
                 <div id="sub-kertas-perakuan" class="admin-card sub-tab-content" style="display: none;">
                     
                     <div class="no-print" style="margin-bottom: 15px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; background: #e0f2fe; padding: 12px 16px; border-radius: 4px; border: 1px solid #bae6fd;">
@@ -1324,307 +1333,320 @@
                         <div style="display: flex; flex-wrap: wrap; gap: 8px;">
                             <button type="button" class="gov-btn gov-btn-primary" style="background-color: #0284c7; border-color: #0284c7;" onclick="simpanKertasPerakuan(true)"><i class="fa-solid fa-floppy-disk"></i> SIMPAN KERTAS PERAKUAN</button>
                             <button type="button" class="gov-btn" style="background-color: #fef3c7; border-color: #f59e0b; color: #92400e; font-weight: 600;" onclick="bukaFolderKertasPerakuan()"><i class="fa-solid fa-folder-open"></i> LIHAT FOLDER SIMPANAN</button>
-                            <button type="button" class="gov-btn gov-btn-success" onclick="hantarKePerolehan()"><i class="fa-solid fa-paper-plane"></i> HANTAR KE PEG. PEROLEHAN</button>
+                            <button type="button" class="gov-btn gov-btn-success" onclick="hantarKeSubw()"><i class="fa-solid fa-paper-plane"></i> HANTAR KE SUB (W) PSM</button>
                             <button type="button" class="gov-btn gov-btn-primary" style="background-color: #dc2626; border-color: #dc2626;" onclick="muatTurunPdfPerakuan()"><i class="fa-solid fa-file-pdf"></i> MUAT TURUN PDF</button>
                             <button type="button" class="gov-btn gov-btn-primary" onclick="window.print()"><i class="fa-solid fa-print"></i> PRINT / PDF</button>
                             <button type="button" class="gov-btn" onclick="janaKertasPerakuanRasmi()"><i class="fa-solid fa-rotate"></i> REFRESH</button>
                         </div>
                     </div>
 
-                    <!-- CONTAINER KERTAS PERAKUAN SEBIJI MACAM FORMAT DOKUMEN WORD RASMI -->
-                    <div class="perakuan-doc-container" id="perakuan-doc-container">
-                        
-                        <!-- HEADER RUJUKAN & TARIKH -->
-                        <div class="perakuan-header-info">
-                            <div>Rujukan: <span id="doc_rujukan_text" contenteditable="true" oninput="autoSimpanKertasPerakuan()">MOSTI.500-8/2/1 Jld. 18 ( &nbsp;&nbsp;&nbsp; )</span></div>
-                            <div>Tarikh: <span id="doc_tarikh_atas_text" contenteditable="true" oninput="autoSimpanKertasPerakuan()">&nbsp;&nbsp;&nbsp;&nbsp; Disember 2025</span></div>
-                        </div>
+                    <!-- CONTAINER KERTAS PERAKUAN RASMI (DIKONGSI UNTUK PRATONTON DI SEMUA PERANAN) -->
+                    <div id="kertas-perakuan-host">
+                        <div class="perakuan-doc-container" id="perakuan-doc-container">
+                            
+                            <!-- HEADER RUJUKAN & TARIKH -->
+                            <div class="perakuan-header-info">
+                                <div>Rujukan: <span id="doc_rujukan_text" contenteditable="true" oninput="autoSimpanKertasPerakuan()">MOSTI.500-8/2/1 Jld. 18 ( &nbsp;&nbsp;&nbsp; )</span></div>
+                                <div>Tarikh: <span id="doc_tarikh_atas_text" contenteditable="true" oninput="autoSimpanKertasPerakuan()">&nbsp;&nbsp;&nbsp;&nbsp; Disember 2025</span></div>
+                            </div>
 
-                        <!-- JADUAL ATAS MAKLUMAT HEADER -->
-                        <table class="perakuan-top-box">
-                            <tr>
-                                <td style="width: 25%;">BAHAGIAN/AGENSI</td>
-                                <td style="width: 75%; font-weight: normal;" id="doc_bahagian_agensi" contenteditable="true" oninput="autoSimpanKertasPerakuan()">BAHAGIAN PENGURUSAN SUMBER MANUSIA (BPSM)</td>
-                            </tr>
-                            <tr>
-                                <td>TAJUK</td>
-                                <td style="font-weight: normal;" id="doc_header_tajuk" contenteditable="true" oninput="autoSimpanKertasPerakuan()">-</td>
-                            </tr>
-                            <tr>
-                                <td>TARIKH</td>
-                                <td style="font-weight: normal;" id="doc_header_tarikh" contenteditable="true" oninput="autoSimpanKertasPerakuan()">-</td>
-                            </tr>
-                            <tr>
-                                <td>LOKASI</td>
-                                <td style="font-weight: normal;" id="doc_header_lokasi" contenteditable="true" oninput="autoSimpanKertasPerakuan()">-</td>
-                            </tr>
-                        </table>
-
-                        <!-- JADUAL KANDUNGAN UTAMA PERAKUAN -->
-                        <table class="perakuan-table">
-                            <tr style="text-align: center; font-weight: bold; background-color: #f1f5f9;">
-                                <td style="width: 25%;">PERKARA</td>
-                                <td style="width: 75%;">MAKLUMAT DAN PERAKUAN</td>
-                            </tr>
-                            <tr>
-                                <td style="font-weight: bold;">1. OBJEKTIF</td>
-                                <td>
-                                    <div id="doc_objektif_list" contenteditable="true" oninput="autoSimpanKertasPerakuan()">-</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="font-weight: bold;">2. PERINCIAN PERMOHONAN</td>
-                                <td style="padding: 0;">
-                                    <table style="width: 100%; border-collapse: collapse; border: none;">
-                                        <tr style="font-weight: bold; text-align: center; background-color: #f1f5f9;">
-                                            <td style="width: 25%; border-right: 1px solid #000; border-bottom: 1px solid #000; border-top: none; border-left: none;">PENYERTAAN</td>
-                                            <td style="width: 45%; border-right: 1px solid #000; border-bottom: 1px solid #000; border-top: none;">KOS/AGIHAN</td>
-                                            <td style="width: 30%; border-bottom: 1px solid #000; border-top: none; border-right: none;">PENCERAMAH/ FASILITATOR</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="border-right: 1px solid #000; border-bottom: 1px solid #000; border-left: none;">
-                                                Peserta:<br><br>
-                                                <b>Jumlah Keseluruhan:</b><br>
-                                                <span id="doc_jumlah_peserta_all" contenteditable="true" oninput="autoSimpanKertasPerakuan()">0</span> orang
-                                            </td>
-                                            <td style="border-right: 1px solid #000; border-bottom: 1px solid #000; padding: 0;">
-                                                <table style="width: 100%; border-collapse: collapse; font-size: 8.5pt;">
-                                                    <tr style="font-weight: bold; text-align: center;">
-                                                        <td style="border-bottom: 1px solid #000; border-right: 1px solid #000;">Perihal</td>
-                                                        <td style="border-bottom: 1px solid #000; width: 70px;">RM</td>
-                                                    </tr>
-                                                    <tbody id="doc_tbody_kos">
-                                                        <!-- Generated by JS -->
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                            <td style="border-bottom: 1px solid #000; border-right: none;">
-                                                <u>Penceramah/ Fasilitator Penjawat Awam:</u><br>
-                                                <span id="doc_penceramah_text" contenteditable="true" oninput="autoSimpanKertasPerakuan()">-</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="font-weight: bold; border-right: 1px solid #000; border-bottom: none; border-left: none;">
-                                                Sumber Peruntukan
-                                            </td>
-                                            <td colspan="2" style="border-bottom: none; border-right: none;">
-                                                <span id="doc_sumber_peruntukan" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Peruntukan Belanja Mengurus BPSM</span><br>
-                                                <b>Baki:</b> <span id="doc_baki_peruntukan" contenteditable="true" oninput="autoSimpanKertasPerakuan()"></span>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" style="font-weight: bold; text-align: center; background-color: #f1f5f9;">
-                                    ASAS-ASAS PERMOHONAN
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" style="padding: 0;">
-                                    <table style="width: 100%; border-collapse: collapse; border: none;">
-                                        <tr>
-                                            <td style="width: 65%; border-right: 1px solid #000; border-bottom: none; border-left: none; border-top: none;">
-                                                <div id="doc_syor_text" contenteditable="true" oninput="autoSimpanKertasPerakuan()">
-                                                    (a) Mesyuarat Jawatankuasa Latihan telah bersetuju dengan pelaksanaan program ini.<br><br>
-                                                    (b) Tuan dengan ini dimohon untuk mempertimbang dan memutuskan cadangan kos penganjuran program.
-                                                </div>
-                                            </td>
-                                            <td style="width: 35%; border-bottom: none; border-right: none; border-top: none; text-align: center; vertical-align: bottom; padding-bottom: 15px;">
-                                                <div id="doc_penyedia_text" contenteditable="true" oninput="autoSimpanKertasPerakuan()">
-                                                    <b>ROSLEEZAM BIN JAMAUDIN<br>KPSU(PSM)PO</b><br><br>
-                                                    <b>Tarikh: &nbsp;&nbsp;&nbsp; Disember 2025</b>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
-
-                        <!-- HELAMAN 2: SENARAI SEMAK PERMOHONAN -->
-                        <div style="page-break-before: always; margin-top: 30px;"></div>
-
-                        <div class="perakuan-header-info">
-                            <div>Rujukan: <span id="doc_rujukan_text_2" contenteditable="true" oninput="autoSimpanKertasPerakuan()">MOSTI.500-8/2/1 Jld. 18 ( &nbsp;&nbsp;&nbsp; )</span></div>
-                            <div>Tarikh: <span id="doc_tarikh_atas_text_2" contenteditable="true" oninput="autoSimpanKertasPerakuan()">&nbsp;&nbsp;&nbsp;&nbsp; Disember 2025</span></div>
-                        </div>
-
-                        <table class="perakuan-top-box">
-                            <tr>
-                                <td style="width: 25%;">BAHAGIAN/AGENSI</td>
-                                <td style="width: 75%; font-weight: normal;">BAHAGIAN PENGURUSAN SUMBER MANUSIA (BPSM)</td>
-                            </tr>
-                            <tr>
-                                <td>TAJUK</td>
-                                <td style="font-weight: normal;" id="doc_header_tajuk_2">-</td>
-                            </tr>
-                            <tr>
-                                <td>TARIKH</td>
-                                <td style="font-weight: normal;" id="doc_header_tarikh_2">-</td>
-                            </tr>
-                            <tr>
-                                <td>LOKASI</td>
-                                <td style="font-weight: normal;" id="doc_header_lokasi_2">-</td>
-                            </tr>
-                        </table>
-
-                        <div style="font-weight: bold; text-align: center; margin-top: 15px; margin-bottom: 12px; font-size: 10pt;">
-                            SENARAI SEMAK PERMOHONAN MENGANJUR KURSUS/BENGKEL/SEMINAR
-                        </div>
-
-                        <table class="perakuan-table" id="doc_senarai_semak_table">
-                            <thead>
-                                <tr style="font-weight: bold; text-align: center; background-color: #808080; color: #fff;">
-                                    <td style="width: 6%;">Bil</td>
-                                    <td style="width: 44%;">Perkara</td>
-                                    <td style="width: 25%;">Ada / Tiada / Tidak Berkenaan</td>
-                                    <td style="width: 25%;">Catatan</td>
+                            <!-- JADUAL ATAS MAKLUMAT HEADER -->
+                            <table class="perakuan-top-box">
+                                <tr>
+                                    <td style="width: 25%;">BAHAGIAN/AGENSI</td>
+                                    <td style="width: 75%; font-weight: normal;" id="doc_bahagian_agensi" contenteditable="true" oninput="autoSimpanKertasPerakuan()">BAHAGIAN PENGURUSAN SUMBER MANUSIA (BPSM)</td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                <tr><td style="text-align:center;">1</td><td>Kertas Cadangan/Pertimbangan <span style="color:red; font-weight:bold;">(wajib)</span></td><td style="text-align:center; font-weight:bold;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Ada</td><td style="text-align:center;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">-</td></tr>
-                                <tr><td style="text-align:center;">2</td><td>Senarai Anggaran Kos <span style="color:red; font-weight:bold;">(wajib)</span></td><td style="text-align:center; font-weight:bold;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Ada</td><td style="text-align:center;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Lampiran A</td></tr>
-                                <tr><td style="text-align:center;">3</td><td>Senarai Bilangan Peserta <span style="color:red; font-weight:bold;">(wajib)</span></td><td style="text-align:center; font-weight:bold;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Ada</td><td style="text-align:center;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Lampiran C</td></tr>
-                                <tr><td style="text-align:center;">4</td><td>Salinan Permohonan Tempat di ILA <span style="color:red; font-weight:bold;">(wajib)</span></td><td style="text-align:center; font-weight:bold;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Ada</td><td style="text-align:center;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">-</td></tr>
-                                <tr><td style="text-align:center;">5</td><td>Jadual Bengkel dan Penceramah <span style="color:red; font-weight:bold;">(wajib)</span></td><td style="text-align:center; font-weight:bold;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Tidak Berkenaan</td><td style="text-align:center;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">-</td></tr>
-                                <tr><td style="text-align:center;">6</td><td>Sumber Peruntukan (Laporan Vot bagi yang menggunakan peruntukan/Jabatan) <span style="color:red; font-weight:bold;">(wajib)</span></td><td style="text-align:center; font-weight:bold;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Ada</td><td style="text-align:center;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Peruntukan Generik BPSM Tahun 2026</td></tr>
-                                <tr><td style="text-align:center;">7</td><td>Salinan Kelulusan POL <span style="color:red; font-weight:bold;">(wajib)</span></td><td style="text-align:center; font-weight:bold;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Tidak Berkenaan</td><td style="text-align:center;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">-</td></tr>
-                            </tbody>
-                        </table>
+                                <tr>
+                                    <td>TAJUK</td>
+                                    <td style="font-weight: normal;" id="doc_header_tajuk" contenteditable="true" oninput="autoSimpanKertasPerakuan()">-</td>
+                                </tr>
+                                <tr>
+                                    <td>TARIKH</td>
+                                    <td style="font-weight: normal;" id="doc_header_tarikh" contenteditable="true" oninput="autoSimpanKertasPerakuan()">-</td>
+                                </tr>
+                                <tr>
+                                    <td>LOKASI</td>
+                                    <td style="font-weight: normal;" id="doc_header_lokasi" contenteditable="true" oninput="autoSimpanKertasPerakuan()">-</td>
+                                </tr>
+                            </table>
 
-                        <!-- HELAMAN 3: ULASAN SUB (W) & KEPUTUSAN PBM (TEPAT DENGAN STRUKTUR DOKUMEN WORD) -->
-                        <div style="page-break-before: always; margin-top: 30px;"></div>
+                            <!-- JADUAL KANDUNGAN UTAMA PERAKUAN -->
+                            <table class="perakuan-table">
+                                <tr style="text-align: center; font-weight: bold; background-color: #f1f5f9;">
+                                    <td style="width: 25%;">PERKARA</td>
+                                    <td style="width: 75%;">MAKLUMAT DAN PERAKUAN</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold;">1. OBJEKTIF</td>
+                                    <td><div id="doc_objektif_list" contenteditable="true" oninput="autoSimpanKertasPerakuan()">-</div></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold;">2. PERINCIAN PERMOHONAN</td>
+                                    <td style="padding: 0;">
+                                        <table style="width: 100%; border-collapse: collapse; border: none;">
+                                            <tr style="font-weight: bold; text-align: center; background-color: #f1f5f9;">
+                                                <td style="width: 25%; border-right: 1px solid #000; border-bottom: 1px solid #000; border-top: none; border-left: none;">PENYERTAAN</td>
+                                                <td style="width: 45%; border-right: 1px solid #000; border-bottom: 1px solid #000; border-top: none;">KOS/AGIHAN</td>
+                                                <td style="width: 30%; border-bottom: 1px solid #000; border-top: none; border-right: none;">PENCERAMAH/ FASILITATOR</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="border-right: 1px solid #000; border-bottom: 1px solid #000; border-left: none;">
+                                                    Peserta:<br><br>
+                                                    <b>Jumlah Keseluruhan:</b><br>
+                                                    <span id="doc_jumlah_peserta_all" contenteditable="true" oninput="autoSimpanKertasPerakuan()">0</span> orang
+                                                </td>
+                                                <td style="border-right: 1px solid #000; border-bottom: 1px solid #000; padding: 0;">
+                                                    <table style="width: 100%; border-collapse: collapse; font-size: 8.5pt;">
+                                                        <tr style="font-weight: bold; text-align: center;">
+                                                            <td style="border-bottom: 1px solid #000; border-right: 1px solid #000;">Perihal</td>
+                                                            <td style="border-bottom: 1px solid #000; width: 70px;">RM</td>
+                                                        </tr>
+                                                        <tbody id="doc_tbody_kos"></tbody>
+                                                    </table>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #000; border-right: none;">
+                                                    <u>Penceramah/ Fasilitator Penjawat Awam:</u><br>
+                                                    <span id="doc_penceramah_text" contenteditable="true" oninput="autoSimpanKertasPerakuan()">-</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-weight: bold; border-right: 1px solid #000; border-bottom: none; border-left: none;">Sumber Peruntukan</td>
+                                                <td colspan="2" style="border-bottom: none; border-right: none;">
+                                                    <span id="doc_sumber_peruntukan" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Peruntukan Belanja Mengurus BPSM</span><br>
+                                                    <b>Baki:</b> <span id="doc_baki_peruntukan" contenteditable="true" oninput="autoSimpanKertasPerakuan()"></span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="font-weight: bold; text-align: center; background-color: #f1f5f9;">ASAS-ASAS PERMOHONAN</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="padding: 0;">
+                                        <table style="width: 100%; border-collapse: collapse; border: none;">
+                                            <tr>
+                                                <td style="width: 65%; border-right: 1px solid #000; border-bottom: none; border-left: none; border-top: none;">
+                                                    <div id="doc_syor_text" contenteditable="true" oninput="autoSimpanKertasPerakuan()">
+                                                        (a) Mesyuarat Jawatankuasa Latihan telah bersetuju dengan pelaksanaan program ini.<br><br>
+                                                        (b) Tuan dengan ini dimohon untuk mempertimbang dan memutuskan cadangan kos penganjuran program.
+                                                    </div>
+                                                </td>
+                                                <td style="width: 35%; border-bottom: none; border-right: none; border-top: none; text-align: center; vertical-align: bottom; padding-bottom: 15px;">
+                                                    <div id="doc_penyedia_text" contenteditable="true" oninput="autoSimpanKertasPerakuan()">
+                                                        <b>ROSLEEZAM BIN JAMAUDIN<br>KPSU(PSM)PO</b><br><br>
+                                                        <b>Tarikh: &nbsp;&nbsp;&nbsp; Disember 2025</b>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
 
-                        <table class="perakuan-top-box">
-                            <tr>
-                                <td style="width: 25%;">BAHAGIAN/AGENSI</td>
-                                <td style="width: 75%; font-weight: normal;">BAHAGIAN PENGURUSAN SUMBER MANUSIA (BPSM)</td>
-                            </tr>
-                            <tr>
-                                <td>TAJUK</td>
-                                <td style="font-weight: normal;" id="doc_header_tajuk_3">-</td>
-                            </tr>
-                            <tr>
-                                <td>TARIKH</td>
-                                <td style="font-weight: normal;" id="doc_header_tarikh_3">-</td>
-                            </tr>
-                            <tr>
-                                <td>LOKASI</td>
-                                <td style="font-weight: normal;" id="doc_header_lokasi_3">-</td>
-                            </tr>
-                        </table>
+                            <!-- HALAMAN 2: SENARAI SEMAK PERMOHONAN -->
+                            <div style="page-break-before: always; margin-top: 30px;"></div>
 
-                        <!-- JADUAL ULASAN SUB (W) -->
-                        <table class="perakuan-table" style="margin-top: 15px;">
-                            <tr>
-                                <td style="font-weight: bold; background-color: #ffffff;">ULASAN SUB (W)</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 15px;">
-                                    <div style="display: flex; gap: 20px;">
-                                        <div style="flex: 1;">
-                                            <!-- PETAK TICK SOKONG / TIDAK SOKONG -->
-                                            <div class="perakuan-box-row">
-                                                <div class="perakuan-box-square" id="tick-sokong"></div>
-                                                <div class="perakuan-box-label">SOKONG</div>
+                            <div class="perakuan-header-info">
+                                <div>Rujukan: <span id="doc_rujukan_text_2" contenteditable="true" oninput="autoSimpanKertasPerakuan()">MOSTI.500-8/2/1 Jld. 18 ( &nbsp;&nbsp;&nbsp; )</span></div>
+                                <div>Tarikh: <span id="doc_tarikh_atas_text_2" contenteditable="true" oninput="autoSimpanKertasPerakuan()">&nbsp;&nbsp;&nbsp;&nbsp; Disember 2025</span></div>
+                            </div>
+
+                            <table class="perakuan-top-box">
+                                <tr>
+                                    <td style="width: 25%;">BAHAGIAN/AGENSI</td>
+                                    <td style="width: 75%; font-weight: normal;">BAHAGIAN PENGURUSAN SUMBER MANUSIA (BPSM)</td>
+                                </tr>
+                                <tr>
+                                    <td>TAJUK</td>
+                                    <td style="font-weight: normal;" id="doc_header_tajuk_2">-</td>
+                                </tr>
+                                <tr>
+                                    <td>TARIKH</td>
+                                    <td style="font-weight: normal;" id="doc_header_tarikh_2">-</td>
+                                </tr>
+                                <tr>
+                                    <td>LOKASI</td>
+                                    <td style="font-weight: normal;" id="doc_header_lokasi_2">-</td>
+                                </tr>
+                            </table>
+
+                            <div style="font-weight: bold; text-align: center; margin-top: 15px; margin-bottom: 12px; font-size: 10pt;">
+                                SENARAI SEMAK PERMOHONAN MENGANJUR KURSUS/BENGKEL/SEMINAR
+                            </div>
+
+                            <table class="perakuan-table" id="doc_senarai_semak_table">
+                                <thead>
+                                    <tr style="font-weight: bold; text-align: center; background-color: #808080; color: #fff;">
+                                        <td style="width: 6%;">Bil</td>
+                                        <td style="width: 44%;">Perkara</td>
+                                        <td style="width: 25%;">Ada / Tiada / Tidak Berkenaan</td>
+                                        <td style="width: 25%;">Catatan</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td style="text-align:center;">1</td><td>Kertas Cadangan/Pertimbangan <span style="color:red; font-weight:bold;">(wajib)</span></td><td style="text-align:center; font-weight:bold;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Ada</td><td style="text-align:center;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">-</td></tr>
+                                    <tr><td style="text-align:center;">2</td><td>Senarai Anggaran Kos <span style="color:red; font-weight:bold;">(wajib)</span></td><td style="text-align:center; font-weight:bold;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Ada</td><td style="text-align:center;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Lampiran A</td></tr>
+                                    <tr><td style="text-align:center;">3</td><td>Senarai Bilangan Peserta <span style="color:red; font-weight:bold;">(wajib)</span></td><td style="text-align:center; font-weight:bold;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Ada</td><td style="text-align:center;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Lampiran C</td></tr>
+                                    <tr><td style="text-align:center;">4</td><td>Salinan Permohonan Tempat di ILA <span style="color:red; font-weight:bold;">(wajib)</span></td><td style="text-align:center; font-weight:bold;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Ada</td><td style="text-align:center;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">-</td></tr>
+                                    <tr><td style="text-align:center;">5</td><td>Jadual Bengkel dan Penceramah <span style="color:red; font-weight:bold;">(wajib)</span></td><td style="text-align:center; font-weight:bold;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Tidak Berkenaan</td><td style="text-align:center;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">-</td></tr>
+                                    <tr><td style="text-align:center;">6</td><td>Sumber Peruntukan (Laporan Vot bagi yang menggunakan peruntukan/Jabatan) <span style="color:red; font-weight:bold;">(wajib)</span></td><td style="text-align:center; font-weight:bold;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Ada</td><td style="text-align:center;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Peruntukan Generik BPSM Tahun 2026</td></tr>
+                                    <tr><td style="text-align:center;">7</td><td>Salinan Kelulusan POL <span style="color:red; font-weight:bold;">(wajib)</span></td><td style="text-align:center; font-weight:bold;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">Tidak Berkenaan</td><td style="text-align:center;" contenteditable="true" oninput="autoSimpanKertasPerakuan()">-</td></tr>
+                                </tbody>
+                            </table>
+
+                            <!-- HALAMAN 3: ULASAN SUB (W), SEMAKAN PEROLEHAN & KEPUTUSAN PBM -->
+                            <div style="page-break-before: always; margin-top: 30px;"></div>
+
+                            <table class="perakuan-top-box">
+                                <tr>
+                                    <td style="width: 25%;">BAHAGIAN/AGENSI</td>
+                                    <td style="width: 75%; font-weight: normal;">BAHAGIAN PENGURUSAN SUMBER MANUSIA (BPSM)</td>
+                                </tr>
+                                <tr>
+                                    <td>TAJUK</td>
+                                    <td style="font-weight: normal;" id="doc_header_tajuk_3">-</td>
+                                </tr>
+                                <tr>
+                                    <td>TARIKH</td>
+                                    <td style="font-weight: normal;" id="doc_header_tarikh_3">-</td>
+                                </tr>
+                                <tr>
+                                    <td>LOKASI</td>
+                                    <td style="font-weight: normal;" id="doc_header_lokasi_3">-</td>
+                                </tr>
+                            </table>
+
+                            <!-- BLOK 1: ULASAN SUB (W) PSM -->
+                            <table class="perakuan-table" style="margin-top: 15px;">
+                                <tr>
+                                    <td style="font-weight: bold; background-color: #ffffff;">ULASAN SUB (W) PSM</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 15px;">
+                                        <div style="display: flex; gap: 20px;">
+                                            <div style="flex: 1;">
+                                                <div class="perakuan-box-row">
+                                                    <div class="perakuan-box-square" id="tick-sokong"></div>
+                                                    <div class="perakuan-box-label">SOKONG</div>
+                                                </div>
+                                                <div class="perakuan-box-row">
+                                                    <div class="perakuan-box-square" id="tick-tidaksokong"></div>
+                                                    <div class="perakuan-box-label">TIDAK SOKONG</div>
+                                                </div>
+                                                <br>
+                                                <div id="subw-signature-holder" style="height: 45px; text-align: left;"></div>
+                                                <b id="subw-pegawai-nama">(RUHAIRI BIN RAMLI)</b><br>
+                                                <span id="subw-pegawai-tarikh">Tarikh: </span>
                                             </div>
-                                            <div class="perakuan-box-row">
-                                                <div class="perakuan-box-square" id="tick-tidaksokong"></div>
-                                                <div class="perakuan-box-label">TIDAK SOKONG</div>
+                                            <div style="flex: 2; border-left: 1px solid #000; padding-left: 15px; min-height: 140px;">
+                                                <u>Ulasan:</u>
+                                                <div id="subw-ulasan-text" style="margin-top: 8px; font-style: italic; color: #334155;"></div>
                                             </div>
-                                            <br>
-                                            <!-- TEMPAT TANDATANGAN AUTOMATIK APABILA DISAHKAN -->
-                                            <div id="subw-signature-holder" style="height: 45px; text-align: left;"></div>
-                                            <b id="subw-pegawai-nama">(RUHAIRI BIN RAMLI)</b><br>
-                                            <span id="subw-pegawai-tarikh">Tarikh: </span>
                                         </div>
-                                        <div style="flex: 2; border-left: 1px solid #000; padding-left: 15px; min-height: 140px;">
-                                            <u>Ulasan:</u>
-                                            <div id="subw-ulasan-text" style="margin-top: 8px; font-style: italic; color: #334155;"></div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
+                                    </td>
+                                </tr>
+                            </table>
 
-                        <!-- JADUAL KEPUTUSAN PBM -->
-                        <table class="perakuan-table">
-                            <tr>
-                                <td style="font-weight: bold; background-color: #ffffff;">KEPUTUSAN PBM</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 15px;">
-                                    <div style="display: flex; gap: 20px;">
-                                        <div style="flex: 1;">
-                                            <!-- PETAK TICK LULUS / TIDAK LULUS -->
-                                            <div class="perakuan-box-row">
-                                                <div class="perakuan-box-square" id="tick-lulus"></div>
-                                                <div class="perakuan-box-label">LULUS</div>
+                            <!-- BLOK 2: PENGESAHAN / SEMAKAN PEROLEHAN -->
+                            <table class="perakuan-table">
+                                <tr>
+                                    <td style="font-weight: bold; background-color: #ffffff;">PENGESAHAN / SEMAKAN PEROLEHAN</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 15px;">
+                                        <div style="display: flex; gap: 20px;">
+                                            <div style="flex: 1;">
+                                                <div id="perolehan-signature-holder" style="height: 45px; text-align: left;"></div>
+                                                <b id="perolehan-doc-nama">(PEGAWAI PEROLEHAN)</b><br>
+                                                <span id="perolehan-doc-jawatan" style="font-size: 8.5pt;">-</span><br>
+                                                <span id="perolehan-doc-tarikh">Tarikh: </span>
                                             </div>
-                                            <div class="perakuan-box-row">
-                                                <div class="perakuan-box-square" id="tick-tidaklulus"></div>
-                                                <div class="perakuan-box-label">TIDAK LULUS</div>
+                                            <div style="flex: 2; border-left: 1px solid #000; padding-left: 15px; min-height: 110px;">
+                                                <u>Ulasan Perolehan:</u>
+                                                <div id="perolehan-ulasan-text" style="margin-top: 8px; font-style: italic; color: #334155;"></div>
                                             </div>
-                                            <br>
-                                            <!-- TEMPAT TANDATANGAN AUTOMATIK APABILA DISAHKAN -->
-                                            <div id="pbm-signature-holder" style="height: 45px; text-align: left;"></div>
-                                            <b id="pbm-pegawai-nama">(OOLI GUNALAN A/L MANICKAM)</b><br>
-                                            <span id="pbm-pegawai-tarikh">Tarikh: </span>
                                         </div>
-                                        <div style="flex: 2; border-left: 1px solid #000; padding-left: 15px; min-height: 140px;">
-                                            <u>Ulasan:</u>
-                                            <div id="pbm-ulasan-text" style="margin-top: 8px; font-style: italic; color: #334155;"></div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
+                                    </td>
+                                </tr>
+                            </table>
 
+                            <!-- BLOK 3: KEPUTUSAN PIHAK BERKUASA (PBM) -->
+                            <table class="perakuan-table">
+                                <tr>
+                                    <td style="font-weight: bold; background-color: #ffffff;">KEPUTUSAN PIHAK BERKUASA (PBM)</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 15px;">
+                                        <div style="display: flex; gap: 20px;">
+                                            <div style="flex: 1;">
+                                                <div class="perakuan-box-row">
+                                                    <div class="perakuan-box-square" id="tick-lulus"></div>
+                                                    <div class="perakuan-box-label">LULUS</div>
+                                                </div>
+                                                <div class="perakuan-box-row">
+                                                    <div class="perakuan-box-square" id="tick-tidaklulus"></div>
+                                                    <div class="perakuan-box-label">TIDAK LULUS</div>
+                                                </div>
+                                                <br>
+                                                <div id="pbm-signature-holder" style="height: 45px; text-align: left;"></div>
+                                                <b id="pbm-pegawai-nama">(OOLI GUNALAN A/L MANICKAM)</b><br>
+                                                <span id="pbm-pegawai-tarikh">Tarikh: </span>
+                                            </div>
+                                            <div style="flex: 2; border-left: 1px solid #000; padding-left: 15px; min-height: 140px;">
+                                                <u>Ulasan:</u>
+                                                <div id="pbm-ulasan-text" style="margin-top: 8px; font-style: italic; color: #334155;"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
                     </div>
                 </div>
 
             </div>
 
-            <!-- TAB 2: PEGAWAI PENTADBIR PEROLEHAN -->
-            <div id="perolehan-tab" class="tab-section">
-                <div class="gov-banner-header" style="background-color: #10b981;">
-                    PENGURUSAN PEROLEHAN & SEBUT HARGA (PENTADBIR PEROLEHAN)
+            <!-- =========================================================================
+                 TAB 2: PERANAN 2 - SUB (W) PSM
+                 ========================================================================= -->
+            <div id="subw-tab" class="tab-section">
+                <div class="gov-banner-header" style="background-color: #0284c7;">
+                    <span>PENGESAHAN & SOKONGAN KERTAS PERAKUAN — SUB (W) PSM</span>
                 </div>
 
-                <!-- SEKSYEN PENGESAHAN AUTOMATIK KERTAS PERAKUAN LATIHAN -->
-                <div class="admin-card" style="border-top: 4px solid #10b981;">
-                    <div class="gov-section-title" style="background-color: #f8fafc; border-left-color: #10b981; color: #0c2847;">
-                        <i class="fa-solid fa-signature"></i> PENGESAHAN KERTAS PERAKUAN LATIHAN (SOKONG & KEPUTUSAN PBM)
+                <div class="admin-card" style="border-top: 4px solid #0284c7;">
+                    <div class="gov-section-title" style="border-left-color: #0284c7;">
+                        <i class="fa-solid fa-signature"></i> BORANG PENGESAHAN SUB (W) PSM
                     </div>
 
-                    <div id="perolehan-pending-box" style="display: none; background: #fffbebfb; border: 1px solid #fde68a; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
-                        <div style="font-weight: bold; color: #b45309; font-size: 0.95rem; margin-bottom: 8px;">
-                            <i class="fa-solid fa-triangle-exclamation"></i> Kertas Perakuan Diterima Dari Pegawai Pentadbir Latihan
+                    <div id="subw-pending-box" style="display: none; background: #f0f9ff; border: 1px solid #bae6fd; padding: 18px; border-radius: 4px; margin-bottom: 18px;">
+                        <div style="font-weight: bold; color: #0369a1; font-size: 0.95rem; margin-bottom: 6px;">
+                            <i class="fa-solid fa-file-circle-check"></i> Kertas Perakuan Diterima Dari Admin (Latihan)
                         </div>
-                        <p style="font-size: 0.85rem; color: #334155; margin-bottom: 12px;">
-                            Sila semak Kertas Perakuan, pilih status sokongan dan keputusan PBM, isi nama serta turunkan tandatangan online bagi kedua-dua pihak. Sistem akan auto-tick petak-petak perakuan berkenaan.
+                        <p style="font-size: 0.85rem; color: #334155; margin-bottom: 15px;">
+                            Sila semak Kertas Perakuan di bawah, pilih sama ada <b>SOKONG</b> atau <b>TIDAK SOKONG</b>, masukkan ulasan, serta turunkan tandatangan online sebelum menghantar ke pihak Perolehan.
                         </p>
 
-                        <form id="form-pengesahan-perolehan" onsubmit="laksanaPengesahanPerolehan(event)">
+                        <form id="form-pengesahan-subw" onsubmit="laksanaPengesahanSubw(event)">
                             <table class="gov-form-table">
-                                <!-- BAHAGIAN 1: ULASAN SUB (W) -->
                                 <tr>
-                                    <td class="label-col">1. Ulasan SUB (W) *</td>
+                                    <td class="label-col">Keputusan Sokongan *</td>
                                     <td>: 
-                                        <select id="perolehan_status_subw" class="gov-input" style="width: auto; font-weight: bold;">
+                                        <select id="subw_status_select" class="gov-input" style="width: auto; font-weight: bold;">
                                             <option value="SOKONG" selected>SOKONG</option>
                                             <option value="TIDAK SOKONG">TIDAK SOKONG</option>
                                         </select>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="label-col">Nama SUB (W) *</td>
-                                    <td>: <input type="text" id="perolehan_nama_subw" class="gov-input" required placeholder="Nama penuh SUB (W)..."></td>
+                                    <td class="label-col">Nama SUB (W) PSM *</td>
+                                    <td>: <input type="text" id="subw_nama_input" class="gov-input" required placeholder="Nama penuh SUB (W) PSM..."></td>
                                 </tr>
                                 <tr>
-                                    <td class="label-col">Catatan / Ulasan SUB (W)</td>
-                                    <td>: <textarea id="perolehan_ulasan_subw" class="gov-textarea" rows="2" placeholder="Ulasan bagi pihak SUB (W)..."></textarea></td>
+                                    <td class="label-col">Ulasan SUB (W) PSM</td>
+                                    <td>: <textarea id="subw_ulasan_input" class="gov-textarea" rows="3" placeholder="Masukkan ulasan sokongan..."></textarea></td>
                                 </tr>
                                 <tr>
                                     <td class="label-col">Tandatangan Online SUB (W) *</td>
@@ -1632,80 +1654,183 @@
                                         <div class="signature-pad-wrapper" style="max-width: 450px;">
                                             <canvas id="signature-canvas-subw" class="signature-canvas-box" width="450" height="140"></canvas>
                                             <div style="padding: 4px; background: #f1f5f9; text-align: right;">
-                                                <button type="button" class="gov-btn" style="padding: 2px 8px; font-size: 0.75rem;" onclick="clearSignatureSubw()"><i class="fa-solid fa-eraser"></i> Padam Signature SUB (W)</button>
+                                                <button type="button" class="gov-btn" style="padding: 2px 8px; font-size: 0.75rem;" onclick="clearSignaturePad('subw')"><i class="fa-solid fa-eraser"></i> Padam Tandatangan</button>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
+                            </table>
 
+                            <div class="gov-btn-group" style="justify-content: flex-start; gap: 10px;">
+                                <button type="submit" class="gov-btn gov-btn-success" style="font-size: 0.9rem; padding: 10px 22px;">
+                                    <i class="fa-solid fa-paper-plane"></i> SAHKAN & HANTAR KE PEROLEHAN
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div id="subw-empty-box" style="padding: 24px; text-align: center; color: #64748b; font-size: 0.88rem; background: #f8fafc; border: 1px dashed #cbd5e1;">
+                        <i class="fa-solid fa-inbox" style="font-size: 2rem; margin-bottom: 8px; color: #94a3b8;"></i><br>
+                        <span id="subw-empty-msg">Tiada Kertas Perakuan yang menunggu pengesahan SUB (W) PSM pada masa ini.</span>
+                    </div>
+                </div>
+
+                <!-- PRATONTON DOKUMEN KERTAS PERAKUAN -->
+                <div class="admin-card">
+                    <div class="gov-section-title"><i class="fa-solid fa-file-lines"></i> PAPARAN KERTAS PERAKUAN SEMASA</div>
+                    <div id="subw-doc-preview"></div>
+                </div>
+            </div>
+
+            <!-- =========================================================================
+                 TAB 3: PERANAN 3 - PEROLEHAN
+                 ========================================================================= -->
+            <div id="perolehan-tab" class="tab-section">
+                <div class="gov-banner-header" style="background-color: #10b981;">
+                    <span>PENGESAHAN PEROLEHAN & SEBUT HARGA — PIHAK PEROLEHAN</span>
+                </div>
+
+                <div class="admin-card" style="border-top: 4px solid #10b981;">
+                    <div class="gov-section-title" style="border-left-color: #10b981;">
+                        <i class="fa-solid fa-signature"></i> BORANG APPROVAL & TANDATANGAN PIHAK PEROLEHAN
+                    </div>
+
+                    <div id="perolehan-pending-box" style="display: none; background: #ecfdf5; border: 1px solid #a7f3d0; padding: 18px; border-radius: 4px; margin-bottom: 18px;">
+                        <div style="font-weight: bold; color: #065f46; font-size: 0.95rem; margin-bottom: 6px;">
+                            <i class="fa-solid fa-circle-check"></i> Kertas Perakuan Telah Disokong Oleh SUB (W) PSM
+                        </div>
+                        <p style="font-size: 0.85rem; color: #334155; margin-bottom: 15px;">
+                            Sila semak borang Kertas Perakuan di bawah (beserta pengesahan daripada SUB (W) PSM), masukkan ulasan/nama pegawai Perolehan dan turunkan tandatangan online sebelum dihantar ke Pihak Berkuasa.
+                        </p>
+
+                        <form id="form-pengesahan-perolehan" onsubmit="laksanaPengesahanPerolehan(event)">
+                            <table class="gov-form-table">
                                 <tr>
-                                    <td colspan="2"><hr style="border: 0; border-top: 1px dashed #cbd5e1; margin: 10px 0;"></td>
+                                    <td class="label-col">Nama Pegawai Perolehan *</td>
+                                    <td>: <input type="text" id="perolehan_pegawai_nama" class="gov-input" required placeholder="Nama penuh pegawai Perolehan..."></td>
                                 </tr>
-
-                                <!-- BAHAGIAN 2: KEPUTUSAN PBM -->
                                 <tr>
-                                    <td class="label-col">2. Keputusan PBM *</td>
+                                    <td class="label-col">Jawatan & Gred *</td>
+                                    <td>: <input type="text" id="perolehan_pegawai_jawatan" class="gov-input" required placeholder="Contoh: Penolong Setiausaha (Perolehan) M44"></td>
+                                </tr>
+                                <tr>
+                                    <td class="label-col">Ulasan Pihak Perolehan</td>
+                                    <td>: <textarea id="perolehan_ulasan_input" class="gov-textarea" rows="3" placeholder="Masukkan ulasan semakan kewangan / perolehan..."></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td class="label-col">Tandatangan Online Perolehan *</td>
+                                    <td>
+                                        <div class="signature-pad-wrapper" style="max-width: 450px;">
+                                            <canvas id="signature-canvas-perolehan" class="signature-canvas-box" width="450" height="140"></canvas>
+                                            <div style="padding: 4px; background: #f1f5f9; text-align: right;">
+                                                <button type="button" class="gov-btn" style="padding: 2px 8px; font-size: 0.75rem;" onclick="clearSignaturePad('perolehan')"><i class="fa-solid fa-eraser"></i> Padam Tandatangan</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <div class="gov-btn-group" style="justify-content: flex-start; gap: 10px;">
+                                <button type="submit" class="gov-btn gov-btn-success" style="font-size: 0.9rem; padding: 10px 22px;">
+                                    <i class="fa-solid fa-paper-plane"></i> SAHKAN & HANTAR KE PIHAK BERKUASA
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div id="perolehan-empty-box" style="padding: 24px; text-align: center; color: #64748b; font-size: 0.88rem; background: #f8fafc; border: 1px dashed #cbd5e1;">
+                        <i class="fa-solid fa-inbox" style="font-size: 2rem; margin-bottom: 8px; color: #94a3b8;"></i><br>
+                        <span id="perolehan-empty-msg">Tiada Kertas Perakuan yang menunggu pengesahan Pihak Perolehan pada masa ini.</span>
+                    </div>
+                </div>
+
+                <!-- PRATONTON DOKUMEN KERTAS PERAKUAN -->
+                <div class="admin-card">
+                    <div class="gov-section-title"><i class="fa-solid fa-file-lines"></i> PAPARAN KERTAS PERAKUAN (BESERTA PENGESAHAN SUB (W))</div>
+                    <div id="perolehan-doc-preview"></div>
+                </div>
+            </div>
+
+            <!-- =========================================================================
+                 TAB 4: PERANAN 4 - PIHAK BERKUASA (PBM)
+                 ========================================================================= -->
+            <div id="pbm-tab" class="tab-section">
+                <div class="gov-banner-header" style="background-color: #7c3aed;">
+                    <span>KELULUSAN AKHIR KERTAS PERAKUAN — PIHAK BERKUASA (PBM)</span>
+                </div>
+
+                <div class="admin-card" style="border-top: 4px solid #7c3aed;">
+                    <div class="gov-section-title" style="border-left-color: #7c3aed;">
+                        <i class="fa-solid fa-gavel"></i> BORANG KELULUSAN PIHAK BERKUASA (LULUS / TIDAK LULUS)
+                    </div>
+
+                    <div id="pbm-pending-box" style="display: none; background: #f5f3ff; border: 1px solid #ddd6fe; padding: 18px; border-radius: 4px; margin-bottom: 18px;">
+                        <div style="font-weight: bold; color: #5b21b6; font-size: 0.95rem; margin-bottom: 6px;">
+                            <i class="fa-solid fa-file-signature"></i> Kertas Perakuan Diterima Dari Pihak Perolehan
+                        </div>
+                        <p style="font-size: 0.85rem; color: #334155; margin-bottom: 15px;">
+                            Sila semak keseluruhan Kertas Perakuan di bawah, pilih sama ada <b>LULUS</b> atau <b>TIDAK LULUS</b>, masukkan ulasan dan turunkan tandatangan online. Semua maklumat lengkap akan dihantar semula ke Admin.
+                        </p>
+
+                        <form id="form-pengesahan-pbm" onsubmit="laksanaPengesahanPbm(event)">
+                            <table class="gov-form-table">
+                                <tr>
+                                    <td class="label-col">Keputusan Pihak Berkuasa *</td>
                                     <td>: 
-                                        <select id="perolehan_status_pbm" class="gov-input" style="width: auto; font-weight: bold;">
+                                        <select id="pbm_status_select" class="gov-input" style="width: auto; font-weight: bold;">
                                             <option value="LULUS" selected>LULUS</option>
                                             <option value="TIDAK LULUS">TIDAK LULUS</option>
                                         </select>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="label-col">Nama Keputusan PBM *</td>
-                                    <td>: <input type="text" id="perolehan_nama_pbm" class="gov-input" required placeholder="Nama penuh pegawai keputusan PBM..."></td>
+                                    <td class="label-col">Nama Pihak Berkuasa *</td>
+                                    <td>: <input type="text" id="pbm_nama_input" class="gov-input" required placeholder="Nama penuh Pihak Berkuasa Melulus..."></td>
                                 </tr>
                                 <tr>
-                                    <td class="label-col">Catatan / Ulasan PBM</td>
-                                    <td>: <textarea id="perolehan_ulasan_pbm" class="gov-textarea" rows="2" placeholder="Ulasan keputusan PBM..."></textarea></td>
+                                    <td class="label-col">Ulasan Pihak Berkuasa</td>
+                                    <td>: <textarea id="pbm_ulasan_input" class="gov-textarea" rows="3" placeholder="Masukkan ulasan keputusan akhir..."></textarea></td>
                                 </tr>
                                 <tr>
-                                    <td class="label-col">Tandatangan Online PBM *</td>
+                                    <td class="label-col">Tandatangan Online Pihak Berkuasa *</td>
                                     <td>
                                         <div class="signature-pad-wrapper" style="max-width: 450px;">
                                             <canvas id="signature-canvas-pbm" class="signature-canvas-box" width="450" height="140"></canvas>
                                             <div style="padding: 4px; background: #f1f5f9; text-align: right;">
-                                                <button type="button" class="gov-btn" style="padding: 2px 8px; font-size: 0.75rem;" onclick="clearSignaturePbm()"><i class="fa-solid fa-eraser"></i> Padam Signature PBM</button>
+                                                <button type="button" class="gov-btn" style="padding: 2px 8px; font-size: 0.75rem;" onclick="clearSignaturePad('pbm')"><i class="fa-solid fa-eraser"></i> Padam Tandatangan</button>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
-
-                                <tr>
-                                    <td colspan="2"><hr style="border: 0; border-top: 1px dashed #cbd5e1; margin: 10px 0;"></td>
-                                </tr>
-
-                                <!-- BAHAGIAN 3: PEGAWAI PEROLEHAN -->
-                                <tr>
-                                    <td class="label-col">Nama Pegawai Perolehan *</td>
-                                    <td>: <input type="text" id="perolehan_pegawai_nama" class="gov-input" required placeholder="Nama penuh pegawai yang mengesahkan..."></td>
-                                </tr>
-                                <tr>
-                                    <td class="label-col">Jawatan Pegawai *</td>
-                                    <td>: <input type="text" id="perolehan_pegawai_jawatan" class="gov-input" required placeholder="Jawatan & Gred..."></td>
-                                </tr>
                             </table>
 
                             <div class="gov-btn-group" style="justify-content: flex-start; gap: 10px;">
-                                <button type="submit" class="gov-btn gov-btn-success" style="font-size: 0.9rem; padding: 8px 20px;">
-                                    <i class="fa-solid fa-check-double"></i> SAHKAN & TICK KERTAS PERAKUAN
+                                <button type="submit" class="gov-btn gov-btn-success" style="font-size: 0.9rem; padding: 10px 22px;">
+                                    <i class="fa-solid fa-check-double"></i> SAHKAN KEPUTUSAN & HANTAR BALIK KE ADMIN
                                 </button>
                             </div>
                         </form>
                     </div>
 
-                    <div id="perolehan-empty-box" style="padding: 20px; text-align: center; color: #64748b; font-size: 0.88rem; background: #f8fafc; border: 1px dashed #cbd5e1;">
+                    <div id="pbm-empty-box" style="padding: 24px; text-align: center; color: #64748b; font-size: 0.88rem; background: #f8fafc; border: 1px dashed #cbd5e1;">
                         <i class="fa-solid fa-inbox" style="font-size: 2rem; margin-bottom: 8px; color: #94a3b8;"></i><br>
-                        Tiada Kertas Perakuan Latihan yang memerlukan pengesahan pada masa ini.
+                        <span id="pbm-empty-msg">Tiada Kertas Perakuan yang menunggu kelulusan Pihak Berkuasa pada masa ini.</span>
                     </div>
+                </div>
+
+                <!-- PRATONTON DOKUMEN KERTAS PERAKUAN -->
+                <div class="admin-card">
+                    <div class="gov-section-title"><i class="fa-solid fa-file-lines"></i> PAPARAN KERTAS PERAKUAN LENGKAP</div>
+                    <div id="pbm-doc-preview"></div>
                 </div>
             </div>
 
-            <!-- TAB 3: FOLDER KERTAS PERAKUAN TERSIMPAN (MENGIKUT EMAIL ADMIN) -->
+            <!-- =========================================================================
+                 TAB 5: FOLDER KERTAS PERAKUAN TERSIMPAN (ADMIN)
+                 ========================================================================= -->
             <div id="folder-perakuan-tab" class="tab-section">
                 <div class="gov-banner-header" style="background-color: #0c2847;">
-                    <i class="fa-solid fa-folder-open" style="color: #ef7c00; margin-right: 8px;"></i> FOLDER SIMPANAN KERTAS PERAKUAN
+                    <span><i class="fa-solid fa-folder-open" style="color: #ef7c00; margin-right: 8px;"></i> FOLDER SIMPANAN KERTAS PERAKUAN</span>
                 </div>
 
                 <div class="admin-card">
@@ -1715,7 +1840,7 @@
                                 <i class="fa-solid fa-envelope" style="color: #ef7c00;"></i> <b>Akaun Admin Log Masuk:</b> <span id="folder-current-email">-</span>
                             </div>
                             <div style="font-size: 0.78rem; color: #475569; margin-top: 2px;">
-                                Semua Kertas Perakuan yang disimpan akan masuk ke dalam folder ini dan boleh dibuka semula pada bila-bila masa.
+                                Semua Kertas Perakuan yang disimpan atau dipulangkan daripada Pihak Berkuasa dipaparkan di sini.
                             </div>
                         </div>
                         <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
@@ -1737,13 +1862,11 @@
                                     <th style="width: 110px;">Jumlah Kos (RM)</th>
                                     <th style="width: 190px;">Disimpan Oleh (E-mel)</th>
                                     <th style="width: 140px;">Masa Disimpan</th>
-                                    <th style="width: 130px;">Status</th>
+                                    <th style="width: 150px;">Status</th>
                                     <th style="width: 220px;">Tindakan</th>
                                 </tr>
                             </thead>
-                            <tbody id="tbody-folder-perakuan">
-                                <!-- Dijana secara dinamik oleh renderFolderKertasPerakuan() -->
-                            </tbody>
+                            <tbody id="tbody-folder-perakuan"></tbody>
                         </table>
                     </div>
                 </div>
@@ -1757,23 +1880,23 @@
     </footer>
 
     <script src="script.js"></script>
-    <!-- SCRIPT PENGURUSAN TAB & DYNAMIC FUNCTIONS -->
     <script>
-        let signaturePadSubw = null;
-        let signaturePadPbm = null;
+        let signaturePads = { subw: null, perolehan: null, pbm: null };
         let currentUser = null;
+        let activeBahagian = 'admin';
 
         document.addEventListener('DOMContentLoaded', async () => {
             const storedUser = sessionStorage.getItem('user') || localStorage.getItem('user');
             if (storedUser) {
                 try {
                     currentUser = JSON.parse(storedUser);
+                    activeBahagian = currentUser.bahagian || 'admin';
                 } catch(e) { console.error(e); }
             }
 
             setupNavbar();
+            await terapkanPerananBahagian(activeBahagian);
 
-            loadApplications();
             await loadModuleData('maklumat_kursus');
             await loadModuleData('anggaran_kos');
             await loadModuleData('senarai_peserta');
@@ -1781,7 +1904,6 @@
             await loadModuleData('upload_dokumen');
             await loadModuleData('senarai_semak');
 
-            initSignaturePad();
             await muatKertasPerakuanTersimpan();
             checkWorkflowStatus();
             setupAutoSaveListeners();
@@ -1796,12 +1918,35 @@
             });
         });
 
-        /* FUNGSI CARIAN BAR NAVIGASI TOP */
+        /* ---------------- PENETAPAN PERANAN 4 BAHAGIAN ---------------- */
+        async function terapkanPerananBahagian(bahagian) {
+            const badge = document.getElementById('active-bahagian-badge');
+            const sideRole = document.getElementById('sidebar-role-text');
+            if (badge) badge.innerText = `PERANAN: ${bahagian}`;
+            if (sideRole) sideRole.innerText = `Bahagian: ${bahagian}`;
+
+            // Tapis menu sidebar mengikut bahagian yang log masuk
+            const menuItems = document.querySelectorAll('#sidebar-menu-list li');
+            menuItems.forEach(li => {
+                const allowedRole = li.getAttribute('data-role');
+                li.style.display = (allowedRole === bahagian) ? 'block' : 'none';
+            });
+
+            // Halakan terus ke tab utama bagi peranan tersebut
+            if (bahagian === 'SUB (W) PSM') {
+                await switchTab('subw-tab', document.getElementById('nav-subw'));
+            } else if (bahagian === 'PEROLEHAN') {
+                await switchTab('perolehan-tab', document.getElementById('nav-perolehan'));
+            } else if (bahagian === 'PIHAK BERKUASA') {
+                await switchTab('pbm-tab', document.getElementById('nav-pbm'));
+            } else {
+                await switchTab('latihan-tab', document.getElementById('nav-latihan'));
+            }
+        }
+
         function handleNavSearch() {
             const inputVal = document.getElementById('top-nav-search-input').value.trim();
-            if (inputVal) {
-                window.location.href = `iklan.html?keyword=${encodeURIComponent(inputVal)}`;
-            }
+            if (inputVal) window.location.href = `iklan.html?keyword=${encodeURIComponent(inputVal)}`;
         }
 
         function setupNavbar() {
@@ -1809,7 +1954,6 @@
             if (currentUser && navContainer) {
                 const userPhoto = currentUser.gambar || 'https://via.placeholder.com/150';
                 const userName = currentUser.nama || 'Pengguna';
-
                 const adminMenuOption = currentUser.role === 'admin' 
                     ? `<a href="admin_dashboard.html"><i class="fa-solid fa-user-shield"></i> Peranan Admin</a>` 
                     : '';
@@ -1834,9 +1978,7 @@
 
         function toggleUserDropdown() {
             const dropdown = document.getElementById('userMenuDropdown');
-            if (dropdown) {
-                dropdown.classList.toggle('show');
-            }
+            if (dropdown) dropdown.classList.toggle('show');
         }
 
         function handleLogout() {
@@ -1845,14 +1987,15 @@
             window.location.href = 'login.html';
         }
 
-        function setupSinglePad(canvasId) {
+        /* ---------------- PENGURUSAN SIGNATURE PAD (3 PERANAN) ---------------- */
+        function setupSinglePad(key) {
+            const canvasId = `signature-canvas-${key}`;
             const canvas = document.getElementById(canvasId);
             if (!canvas) return null;
 
-            const width = canvas.offsetWidth || 450;
-            const height = canvas.offsetHeight || 140;
-            canvas.width = width;
-            canvas.height = height;
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width > 0 ? rect.width : 450;
+            canvas.height = rect.height > 0 ? rect.height : 140;
 
             const pad = new SignaturePad(canvas, {
                 minWidth: 1.5,
@@ -1861,97 +2004,317 @@
                 backgroundColor: 'rgba(255, 255, 255, 1)'
             });
             pad.clear();
+            signaturePads[key] = pad;
             return pad;
         }
 
-        function initSignaturePad() {
-            signaturePadSubw = setupSinglePad('signature-canvas-subw');
-            signaturePadPbm = setupSinglePad('signature-canvas-pbm');
-        }
-
-        function clearSignatureSubw() {
-            if (signaturePadSubw) {
-                signaturePadSubw.clear();
+        function clearSignaturePad(key) {
+            if (signaturePads[key]) {
+                signaturePads[key].clear();
             } else {
-                signaturePadSubw = setupSinglePad('signature-canvas-subw');
+                setupSinglePad(key);
             }
         }
 
-        function clearSignaturePbm() {
-            if (signaturePadPbm) {
-                signaturePadPbm.clear();
-            } else {
-                signaturePadPbm = setupSinglePad('signature-canvas-pbm');
+        function refreshSignaturePadDelayed(key) {
+            setTimeout(() => setupSinglePad(key), 150);
+        }
+
+        /* ---------------- NAVIGASI TAB & PRATONTON DOKUMEN ---------------- */
+        function pindahkanPratontonDokumen(targetContainerId) {
+            const docEl = document.getElementById('perakuan-doc-container');
+            const target = document.getElementById(targetContainerId);
+            if (docEl && target) {
+                target.appendChild(docEl);
             }
         }
 
-        function refreshAllSignatureCanvas() {
-            setTimeout(() => {
-                ['signature-canvas-subw', 'signature-canvas-pbm'].forEach(id => {
-                    const canvas = document.getElementById(id);
-                    if (!canvas) return;
-                    const rect = canvas.getBoundingClientRect();
-                    const width = rect.width > 0 ? rect.width : 450;
-                    const height = rect.height > 0 ? rect.height : 140;
+        async function switchTab(tabId, element) {
+            document.querySelectorAll('.tab-section').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.sidebar-link').forEach(link => link.classList.remove('active'));
 
-                    canvas.width = width;
-                    canvas.height = height;
-
-                    const pad = new SignaturePad(canvas, {
-                        minWidth: 1.5,
-                        maxWidth: 3.0,
-                        penColor: '#000080',
-                        backgroundColor: 'rgba(255, 255, 255, 1)'
-                    });
-                    pad.clear();
-
-                    if (id === 'signature-canvas-subw') signaturePadSubw = pad;
-                    if (id === 'signature-canvas-pbm') signaturePadPbm = pad;
-                });
-            }, 150);
-        }
-
-        function switchTab(tabId, element) {
-            const tabs = document.querySelectorAll('.tab-section');
-            tabs.forEach(tab => tab.classList.remove('active'));
-
-            const links = document.querySelectorAll('.sidebar-link');
-            links.forEach(link => link.classList.remove('active'));
-
-            document.getElementById(tabId).classList.add('active');
+            const targetTab = document.getElementById(tabId);
+            if (targetTab) targetTab.classList.add('active');
             if (element) element.classList.add('active');
 
-            if (tabId === 'folder-perakuan-tab') {
-                renderFolderKertasPerakuan();
+            // Muat turun status terkini dari pelayan setiap kali bertukar tab peranan
+            if (['subw-tab', 'perolehan-tab', 'pbm-tab'].includes(tabId)) {
+                await muatKertasPerakuanTersimpan();
+                checkWorkflowStatus();
             }
 
-            if (tabId === 'perolehan-tab') {
-                refreshAllSignatureCanvas();
+            if (tabId === 'latihan-tab') {
+                pindahkanPratontonDokumen('kertas-perakuan-host');
+            } else if (tabId === 'subw-tab') {
+                pindahkanPratontonDokumen('subw-doc-preview');
+                refreshSignaturePadDelayed('subw');
+            } else if (tabId === 'perolehan-tab') {
+                pindahkanPratontonDokumen('perolehan-doc-preview');
+                refreshSignaturePadDelayed('perolehan');
+            } else if (tabId === 'pbm-tab') {
+                pindahkanPratontonDokumen('pbm-doc-preview');
+                refreshSignaturePadDelayed('pbm');
+            } else if (tabId === 'folder-perakuan-tab') {
+                renderFolderKertasPerakuan();
             }
         }
 
         function bukaFolderKertasPerakuan() {
-            const folderLink = document.querySelectorAll('.sidebar-link')[2];
-            switchTab('folder-perakuan-tab', folderLink);
+            switchTab('folder-perakuan-tab', document.getElementById('nav-folder'));
         }
 
         async function switchSubTab(subTabId, element) {
-            const subTabs = document.querySelectorAll('.sub-tab-content');
-            subTabs.forEach(sub => sub.style.display = 'none');
-
-            const tabItems = document.querySelectorAll('.gov-tab-item');
-            tabItems.forEach(item => item.classList.remove('active'));
+            document.querySelectorAll('.sub-tab-content').forEach(sub => sub.style.display = 'none');
+            document.querySelectorAll('.gov-tab-item').forEach(item => item.classList.remove('active'));
 
             document.getElementById(subTabId).style.display = 'block';
             if (element) element.classList.add('active');
 
             if (subTabId === 'sub-kertas-perakuan') {
+                pindahkanPratontonDokumen('kertas-perakuan-host');
                 janaKertasPerakuanRasmi();
                 await muatKertasPerakuanTersimpan();
                 checkWorkflowStatus();
             }
         }
 
+        /* ---------------- ALIRAN KERJA 4 PERINGKAT ---------------- */
+        function getWorkflowObject() {
+            try {
+                const raw = localStorage.getItem('kertas_perakuan_workflow');
+                return raw ? JSON.parse(raw) : {};
+            } catch (e) {
+                return {};
+            }
+        }
+
+        // PERINGKAT 1 -> PERINGKAT 2: ADMIN HANTAR KE SUB (W) PSM
+        async function hantarKeSubw() {
+            janaKertasPerakuanRasmi();
+
+            const wf = {
+                stage: 'pending_subw',
+                tarikhHantarAdmin: new Date().toLocaleString('ms-MY')
+            };
+            localStorage.setItem('kertas_perakuan_workflow', JSON.stringify(wf));
+            await simpanKertasPerakuan(false);
+            checkWorkflowStatus();
+            alert('Kertas Perakuan telah berjaya dihantar ke SUB (W) PSM untuk semakan & pengesahan!');
+        }
+
+        // PERINGKAT 2 -> PERINGKAT 3: SUB (W) PSM SAHKAN & HANTAR KE PEROLEHAN
+        async function laksanaPengesahanSubw(event) {
+            event.preventDefault();
+            if (!signaturePads.subw || signaturePads.subw.isEmpty()) {
+                alert('Sila turunkan tandatangan online SUB (W) PSM terlebih dahulu.');
+                return;
+            }
+
+            const wf = getWorkflowObject();
+            wf.stage = 'pending_perolehan';
+            wf.statusSubw = document.getElementById('subw_status_select').value;
+            wf.namaSubw = document.getElementById('subw_nama_input').value.trim();
+            wf.ulasanSubw = document.getElementById('subw_ulasan_input').value.trim();
+            wf.signatureImgSubw = signaturePads.subw.toDataURL();
+            wf.tarikhSubw = new Date().toLocaleDateString('ms-MY');
+
+            localStorage.setItem('kertas_perakuan_workflow', JSON.stringify(wf));
+            checkWorkflowStatus();
+            await simpanKertasPerakuan(false);
+            alert('Pengesahan SUB (W) PSM berjaya direkodkan dan telah dihantar ke pihak PEROLEHAN!');
+        }
+
+        // PERINGKAT 3 -> PERINGKAT 4: PEROLEHAN SAHKAN & HANTAR KE PIHAK BERKUASA
+        async function laksanaPengesahanPerolehan(event) {
+            event.preventDefault();
+            if (!signaturePads.perolehan || signaturePads.perolehan.isEmpty()) {
+                alert('Sila turunkan tandatangan online Pihak Perolehan terlebih dahulu.');
+                return;
+            }
+
+            const wf = getWorkflowObject();
+            wf.stage = 'pending_pbm';
+            wf.pegawaiPerolehanNama = document.getElementById('perolehan_pegawai_nama').value.trim();
+            wf.pegawaiPerolehanJawatan = document.getElementById('perolehan_pegawai_jawatan').value.trim();
+            wf.ulasanPerolehan = document.getElementById('perolehan_ulasan_input').value.trim();
+            wf.signatureImgPerolehan = signaturePads.perolehan.toDataURL();
+            wf.tarikhPerolehan = new Date().toLocaleDateString('ms-MY');
+
+            localStorage.setItem('kertas_perakuan_workflow', JSON.stringify(wf));
+            checkWorkflowStatus();
+            await simpanKertasPerakuan(false);
+            alert('Pengesahan Pihak Perolehan berjaya direkodkan dan telah dihantar ke PIHAK BERKUASA!');
+        }
+
+        // PERINGKAT 4 -> KEMBALI KE PERINGKAT 1: PIHAK BERKUASA LULUS/TIDAK LULUS & HANTAR BALIK KE ADMIN
+        async function laksanaPengesahanPbm(event) {
+            event.preventDefault();
+            if (!signaturePads.pbm || signaturePads.pbm.isEmpty()) {
+                alert('Sila turunkan tandatangan online Pihak Berkuasa terlebih dahulu.');
+                return;
+            }
+
+            const wf = getWorkflowObject();
+            wf.stage = 'completed';
+            wf.statusPbm = document.getElementById('pbm_status_select').value;
+            wf.namaPbm = document.getElementById('pbm_nama_input').value.trim();
+            wf.ulasanPbm = document.getElementById('pbm_ulasan_input').value.trim();
+            wf.signatureImgPbm = signaturePads.pbm.toDataURL();
+            wf.tarikhPbm = new Date().toLocaleDateString('ms-MY');
+
+            localStorage.setItem('kertas_perakuan_workflow', JSON.stringify(wf));
+            checkWorkflowStatus();
+            await simpanKertasPerakuan(false);
+            alert(`Keputusan Pihak Berkuasa (${wf.statusPbm}) telah disahkan! Semua maklumat lengkap & tandatangan telah dihantar balik ke Admin.`);
+        }
+
+        /* ---------------- KEMAS KINI PAPARAN & DOKUMEN MENGIKUT STATUS ---------------- */
+        function checkWorkflowStatus() {
+            const wf = getWorkflowObject();
+            const stage = wf.stage || 'draft';
+
+            const badgeLatihan = document.getElementById('workflow-status-badge');
+            const subwPendingBox = document.getElementById('subw-pending-box');
+            const subwEmptyBox = document.getElementById('subw-empty-box');
+            const perolehanPendingBox = document.getElementById('perolehan-pending-box');
+            const perolehanEmptyBox = document.getElementById('perolehan-empty-box');
+            const pbmPendingBox = document.getElementById('pbm-pending-box');
+            const pbmEmptyBox = document.getElementById('pbm-empty-box');
+
+            // Reset kotak borang tindakan
+            if (subwPendingBox) subwPendingBox.style.display = 'none';
+            if (subwEmptyBox) subwEmptyBox.style.display = 'block';
+            if (perolehanPendingBox) perolehanPendingBox.style.display = 'none';
+            if (perolehanEmptyBox) perolehanEmptyBox.style.display = 'block';
+            if (pbmPendingBox) pbmPendingBox.style.display = 'none';
+            if (pbmEmptyBox) pbmEmptyBox.style.display = 'block';
+
+            // Reset petak tick & tandatangan pada dokumen
+            ['tick-sokong', 'tick-tidaksokong', 'tick-lulus', 'tick-tidaklulus'].forEach(id => {
+                if (document.getElementById(id)) document.getElementById(id).innerText = '';
+            });
+            if (document.getElementById('subw-signature-holder')) document.getElementById('subw-signature-holder').innerHTML = '';
+            if (document.getElementById('perolehan-signature-holder')) document.getElementById('perolehan-signature-holder').innerHTML = '';
+            if (document.getElementById('pbm-signature-holder')) document.getElementById('pbm-signature-holder').innerHTML = '';
+
+            // 1. Papar maklumat SUB (W) jika sudah disahkan
+            if (wf.statusSubw) {
+                if (wf.statusSubw === 'SOKONG') {
+                    document.getElementById('tick-sokong').innerText = '✓';
+                } else {
+                    document.getElementById('tick-tidaksokong').innerText = '✓';
+                }
+                if (wf.signatureImgSubw) {
+                    document.getElementById('subw-signature-holder').innerHTML = `<img src="${wf.signatureImgSubw}" style="max-height: 40px; max-width: 140px; object-fit: contain;">`;
+                }
+                document.getElementById('subw-pegawai-nama').innerText = `(${(wf.namaSubw || '').toUpperCase()})`;
+                document.getElementById('subw-pegawai-tarikh').innerText = `Tarikh: ${wf.tarikhSubw || ''}`;
+                document.getElementById('subw-ulasan-text').innerText = wf.ulasanSubw || '-';
+            }
+
+            // 2. Papar maklumat PEROLEHAN jika sudah disahkan
+            if (wf.pegawaiPerolehanNama) {
+                if (wf.signatureImgPerolehan) {
+                    document.getElementById('perolehan-signature-holder').innerHTML = `<img src="${wf.signatureImgPerolehan}" style="max-height: 40px; max-width: 140px; object-fit: contain;">`;
+                }
+                document.getElementById('perolehan-doc-nama').innerText = `(${wf.pegawaiPerolehanNama.toUpperCase()})`;
+                document.getElementById('perolehan-doc-jawatan').innerText = wf.pegawaiPerolehanJawatan || '';
+                document.getElementById('perolehan-doc-tarikh').innerText = `Tarikh: ${wf.tarikhPerolehan || ''}`;
+                document.getElementById('perolehan-ulasan-text').innerText = wf.ulasanPerolehan || '-';
+            }
+
+            // 3. Papar maklumat PIHAK BERKUASA (PBM) jika sudah diputuskan
+            if (wf.statusPbm) {
+                if (wf.statusPbm === 'LULUS') {
+                    document.getElementById('tick-lulus').innerText = '✓';
+                } else {
+                    document.getElementById('tick-tidaklulus').innerText = '✓';
+                }
+                if (wf.signatureImgPbm) {
+                    document.getElementById('pbm-signature-holder').innerHTML = `<img src="${wf.signatureImgPbm}" style="max-height: 40px; max-width: 140px; object-fit: contain;">`;
+                }
+                document.getElementById('pbm-pegawai-nama').innerText = `(${(wf.namaPbm || '').toUpperCase()})`;
+                document.getElementById('pbm-pegawai-tarikh').innerText = `Tarikh: ${wf.tarikhPbm || ''}`;
+                document.getElementById('pbm-ulasan-text').innerText = wf.ulasanPbm || '-';
+            }
+
+            // Kawalan paparan borang & stepper mengikut stage semasa
+            updateStepperUI(stage, wf);
+
+            if (stage === 'draft') {
+                if (badgeLatihan) { badgeLatihan.className = 'badge-status badge-draft'; badgeLatihan.innerText = 'DRAFT / BELUM DIHANTAR'; }
+            } else if (stage === 'pending_subw') {
+                if (badgeLatihan) { badgeLatihan.className = 'badge-status badge-pending'; badgeLatihan.innerText = 'MENUNGGU PENGESAHAN SUB (W) PSM'; }
+                if (subwPendingBox) { subwPendingBox.style.display = 'block'; refreshSignaturePadDelayed('subw'); }
+                if (subwEmptyBox) subwEmptyBox.style.display = 'none';
+            } else if (stage === 'pending_perolehan') {
+                if (badgeLatihan) { badgeLatihan.className = 'badge-status badge-pending'; badgeLatihan.innerText = 'DISOKONG SUB (W) -> MENUNGGU PEROLEHAN'; }
+                if (subwEmptyBox) document.getElementById('subw-empty-msg').innerText = `Telah disahkan (${wf.statusSubw}) dan dihantar ke Perolehan pada ${wf.tarikhSubw}.`;
+                if (perolehanPendingBox) { perolehanPendingBox.style.display = 'block'; refreshSignaturePadDelayed('perolehan'); }
+                if (perolehanEmptyBox) perolehanEmptyBox.style.display = 'none';
+            } else if (stage === 'pending_pbm') {
+                if (badgeLatihan) { badgeLatihan.className = 'badge-status badge-pending'; badgeLatihan.innerText = 'DISAHKAN PEROLEHAN -> MENUNGGU PIHAK BERKUASA'; }
+                if (subwEmptyBox) document.getElementById('subw-empty-msg').innerText = `Telah disahkan (${wf.statusSubw}) pada ${wf.tarikhSubw}.`;
+                if (perolehanEmptyBox) document.getElementById('perolehan-empty-msg').innerText = `Telah disahkan oleh ${wf.pegawaiPerolehanNama} dan dihantar ke Pihak Berkuasa pada ${wf.tarikhPerolehan}.`;
+                if (pbmPendingBox) { pbmPendingBox.style.display = 'block'; refreshSignaturePadDelayed('pbm'); }
+                if (pbmEmptyBox) pbmEmptyBox.style.display = 'none';
+            } else if (stage === 'completed') {
+                const isLulus = wf.statusPbm === 'LULUS';
+                if (badgeLatihan) {
+                    badgeLatihan.className = isLulus ? 'badge-status badge-approved' : 'badge-status badge-rejected';
+                    badgeLatihan.innerText = `SELESAI (${wf.statusPbm} OLEH PIHAK BERKUASA)`;
+                }
+                if (subwEmptyBox) document.getElementById('subw-empty-msg').innerText = `Selesai (${wf.statusSubw}) pada ${wf.tarikhSubw}.`;
+                if (perolehanEmptyBox) document.getElementById('perolehan-empty-msg').innerText = `Selesai disahkan oleh ${wf.pegawaiPerolehanNama} pada ${wf.tarikhPerolehan}.`;
+                if (pbmEmptyBox) document.getElementById('pbm-empty-msg').innerText = `Keputusan muktamad (${wf.statusPbm}) oleh ${wf.namaPbm} telah dihantar balik ke Admin pada ${wf.tarikhPbm}.`;
+            }
+        }
+
+        function updateStepperUI(stage, wf) {
+            const steps = ['step-1', 'step-2', 'step-3', 'step-4'];
+            steps.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.className = 'step-item';
+            });
+
+            if (stage === 'draft') {
+                document.getElementById('step-1').classList.add('active');
+                document.getElementById('step-1-sub').innerText = 'Sedang Disediakan';
+                document.getElementById('step-2-sub').innerText = 'Menunggu';
+                document.getElementById('step-3-sub').innerText = 'Menunggu';
+                document.getElementById('step-4-sub').innerText = 'Menunggu';
+            } else if (stage === 'pending_subw') {
+                document.getElementById('step-1').classList.add('done');
+                document.getElementById('step-1-sub').innerText = 'Dihantar';
+                document.getElementById('step-2').classList.add('active');
+                document.getElementById('step-2-sub').innerText = 'Dalam Semakan';
+            } else if (stage === 'pending_perolehan') {
+                document.getElementById('step-1').classList.add('done');
+                document.getElementById('step-2').classList.add('done');
+                document.getElementById('step-2-sub').innerText = wf.statusSubw || 'Selesai';
+                document.getElementById('step-3').classList.add('active');
+                document.getElementById('step-3-sub').innerText = 'Dalam Semakan';
+            } else if (stage === 'pending_pbm') {
+                document.getElementById('step-1').classList.add('done');
+                document.getElementById('step-2').classList.add('done');
+                document.getElementById('step-2-sub').innerText = wf.statusSubw || 'Selesai';
+                document.getElementById('step-3').classList.add('done');
+                document.getElementById('step-3-sub').innerText = 'Disahkan';
+                document.getElementById('step-4').classList.add('active');
+                document.getElementById('step-4-sub').innerText = 'Dalam Semakan';
+            } else if (stage === 'completed') {
+                document.getElementById('step-1').classList.add('done');
+                document.getElementById('step-2').classList.add('done');
+                document.getElementById('step-2-sub').innerText = wf.statusSubw || 'Selesai';
+                document.getElementById('step-3').classList.add('done');
+                document.getElementById('step-3-sub').innerText = 'Disahkan';
+                const isLulus = wf.statusPbm === 'LULUS';
+                document.getElementById('step-4').classList.add(isLulus ? 'done' : 'rejected');
+                document.getElementById('step-4-sub').innerText = wf.statusPbm || 'Selesai';
+            }
+        }
+
+        /* ---------------- SENARAI SEMAK DINAMIK ---------------- */
         function formatPerkaraWajibHtml(text) {
             return String(text || '').replace(/\(wajib\)/gi, '<span style="color:red; font-weight:bold;">(wajib)</span>');
         }
@@ -1984,12 +2347,10 @@
             const tbody = document.getElementById('tbody-input-senarai-semak');
             if (!tbody) return;
             const checkboxes = tbody.querySelectorAll('.semak-check:checked');
-
             if (checkboxes.length === 0) {
                 alert('Sila pilih sekurang-kurangnya satu perkara tambahan untuk dihapuskan.');
                 return;
             }
-
             checkboxes.forEach(cb => cb.closest('tr').remove());
             kemaskiniNomborJadual('#jadual-input-senarai-semak');
             segerakSenaraiSemakKePerakuan();
@@ -2002,7 +2363,6 @@
             const existingRows = Array.from(tbody.querySelectorAll('tr'));
             const wajibCount = existingRows.filter(r => r.dataset.wajib === '1').length;
 
-            // Kemas kini baris wajib sedia ada
             for (let i = 0; i < wajibCount; i++) {
                 const row = existingRows[i];
                 const selectEl = row.querySelector('.semak-status-input');
@@ -2011,7 +2371,6 @@
                 if (catEl && data.semak_catatan?.[i] !== undefined) catEl.value = data.semak_catatan[i];
             }
 
-            // Buang baris tambahan lama dan bina semula mengikut data simpanan
             for (let i = existingRows.length - 1; i >= wajibCount; i--) {
                 existingRows[i].remove();
             }
@@ -2060,143 +2419,14 @@
             autoSimpanKertasPerakuan();
         }
 
-        function hantarKePerolehan() {
-            simpanKertasPerakuan(false);
-            const statusData = {
-                status: 'pending',
-                tarikhHantar: new Date().toLocaleString('ms-MY')
-            };
-            localStorage.setItem('kertas_perakuan_workflow', JSON.stringify(statusData));
-            simpanKeFolderAdmin();
-            alert('Kertas Perakuan telah berjaya disimpan & dihantar ke Pegawai Pentadbir Perolehan untuk pengesahan!');
-            checkWorkflowStatus();
-        }
-
-        function laksanaPengesahanPerolehan(event) {
-            event.preventDefault();
-            if (!signaturePadSubw || signaturePadSubw.isEmpty()) {
-                alert('Sila turunkan tandatangan online SUB (W) terlebih dahulu.');
-                return;
-            }
-            if (!signaturePadPbm || signaturePadPbm.isEmpty()) {
-                alert('Sila turunkan tandatangan online Keputusan PBM terlebih dahulu.');
-                return;
-            }
-
-            const statusSubw = document.getElementById('perolehan_status_subw').value;
-            const namaSubw = document.getElementById('perolehan_nama_subw').value.trim();
-            const ulasanSubw = document.getElementById('perolehan_ulasan_subw').value;
-            const signatureImgSubw = signaturePadSubw.toDataURL();
-
-            const statusPbm = document.getElementById('perolehan_status_pbm').value;
-            const namaPbm = document.getElementById('perolehan_nama_pbm').value.trim();
-            const ulasanPbm = document.getElementById('perolehan_ulasan_pbm').value;
-            const signatureImgPbm = signaturePadPbm.toDataURL();
-
-            const pegawaiNama = document.getElementById('perolehan_pegawai_nama').value;
-            const pegawaiJawatan = document.getElementById('perolehan_pegawai_jawatan').value;
-
-            const workflowResult = {
-                status: 'verified',
-                statusSubw: statusSubw,
-                namaSubw: namaSubw,
-                ulasanSubw: ulasanSubw,
-                signatureImgSubw: signatureImgSubw,
-                statusPbm: statusPbm,
-                namaPbm: namaPbm,
-                ulasanPbm: ulasanPbm,
-                signatureImgPbm: signatureImgPbm,
-                pegawaiNama: pegawaiNama,
-                pegawaiJawatan: pegawaiJawatan,
-                tarikhPengesahan: new Date().toLocaleDateString('ms-MY')
-            };
-
-            localStorage.setItem('kertas_perakuan_workflow', JSON.stringify(workflowResult));
-            alert('Kertas Perakuan telah berjaya disahkan dengan tandatangan online SUB(W) dan PBM!');
-
-            checkWorkflowStatus();
-            simpanKertasPerakuan(false);
-            simpanKeFolderAdmin();
-
-            const latihanLink = document.querySelectorAll('.sidebar-link')[0];
-            switchTab('latihan-tab', latihanLink);
-            switchSubTab('sub-kertas-perakuan', document.querySelectorAll('.gov-tab-item')[6]);
-        }
-
-        function checkWorkflowStatus() {
-            const savedWorkflow = localStorage.getItem('kertas_perakuan_workflow');
-            const badgeLatihan = document.getElementById('workflow-status-badge');
-            const perolehanPendingBox = document.getElementById('perolehan-pending-box');
-            const perolehanEmptyBox = document.getElementById('perolehan-empty-box');
-
-            if (document.getElementById('tick-sokong')) document.getElementById('tick-sokong').innerText = '';
-            if (document.getElementById('tick-tidaksokong')) document.getElementById('tick-tidaksokong').innerText = '';
-            if (document.getElementById('tick-lulus')) document.getElementById('tick-lulus').innerText = '';
-            if (document.getElementById('tick-tidaklulus')) document.getElementById('tick-tidaklulus').innerText = '';
-
-            if (!savedWorkflow) {
-                if (badgeLatihan) { badgeLatihan.className = 'badge-status badge-draft'; badgeLatihan.innerText = 'DRAFT / BELUM DIHANTAR'; }
-                if (perolehanPendingBox) perolehanPendingBox.style.display = 'none';
-                if (perolehanEmptyBox) perolehanEmptyBox.style.display = 'block';
-                return;
-            }
-
-            const data = JSON.parse(savedWorkflow);
-
-            if (data.status === 'pending') {
-                if (badgeLatihan) { badgeLatihan.className = 'badge-status badge-pending'; badgeLatihan.innerText = 'DALAM SEMAKAN PEROLEHAN'; }
-                if (perolehanPendingBox) {
-                    perolehanPendingBox.style.display = 'block';
-                    refreshAllSignatureCanvas();
-                }
-                if (perolehanEmptyBox) perolehanEmptyBox.style.display = 'none';
-            } else if (data.status === 'verified') {
-                if (badgeLatihan) { badgeLatihan.className = 'badge-status badge-approved'; badgeLatihan.innerText = 'DISAHKAN OLEH PEROLEHAN'; }
-                if (perolehanPendingBox) perolehanPendingBox.style.display = 'none';
-                if (perolehanEmptyBox) perolehanEmptyBox.style.display = 'block';
-
-                const paparanNamaSubw = (data.namaSubw || data.pegawaiNama || '').toUpperCase();
-                const paparanNamaPbm = (data.namaPbm || data.pegawaiNama || '').toUpperCase();
-                const sigSubw = data.signatureImgSubw || data.signatureImg;
-                const sigPbm = data.signatureImgPbm || data.signatureImg;
-
-                if (data.statusSubw === 'SOKONG') {
-                    document.getElementById('tick-sokong').innerText = '✓';
-                } else {
-                    document.getElementById('tick-tidaksokong').innerText = '✓';
-                }
-                const holderSubw = document.getElementById('subw-signature-holder');
-                if (holderSubw && sigSubw) holderSubw.innerHTML = `<img src="${sigSubw}" style="max-height: 40px; max-width: 140px; object-fit: contain;">`;
-                if (document.getElementById('subw-pegawai-nama')) document.getElementById('subw-pegawai-nama').innerText = `(${paparanNamaSubw})`;
-                if (document.getElementById('subw-pegawai-tarikh')) document.getElementById('subw-pegawai-tarikh').innerText = `Tarikh: ${data.tarikhPengesahan}`;
-                if (document.getElementById('subw-ulasan-text')) document.getElementById('subw-ulasan-text').innerText = data.ulasanSubw || '';
-
-                if (data.statusPbm === 'LULUS') {
-                    document.getElementById('tick-lulus').innerText = '✓';
-                } else {
-                    document.getElementById('tick-tidaklulus').innerText = '✓';
-                }
-                const holderPbm = document.getElementById('pbm-signature-holder');
-                if (holderPbm && sigPbm) holderPbm.innerHTML = `<img src="${sigPbm}" style="max-height: 40px; max-width: 140px; object-fit: contain;">`;
-                if (document.getElementById('pbm-pegawai-nama')) document.getElementById('pbm-pegawai-nama').innerText = `(${paparanNamaPbm})`;
-                if (document.getElementById('pbm-pegawai-tarikh')) document.getElementById('pbm-pegawai-tarikh').innerText = `Tarikh: ${data.tarikhPengesahan}`;
-                if (document.getElementById('pbm-ulasan-text')) document.getElementById('pbm-ulasan-text').innerText = data.ulasanPbm || '';
-            }
-        }
-
+        /* ---------------- SIMPANAN & FOLDER ---------------- */
         function setupAutoSaveListeners() {
             const forms = ['form-maklumat-kursus', 'form-anggaran-kos', 'form-senarai-peserta', 'form-jadual-kadar', 'form-upload-dokumen', 'form-senarai-semak'];
             forms.forEach(formId => {
                 const form = document.getElementById(formId);
                 if (form) {
-                    form.addEventListener('input', () => {
-                        const moduleName = formId.replace('form-', '').replace(/-/g, '_');
-                        saveToLocalStorage(form, moduleName);
-                    });
-                    form.addEventListener('change', () => {
-                        const moduleName = formId.replace('form-', '').replace(/-/g, '_');
-                        saveToLocalStorage(form, moduleName);
-                    });
+                    form.addEventListener('input', () => saveToLocalStorage(form, formId.replace('form-', '').replace(/-/g, '_')));
+                    form.addEventListener('change', () => saveToLocalStorage(form, formId.replace('form-', '').replace(/-/g, '_')));
                 }
             });
         }
@@ -2204,11 +2434,9 @@
         function saveToLocalStorage(form, moduleName) {
             const formData = new FormData(form);
             const dataObject = {};
-
             formData.forEach((value, key) => {
                 const isArrayKey = key.endsWith('[]');
                 const cleanKey = isArrayKey ? key.slice(0, -2) : key;
-
                 if (typeof value === 'string') {
                     if (isArrayKey) {
                         if (!dataObject[cleanKey]) dataObject[cleanKey] = [];
@@ -2218,11 +2446,9 @@
                     }
                 }
             });
-
             localStorage.setItem(`admin_modul_${moduleName}`, JSON.stringify(dataObject));
         }
 
-        /* ---------------- FUNGSI FOLDER SIMPANAN KERTAS PERAKUAN MENGIKUT EMAIL ADMIN ---------------- */
         function getAdminEmailAktif() {
             if (currentUser && currentUser.email) return currentUser.email.trim().toLowerCase();
             if (currentUser && currentUser.emel) return currentUser.emel.trim().toLowerCase();
@@ -2238,15 +2464,12 @@
             const lokasi = document.getElementById('doc_header_lokasi')?.innerText?.trim() || '-';
             const jumlahKos = document.getElementById('kos_digenapkan')?.value || document.getElementById('auto_jumlah_kos')?.value || '0.00';
 
-            const workflowRaw = localStorage.getItem('kertas_perakuan_workflow');
+            const wf = getWorkflowObject();
             let statusText = 'DRAFT';
-            if (workflowRaw) {
-                try {
-                    const wf = JSON.parse(workflowRaw);
-                    if (wf.status === 'pending') statusText = 'DALAM SEMAKAN';
-                    else if (wf.status === 'verified') statusText = 'DISAHKAN';
-                } catch(e) {}
-            }
+            if (wf.stage === 'pending_subw') statusText = 'MENUNGGU SUB (W)';
+            else if (wf.stage === 'pending_perolehan') statusText = 'MENUNGGU PEROLEHAN';
+            else if (wf.stage === 'pending_pbm') statusText = 'MENUNGGU PIHAK BERKUASA';
+            else if (wf.stage === 'completed') statusText = `SELESAI (${wf.statusPbm || 'DISAHKAN'})`;
 
             const rekodId = (tajuk.toLowerCase().replace(/[^a-z0-9]/g, '_') || 'dokumen') + '__' + adminEmail;
 
@@ -2266,20 +2489,15 @@
                 modulLokasi: localStorage.getItem('admin_modul_jadual_kadar') || '{}',
                 modulSenaraiSemak: localStorage.getItem('admin_modul_senarai_semak') || '{}',
                 kertasPerakuan: localStorage.getItem('admin_kertas_perakuan_saved') || '{}',
-                workflow: workflowRaw || null
+                workflow: JSON.stringify(wf)
             };
 
             let folderSenarai = [];
-            try {
-                folderSenarai = JSON.parse(localStorage.getItem('admin_folder_kertas_perakuan') || '[]');
-            } catch (e) { folderSenarai = []; }
+            try { folderSenarai = JSON.parse(localStorage.getItem('admin_folder_kertas_perakuan') || '[]'); } catch (e) {}
 
             const existingIndex = folderSenarai.findIndex(item => item.id === rekodId);
-            if (existingIndex >= 0) {
-                folderSenarai[existingIndex] = snapshotLengkap;
-            } else {
-                folderSenarai.unshift(snapshotLengkap);
-            }
+            if (existingIndex >= 0) folderSenarai[existingIndex] = snapshotLengkap;
+            else folderSenarai.unshift(snapshotLengkap);
 
             localStorage.setItem('admin_folder_kertas_perakuan', JSON.stringify(folderSenarai));
             renderFolderKertasPerakuan();
@@ -2294,9 +2512,7 @@
             if (!tbody) return;
 
             let folderSenarai = [];
-            try {
-                folderSenarai = JSON.parse(localStorage.getItem('admin_folder_kertas_perakuan') || '[]');
-            } catch (e) { folderSenarai = []; }
+            try { folderSenarai = JSON.parse(localStorage.getItem('admin_folder_kertas_perakuan') || '[]'); } catch (e) {}
 
             const filterMode = document.getElementById('folder-filter-mode')?.value || 'mine';
             const searchQuery = (document.getElementById('folder-search-input')?.value || '').toLowerCase().trim();
@@ -2315,8 +2531,7 @@
                     <tr>
                         <td colspan="8" style="text-align: center; padding: 30px; color: #64748b;">
                             <i class="fa-solid fa-folder-open" style="font-size: 2rem; color: #94a3b8; margin-bottom: 8px;"></i><br>
-                            Tiada Kertas Perakuan tersimpan di dalam folder untuk paparan ini.<br>
-                            <small>Sila pergi ke <b>Peg. Pentadbir Latihan &gt; Kertas Perakuan</b> dan klik butang <b>SIMPAN KERTAS PERAKUAN</b>.</small>
+                            Tiada Kertas Perakuan tersimpan di dalam folder untuk paparan ini.
                         </td>
                     </tr>
                 `;
@@ -2325,8 +2540,8 @@
 
             tbody.innerHTML = ditapis.map((item, idx) => {
                 let badgeClass = 'badge-draft';
-                if (item.status === 'DALAM SEMAKAN') badgeClass = 'badge-pending';
-                if (item.status === 'DISAHKAN') badgeClass = 'badge-approved';
+                if (item.status.includes('MENUNGGU')) badgeClass = 'badge-pending';
+                if (item.status.includes('SELESAI')) badgeClass = item.status.includes('TIDAK') ? 'badge-rejected' : 'badge-approved';
 
                 return `
                     <tr>
@@ -2356,15 +2571,10 @@
         async function bukaRekodDariFolder(encodedId) {
             const rekodId = decodeURIComponent(encodedId);
             let folderSenarai = [];
-            try {
-                folderSenarai = JSON.parse(localStorage.getItem('admin_folder_kertas_perakuan') || '[]');
-            } catch (e) { folderSenarai = []; }
+            try { folderSenarai = JSON.parse(localStorage.getItem('admin_folder_kertas_perakuan') || '[]'); } catch (e) {}
 
             const item = folderSenarai.find(x => x.id === rekodId);
-            if (!item) {
-                alert('Rekod Kertas Perakuan tidak dijumpai.');
-                return;
-            }
+            if (!item) return;
 
             if (item.modulMaklumat) localStorage.setItem('admin_modul_maklumat_kursus', item.modulMaklumat);
             if (item.modulKos) localStorage.setItem('admin_modul_anggaran_kos', item.modulKos);
@@ -2372,11 +2582,7 @@
             if (item.modulLokasi) localStorage.setItem('admin_modul_jadual_kadar', item.modulLokasi);
             if (item.modulSenaraiSemak) localStorage.setItem('admin_modul_senarai_semak', item.modulSenaraiSemak);
             if (item.kertasPerakuan) localStorage.setItem('admin_kertas_perakuan_saved', item.kertasPerakuan);
-            if (item.workflow) {
-                localStorage.setItem('kertas_perakuan_workflow', item.workflow);
-            } else {
-                localStorage.removeItem('kertas_perakuan_workflow');
-            }
+            if (item.workflow) localStorage.setItem('kertas_perakuan_workflow', item.workflow);
 
             await loadModuleData('maklumat_kursus');
             await loadModuleData('anggaran_kos');
@@ -2386,37 +2592,29 @@
             await muatKertasPerakuanTersimpan();
             checkWorkflowStatus();
 
-            const latihanLink = document.querySelectorAll('.sidebar-link')[0];
-            switchTab('latihan-tab', latihanLink);
-            switchSubTab('sub-kertas-perakuan', document.querySelectorAll('.gov-tab-item')[6]);
+            await switchTab('latihan-tab', document.getElementById('nav-latihan'));
+            await switchSubTab('sub-kertas-perakuan', document.querySelectorAll('.gov-tab-item')[6]);
         }
 
         function padamRekodDariFolder(encodedId) {
             if (!confirm('Adakah anda pasti ingin memadam Kertas Perakuan ini daripada folder simpanan?')) return;
             const rekodId = decodeURIComponent(encodedId);
             let folderSenarai = [];
-            try {
-                folderSenarai = JSON.parse(localStorage.getItem('admin_folder_kertas_perakuan') || '[]');
-            } catch (e) { folderSenarai = []; }
-
+            try { folderSenarai = JSON.parse(localStorage.getItem('admin_folder_kertas_perakuan') || '[]'); } catch (e) {}
             folderSenarai = folderSenarai.filter(x => x.id !== rekodId);
             localStorage.setItem('admin_folder_kertas_perakuan', JSON.stringify(folderSenarai));
             renderFolderKertasPerakuan();
         }
 
-        /* ---------------- FUNGSI SIMPAN & MUAT KERTAS PERAKUAN SUPAYA TAK HILANG ---------------- */
         let autoSavePerakuanTimer = null;
         function autoSimpanKertasPerakuan() {
             clearTimeout(autoSavePerakuanTimer);
-            autoSavePerakuanTimer = setTimeout(() => {
-                simpanKertasPerakuan(false);
-            }, 400);
+            autoSavePerakuanTimer = setTimeout(() => simpanKertasPerakuan(false), 400);
         }
 
         async function simpanKertasPerakuan(showAlert = true) {
             const semakRows = [];
-            const semakTrs = document.querySelectorAll('#doc_senarai_semak_table tbody tr');
-            semakTrs.forEach(tr => {
+            document.querySelectorAll('#doc_senarai_semak_table tbody tr').forEach(tr => {
                 if (tr.cells.length >= 4) {
                     semakRows.push({
                         perkara: tr.cells[1].innerHTML,
@@ -2450,17 +2648,18 @@
 
             localStorage.setItem('admin_kertas_perakuan_saved', JSON.stringify(kertasPerakuanData));
 
-            const forms = ['form-maklumat-kursus', 'form-anggaran-kos', 'form-senarai-peserta', 'form-jadual-kadar', 'form-senarai-semak'];
-            forms.forEach(fid => {
-                const f = document.getElementById(fid);
-                if (f) saveToLocalStorage(f, fid.replace('form-', '').replace(/-/g, '_'));
-            });
-
-            simpanKeFolderAdmin();
+            if (activeBahagian === 'admin') {
+                const forms = ['form-maklumat-kursus', 'form-anggaran-kos', 'form-senarai-peserta', 'form-jadual-kadar', 'form-senarai-semak'];
+                forms.forEach(fid => {
+                    const f = document.getElementById(fid);
+                    if (f) saveToLocalStorage(f, fid.replace('form-', '').replace(/-/g, '_'));
+                });
+                simpanKeFolderAdmin();
+            }
 
             const infoEl = document.getElementById('kertas-perakuan-saved-info');
             if (infoEl) {
-                infoEl.innerHTML = `<i class="fa-solid fa-circle-check"></i> Tersimpan di Folder (${getAdminEmailAktif()}) pada: ${kertasPerakuanData.masaSimpan}`;
+                infoEl.innerHTML = `<i class="fa-solid fa-circle-check"></i> Dikemas kini pada: ${kertasPerakuanData.masaSimpan}`;
             }
 
             try {
@@ -2469,53 +2668,45 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(kertasPerakuanData)
                 });
-            } catch (e) {}
+            } catch (e) {
+                console.error('Gagal hantar ke server:', e);
+            }
 
             if (showAlert) {
-                alert(`Kertas Perakuan berjaya disimpan ke dalam Folder Kertas Perakuan (${getAdminEmailAktif()})!`);
+                alert(`Kertas Perakuan berjaya disimpan!`);
             }
         }
 
         async function muatKertasPerakuanTersimpan() {
             let savedData = null;
 
-            const localStr = localStorage.getItem('admin_kertas_perakuan_saved');
-            if (localStr) {
-                try {
-                    savedData = JSON.parse(localStr);
-                } catch (e) { console.error(e); }
-            }
+            // Cuba ambil data terkini dari pelayan terlebih dahulu supaya perubahan antara 4 peranan sentiasa segerak
+            try {
+                const res = await fetch('/api/admin/latihan-modul/kertas_perakuan');
+                if (res.ok) {
+                    const apiData = await res.json();
+                    if (apiData && Object.keys(apiData).length > 0) {
+                        savedData = apiData;
+                        localStorage.setItem('admin_kertas_perakuan_saved', JSON.stringify(savedData));
+                    }
+                }
+            } catch (e) {}
 
             if (!savedData) {
-                try {
-                    const res = await fetch('/api/admin/latihan-modul/kertas_perakuan');
-                    if (res.ok) {
-                        const apiData = await res.json();
-                        if (apiData && Object.keys(apiData).length > 0) {
-                            savedData = apiData;
-                            localStorage.setItem('admin_kertas_perakuan_saved', JSON.stringify(savedData));
-                        }
-                    }
-                } catch (e) {}
+                const localStr = localStorage.getItem('admin_kertas_perakuan_saved');
+                if (localStr) {
+                    try { savedData = JSON.parse(localStr); } catch (e) {}
+                }
             }
 
             if (!savedData) return;
 
-            if (savedData.rujukan && document.getElementById('doc_rujukan_text')) {
-                document.getElementById('doc_rujukan_text').innerHTML = savedData.rujukan;
-            }
-            if (savedData.tarikhAtas && document.getElementById('doc_tarikh_atas_text')) {
-                document.getElementById('doc_tarikh_atas_text').innerHTML = savedData.tarikhAtas;
-            }
-            if (savedData.rujukan2 && document.getElementById('doc_rujukan_text_2')) {
-                document.getElementById('doc_rujukan_text_2').innerHTML = savedData.rujukan2;
-            }
-            if (savedData.tarikhAtas2 && document.getElementById('doc_tarikh_atas_text_2')) {
-                document.getElementById('doc_tarikh_atas_text_2').innerHTML = savedData.tarikhAtas2;
-            }
-            if (savedData.bahagianAgensi && document.getElementById('doc_bahagian_agensi')) {
-                document.getElementById('doc_bahagian_agensi').innerHTML = savedData.bahagianAgensi;
-            }
+            if (savedData.rujukan && document.getElementById('doc_rujukan_text')) document.getElementById('doc_rujukan_text').innerHTML = savedData.rujukan;
+            if (savedData.tarikhAtas && document.getElementById('doc_tarikh_atas_text')) document.getElementById('doc_tarikh_atas_text').innerHTML = savedData.tarikhAtas;
+            if (savedData.rujukan2 && document.getElementById('doc_rujukan_text_2')) document.getElementById('doc_rujukan_text_2').innerHTML = savedData.rujukan2;
+            if (savedData.tarikhAtas2 && document.getElementById('doc_tarikh_atas_text_2')) document.getElementById('doc_tarikh_atas_text_2').innerHTML = savedData.tarikhAtas2;
+            if (savedData.bahagianAgensi && document.getElementById('doc_bahagian_agensi')) document.getElementById('doc_bahagian_agensi').innerHTML = savedData.bahagianAgensi;
+
             if (savedData.tajuk && savedData.tajuk !== '-') {
                 ['doc_header_tajuk', 'doc_header_tajuk_2', 'doc_header_tajuk_3'].forEach(id => {
                     if (document.getElementById(id)) document.getElementById(id).innerHTML = savedData.tajuk;
@@ -2531,30 +2722,15 @@
                     if (document.getElementById(id)) document.getElementById(id).innerHTML = savedData.lokasi;
                 });
             }
-            if (savedData.objektifHtml && savedData.objektifHtml !== '-' && document.getElementById('doc_objektif_list')) {
-                document.getElementById('doc_objektif_list').innerHTML = savedData.objektifHtml;
-            }
-            if (savedData.jumlahPeserta && document.getElementById('doc_jumlah_peserta_all')) {
-                document.getElementById('doc_jumlah_peserta_all').innerHTML = savedData.jumlahPeserta;
-            }
-            if (savedData.tbodyKosHtml && document.getElementById('doc_tbody_kos')) {
-                document.getElementById('doc_tbody_kos').innerHTML = savedData.tbodyKosHtml;
-            }
-            if (savedData.penceramahHtml && savedData.penceramahHtml !== '-' && document.getElementById('doc_penceramah_text')) {
-                document.getElementById('doc_penceramah_text').innerHTML = savedData.penceramahHtml;
-            }
-            if (savedData.sumberPeruntukan && document.getElementById('doc_sumber_peruntukan')) {
-                document.getElementById('doc_sumber_peruntukan').innerHTML = savedData.sumberPeruntukan;
-            }
-            if (savedData.bakiPeruntukan !== undefined && document.getElementById('doc_baki_peruntukan')) {
-                document.getElementById('doc_baki_peruntukan').innerHTML = savedData.bakiPeruntukan;
-            }
-            if (savedData.syorHtml && document.getElementById('doc_syor_text')) {
-                document.getElementById('doc_syor_text').innerHTML = savedData.syorHtml;
-            }
-            if (savedData.penyediaHtml && document.getElementById('doc_penyedia_text')) {
-                document.getElementById('doc_penyedia_text').innerHTML = savedData.penyediaHtml;
-            }
+            if (savedData.objektifHtml && savedData.objektifHtml !== '-' && document.getElementById('doc_objektif_list')) document.getElementById('doc_objektif_list').innerHTML = savedData.objektifHtml;
+            if (savedData.jumlahPeserta && document.getElementById('doc_jumlah_peserta_all')) document.getElementById('doc_jumlah_peserta_all').innerHTML = savedData.jumlahPeserta;
+            if (savedData.tbodyKosHtml && document.getElementById('doc_tbody_kos')) document.getElementById('doc_tbody_kos').innerHTML = savedData.tbodyKosHtml;
+            if (savedData.penceramahHtml && savedData.penceramahHtml !== '-' && document.getElementById('doc_penceramah_text')) document.getElementById('doc_penceramah_text').innerHTML = savedData.penceramahHtml;
+            if (savedData.sumberPeruntukan && document.getElementById('doc_sumber_peruntukan')) document.getElementById('doc_sumber_peruntukan').innerHTML = savedData.sumberPeruntukan;
+            if (savedData.bakiPeruntukan !== undefined && document.getElementById('doc_baki_peruntukan')) document.getElementById('doc_baki_peruntukan').innerHTML = savedData.bakiPeruntukan;
+            if (savedData.syorHtml && document.getElementById('doc_syor_text')) document.getElementById('doc_syor_text').innerHTML = savedData.syorHtml;
+            if (savedData.penyediaHtml && document.getElementById('doc_penyedia_text')) document.getElementById('doc_penyedia_text').innerHTML = savedData.penyediaHtml;
+
             if (Array.isArray(savedData.senaraiSemak) && savedData.senaraiSemak.length > 0) {
                 const docTbody = document.querySelector('#doc_senarai_semak_table tbody');
                 if (docTbody) {
@@ -2568,36 +2744,32 @@
                     `).join('');
                 }
             }
-            if (savedData.workflow && !localStorage.getItem('kertas_perakuan_workflow')) {
+            if (savedData.workflow) {
                 localStorage.setItem('kertas_perakuan_workflow', savedData.workflow);
             }
             if (savedData.masaSimpan && document.getElementById('kertas-perakuan-saved-info')) {
-                document.getElementById('kertas-perakuan-saved-info').innerHTML = `<i class="fa-solid fa-circle-check"></i> Tersimpan di Folder (${getAdminEmailAktif()}) pada: ${savedData.masaSimpan}`;
+                document.getElementById('kertas-perakuan-saved-info').innerHTML = `<i class="fa-solid fa-circle-check"></i> Dikemas kini pada: ${savedData.masaSimpan}`;
             }
         }
 
+        /* ---------------- PENGIRAAN & PENJANAAN KERTAS PERAKUAN ---------------- */
         function kiraKosPeserta() {
             const rows = document.querySelectorAll('#jadual-peserta-kadar tbody tr');
             let totalTawaranSemua = 0;
 
             const bilPeserta = rows.length;
-            const inputBilPeserta = document.getElementById('input_bil_peserta');
-            if (inputBilPeserta) inputBilPeserta.value = bilPeserta;
+            if (document.getElementById('input_bil_peserta')) document.getElementById('input_bil_peserta').value = bilPeserta;
 
-            const rowsUrusetia = document.querySelectorAll('#jadual-urusetia tbody tr');
-            const bilUrusetia = rowsUrusetia.length;
-            const inputBilUrusetia = document.getElementById('input_bil_urusetia');
-            if (inputBilUrusetia) inputBilUrusetia.value = bilUrusetia;
+            const bilUrusetia = document.querySelectorAll('#jadual-urusetia tbody tr').length;
+            if (document.getElementById('input_bil_urusetia')) document.getElementById('input_bil_urusetia').value = bilUrusetia;
 
-            const inputTotalAll = document.getElementById('input_jumlah_peserta_keseluruhan');
-            if (inputTotalAll) inputTotalAll.value = bilPeserta + bilUrusetia;
+            if (document.getElementById('input_jumlah_peserta_keseluruhan')) document.getElementById('input_jumlah_peserta_keseluruhan').value = bilPeserta + bilUrusetia;
 
             rows.forEach(row => {
                 const emakan = parseFloat(row.querySelector('input[name="peserta_emakan[]"]')?.value || 0);
                 const ehotel = parseFloat(row.querySelector('input[name="peserta_ehotel[]"]')?.value || 0);
                 const sst = parseFloat(row.querySelector('input[name="peserta_sst[]"]')?.value || 0);
                 const malam = parseFloat(row.querySelector('input[name="peserta_malam[]"]')?.value || 0);
-
                 const pakej = parseFloat(row.querySelector('input[name="peserta_pakej[]"]')?.value || 0);
                 const hotelxday = parseFloat(row.querySelector('input[name="peserta_hotelxday[]"]')?.value || 0);
 
@@ -2605,34 +2777,23 @@
                 const jKelayakan3Malam = jKelayakan * (malam || 1);
                 const jTawaran = pakej * (hotelxday || 1);
 
-                const inputJKelayakan = row.querySelector('input[name="peserta_jkelayakan[]"]');
-                if (inputJKelayakan) inputJKelayakan.value = jKelayakan.toFixed(2);
-
-                const inputJKelayakan3Malam = row.querySelector('input[name="peserta_jkelayakan3malam[]"]');
-                if (inputJKelayakan3Malam) inputJKelayakan3Malam.value = jKelayakan3Malam.toFixed(2);
-
-                const inputJTawaran = row.querySelector('input[name="peserta_jtawaran[]"]');
-                if (inputJTawaran) inputJTawaran.value = jTawaran.toFixed(2);
+                if (row.querySelector('input[name="peserta_jkelayakan[]"]')) row.querySelector('input[name="peserta_jkelayakan[]"]').value = jKelayakan.toFixed(2);
+                if (row.querySelector('input[name="peserta_jkelayakan3malam[]"]')) row.querySelector('input[name="peserta_jkelayakan3malam[]"]').value = jKelayakan3Malam.toFixed(2);
+                if (row.querySelector('input[name="peserta_jtawaran[]"]')) row.querySelector('input[name="peserta_jtawaran[]"]').value = jTawaran.toFixed(2);
 
                 totalTawaranSemua += jTawaran;
             });
 
-            const elemTotalTawaran = document.getElementById('jumlah_keseluruhan_tawaran_peserta');
-            if (elemTotalTawaran) {
-                elemTotalTawaran.value = totalTawaranSemua.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            if (document.getElementById('jumlah_keseluruhan_tawaran_peserta')) {
+                document.getElementById('jumlah_keseluruhan_tawaran_peserta').value = totalTawaranSemua.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
             }
 
             janaKertasPerakuanRasmi();
         }
 
         function kiraKosKeseluruhan() {
-            const rmInputs = document.querySelectorAll('.class-kos-rm');
             let totalRM = 0;
-
-            rmInputs.forEach(input => {
-                const val = parseFloat(input.value) || 0;
-                totalRM += val;
-            });
+            document.querySelectorAll('.class-kos-rm').forEach(input => totalRM += (parseFloat(input.value) || 0));
 
             const peratusKontigensi = parseFloat(document.getElementById('input_peratus_kontigensi')?.value || 0);
             const kontigensi = totalRM * (peratusKontigensi / 100);
@@ -2648,16 +2809,15 @@
             if (document.getElementById('kos_kontigensi')) document.getElementById('kos_kontigensi').value = strKon;
             if (document.getElementById('kos_jumlah_keseluruhan')) document.getElementById('kos_jumlah_keseluruhan').value = strTot;
             if (document.getElementById('kos_digenapkan')) document.getElementById('kos_digenapkan').value = strGen;
-
-            const autoJumlahKos = document.getElementById('auto_jumlah_kos');
-            if (autoJumlahKos) autoJumlahKos.value = strGen;
+            if (document.getElementById('auto_jumlah_kos')) document.getElementById('auto_jumlah_kos').value = strGen;
 
             janaKertasPerakuanRasmi();
         }
 
-        /* ---------------- FUNGSI SEGERAKAN KERTAS PERAKUAN BPSM ---------------- */
         function janaKertasPerakuanRasmi() {
-            const namaPPK = document.getElementById('auto_nama_ppk')?.value || '-';
+            const namaPPK = document.getElementById('auto_nama_ppk')?.value || '';
+            if (!namaPPK && activeBahagian !== 'admin') return;
+
             const lokasi = document.getElementById('auto_lokasi')?.value || '-';
             const negeri = document.getElementById('auto_negeri')?.value || '';
             const lokasiPenuh = lokasi + (negeri ? ', ' + negeri : '');
@@ -2672,34 +2832,39 @@
                 }
             }
 
-            ['doc_header_tajuk', 'doc_header_tajuk_2', 'doc_header_tajuk_3'].forEach(id => {
-                if(document.getElementById(id)) document.getElementById(id).innerText = namaPPK;
-            });
+            if (namaPPK) {
+                ['doc_header_tajuk', 'doc_header_tajuk_2', 'doc_header_tajuk_3'].forEach(id => {
+                    if(document.getElementById(id)) document.getElementById(id).innerText = namaPPK;
+                });
+            }
 
-            ['doc_header_lokasi', 'doc_header_lokasi_2', 'doc_header_lokasi_3'].forEach(id => {
-                if(document.getElementById(id)) document.getElementById(id).innerText = lokasiPenuh || '-';
-            });
+            if (lokasi !== '-' || negeri) {
+                ['doc_header_lokasi', 'doc_header_lokasi_2', 'doc_header_lokasi_3'].forEach(id => {
+                    if(document.getElementById(id)) document.getElementById(id).innerText = lokasiPenuh;
+                });
+            }
 
-            ['doc_header_tarikh', 'doc_header_tarikh_2', 'doc_header_tarikh_3'].forEach(id => {
-                if(document.getElementById(id)) document.getElementById(id).innerText = formattedTarikh;
-            });
+            if (formattedTarikh !== '-') {
+                ['doc_header_tarikh', 'doc_header_tarikh_2', 'doc_header_tarikh_3'].forEach(id => {
+                    if(document.getElementById(id)) document.getElementById(id).innerText = formattedTarikh;
+                });
+            }
 
             const objektifInputs = document.querySelectorAll('.input-objektif');
             const docObjektifList = document.getElementById('doc_objektif_list');
-            if (docObjektifList) {
+            if (docObjektifList && objektifInputs.length > 0) {
                 let htmlObjektif = '';
                 objektifInputs.forEach((input, index) => {
                     if (input.value.trim() !== '') {
                         htmlObjektif += `<div style="margin-bottom: 4px;">(${String.fromCharCode(97 + index)}) ${input.value}</div>`;
                     }
                 });
-                docObjektifList.innerHTML = htmlObjektif || '-';
+                if (htmlObjektif) docObjektifList.innerHTML = htmlObjektif;
             }
 
             const bilPeserta = parseInt(document.getElementById('input_bil_peserta')?.value || '0');
             const bilUrusetia = parseInt(document.getElementById('input_bil_urusetia')?.value || '0');
-            
-            if (document.getElementById('doc_jumlah_peserta_all')) {
+            if (document.getElementById('doc_jumlah_peserta_all') && (bilPeserta + bilUrusetia) > 0) {
                 document.getElementById('doc_jumlah_peserta_all').innerText = (bilPeserta + bilUrusetia);
             }
 
@@ -2707,7 +2872,7 @@
             const rmInputs = document.querySelectorAll('.class-kos-rm');
             const docTbodyKos = document.getElementById('doc_tbody_kos');
             
-            if (docTbodyKos) {
+            if (docTbodyKos && perihalInputs.length > 0) {
                 let htmlKos = '';
                 perihalInputs.forEach((input, idx) => {
                     const rmVal = rmInputs[idx] ? parseFloat(rmInputs[idx].value || 0).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}) : '0.00';
@@ -2745,23 +2910,22 @@
                         <td style="text-align: right; padding: 3px 5px;">${digenapkan}</td>
                     </tr>
                 `;
-
                 docTbodyKos.innerHTML = htmlKos;
             }
 
-            const penceramahText = document.getElementById('auto_penceramah')?.value || '-';
-            if (document.getElementById('doc_penceramah_text')) document.getElementById('doc_penceramah_text').innerText = penceramahText;
+            const penceramahText = document.getElementById('auto_penceramah')?.value;
+            if (penceramahText && document.getElementById('doc_penceramah_text')) document.getElementById('doc_penceramah_text').innerText = penceramahText;
 
-            const syorText = document.getElementById('auto_syor')?.value || '-';
+            const syorText = document.getElementById('auto_syor')?.value;
             const docSyorText = document.getElementById('doc_syor_text');
-            if (docSyorText) {
+            if (syorText && docSyorText) {
                 docSyorText.innerHTML = `
                     (a) Mesyuarat Jawatankuasa Latihan telah bersetuju dengan pelaksanaan program ini.<br><br>
                     (b) ${syorText}
                 `;
             }
 
-            segerakSenaraiSemakKePerakuan();
+            if (activeBahagian === 'admin') segerakSenaraiSemakKePerakuan();
         }
 
         function muatTurunPdfPerakuan() {
@@ -2795,11 +2959,11 @@
             });
         }
 
+        /* ---------------- JADUAL DINAMIK OBJEKTIF, URUS SETIA, KOS & PESERTA ---------------- */
         function renderObjektifTable(objList) {
             const tbody = document.querySelector('#jadual-objektif tbody');
             if (!tbody) return;
             tbody.innerHTML = '';
-            
             if (!objList || objList.length === 0) return;
 
             objList.forEach((textVal, index) => {
@@ -2807,9 +2971,7 @@
                 tr.innerHTML = `
                     <td style="text-align: center;"><input type="checkbox" class="objektif-check"></td>
                     <td style="text-align: center;">${index + 1}</td>
-                    <td>
-                        <input type="text" name="objektif[]" class="gov-input input-objektif" style="max-width: 100%;" value="${textVal}" oninput="janaKertasPerakuanRasmi(); saveToLocalStorage(document.getElementById('form-maklumat-kursus'), 'maklumat_kursus');">
-                    </td>
+                    <td><input type="text" name="objektif[]" class="gov-input input-objektif" style="max-width: 100%;" value="${textVal}" oninput="janaKertasPerakuanRasmi(); saveToLocalStorage(document.getElementById('form-maklumat-kursus'), 'maklumat_kursus');"></td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -2817,15 +2979,11 @@
 
         function tambahObjektif() {
             const tbody = document.querySelector('#jadual-objektif tbody');
-            const rowCount = tbody.rows.length + 1;
-            
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td style="text-align: center;"><input type="checkbox" class="objektif-check"></td>
-                <td style="text-align: center;">${rowCount}</td>
-                <td>
-                    <input type="text" name="objektif[]" class="gov-input input-objektif" style="max-width: 100%;" placeholder="Masukkan objektif baharu..." oninput="janaKertasPerakuanRasmi(); saveToLocalStorage(document.getElementById('form-maklumat-kursus'), 'maklumat_kursus');">
-                </td>
+                <td style="text-align: center;">${tbody.rows.length + 1}</td>
+                <td><input type="text" name="objektif[]" class="gov-input input-objektif" style="max-width: 100%;" placeholder="Masukkan objektif baharu..." oninput="janaKertasPerakuanRasmi(); saveToLocalStorage(document.getElementById('form-maklumat-kursus'), 'maklumat_kursus');"></td>
             `;
             tbody.appendChild(tr);
             kemaskiniNomborJadual('#jadual-objektif');
@@ -2834,14 +2992,8 @@
         }
 
         function hapusObjektif() {
-            const tbody = document.querySelector('#jadual-objektif tbody');
-            const checkboxes = tbody.querySelectorAll('.objektif-check:checked');
-            
-            if (checkboxes.length === 0) {
-                alert('Sila pilih/tanda sekurang-kurangnya satu objektif untuk dihapuskan.');
-                return;
-            }
-
+            const checkboxes = document.querySelectorAll('#jadual-objektif tbody .objektif-check:checked');
+            if (checkboxes.length === 0) return alert('Sila pilih sekurang-kurangnya satu objektif.');
             checkboxes.forEach(cb => cb.closest('tr').remove());
             kemaskiniNomborJadual('#jadual-objektif');
             janaKertasPerakuanRasmi();
@@ -2852,7 +3004,6 @@
             const tbody = document.querySelector('#jadual-urusetia tbody');
             if (!tbody) return;
             tbody.innerHTML = '';
-
             if (!urusetiaList || urusetiaList.length === 0) return;
 
             urusetiaList.forEach((u, index) => {
@@ -2864,9 +3015,7 @@
                         <input type="text" name="urusetia_nama[]" class="gov-input" style="max-width: 100%; font-weight:bold; margin-bottom:4px;" value="${u.nama || ''}"><br>
                         <input type="text" name="urusetia_jawatan[]" class="gov-input" style="max-width: 100%; font-size:0.75rem;" value="${u.jawatan || ''}" placeholder="Jawatan...">
                     </td>
-                    <td>
-                        <textarea name="urusetia_unit[]" class="gov-textarea" rows="3" style="max-width: 100%;">${u.unit || ''}</textarea>
-                    </td>
+                    <td><textarea name="urusetia_unit[]" class="gov-textarea" rows="3" style="max-width: 100%;">${u.unit || ''}</textarea></td>
                     <td><input type="text" name="urusetia_tel[]" class="gov-input" value="${u.tel || ''}" style="max-width:100px;"></td>
                     <td><input type="email" name="urusetia_email[]" class="gov-input" value="${u.email || ''}" style="max-width:160px;"></td>
                 `;
@@ -2876,19 +3025,15 @@
 
         function tambahUrusetia() {
             const tbody = document.querySelector('#jadual-urusetia tbody');
-            const rowCount = tbody.rows.length + 1;
-
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td style="text-align: center;"><input type="checkbox" class="urusetia-check"></td>
-                <td style="text-align: center;">${rowCount}</td>
+                <td style="text-align: center;">${tbody.rows.length + 1}</td>
                 <td>
                     <input type="text" name="urusetia_nama[]" class="gov-input" style="max-width: 100%; font-weight:bold; margin-bottom:4px;" placeholder="No. KP - Nama Pemilik"><br>
                     <input type="text" name="urusetia_jawatan[]" class="gov-input" style="max-width: 100%; font-size:0.75rem;" placeholder="Jawatan & Gred...">
                 </td>
-                <td>
-                    <textarea name="urusetia_unit[]" class="gov-textarea" rows="2" style="max-width: 100%;" placeholder="Unit Organisasi..."></textarea>
-                </td>
+                <td><textarea name="urusetia_unit[]" class="gov-textarea" rows="2" style="max-width: 100%;" placeholder="Unit Organisasi..."></textarea></td>
                 <td><input type="text" name="urusetia_tel[]" class="gov-input" placeholder="No Tel" style="max-width:100px;"></td>
                 <td><input type="email" name="urusetia_email[]" class="gov-input" placeholder="Emel" style="max-width:160px;"></td>
             `;
@@ -2899,14 +3044,8 @@
         }
 
         function hapusUrusetia() {
-            const tbody = document.querySelector('#jadual-urusetia tbody');
-            const checkboxes = tbody.querySelectorAll('.urusetia-check:checked');
-            
-            if (checkboxes.length === 0) {
-                alert('Sila pilih sekurang-kurangnya satu urus setia untuk dihapuskan.');
-                return;
-            }
-
+            const checkboxes = document.querySelectorAll('#jadual-urusetia tbody .urusetia-check:checked');
+            if (checkboxes.length === 0) return alert('Sila pilih sekurang-kurangnya satu urus setia.');
             checkboxes.forEach(cb => cb.closest('tr').remove());
             kemaskiniNomborJadual('#jadual-urusetia');
             kiraKosPeserta();
@@ -2923,12 +3062,8 @@
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td style="text-align: center;"><input type="checkbox" class="kos-check"></td>
-                    <td>
-                        <input type="text" name="kos_perihal[]" class="gov-input input-kos-perihal" style="max-width: 100%; font-weight: bold;" value="${perihal}" placeholder="Perihal Bayaran..." oninput="janaKertasPerakuanRasmi(); saveToLocalStorage(document.getElementById('form-anggaran-kos'), 'anggaran_kos');">
-                    </td>
-                    <td style="text-align: right; vertical-align: bottom;">
-                        <input type="number" step="0.01" name="kos_rm[]" class="gov-input class-kos-rm" style="text-align: right; width: 100%;" value="${rmVal}" oninput="kiraKosKeseluruhan(); saveToLocalStorage(document.getElementById('form-anggaran-kos'), 'anggaran_kos');">
-                    </td>
+                    <td><input type="text" name="kos_perihal[]" class="gov-input input-kos-perihal" style="max-width: 100%; font-weight: bold;" value="${perihal}" placeholder="Perihal Bayaran..." oninput="janaKertasPerakuanRasmi(); saveToLocalStorage(document.getElementById('form-anggaran-kos'), 'anggaran_kos');"></td>
+                    <td style="text-align: right; vertical-align: bottom;"><input type="number" step="0.01" name="kos_rm[]" class="gov-input class-kos-rm" style="text-align: right; width: 100%;" value="${rmVal}" oninput="kiraKosKeseluruhan(); saveToLocalStorage(document.getElementById('form-anggaran-kos'), 'anggaran_kos');"></td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -2939,26 +3074,16 @@
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td style="text-align: center;"><input type="checkbox" class="kos-check"></td>
-                <td>
-                    <input type="text" name="kos_perihal[]" class="gov-input input-kos-perihal" style="max-width: 100%;" placeholder="Perihal Bayaran / Agihan Kos..." oninput="janaKertasPerakuanRasmi(); saveToLocalStorage(document.getElementById('form-anggaran-kos'), 'anggaran_kos');">
-                </td>
-                <td style="text-align: right;">
-                    <input type="number" step="0.01" name="kos_rm[]" class="gov-input class-kos-rm" style="text-align: right; width: 100%;" value="0.00" oninput="kiraKosKeseluruhan(); saveToLocalStorage(document.getElementById('form-anggaran-kos'), 'anggaran_kos');">
-                </td>
+                <td><input type="text" name="kos_perihal[]" class="gov-input input-kos-perihal" style="max-width: 100%;" placeholder="Perihal Bayaran / Agihan Kos..." oninput="janaKertasPerakuanRasmi(); saveToLocalStorage(document.getElementById('form-anggaran-kos'), 'anggaran_kos');"></td>
+                <td style="text-align: right;"><input type="number" step="0.01" name="kos_rm[]" class="gov-input class-kos-rm" style="text-align: right; width: 100%;" value="0.00" oninput="kiraKosKeseluruhan(); saveToLocalStorage(document.getElementById('form-anggaran-kos'), 'anggaran_kos');"></td>
             `;
             tbody.appendChild(tr);
             saveToLocalStorage(document.getElementById('form-anggaran-kos'), 'anggaran_kos');
         }
 
         function hapusPerihalKos() {
-            const tbody = document.getElementById('tbody-kos-perihal');
-            const checkboxes = tbody.querySelectorAll('.kos-check:checked');
-            
-            if (checkboxes.length === 0) {
-                alert('Sila pilih sekurang-kurangnya satu perihal kos untuk dihapuskan.');
-                return;
-            }
-
+            const checkboxes = document.querySelectorAll('#tbody-kos-perihal .kos-check:checked');
+            if (checkboxes.length === 0) return alert('Sila pilih sekurang-kurangnya satu perihal kos.');
             checkboxes.forEach(cb => cb.closest('tr').remove());
             kiraKosKeseluruhan();
             saveToLocalStorage(document.getElementById('form-anggaran-kos'), 'anggaran_kos');
@@ -2994,12 +3119,10 @@
 
         function tambahPesertaBaris() {
             const tbody = document.querySelector('#jadual-peserta-kadar tbody');
-            const rowCount = tbody.rows.length + 1;
-
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td style="text-align: center;"><input type="checkbox" class="peserta-check"></td>
-                <td style="text-align: center;">${rowCount}</td>
+                <td style="text-align: center;">${tbody.rows.length + 1}</td>
                 <td><input type="text" name="peserta_nama[]" class="gov-input" style="width: 100%;" placeholder="Nama Peserta"></td>
                 <td><input type="text" name="peserta_jabatan[]" class="gov-input" style="width: 100%;" placeholder="Jabatan"></td>
                 <td><input type="text" name="peserta_gred[]" class="gov-input" style="width: 100%; text-align: center;" placeholder="Gred"></td>
@@ -3021,14 +3144,8 @@
         }
 
         function hapusPesertaBaris() {
-            const tbody = document.querySelector('#jadual-peserta-kadar tbody');
-            const checkboxes = tbody.querySelectorAll('.peserta-check:checked');
-            
-            if (checkboxes.length === 0) {
-                alert('Sila pilih sekurang-kurangnya satu peserta untuk dihapuskan.');
-                return;
-            }
-
+            const checkboxes = document.querySelectorAll('#jadual-peserta-kadar tbody .peserta-check:checked');
+            if (checkboxes.length === 0) return alert('Sila pilih sekurang-kurangnya satu peserta.');
             checkboxes.forEach(cb => cb.closest('tr').remove());
             kemaskiniNomborJadual('#jadual-peserta-kadar');
             kiraKosPeserta();
@@ -3045,37 +3162,27 @@
         }
 
         function toggleSelectAll(masterCb, childSelector) {
-            const checkboxes = document.querySelectorAll(childSelector);
-            checkboxes.forEach(cb => cb.checked = masterCb.checked);
+            document.querySelectorAll(childSelector).forEach(cb => cb.checked = masterCb.checked);
         }
 
         async function loadModuleData(moduleName) {
             let data = null;
-
             const localDataStr = localStorage.getItem(`admin_modul_${moduleName}`);
             if (localDataStr) {
-                try {
-                    data = JSON.parse(localDataStr);
-                } catch (e) { console.error(e); }
+                try { data = JSON.parse(localDataStr); } catch (e) {}
             }
 
             if (!data || Object.keys(data).length === 0) {
                 try {
                     const res = await fetch(`/api/admin/latihan-modul/${moduleName}`);
-                    if (res.ok) {
-                        data = await res.json();
-                    }
-                } catch (err) {
-                    console.warn(`Gagal memuatkan data dari API (${moduleName}):`, err);
-                }
+                    if (res.ok) data = await res.json();
+                } catch (err) {}
             }
 
             if (data && Object.keys(data).length > 0) {
                 if (moduleName === 'maklumat_kursus') {
-                    if (data.objektif && Array.isArray(data.objektif)) {
-                        renderObjektifTable(data.objektif);
-                    }
-                    if (data.urusetia_nama && Array.isArray(data.urusetia_nama)) {
+                    if (Array.isArray(data.objektif)) renderObjektifTable(data.objektif);
+                    if (Array.isArray(data.urusetia_nama)) {
                         const uList = data.urusetia_nama.map((nama, idx) => ({
                             nama: nama,
                             jawatan: data.urusetia_jawatan?.[idx] || '',
@@ -3086,86 +3193,59 @@
                         renderUrusetiaTable(uList);
                     }
                 }
-
-                if (moduleName === 'anggaran_kos' && data.kos_perihal && Array.isArray(data.kos_perihal)) {
-                    renderKosTable(data.kos_perihal, data.kos_rm);
-                }
-
-                if (moduleName === 'senarai_peserta' && data.peserta_nama && Array.isArray(data.peserta_nama)) {
-                    renderPesertaTable(data);
-                }
-
-                if (moduleName === 'senarai_semak' && data.semak_perkara && Array.isArray(data.semak_perkara)) {
-                    renderSenaraiSemakTable(data);
-                }
+                if (moduleName === 'anggaran_kos' && Array.isArray(data.kos_perihal)) renderKosTable(data.kos_perihal, data.kos_rm);
+                if (moduleName === 'senarai_peserta' && Array.isArray(data.peserta_nama)) renderPesertaTable(data);
+                if (moduleName === 'senarai_semak' && Array.isArray(data.semak_perkara)) renderSenaraiSemakTable(data);
 
                 Object.keys(data).forEach(key => {
                     if (key === 'objektif' || key.startsWith('urusetia_') || key === 'kos_perihal' || key === 'kos_rm' || key.startsWith('peserta_') || key.startsWith('semak_')) return;
-
                     const inputs = document.querySelectorAll(`[name="${key}"], [name="${key}[]"]`);
                     if (inputs.length > 0) {
                         const val = data[key];
-                        if (Array.isArray(val)) {
-                            inputs.forEach((input, idx) => {
-                                if (val[idx] !== undefined) input.value = val[idx];
-                            });
-                        } else {
-                            inputs[0].value = val;
-                        }
+                        if (Array.isArray(val)) inputs.forEach((input, idx) => { if (val[idx] !== undefined) input.value = val[idx]; });
+                        else inputs[0].value = val;
                     }
                 });
-            } else {
-                if (moduleName === 'maklumat_kursus') {
-                    renderObjektifTable([]);
-                    renderUrusetiaTable([]);
-                }
+            } else if (moduleName === 'maklumat_kursus') {
+                renderObjektifTable([]);
+                renderUrusetiaTable([]);
             }
 
-            if (typeof kiraKosPeserta === 'function') kiraKosPeserta();
-            if (typeof kiraKosKeseluruhan === 'function') kiraKosKeseluruhan();
-            if (typeof janaKertasPerakuanRasmi === 'function') janaKertasPerakuanRasmi();
+            kiraKosPeserta();
+            kiraKosKeseluruhan();
+            janaKertasPerakuanRasmi();
         }
 
         async function saveModuleData(event, moduleName) {
             event.preventDefault();
             const form = event.target;
             saveToLocalStorage(form, moduleName);
-            simpanKertasPerakuan(false);
+            await simpanKertasPerakuan(false);
 
             const formData = new FormData(form);
             const dataObject = {};
+            const fileReadPromises = [];
 
-            const processForm = new Promise((resolve) => {
-                let fileReadPromises = [];
-
-                formData.forEach((value, key) => {
-                    const isArrayKey = key.endsWith('[]');
-                    const cleanKey = isArrayKey ? key.slice(0, -2) : key;
-
-                    if (value instanceof File && value.name) {
-                        const reader = new FileReader();
-                        const promise = new Promise((resFile) => {
-                            reader.onload = function(e) {
-                                dataObject[cleanKey] = e.target.result;
-                                resFile();
-                            };
-                            reader.readAsDataURL(value);
-                        });
-                        fileReadPromises.push(promise);
-                    } else if (typeof value === 'string') {
-                        if (isArrayKey) {
-                            if (!dataObject[cleanKey]) dataObject[cleanKey] = [];
-                            dataObject[cleanKey].push(value);
-                        } else {
-                            dataObject[cleanKey] = value;
-                        }
+            formData.forEach((value, key) => {
+                const isArrayKey = key.endsWith('[]');
+                const cleanKey = isArrayKey ? key.slice(0, -2) : key;
+                if (value instanceof File && value.name) {
+                    const reader = new FileReader();
+                    fileReadPromises.push(new Promise((resFile) => {
+                        reader.onload = function(e) { dataObject[cleanKey] = e.target.result; resFile(); };
+                        reader.readAsDataURL(value);
+                    }));
+                } else if (typeof value === 'string') {
+                    if (isArrayKey) {
+                        if (!dataObject[cleanKey]) dataObject[cleanKey] = [];
+                        dataObject[cleanKey].push(value);
+                    } else {
+                        dataObject[cleanKey] = value;
                     }
-                });
-
-                Promise.all(fileReadPromises).then(() => resolve());
+                }
             });
 
-            await processForm;
+            await Promise.all(fileReadPromises);
             localStorage.setItem(`admin_modul_${moduleName}`, JSON.stringify(dataObject));
 
             try {
@@ -3174,28 +3254,10 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(dataObject)
                 });
-
-                if (res.ok) {
-                    alert(`Rekod ${moduleName.replace(/_/g, ' ').toUpperCase()} berjaya disimpan!`);
-                } else {
-                    alert(`Disimpan dalam peranti tempatan (LocalStorage).`);
-                }
+                alert(res.ok ? `Rekod ${moduleName.replace(/_/g, ' ').toUpperCase()} berjaya disimpan!` : `Disimpan dalam peranti tempatan (LocalStorage).`);
             } catch (err) {
-                console.error("Ralat Sambungan Server:", err);
                 alert(`Data telah selamat disimpan di peranti ini (LocalStorage).`);
             }
-        }
-
-        async function loadApplications() {
-            const tbody = document.getElementById('adminTableBody');
-            if (!tbody) return;
-            try {
-                const res = await fetch('/api/admin/applications');
-                if (res.ok) {
-                    const data = await res.json();
-                    renderTable(data);
-                }
-            } catch (err) {}
         }
     </script>
 </body>

@@ -526,20 +526,20 @@
                     </div>
                 </div>
 
-                <!-- Pilihan Peranan / Role -->
+                <!-- Pilihan Peranan / Role (Dibuang Pentadbir MOSTI, kekal Peserta & Admin) -->
                 <div class="form-group-modern">
                     <label for="reg-role">Jenis Akaun</label>
                     <div class="input-container-modern">
                         <select id="reg-role" class="role-select-modern" onchange="toggleFormByRole()" required>
                             <option value="user">Pengguna Biasa / Peserta</option>
-                            <option value="admin">Pentadbir (Admin)</option>
+                            <option value="admin">Admin</option>
                         </select>
                     </div>
                 </div>
 
                 <!-- Kunci Rahsia Admin (Hanya dipaparkan untuk Admin) -->
                 <div class="form-group-modern" id="admin-key-group" style="display: none;">
-                    <label for="reg-admin-key">Kunci Rahsia Admin (Secret Key)</label>
+                    <label for="reg-admin-key" id="admin-key-label">Kunci Rahsia Admin (Secret Key)</label>
                     <div class="input-container-modern">
                         <input type="password" id="reg-admin-key" placeholder="Masukkan Kunci Rahsia Admin">
                     </div>
@@ -609,11 +609,12 @@
             }
         }
 
-        /* Fungsi Asal Register (TIDAK DIUBAH) */
+        /* Fungsi Asal Register */
         function toggleFormByRole() {
             const role = document.getElementById('reg-role').value;
             const adminKeyGroup = document.getElementById('admin-key-group');
             const adminKeyInput = document.getElementById('reg-admin-key');
+            const adminKeyLabel = document.getElementById('admin-key-label');
             const userPasswordFields = document.getElementById('user-password-fields');
             const passInput = document.getElementById('reg-pass');
             const confirmInput = document.getElementById('reg-confirm');
@@ -622,6 +623,8 @@
                 // Tunjukkan Secret Key, sembunyikan Password
                 adminKeyGroup.style.display = 'block';
                 adminKeyInput.required = true;
+                adminKeyLabel.innerText = 'Kunci Rahsia Admin (Secret Key)';
+                adminKeyInput.placeholder = 'Masukkan Kunci Rahsia Admin';
                 
                 userPasswordFields.style.display = 'none';
                 passInput.required = false;
@@ -675,7 +678,12 @@
                     const data = await response.json();
                     if (response.ok) {
                         alert(data.message || 'Pendaftaran berjaya! Sila log masuk.');
-                        window.location.href = 'login.html';
+                        // Jika daftar sebagai admin, bawa parameter role=admin ke login.html
+                        if (role === 'admin') {
+                            window.location.href = 'login.html?role=admin';
+                        } else {
+                            window.location.href = 'login.html';
+                        }
                     } else {
                         alert('Gagal mendaftar: ' + (data.error || 'Maklumat tidak sah.'));
                     }

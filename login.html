@@ -540,7 +540,20 @@
                     <div class="input-container-modern">
                         <select id="login-role" class="role-select-modern" onchange="toggleLoginRole()" required>
                             <option value="user">Pengguna Biasa / Peserta</option>
-                            <option value="admin">Pentadbir (Admin)</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Pilihan 4 Bahagian (Muncul apabila pilih Admin) -->
+                <div class="form-group-modern" id="admin-bahagian-group" style="display: none;">
+                    <label for="login-bahagian">Bahagian</label>
+                    <div class="input-container-modern">
+                        <select id="login-bahagian" class="role-select-modern">
+                            <option value="admin">1) admin</option>
+                            <option value="SUB (W) PSM">2) SUB (W) PSM</option>
+                            <option value="PEROLEHAN">3) PEROLEHAN</option>
+                            <option value="PIHAK BERKUASA">4) PIHAK BERKUASA</option>
                         </select>
                     </div>
                 </div>
@@ -566,7 +579,7 @@
 
                 <!-- Secret Key untuk Admin -->
                 <div class="form-group-modern" id="secret-key-group" style="display: none;">
-                    <label for="login-secret-key">Kunci Rahsia Admin (Secret Key)</label>
+                    <label for="login-secret-key" id="secret-key-label">Kunci Rahsia Admin (Secret Key)</label>
                     <div class="input-container-modern">
                         <input type="password" id="login-secret-key" placeholder="Masukkan Secret Key Admin">
                         <i class="fa-regular fa-eye toggle-pass-modern" onclick="togglePassword('login-secret-key', this)"></i>
@@ -620,7 +633,7 @@
             }
         }
 
-        /* Fungsi Asal Login (TIDAK DIUBAH) */
+        /* Fungsi Asal Login */
         function togglePassword(id, icon) {
             const input = document.getElementById(id);
             if (input.type === 'password') {
@@ -634,19 +647,30 @@
 
         function toggleLoginRole() {
             const role = document.getElementById('login-role').value;
+            const bahagianGroup = document.getElementById('admin-bahagian-group');
+            const bahagianSelect = document.getElementById('login-bahagian');
             const passGroup = document.getElementById('pass-group');
             const passInput = document.getElementById('login-password');
             const secretKeyGroup = document.getElementById('secret-key-group');
             const secretKeyInput = document.getElementById('login-secret-key');
+            const secretKeyLabel = document.getElementById('secret-key-label');
 
             if (role === 'admin') {
+                bahagianGroup.style.display = 'block';
+                bahagianSelect.required = true;
+
                 passGroup.style.display = 'none';
                 passInput.required = false;
                 passInput.value = '';
 
                 secretKeyGroup.style.display = 'block';
                 secretKeyInput.required = true;
+                secretKeyLabel.innerText = 'Kunci Rahsia Admin (Secret Key)';
+                secretKeyInput.placeholder = 'Masukkan Secret Key Admin';
             } else {
+                bahagianGroup.style.display = 'none';
+                bahagianSelect.required = false;
+
                 passGroup.style.display = 'block';
                 passInput.required = true;
 
@@ -656,10 +680,20 @@
             }
         }
 
+        // Semak jika diarahkan dari register.html sebagai admin
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('role') === 'admin') {
+                document.getElementById('login-role').value = 'admin';
+                toggleLoginRole();
+            }
+        });
+
         async function handleLogin(e) {
             e.preventDefault();
             
             const role = document.getElementById('login-role').value;
+            const bahagian = role === 'admin' ? document.getElementById('login-bahagian').value : null;
             const emailOrIc = document.getElementById('login-email').value.trim();
             const password = document.getElementById('login-password').value;
             const secretKey = document.getElementById('login-secret-key').value.trim();
@@ -674,7 +708,7 @@
                 const response = await fetch('/api/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ role, emailOrIc, password, secretKey })
+                    body: JSON.stringify({ role, bahagian, emailOrIc, password, secretKey })
                 });
 
                 const contentType = response.headers.get("content-type");
@@ -683,6 +717,9 @@
                     const data = await response.json();
                     if (response.ok) {
                         alert(data.message || 'Log masuk berjaya!');
+                        if (data.user && role === 'admin') {
+                            data.user.bahagian = bahagian;
+                        }
                         sessionStorage.setItem('user', JSON.stringify(data.user));
                         localStorage.setItem('user', JSON.stringify(data.user));
 

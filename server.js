@@ -23,6 +23,7 @@ app.use(express.static(path.join(__dirname)));
 
 // Array Simpanan Memori (Fallback jika Supabase tiada/gagal)
 let memoryApplications = [];
+let memoryAdminModules = {};
 
 // Helper untuk dapatkan Supabase Client dengan selamat tanpa crash
 function getSupabase() {
@@ -538,8 +539,11 @@ app.post('/api/admin/latihan-modul/:moduleName', async (req, res) => {
     try {
         const { moduleName } = req.params;
         const payload = req.body || {};
-        const supabase = getSupabase();
 
+        // Simpan dalam memori pelayan sebagai sandaran segera
+        memoryAdminModules[moduleName] = { ...payload, created_at: new Date().toISOString() };
+
+        const supabase = getSupabase();
         if (supabase) {
             const tableName = `admin_${moduleName}`;
             const safePayload = await filterExistingColumns(supabase, tableName, payload);
@@ -558,7 +562,7 @@ app.post('/api/admin/latihan-modul/:moduleName', async (req, res) => {
             }
 
             if (insertErr) {
-                return res.status(500).json({ error: 'Ralat Supabase: ' + insertErr.message });
+                console.error(`Ralat Supabase (${tableName}):`, insertErr.message);
             }
         }
 
@@ -591,7 +595,8 @@ app.get('/api/admin/latihan-modul/:moduleName', async (req, res) => {
             }
         }
 
-        return res.status(200).json({});
+        // Pulangkan daripada memori pelayan jika tiada dalam Supabase
+        return res.status(200).json(memoryAdminModules[moduleName] || {});
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }

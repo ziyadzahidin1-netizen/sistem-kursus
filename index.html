@@ -19,7 +19,6 @@
     <style>
         /* =========================================================
            TUKAR GAMBAR BACKGROUND HOME ANDA DI SINI (1 TEMPAT SAHAJA)
-           Pastikan fail .jpg berada dalam folder yang sama dengan index.html
            ========================================================= */
         :root {
             --hero-bg-image: url('blue.jpg');
@@ -31,7 +30,54 @@
         }
 
         /* =========================================================
-           GAYA NAVBAR (LATAR PUTIH + SUSUNAN MENU & FONT ASAL)
+           BAR UTILITI GELAP PALING ATAS (GAYA KPT)
+           ========================================================= */
+        .kpt-top-utility-bar {
+            background-color: #0b1633;
+            color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 7px 50px;
+            font-size: 0.85rem;
+        }
+
+        .utility-left, .utility-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .kpt-top-utility-bar a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.2s ease, transform 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .kpt-top-utility-bar a:hover {
+            color: #ef7c00;
+            transform: scale(1.1);
+        }
+
+        .utility-divider {
+            width: 1px;
+            height: 14px;
+            background-color: rgba(255, 255, 255, 0.25);
+            margin: 0 2px;
+        }
+
+        .lang-flag {
+            width: 20px;
+            height: 14px;
+            object-fit: cover;
+            border-radius: 2px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* =========================================================
+           GAYA NAVBAR
            ========================================================= */
         .navbar-header-container {
             background-color: #ffffff !important;
@@ -103,7 +149,6 @@
             font-size: 0.85rem;
         }
 
-        /* Gaya Butang Sign In di Bar Atas */
         .top-auth-link {
             color: #ffffff;
             text-decoration: none;
@@ -124,7 +169,6 @@
             color: #ffffff;
         }
 
-        /* Butang Hamburger (Sembunyi pada Desktop) */
         .mobile-hamburger-btn {
             display: none;
             background: #f1f5f9;
@@ -146,7 +190,6 @@
             color: #ffffff;
         }
 
-        /* Baris Navigasi Bawah (100% Gaya & Susunan Asal) */
         .header-bottom-nav {
             display: flex;
             justify-content: space-between;
@@ -190,7 +233,6 @@
             background-color: #ef7c00;
         }
 
-        /* Kotak Carian Asal */
         .nav-search-box {
             display: flex;
             align-items: center;
@@ -232,77 +274,140 @@
         }
 
         /* =========================================================
-           HERO SECTION (SUSUN ATUR KIRI & LATAR DIGITAL BIRU)
+           HERO CAROUSEL SECTION
            ========================================================= */
-        .hero {
+        .kpt-hero-wrapper {
+            background-color: #ffffff;
+            padding: 12px 24px 25px 24px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .kpt-slider-container {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
             position: relative;
-            min-height: 76vh;
-            background: linear-gradient(90deg, rgba(6, 20, 46, 0.94) 0%, rgba(10, 32, 70, 0.78) 50%, rgba(10, 32, 70, 0.35) 100%), 
-                        var(--hero-bg-image) center right / cover no-repeat !important;
-            background-color: #071936 !important;
+            background-color: #1e293b;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.14);
+            overflow: hidden;
+        }
+
+        .kpt-slides-viewport {
+            position: relative;
+            width: 100%;
+            height: 460px;
+            overflow: hidden;
+        }
+
+        .kpt-slide {
+            position: absolute !important;
+            inset: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s ease-in-out;
             display: flex !important;
             flex-direction: column !important;
             justify-content: center !important;
-            align-items: flex-start !important;
-            padding: 70px 80px 90px 80px !important;
-            text-align: left !important;
+            align-items: center !important;
+            text-align: center !important;
+            padding: 40px 90px !important;
+            background-size: cover !important;
+            background-position: center center !important;
+            background-repeat: no-repeat !important;
             box-sizing: border-box !important;
         }
 
-        .hero-overlay {
-            display: none !important;
+        .kpt-slide.active {
+            opacity: 1 !important;
+            visibility: visible !important;
+            z-index: 1;
         }
 
-        .hero-content {
-            max-width: 620px;
-            margin: 0 !important;
-            padding: 0 !important;
-            transform: none !important;
-            z-index: 2;
+        .kpt-slide-overlay-light {
+            background: linear-gradient(135deg, rgba(6, 20, 46, 0.88) 0%, rgba(12, 45, 95, 0.82) 50%, rgba(6, 20, 46, 0.90) 100%),
+                        var(--hero-bg-image) center center / cover no-repeat !important;
+        }
+
+        .kpt-slide-overlay-dark {
+            background: linear-gradient(90deg, rgba(6, 20, 46, 0.92) 0%, rgba(10, 32, 70, 0.78) 50%, rgba(6, 20, 46, 0.88) 100%),
+                        var(--hero-bg-image) center center / cover no-repeat !important;
+        }
+
+        .kpt-slide-logo {
+            height: 64px;
+            margin-bottom: 8px;
+            object-fit: contain;
+        }
+
+        .kpt-slide-ministry {
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            color: #e2e8f0 !important;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .kpt-welcome-script {
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            font-size: 2.3rem;
+            color: #fbbf24 !important;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .kpt-main-title {
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            font-size: 2.8rem !important;
+            font-weight: 800 !important;
+            color: #ffffff !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+            margin: 6px 0 20px 0 !important;
+            line-height: 1.15 !important;
+        }
+
+        .kpt-slide-overlay-dark .kpt-main-title {
+            color: #ffffff !important;
+            font-size: 2.5rem !important;
+        }
+
+        .kpt-slide-overlay-dark p {
+            color: #e2e8f0;
+            max-width: 780px;
+            margin-bottom: 24px;
+            font-size: 1.05rem;
+            line-height: 1.5;
         }
 
         .hero-badge {
             display: inline-block;
-            background-color: rgba(255, 255, 255, 0.12);
-            border: 1px solid rgba(255, 255, 255, 0.25);
+            background-color: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             color: #ffffff;
-            font-size: 0.72rem;
+            font-size: 0.75rem;
             font-weight: 600;
-            letter-spacing: 1px;
-            padding: 5px 14px;
+            letter-spacing: 1.2px;
+            padding: 5px 16px;
             border-radius: 20px;
-            margin-bottom: 18px;
+            margin-bottom: 14px;
             text-transform: uppercase;
-        }
-
-        .hero-content h1 {
-            font-family: 'Plus Jakarta Sans', sans-serif !important;
-            font-size: 3.1rem !important;
-            font-weight: 800 !important;
-            color: #ffffff !important;
-            letter-spacing: -0.8px;
-            text-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
-            margin: 0 0 16px 0 !important;
-            line-height: 1.15 !important;
-        }
-
-        .hero-content p {
-            font-size: 1.05rem !important;
-            font-weight: 300 !important;
-            color: #e2e8f0 !important;
-            margin: 0 0 30px 0 !important;
-            line-height: 1.6;
         }
 
         .hero-buttons {
             display: flex;
-            justify-content: flex-start;
+            justify-content: center;
             align-items: center;
             gap: 14px;
             flex-wrap: wrap;
         }
 
-        /* Butang Utama Oren */
         .btn-hero-orange {
             background-color: #ef7c00 !important;
             color: #ffffff !important;
@@ -324,9 +429,8 @@
             transform: translateY(-2px);
         }
 
-        /* Butang Kedua Outline Putih */
         .btn-hero-box {
-            background: rgba(15, 23, 42, 0.35) !important;
+            background: rgba(15, 23, 42, 0.45) !important;
             color: #ffffff !important;
             padding: 12px 24px !important;
             border-radius: 4px !important;
@@ -348,27 +452,358 @@
             transform: translateY(-2px);
         }
 
-        .scroll-down-indicator {
+        .kpt-nav-arrow {
             position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            background: rgba(15, 23, 42, 0.65);
+            color: #ffffff;
+            border: none;
+            width: 38px;
+            height: 80px;
+            cursor: pointer;
+            font-size: 1.15rem;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 4px;
-            color: rgba(255, 255, 255, 0.85) !important;
-            font-size: 0.78rem;
-            text-decoration: none;
-            z-index: 2;
+            justify-content: center;
+            transition: background 0.2s;
         }
 
-        .scroll-down-indicator:hover {
-            color: #ef7c00 !important;
+        .kpt-nav-arrow:hover {
+            background: #ef7c00;
+        }
+
+        .kpt-prev { left: 0; }
+        .kpt-next { right: 0; }
+
+        .kpt-banner-social-bar {
+            background-color: #1e3a8a;
+            padding: 10px 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .kpt-banner-social-icons {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .kpt-banner-social-icons a {
+            color: #ffffff;
+            font-size: 1.05rem;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+        .kpt-banner-social-icons a:hover {
+            color: #ef7c00;
+            transform: scale(1.15);
+        }
+
+        .kpt-banner-search-pill {
+            display: flex;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 4px;
+            padding: 4px 12px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .kpt-banner-search-pill i {
+            color: #ffffff;
+            font-size: 0.8rem;
+            margin-right: 8px;
+        }
+
+        .kpt-banner-search-pill input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #ffffff;
+            font-size: 0.78rem;
+            width: 240px;
+        }
+
+        .kpt-banner-search-pill input::placeholder {
+            color: rgba(255, 255, 255, 0.88);
+        }
+
+        .kpt-thumbs-bar {
+            background-color: #262626;
+            padding: 10px 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            overflow-x: auto;
+        }
+
+        .kpt-thumb-item {
+            flex: 1 1 0;
+            max-width: 195px;
+            min-width: 135px;
+            height: 54px;
+            border: 2px solid transparent;
+            opacity: 0.55;
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.25s ease;
+            background-size: cover !important;
+            background-position: center !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4px;
+        }
+
+        .kpt-thumb-item span {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+            line-height: 1.15;
+        }
+
+        .kpt-thumb-item:hover,
+        .kpt-thumb-item.active {
+            opacity: 1;
+            border-color: #ef7c00;
+            transform: translateY(-2px);
         }
 
         /* =========================================================
-           GAYA SEKSYEN LAIN (KEKAL SEPERTI ASAL)
+           SEKSYEN PERKHIDMATAN (4 KAD KOTAK BIRU GELAP GAYA KPT)
+           ========================================================= */
+        .kpt-services-section {
+            background-color: #ffffff;
+            padding: 55px 24px 65px 24px;
+            text-align: center;
+        }
+
+        .kpt-services-heading {
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            font-size: 2.1rem !important;
+            font-weight: 800 !important;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0 0 38px 0 !important;
+            display: inline-block;
+            background: linear-gradient(90deg, #1e3a8a 0%, #0284c7 60%, #14b8a6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .kpt-services-grid {
+            max-width: 1180px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .kpt-service-card {
+            background-color: #0b1633;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 42px 24px 38px 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            text-align: center;
+            min-height: 295px;
+            box-sizing: border-box;
+            border-radius: 0px;
+            box-shadow: 0 6px 18px rgba(11, 22, 51, 0.14);
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+            border-bottom: 4px solid transparent;
+        }
+
+        .kpt-service-card:hover {
+            transform: translateY(-7px);
+            background-color: #132554;
+            border-bottom-color: #ef7c00;
+            box-shadow: 0 14px 28px rgba(11, 22, 51, 0.25);
+        }
+
+        .kpt-service-icon {
+            font-size: 2.7rem;
+            color: #ffffff;
+            margin-bottom: 22px;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .kpt-service-card:hover .kpt-service-icon {
+            transform: scale(1.1);
+            color: #38bdf8;
+        }
+
+        .kpt-service-card h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            font-size: 1.15rem !important;
+            font-weight: 700 !important;
+            color: #ffffff !important;
+            margin: 0 0 16px 0 !important;
+            line-height: 1.35 !important;
+        }
+
+        .kpt-service-card p {
+            font-size: 0.88rem !important;
+            font-weight: 300 !important;
+            color: #cbd5e1 !important;
+            line-height: 1.65 !important;
+            margin: 0 !important;
+        }
+
+        /* =========================================================
+           SEKSYEN SOROTAN AKTIVITI + BUTTON ADMIN
+           ========================================================= */
+        .kpt-activities-section {
+            background-color: #ffffff;
+            padding: 35px 24px 60px 24px;
+            text-align: center;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .sorotan-header-wrapper {
+            max-width: 1220px;
+            margin: 0 auto 32px auto;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .sorotan-header-wrapper .kpt-services-heading {
+            margin-bottom: 0 !important;
+        }
+
+        .btn-admin-sorotan {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #0b1633 0%, #1e3a8a 100%);
+            color: #ffffff !important;
+            border: 1.5px solid #ef7c00;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(11, 22, 51, 0.18);
+            transition: all 0.25s ease;
+        }
+
+        .btn-admin-sorotan:hover {
+            background: #ef7c00;
+            border-color: #ef7c00;
+            transform: translateY(calc(-50% - 2px));
+            box-shadow: 0 6px 16px rgba(239, 124, 0, 0.35);
+        }
+
+        .kpt-activities-grid {
+            max-width: 1220px;
+            margin: 0 auto 32px auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .kpt-activity-card {
+            position: relative;
+            height: 225px;
+            overflow: hidden;
+            background-color: #0b1633;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            display: block;
+            text-decoration: none;
+        }
+
+        .kpt-activity-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.45s ease;
+        }
+
+        .kpt-activity-card:hover img {
+            transform: scale(1.07);
+        }
+
+        .kpt-activity-caption {
+            position: absolute;
+            inset: auto 0 0 0;
+            background: linear-gradient(to top, rgba(6, 20, 46, 0.94) 0%, rgba(6, 20, 46, 0.62) 65%, transparent 100%);
+            color: #ffffff;
+            padding: 24px 14px 12px 14px;
+            text-align: left;
+            font-size: 0.84rem;
+            font-weight: 600;
+            line-height: 1.35;
+            opacity: 0.96;
+            transition: background 0.3s ease;
+        }
+
+        .kpt-activity-card:hover .kpt-activity-caption {
+            background: linear-gradient(to top, rgba(30, 58, 138, 0.96) 0%, rgba(30, 58, 138, 0.68) 75%, transparent 100%);
+        }
+
+        .kpt-quick-links-bar {
+            max-width: 1120px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 14px 42px;
+            padding-top: 8px;
+        }
+
+        .kpt-quick-links-bar a {
+            color: #334155;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .kpt-quick-links-bar a:hover {
+            color: #0284c7;
+            text-decoration: underline;
+        }
+
+        @media screen and (max-width: 992px) {
+            .kpt-services-grid,
+            .kpt-activities-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .sorotan-header-wrapper {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .btn-admin-sorotan {
+                position: static;
+                transform: none;
+            }
+            .btn-admin-sorotan:hover {
+                transform: translateY(-2px);
+            }
+        }
+
+        /* =========================================================
+           GAYA SEKSYEN LAIN
            ========================================================= */
         .btn-modern-primary {
             background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
@@ -758,7 +1193,6 @@
             background-color: #1d4ed8;
         }
 
-        /* User Dropdown Pada Latar Gelap */
         .user-dropdown-container {
             position: relative;
             display: inline-block;
@@ -883,9 +1317,18 @@
             padding: 60px 20px;
         }
 
+        /* =========================================================
+           SEKSYEN MENGENAI MOSTI + 4 CARD GAYA DRIBBBLE (OVERLAP PANEL)
+           ========================================================= */
         .about-modern-container {
-            max-width: 1140px;
+            max-width: 1180px;
             margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 42px;
+        }
+
+        .about-top-split {
             display: flex;
             flex-wrap: wrap;
             align-items: flex-start;
@@ -916,33 +1359,123 @@
             font-weight: 300;
         }
 
+        /* GRID 4 CARD SEPERTI CONTOH DRIBBBLE */
         .stats-mini-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-top: 25px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            width: 100%;
         }
 
-        .stat-box {
+        .dribbble-stat-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .dribbble-stat-card:hover {
+            transform: translateY(-7px);
+        }
+
+        /* Bahagian Gambar/Banner Atas Kad */
+        .dribbble-card-media {
+            width: 100%;
+            height: 175px;
+            border-radius: 18px;
+            overflow: hidden;
+            position: relative;
+            background-color: #0b1633;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+        }
+
+        .dribbble-card-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.45s ease;
+        }
+
+        .dribbble-stat-card:hover .dribbble-card-media img {
+            transform: scale(1.06);
+        }
+
+        .dribbble-media-tint-1 {
+            background: linear-gradient(135deg, #0b1633 0%, #1e3a8a 55%, #0284c7 100%);
+        }
+        .dribbble-media-tint-2 {
+            background: linear-gradient(135deg, #0f172a 0%, #0369a1 55%, #0d9488 100%);
+        }
+        .dribbble-media-tint-3 {
+            background: linear-gradient(135deg, #172554 0%, #1d4ed8 55%, #38bdf8 100%);
+        }
+        .dribbble-media-tint-4 {
+            background: linear-gradient(135deg, #0c2847 0%, #0f766e 55%, #14b8a6 100%);
+        }
+
+        /* Panel Putih Bertindih (Overlapping White Card) Seperti Card Kanan Dribbble */
+        .dribbble-card-panel {
+            width: 88%;
             background: #ffffff;
-            border: 1px solid #e2e8f0;
-            padding: 14px 18px;
-            border-radius: 4px;
+            border-radius: 16px;
+            padding: 20px 20px 22px 20px;
+            margin-top: -54px;
+            position: relative;
+            z-index: 2;
             text-align: left;
+            box-shadow: 0 14px 32px rgba(15, 23, 42, 0.09);
+            border: 1px solid rgba(226, 232, 240, 0.9);
+            box-sizing: border-box;
+            transition: box-shadow 0.3s ease;
         }
 
-        .stat-box h4 {
-            font-size: 1.6rem;
+        .dribbble-stat-card:hover .dribbble-card-panel {
+            box-shadow: 0 20px 40px rgba(2, 132, 199, 0.16);
+        }
+
+        .dribbble-card-kicker {
+            display: block;
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: #94a3b8;
+            margin-bottom: 4px;
+            letter-spacing: 0.2px;
+        }
+
+        .dribbble-card-number {
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            font-size: 2.05rem !important;
+            font-weight: 800 !important;
+            color: #0f172a !important;
+            margin: 0 0 12px 0 !important;
+            line-height: 1.15 !important;
+        }
+
+        .dribbble-card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.72rem;
             font-weight: 700;
-            color: #003d7c;
-            margin: 0 0 4px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #334155;
+            text-decoration: none;
+            transition: color 0.2s ease;
         }
 
-        .stat-box p {
-            font-size: 0.85rem;
-            color: #64748b;
-            margin: 0;
-            font-weight: 400;
+        .dribbble-stat-card:hover .dribbble-card-link {
+            color: #0284c7;
+        }
+
+        @media screen and (max-width: 992px) {
+            .stats-mini-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
         }
 
         .about-links-group {
@@ -1009,6 +1542,13 @@
            SUSUNAN RESPONSIF MOBILE (<= 768px)
            ========================================================= */
         @media screen and (max-width: 768px) {
+            .kpt-top-utility-bar {
+                padding: 6px 12px;
+                font-size: 0.78rem;
+            }
+            .utility-left, .utility-right {
+                gap: 10px;
+            }
             .header-top-row {
                 padding: 7px 12px !important;
                 gap: 6px;
@@ -1040,16 +1580,13 @@
             .header-tagline {
                 font-size: 0.42rem !important;
             }
-
             .header-top-right {
                 gap: 8px !important;
             }
-
             .top-auth-link {
                 padding: 4px 10px;
                 font-size: 0.75rem;
             }
-
             .mobile-hamburger-btn {
                 display: flex !important;
                 width: 30px !important;
@@ -1057,7 +1594,6 @@
                 font-size: 0.95rem !important;
                 border-radius: 5px !important;
             }
-
             .user-avatar-small {
                 width: 24px !important;
                 height: 24px !important;
@@ -1069,7 +1605,6 @@
                 padding: 2px !important;
                 gap: 4px !important;
             }
-
             .header-bottom-nav {
                 display: none;
                 flex-direction: column !important;
@@ -1084,12 +1619,10 @@
                 display: flex !important;
                 animation: slideDownNav 0.2s ease-out;
             }
-
             @keyframes slideDownNav {
                 from { opacity: 0; transform: translateY(-6px); }
                 to { opacity: 1; transform: translateY(0); }
             }
-
             .nav-links-sub {
                 flex-direction: column !important;
                 align-items: stretch !important;
@@ -1120,7 +1653,6 @@
                 border-left: 3px solid #ef7c00;
                 padding-left: 10px !important;
             }
-
             .nav-search-box {
                 width: 100% !important;
                 box-sizing: border-box;
@@ -1131,46 +1663,87 @@
                 width: 100% !important;
                 font-size: 0.82rem !important;
             }
-
-            /* Hero Section Mobile (Otomatik ikut --hero-bg-image) */
-            .hero {
-                padding: 40px 20px 65px 20px !important;
-                min-height: 62vh !important;
-                background: linear-gradient(180deg, rgba(6, 20, 46, 0.92) 0%, rgba(10, 32, 70, 0.82) 100%), 
-                            var(--hero-bg-image) center center / cover no-repeat !important;
+            .kpt-hero-wrapper {
+                padding: 8px 10px 18px 10px !important;
             }
-            .hero-badge {
-                font-size: 0.65rem !important;
-                padding: 4px 10px !important;
+            .kpt-slides-viewport {
+                height: 320px !important;
+            }
+            .kpt-slide {
+                padding: 20px 42px !important;
+            }
+            .kpt-slide-logo {
+                height: 40px !important;
+            }
+            .kpt-slide-ministry {
+                font-size: 0.58rem !important;
+                margin-bottom: 8px !important;
+            }
+            .kpt-welcome-script {
+                font-size: 1.35rem !important;
+            }
+            .kpt-main-title {
+                font-size: 1.35rem !important;
                 margin-bottom: 12px !important;
             }
-            .hero-content h1 {
-                font-size: 1.65rem !important;
-                line-height: 1.25 !important;
-                margin-bottom: 12px !important;
-            }
-            .hero-content p {
-                font-size: 0.85rem !important;
-                line-height: 1.5 !important;
-                margin-bottom: 20px !important;
-            }
-            .hero-buttons {
-                flex-direction: column !important;
-                align-items: stretch !important;
-                gap: 10px !important;
-                max-width: 250px;
+            .kpt-slide-overlay-dark p {
+                font-size: 0.82rem !important;
+                margin-bottom: 14px !important;
             }
             .hero-buttons .btn-hero-orange,
             .hero-buttons .btn-hero-box {
-                justify-content: center !important;
-                padding: 10px 16px !important;
+                padding: 8px 14px !important;
+                font-size: 0.78rem !important;
+            }
+            .kpt-nav-arrow {
+                width: 28px !important;
+                height: 55px !important;
+                font-size: 0.9rem !important;
+            }
+            .kpt-thumb-item {
+                min-width: 95px !important;
+                height: 42px !important;
+            }
+            .kpt-thumb-item span {
+                font-size: 0.52rem !important;
+            }
+            .kpt-services-section,
+            .kpt-activities-section {
+                padding: 35px 14px 45px 14px !important;
+            }
+            .kpt-services-heading {
+                font-size: 1.55rem !important;
+                margin-bottom: 24px !important;
+            }
+            .kpt-services-grid,
+            .kpt-activities-grid {
+                grid-template-columns: 1fr !important;
+                gap: 14px !important;
+            }
+            .kpt-service-card {
+                min-height: auto !important;
+                padding: 28px 20px !important;
+            }
+            .kpt-service-icon {
+                font-size: 2.1rem !important;
+                margin-bottom: 14px !important;
+            }
+            .kpt-service-card h3 {
+                font-size: 1.05rem !important;
+                margin-bottom: 10px !important;
+            }
+            .kpt-service-card p {
                 font-size: 0.82rem !important;
             }
-            .scroll-down-indicator {
-                font-size: 0.7rem !important;
-                bottom: 12px !important;
+            .kpt-activity-card {
+                height: 200px !important;
             }
-
+            .kpt-quick-links-bar {
+                gap: 10px 20px !important;
+            }
+            .kpt-quick-links-bar a {
+                font-size: 0.82rem !important;
+            }
             .dtims-search-section {
                 padding: 24px 14px !important;
             }
@@ -1186,7 +1759,6 @@
                 padding: 8px 18px !important;
                 font-size: 0.82rem !important;
             }
-
             .content-section {
                 padding: 30px 14px !important;
             }
@@ -1199,19 +1771,26 @@
                 line-height: 1.5 !important;
             }
             .stats-mini-grid {
-                gap: 10px !important;
-                margin-top: 16px !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 14px !important;
             }
-            .stat-box {
-                padding: 10px 12px !important;
+            .dribbble-card-media {
+                height: 125px !important;
+                border-radius: 14px !important;
             }
-            .stat-box h4 {
-                font-size: 1.25rem !important;
+            .dribbble-card-panel {
+                width: 90% !important;
+                padding: 14px !important;
+                margin-top: -38px !important;
+                border-radius: 12px !important;
             }
-            .stat-box p {
-                font-size: 0.75rem !important;
+            .dribbble-card-number {
+                font-size: 1.5rem !important;
+                margin-bottom: 8px !important;
             }
-
+            .dribbble-card-link {
+                font-size: 0.65rem !important;
+            }
             .cards-grid-fixed .card {
                 flex: 0 0 100% !important;
                 max-width: 100% !important;
@@ -1241,8 +1820,7 @@
                 padding: 7px 20px !important;
                 font-size: 0.8rem !important;
             }
-
-            .about-modern-container {
+            .about-top-split {
                 flex-direction: column;
                 gap: 20px;
             }
@@ -1263,7 +1841,6 @@
             .feature-text-content {
                 font-size: 0.88rem !important;
             }
-
             .nus-style-footer {
                 padding: 35px 14px 25px 14px !important;
             }
@@ -1287,6 +1864,33 @@
 <body>
 
     <header class="navbar-header-container">
+        
+        <!-- BAR UTILITI GELAP PALING ATAS -->
+        <div class="kpt-top-utility-bar">
+            <div class="utility-left">
+                <a href="https://www.facebook.com/officialmosti/?locale=ms_MY" target="_blank" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://x.com" target="_blank" title="X"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="https://www.instagram.com/officialmosti/?hl=en" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.youtube.com" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+
+            <div class="utility-right">
+                <a href="#contact-section" title="Soalan Lazim (FAQ)"><i class="fa-regular fa-comment-dots"></i></a>
+                <a href="tel:+60388858000" title="Hubungi Kami"><i class="fa-solid fa-phone"></i></a>
+                <a href="#contact-section" title="Aduan & Maklum Balas"><i class="fa-solid fa-headset"></i></a>
+                <a href="#about-section" title="Peta Laman / Direktori"><i class="fa-solid fa-sitemap"></i></a>
+                
+                <span class="utility-divider"></span>
+                
+                <a href="?lang=ms" title="Bahasa Melayu">
+                    <img src="https://flagcdn.com/w40/my.png" alt="Bahasa Melayu" class="lang-flag">
+                </a>
+                <a href="?lang=en" title="English">
+                    <img src="https://flagcdn.com/w40/gb.png" alt="English" class="lang-flag">
+                </a>
+            </div>
+        </div>
+
         <div class="header-top-row">
             <a href="index.html" class="logo">
                 <img src="logo.png" alt="Logo Portal Kursus MOSTI" class="logo-img">
@@ -1301,7 +1905,6 @@
                 <span id="user-nav-container">
                     <a href="login.html" class="top-auth-link"><i class="fa-solid fa-user"></i> Sign In</a>
                 </span>
-                <!-- Butang Hamburger Mobile -->
                 <button type="button" id="mobile-menu-btn" class="mobile-hamburger-btn" onclick="toggleMobileNav()" aria-label="Buka Menu Navigasi" aria-expanded="false">
                     <i class="fa-solid fa-bars" id="hamburger-icon"></i>
                 </button>
@@ -1328,24 +1931,90 @@
         </div>
     </header>
 
-    <section id="hero-section" class="hero">
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <span class="hero-badge">PORTAL KURSUS MOSTI</span>
+    <!-- HERO CAROUSEL MEMANJANG KE TEPI SKRIN -->
+    <section id="hero-section" class="kpt-hero-wrapper">
+        <div class="kpt-slider-container">
             
-            <h1>Selamat Datang Ke Portal Kursus MOSTI</h1>
-            <p>Tingkatkan kemahiran anda menerusi program dan latihan terkini kami.</p>
-            
-            <div class="hero-buttons">
-                <a href="#about-section" class="btn-hero-box">Ketahui Mengenai MOSTI <i class="fa-solid fa-arrow-right"></i></a>
-                <a href="iklan.html" class="btn-hero-box">Lihat Kursus Terkini <i class="fa-solid fa-arrow-right"></i></a>
-            </div>
-        </div>
+            <button type="button" class="kpt-nav-arrow kpt-prev" onclick="changeKptSlide(-1)" title="Sebelumnya">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <button type="button" class="kpt-nav-arrow kpt-next" onclick="changeKptSlide(1)" title="Seterusnya">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
 
-        <a href="#about-section" class="scroll-down-indicator">
-            <span>Tatal Ke Bawah Untuk Profil Syarikat</span>
-            <i class="fa-solid fa-chevron-down"></i>
-        </a>
+            <div class="kpt-slides-viewport">
+                
+                <div class="kpt-slide kpt-slide-overlay-light active">
+                    <img src="logo.png" alt="Jata Negara" class="kpt-slide-logo">
+                    <div class="kpt-slide-ministry">KEMENTERIAN SAINS, TEKNOLOGI DAN INOVASI</div>
+                    <p class="kpt-welcome-script">Selamat Datang</p>
+                    <h1 class="kpt-main-title">PORTAL KURSUS MOSTI</h1>
+                    <div class="hero-buttons">
+                        <a href="iklan.html" class="btn-hero-orange">Lihat Kursus Terkini <i class="fa-solid fa-arrow-right"></i></a>
+                        <a href="#about-section" class="btn-hero-box">Ketahui Mengenai MOSTI</a>
+                    </div>
+                </div>
+
+                <div class="kpt-slide kpt-slide-overlay-dark">
+                    <span class="hero-badge">PROGRAM LATIHAN STIE 2026</span>
+                    <h2 class="kpt-main-title">Tingkatkan Kemahiran Digital & AI Anda</h2>
+                    <p>Sertai program latihan, bengkel dan kursus profesional terkini anjuran MOSTI untuk memacu inovasi negara.</p>
+                    <div class="hero-buttons">
+                        <a href="mohon.html" class="btn-hero-orange">Mohon Kursus Sekarang <i class="fa-solid fa-paper-plane"></i></a>
+                        <a href="takwim.html" class="btn-hero-box">Semak Takwim</a>
+                    </div>
+                </div>
+
+                <div class="kpt-slide kpt-slide-overlay-dark">
+                    <span class="hero-badge">JADUAL RASMI</span>
+                    <h2 class="kpt-main-title">Takwim Kursus Sepanjang Tahun</h2>
+                    <p>Rancang penyertaan latihan anda lebih awal mengikut bidang kepakaran yang ditawarkan.</p>
+                    <div class="hero-buttons">
+                        <a href="takwim.html" class="btn-hero-orange">Buka Takwim Kursus <i class="fa-solid fa-calendar-days"></i></a>
+                    </div>
+                </div>
+
+                <div class="kpt-slide kpt-slide-overlay-dark">
+                    <span class="hero-badge">PEMAKLUMAN TERKINI</span>
+                    <h2 class="kpt-main-title">Semakan Status Permohonan Kursus</h2>
+                    <p>Log masuk ke papan pemuka pengguna untuk menyemak status kelulusan dan rekod penyertaan latihan anda.</p>
+                    <div class="hero-buttons">
+                        <a href="login.html" class="btn-hero-orange">Semak Status Sekarang <i class="fa-solid fa-circle-check"></i></a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="kpt-banner-social-bar">
+                <div class="kpt-banner-social-icons">
+                    <a href="https://www.tiktok.com" target="_blank" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="https://www.instagram.com/officialmosti/?hl=en" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://x.com" target="_blank" title="X"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="https://www.facebook.com/officialmosti/?locale=ms_MY" target="_blank" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://www.youtube.com" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+                <div class="kpt-banner-search-pill">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="KEMENTERIAN SAINS, TEKNOLOGI..." onkeypress="if(event.key==='Enter'){ window.location.href='iklan.html?keyword='+encodeURIComponent(this.value); }">
+                </div>
+            </div>
+
+            <div class="kpt-thumbs-bar">
+                <div class="kpt-thumb-item active" onclick="goToKptSlide(0)" style="background: linear-gradient(rgba(12,45,95,0.78), rgba(12,45,95,0.78)), var(--hero-bg-image) center/cover no-repeat;">
+                    <span>SELAMAT DATANG<br>PORTAL MOSTI</span>
+                </div>
+                <div class="kpt-thumb-item" onclick="goToKptSlide(1)" style="background: linear-gradient(rgba(10,32,70,0.75), rgba(10,32,70,0.75)), var(--hero-bg-image) center/cover no-repeat;">
+                    <span>LATIHAN DIGITAL & AI 2026</span>
+                </div>
+                <div class="kpt-thumb-item" onclick="goToKptSlide(2)" style="background: linear-gradient(rgba(10,32,70,0.75), rgba(10,32,70,0.75)), var(--hero-bg-image) center/cover no-repeat;">
+                    <span>TAKWIM KURSUS RASMI</span>
+                </div>
+                <div class="kpt-thumb-item" onclick="goToKptSlide(3)" style="background: linear-gradient(rgba(10,32,70,0.75), rgba(10,32,70,0.75)), var(--hero-bg-image) center/cover no-repeat;">
+                    <span>SEMAKAN STATUS PERMOHONAN</span>
+                </div>
+            </div>
+
+        </div>
     </section>
 
     <section id="admin-applications-section" class="content-section" style="display: none; background-color: #f8fafc;">
@@ -1418,55 +2087,175 @@
         </div>
     </section>
 
-    <section id="about-section" class="content-section" style="background-color: #f7fcfd;">
+    <!-- =========================================================
+         SEKSYEN PERKHIDMATAN
+         ========================================================= -->
+    <section id="perkhidmatan-section" class="kpt-services-section">
+        <h2 class="kpt-services-heading">PERKHIDMATAN</h2>
+        
+        <div class="kpt-services-grid">
+            <a href="iklan.html" class="kpt-service-card">
+                <i class="fa-solid fa-graduation-cap kpt-service-icon"></i>
+                <h3>Iklan &amp; Jenis Kursus</h3>
+                <p>Senarai program latihan terkini, bengkel pembangunan kemahiran serta kursus STIE yang ditawarkan oleh MOSTI.</p>
+            </a>
+
+            <a href="takwim.html" class="kpt-service-card">
+                <i class="fa-solid fa-calendar-days kpt-service-icon"></i>
+                <h3>Takwim Latihan</h3>
+                <p>Jadual penuh pelaksanaan kursus sepanjang tahun mengikut bidang kepakaran, tarikh dan pusat latihan rasmi.</p>
+            </a>
+
+            <a href="mohon.html" class="kpt-service-card">
+                <i class="fa-solid fa-file-signature kpt-service-icon"></i>
+                <h3>Permohonan Kursus</h3>
+                <p>Kemudahan pendaftaran dan permohonan penyertaan kursus secara dalam talian bagi warga kerja dan peserta luar.</p>
+            </a>
+
+            <a href="user_dashboard.html" class="kpt-service-card">
+                <i class="fa-solid fa-award kpt-service-icon"></i>
+                <h3>Semakan Status &amp; Rekod</h3>
+                <p>Hab maklumat setempat untuk menyemak kelulusan permohonan, sejarah penyertaan latihan dan profil peserta.</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         SEKSYEN SOROTAN AKTIVITI (DENGAN BUTTON KHAS ADMIN)
+         ========================================================= -->
+    <section id="sorotan-aktiviti-section" class="kpt-activities-section">
+        <div class="sorotan-header-wrapper">
+            <h2 class="kpt-services-heading">SOROTAN AKTIVITI</h2>
+
+            <a href="edit_sorotan.html" id="btn-tambah-sorotan-admin" class="btn-admin-sorotan">
+                <i class="fa-solid fa-plus-circle"></i> Tambah Sorotan Aktiviti
+            </a>
+        </div>
+
+        <div class="kpt-activities-grid" id="home-sorotan-grid">
+            <a href="sorotan_aktiviti.html" class="kpt-activity-card">
+                <img src="blue.jpg" alt="Majlis Pelancaran Program Latihan STIE MOSTI">
+                <div class="kpt-activity-caption">Majlis Pelancaran Program Latihan &amp; Pembangunan Bakat STIE MOSTI</div>
+            </a>
+
+            <a href="sorotan_aktiviti.html" class="kpt-activity-card">
+                <img src="blue.jpg" alt="Persidangan & Bengkel Inovasi Kebangsaan">
+                <div class="kpt-activity-caption">Persidangan Teknologi Digital, Kecerdasan Buatan &amp; Inovasi Kebangsaan</div>
+            </a>
+
+            <a href="sorotan_aktiviti.html" class="kpt-activity-card">
+                <img src="blue.jpg" alt="Sesi Libat Urus Penyelidik & Industri">
+                <div class="kpt-activity-caption">Sesi Libat Urus Kepakaran Penyelidikan &amp; Kolaborasi Industri</div>
+            </a>
+
+            <a href="sorotan_aktiviti.html" class="kpt-activity-card">
+                <img src="blue.jpg" alt="Himpunan Peserta Kursus & Latihan Kemahiran">
+                <div class="kpt-activity-caption">Himpunan Peserta Bengkel Kemahiran &amp; Pemerkasaan Modal Insan</div>
+            </a>
+        </div>
+
+        <div class="kpt-quick-links-bar">
+            <a href="iklan.html">Infografik</a>
+            <a href="#contact-section">Soalan Lazim</a>
+            <a href="#about-section">Teks Ucapan YB Menteri</a>
+            <a href="#about-section">Teks Ucapan YB Timbalan Menteri</a>
+            <a href="#about-section">Teks Ucapan Pengurusan Tertinggi</a>
+            <a href="takwim.html">Takwim Rasmi</a>
+            <a href="#about-section">Dashboard Statistik</a>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         SEKSYEN MENGENAI MOSTI + 4 CARD GAYA DRIBBBLE (OVERLAP PANEL)
+         ========================================================= -->
+    <section id="about-section" class="content-section" style="background-color: #f3f5f8;">
         <div class="about-modern-container">
-            <div class="about-modern-left">
-                <h2 class="about-title-large">Mengenai MOSTI</h2>
-                <p class="about-desc-text">
-                    Kementerian Sains, Teknologi dan Inovasi (MOSTI) ialah kementerian di bawah Kerajaan Malaysia yang bertanggungjawab menerajui pembangunan sains, teknologi, inovasi (STI) dan ekonomi (STIE).
-                </p>
+            
+            <!-- BARIS ATAS: PENERANGAN & VISI/MISI -->
+            <div class="about-top-split">
+                <div class="about-modern-left">
+                    <h2 class="about-title-large">Mengenai MOSTI</h2>
+                    <p class="about-desc-text">
+                        Kementerian Sains, Teknologi dan Inovasi (MOSTI) ialah kementerian di bawah Kerajaan Malaysia yang bertanggungjawab menerajui pembangunan sains, teknologi, inovasi (STI) dan ekonomi (STIE).
+                    </p>
 
-                <div class="stats-mini-grid">
-                    <div class="stat-box">
-                        <h4 id="stat-kursus">1</h4>
-                        <p>Jumlah Kursus</p>
-                    </div>
-                    <div class="stat-box">
-                        <h4 id="stat-bidang">1</h4>
-                        <p>Jumlah Bidang</p>
-                    </div>
-                    <div class="stat-box">
-                        <h4 id="stat-peserta">0</h4>
-                        <p>Peserta</p>
-                    </div>
-                    <div class="stat-box">
-                        <h4 id="stat-pusat">1</h4>
-                        <p>Pusat Latihan</p>
+                    <div class="about-links-group">
+                        <a href="iklan.html" class="about-link-item">Kursus <i class="fa-solid fa-chevron-right"></i></a>
+                        <a href="takwim.html" class="about-link-item">Takwim <i class="fa-solid fa-chevron-right"></i></a>
                     </div>
                 </div>
 
-                <div class="about-links-group">
-                    <a href="iklan.html" class="about-link-item">Kursus <i class="fa-solid fa-chevron-right"></i></a>
-                    <a href="takwim.html" class="about-link-item">Takwim <i class="fa-solid fa-chevron-right"></i></a>
-                </div>
-            </div>
-
-            <div class="about-modern-right">
-                <div class="about-features-card">
-                    <div class="feature-item-row">
-                        <i class="fa-solid fa-check feature-icon-check"></i>
-                        <span class="feature-text-content">Visi Kami: Negara Berteknologi Tinggi Melalui STIE.</span>
-                    </div>
-                    <div class="feature-item-row">
-                        <i class="fa-solid fa-check feature-icon-check"></i>
-                        <span class="feature-text-content">Misi Kami: Menerajui STIE untuk cabaran negara, kesejahteraan masyarakat, dan pembangunan mampan.</span>
-                    </div>
-                    <div class="feature-item-row">
-                        <i class="fa-solid fa-check feature-icon-check"></i>
-                        <span class="feature-text-content">Memperkasa ekosistem syarikat pemula (startup), bioteknologi, keselamatan siber, nanoteknologi, dan teknologi angkasa.</span>
+                <div class="about-modern-right">
+                    <div class="about-features-card">
+                        <div class="feature-item-row">
+                            <i class="fa-solid fa-check feature-icon-check"></i>
+                            <span class="feature-text-content">Visi Kami: Negara Berteknologi Tinggi Melalui STIE.</span>
+                        </div>
+                        <div class="feature-item-row">
+                            <i class="fa-solid fa-check feature-icon-check"></i>
+                            <span class="feature-text-content">Misi Kami: Menerajui STIE untuk cabaran negara, kesejahteraan masyarakat, dan pembangunan mampan.</span>
+                        </div>
+                        <div class="feature-item-row">
+                            <i class="fa-solid fa-check feature-icon-check"></i>
+                            <span class="feature-text-content">Memperkasa ekosistem syarikat pemula (startup), bioteknologi, keselamatan siber, nanoteknologi, dan teknologi angkasa.</span>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <!-- BARIS BAWAH: 4 CARD DENGAN PANEL PUTIH BERTINDIH -->
+            <div class="stats-mini-grid">
+                
+                <!-- CARD 1: JUMLAH KURSUS -->
+                <a href="iklan.html" class="dribbble-stat-card">
+                    <div class="dribbble-card-media dribbble-media-tint-1">
+                        <img src="blue.jpg" alt="Jumlah Kursus">
+                    </div>
+                    <div class="dribbble-card-panel">
+                        <span class="dribbble-card-kicker">Jumlah Kursus</span>
+                        <h4 id="stat-kursus" class="dribbble-card-number">1</h4>
+                        <span class="dribbble-card-link">SEE MORE <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </a>
+
+                <!-- CARD 2: JUMLAH BIDANG -->
+                <a href="iklan.html" class="dribbble-stat-card">
+                    <div class="dribbble-card-media dribbble-media-tint-2">
+                        <img src="blue.jpg" alt="Jumlah Bidang">
+                    </div>
+                    <div class="dribbble-card-panel">
+                        <span class="dribbble-card-kicker">Jumlah Bidang</span>
+                        <h4 id="stat-bidang" class="dribbble-card-number">1</h4>
+                        <span class="dribbble-card-link">SEE MORE <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </a>
+
+                <!-- CARD 3: PESERTA -->
+                <a href="mohon.html" class="dribbble-stat-card">
+                    <div class="dribbble-card-media dribbble-media-tint-3">
+                        <img src="blue.jpg" alt="Peserta">
+                    </div>
+                    <div class="dribbble-card-panel">
+                        <span class="dribbble-card-kicker">Peserta</span>
+                        <h4 id="stat-peserta" class="dribbble-card-number">0</h4>
+                        <span class="dribbble-card-link">SEE MORE <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </a>
+
+                <!-- CARD 4: PUSAT LATIHAN -->
+                <a href="takwim.html" class="dribbble-stat-card">
+                    <div class="dribbble-card-media dribbble-media-tint-4">
+                        <img src="blue.jpg" alt="Pusat Latihan">
+                    </div>
+                    <div class="dribbble-card-panel">
+                        <span class="dribbble-card-kicker">Pusat Latihan</span>
+                        <h4 id="stat-pusat" class="dribbble-card-number">1</h4>
+                        <span class="dribbble-card-link">SEE MORE <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </a>
+
+            </div>
+
         </div>
     </section>
 
@@ -1534,6 +2323,8 @@
     <script>
         let currentUser = null;
         let allCurrentCourses = [];
+        let currentKptSlide = 0;
+        let kptSlideInterval = null;
 
         document.addEventListener('DOMContentLoaded', () => {
             const storedUser = sessionStorage.getItem('user') || localStorage.getItem('user');
@@ -1546,6 +2337,8 @@
             setupNavbar();
             checkAdminMode();
             loadAdminCoursesOnly();
+            loadHomeSorotanAktiviti();
+            resetKptAutoSlide();
             
             if (typeof loadDashboardStats === 'function') {
                 loadDashboardStats();
@@ -1569,6 +2362,89 @@
             });
         });
 
+        /* =========================================================
+           FUNGSI MUATKAN SOROTAN AKTIVITI DI HALAMAN UTAMA
+           ========================================================= */
+        function loadHomeSorotanAktiviti() {
+            const grid = document.getElementById('home-sorotan-grid');
+            if (!grid) return;
+
+            let savedSorotan = [];
+            try {
+                savedSorotan = JSON.parse(localStorage.getItem('mosti_sorotan_aktiviti') || '[]');
+            } catch (e) { console.error(e); }
+
+            if (savedSorotan.length > 0) {
+                const latestFour = savedSorotan.slice(0, 4);
+                let html = '';
+
+                latestFour.forEach((item) => {
+                    const coverImg = (item.images && item.images.length > 0) ? item.images[0] : 'blue.jpg';
+                    const captionTitle = item.kursusTajuk || item.deskripsi || 'Sorotan Aktiviti Kursus MOSTI';
+                    html += `
+                        <a href="sorotan_aktiviti.html?id=${encodeURIComponent(item.id)}" class="kpt-activity-card">
+                            <img src="${coverImg}" alt="${captionTitle}">
+                            <div class="kpt-activity-caption">${captionTitle}</div>
+                        </a>
+                    `;
+                });
+
+                const defaultCards = [
+                    { img: 'blue.jpg', title: 'Majlis Pelancaran Program Latihan & Pembangunan Bakat STIE MOSTI' },
+                    { img: 'blue.jpg', title: 'Persidangan Teknologi Digital, Kecerdasan Buatan & Inovasi Kebangsaan' },
+                    { img: 'blue.jpg', title: 'Sesi Libat Urus Kepakaran Penyelidikan & Kolaborasi Industri' },
+                    { img: 'blue.jpg', title: 'Himpunan Peserta Bengkel Kemahiran & Pemerkasaan Modal Insan' }
+                ];
+
+                for (let i = latestFour.length; i < 4; i++) {
+                    html += `
+                        <a href="sorotan_aktiviti.html" class="kpt-activity-card">
+                            <img src="${defaultCards[i].img}" alt="${defaultCards[i].title}">
+                            <div class="kpt-activity-caption">${defaultCards[i].title}</div>
+                        </a>
+                    `;
+                }
+
+                grid.innerHTML = html;
+            }
+        }
+
+        /* =========================================================
+           FUNGSI SLIDER CAROUSEL GAYA KPT
+           ========================================================= */
+        function showKptSlide(index) {
+            const slides = document.querySelectorAll('.kpt-slide');
+            const thumbs = document.querySelectorAll('.kpt-thumb-item');
+            if (!slides.length) return;
+
+            if (index >= slides.length) currentKptSlide = 0;
+            else if (index < 0) currentKptSlide = slides.length - 1;
+            else currentKptSlide = index;
+
+            slides.forEach((s, i) => s.classList.toggle('active', i === currentKptSlide));
+            thumbs.forEach((t, i) => t.classList.toggle('active', i === currentKptSlide));
+        }
+
+        function changeKptSlide(step) {
+            showKptSlide(currentKptSlide + step);
+            resetKptAutoSlide();
+        }
+
+        function goToKptSlide(index) {
+            showKptSlide(index);
+            resetKptAutoSlide();
+        }
+
+        function resetKptAutoSlide() {
+            clearInterval(kptSlideInterval);
+            kptSlideInterval = setInterval(() => {
+                showKptSlide(currentKptSlide + 1);
+            }, 5000);
+        }
+
+        /* =========================================================
+           FUNGSI DASHBOARD & KURSUS SEDIA ADA
+           ========================================================= */
         async function updatePesertaCount() {
             const el = document.getElementById('stat-peserta');
             if (!el) return;
@@ -1675,13 +2551,17 @@
         function checkAdminMode() {
             const adminAppSection = document.getElementById('admin-applications-section');
             const btnEditSemua = document.getElementById('btn-edit-semua-kursus');
+            const btnTambahSorotan = document.getElementById('btn-tambah-sorotan-admin');
+
             if (currentUser && currentUser.role === 'admin') {
                 if (adminAppSection) adminAppSection.style.display = 'block';
                 if (btnEditSemua) btnEditSemua.style.display = 'inline-flex';
+                if (btnTambahSorotan) btnTambahSorotan.style.display = 'inline-flex';
                 loadAllUserApplicationsForAdmin();
             } else {
                 if (adminAppSection) adminAppSection.style.display = 'none';
                 if (btnEditSemua) btnEditSemua.style.display = 'none';
+                if (btnTambahSorotan) btnTambahSorotan.style.display = 'none';
             }
         }
 
