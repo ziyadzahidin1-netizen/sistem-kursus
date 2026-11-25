@@ -22,7 +22,7 @@
             color: #334155;
         }
 
-        /* Navbar Rasmi Gaya Portal Kerajaan (Sama dengan sorotan_aktiviti.html) */
+        /* Navbar Rasmi Gaya Portal Kerajaan */
         .top-admin-header {
             background-color: #ffffff;
             color: #0b1633;
@@ -263,6 +263,11 @@
             background-color: #0b1633;
         }
 
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
         .btn-submit.update-mode {
             background-color: #0284c7;
         }
@@ -288,7 +293,7 @@
             color: #0f172a;
         }
 
-        /* Senarai Sorotan Sedia Ada (Gaya Grid Bersih MOHE) */
+        /* Senarai Sorotan Sedia Ada */
         .list-section-title {
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 1.4rem;
@@ -470,7 +475,7 @@
 
     <main class="page-container">
         <h1 class="page-main-title">Pengurusan Sorotan Aktiviti Kursus</h1>
-        <p class="page-subtitle">Tambah sorotan baharu atau kemas kini gambar dan laporan bergambar bagi setiap kursus sedia ada.</p>
+        <p class="page-subtitle">Tambah sorotan baharu atau kemas kini gambar dan laporan bergambar bagi setiap kursus sedia ada (Disimpan ke Database Supabase).</p>
 
         <!-- BORANG TAMBAH / EDIT SOROTAN AKTIVITI -->
         <section class="form-section" id="formSectionContainer">
@@ -526,8 +531,10 @@
         </section>
     </main>
 
+    <script src="script.js"></script>
     <script>
         let selectedImagesBase64 = [];
+        let cachedSorotanList = [];
 
         document.addEventListener('DOMContentLoaded', () => {
             verifyAdminAccess();
@@ -616,20 +623,12 @@
             renderImagePreviews();
         }
 
-        // Fungsi Edit untuk setiap kursus
         function startEditSorotan(id) {
-            let list = [];
-            try {
-                list = JSON.parse(localStorage.getItem('mosti_sorotan_aktiviti') || '[]');
-            } catch (e) {}
-
-            const targetItem = list.find(item => item.id === id);
+            const targetItem = cachedSorotanList.find(item => item.id === id);
             if (!targetItem) return;
 
-            // Masukkan ID item yang sedang diedit
             document.getElementById('editingItemId').value = targetItem.id;
 
-            // Pilih kursus dalam dropdown (tambah option jika kursus tiada dalam senarai semasa)
             const selectEl = document.getElementById('kursusSelect');
             let optionExists = Array.from(selectEl.options).some(opt => opt.value === targetItem.kursusTajuk);
             if (!optionExists) {
@@ -642,12 +641,10 @@
             }
             selectEl.value = targetItem.kursusTajuk;
 
-            // Isi semula teks penerangan & gambar sedia ada
             document.getElementById('deskripsiInput').value = targetItem.deskripsi || '';
             selectedImagesBase64 = Array.isArray(targetItem.images) ? [...targetItem.images] : [];
             renderImagePreviews();
 
-            // Tukar paparan borang kepada Mod Edit
             document.getElementById('formSectionContainer').classList.add('editing-mode');
             document.getElementById('formHeadingTitle').textContent = 'Kemas Kini Sorotan Aktiviti Kursus';
             document.getElementById('editingModeBadge').style.display = 'inline-block';
@@ -657,8 +654,6 @@
             submitBtn.innerHTML = '<i class="fa-solid fa-check"></i> Kemas Kini Sorotan Aktiviti';
 
             document.getElementById('cancelEditBtn').style.display = 'inline-block';
-
-            // Skrol lancar ke bahagian atas borang
             document.getElementById('formSectionContainer').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
@@ -700,80 +695,76 @@
                 return;
             }
 
-            let existingList = [];
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+
             try {
-                existingList = JSON.parse(localStorage.getItem('mosti_sorotan_aktiviti') || '[]');
-            } catch (e) {}
-
-            if (editingId) {
-                // Kemas kini rekod sedia ada
-                const idx = existingList.findIndex(item => item.id === editingId);
-                if (idx !== -1) {
-                    existingList[idx] = {
-                        ...existingList[idx],
-                        kursusTajuk: kursusTajuk,
-                        tarikh: tarikhKursus || existingList[idx].tarikh,
-                        tempat: tempatKursus || existingList[idx].tempat,
-                        deskripsi: deskripsi,
-                        images: selectedImagesBase64,
-                        updatedAt: new Date().toLocaleDateString('ms-MY', { day: 'numeric', month: 'long', year: 'numeric' })
-                    };
-                }
-                localStorage.setItem('mosti_sorotan_aktiviti', JSON.stringify(existingList));
-
-                try {
-                    await fetch(`/api/sorotan/${encodeURIComponent(editingId)}`, {
+                if (editingId) {
+                    const res = await fetch(`/api/sorotan/${encodeURIComponent(editingId)}`, {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(existingList[idx])
+                        body: JSON.stringify({
+                            kursusTajuk,
+                            tarikh: tarikhKursus,
+                            tempat: tempatKursus,
+                            deskripsi,
+                            images: selectedImagesBase64
+                        })
                     });
-                } catch (e) {}
 
-                alert('Sorotan aktiviti berjaya dikemas kini!');
-            } else {
-                // Tambah rekod baharu
-                const newEntry = {
-                    id: 'sorotan_' + Date.now(),
-                    kursusTajuk: kursusTajuk,
-                    tarikh: tarikhKursus,
-                    tempat: tempatKursus,
-                    deskripsi: deskripsi,
-                    images: selectedImagesBase64,
-                    createdAt: new Date().toLocaleDateString('ms-MY', { day: 'numeric', month: 'long', year: 'numeric' })
-                };
+                    const result = await res.json();
+                    if (!res.ok) throw new Error(result.error || 'Gagal mengemas kini rekod di database.');
+                    alert('Sorotan aktiviti berjaya dikemas kini dalam database!');
+                } else {
+                    const newEntry = {
+                        id: 'sorotan_' + Date.now(),
+                        kursusTajuk,
+                        tarikh: tarikhKursus,
+                        tempat: tempatKursus,
+                        deskripsi,
+                        images: selectedImagesBase64
+                    };
 
-                existingList.unshift(newEntry);
-                localStorage.setItem('mosti_sorotan_aktiviti', JSON.stringify(existingList));
-
-                try {
-                    await fetch('/api/sorotan', {
+                    const res = await fetch('/api/sorotan', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(newEntry)
                     });
-                } catch (e) {}
 
-                alert('Sorotan aktiviti baharu berjaya disimpan!');
+                    const result = await res.json();
+                    if (!res.ok) throw new Error(result.error || 'Gagal menyimpan rekod ke database.');
+                    alert('Sorotan aktiviti baharu berjaya disimpan ke database!');
+                }
+
+                resetFormToCreateMode();
+                await renderSavedSorotanList();
+            } catch (err) {
+                alert('Ralat Database: ' + err.message);
+            } finally {
+                submitBtn.disabled = false;
             }
-
-            resetFormToCreateMode();
-            renderSavedSorotanList();
         }
 
-        function renderSavedSorotanList() {
+        async function renderSavedSorotanList() {
             const container = document.getElementById('savedSorotanContainer');
-            let list = [];
-            try {
-                list = JSON.parse(localStorage.getItem('mosti_sorotan_aktiviti') || '[]');
-            } catch (e) {}
+            container.innerHTML = '<p style="color: #64748b; grid-column: 1 / -1;">Memuatkan data dari database...</p>';
 
-            if (list.length === 0) {
+            try {
+                const res = await fetch('/api/sorotan');
+                if (!res.ok) throw new Error('Ralat pelayan');
+                cachedSorotanList = await res.json();
+            } catch (e) {
+                container.innerHTML = '<p style="color: #dc2626; grid-column: 1 / -1;">Gagal menyambung ke database Supabase.</p>';
+                return;
+            }
+
+            if (cachedSorotanList.length === 0) {
                 container.innerHTML = '<p style="color: #64748b; grid-column: 1 / -1;">Belum ada sorotan aktiviti baharu ditambah oleh admin.</p>';
                 return;
             }
 
             container.innerHTML = '';
-            list.forEach((item) => {
+            cachedSorotanList.forEach((item) => {
                 const thumb = (item.images && item.images.length > 0) ? item.images[0] : 'blue.jpg';
                 const totalImg = item.images ? item.images.length : 1;
                 const metaText = [item.tarikh, item.tempat].filter(Boolean).join(' | ');
@@ -810,17 +801,23 @@
             });
         }
 
-        function deleteSorotan(id) {
-            if (!confirm('Adakah anda pasti mahu memadam sorotan aktiviti ini?')) return;
+        async function deleteSorotan(id) {
+            if (!confirm('Adakah anda pasti mahu memadam sorotan aktiviti ini dari database?')) return;
 
-            if (document.getElementById('editingItemId').value === id) {
-                resetFormToCreateMode();
+            try {
+                const res = await fetch(`/api/sorotan/${encodeURIComponent(id)}`, {
+                    method: 'DELETE'
+                });
+                const result = await res.json();
+                if (!res.ok) throw new Error(result.error || 'Gagal memadam rekod.');
+
+                if (document.getElementById('editingItemId').value === id) {
+                    resetFormToCreateMode();
+                }
+                await renderSavedSorotanList();
+            } catch (err) {
+                alert('Ralat memadam data: ' + err.message);
             }
-
-            let list = JSON.parse(localStorage.getItem('mosti_sorotan_aktiviti') || '[]');
-            list = list.filter(item => item.id !== id);
-            localStorage.setItem('mosti_sorotan_aktiviti', JSON.stringify(list));
-            renderSavedSorotanList();
         }
     </script>
 </body>

@@ -144,7 +144,14 @@ function initRealtimeListener() {
                 if (typeof loadAdminCoursesOnly === 'function') loadAdminCoursesOnly();
                 if (typeof renderAdminCoursesOnly === 'function') renderAdminCoursesOnly();
                 if (typeof loadCourses === 'function') loadCourses();
+                if (typeof loadCourseDropdown === 'function') loadCourseDropdown();
                 loadDashboardStats();
+            }
+
+            if (data.type === 'SOROTAN_UPDATED') {
+                if (typeof renderSavedSorotanList === 'function') renderSavedSorotanList();
+                if (typeof loadSorotanAktiviti === 'function') loadSorotanAktiviti();
+                if (typeof loadHomeSorotanAktiviti === 'function') loadHomeSorotanAktiviti();
             }
 
             if (data.type === 'APPLICATION_UPDATED') {

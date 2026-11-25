@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang Kami - Portal Kursus MOSTI</title>
+    
+    <!-- Pautan ke Fail CSS Asing -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Google Fonts: Plus Jakarta Sans, Open Sans & Roboto -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f8fafc;
+            color: #333333;
+        }
+
+        body, button, input, select, textarea {
+            font-family: 'Roboto', 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif !important;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* =========================================================
+           BAR UTILITI GELAP PALING ATAS (SAMA SEPERTI INDEX.HTML)
+           ========================================================= */
+        .kpt-top-utility-bar {
+            background-color: #0b1633;
+            color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 7px 50px;
+            font-size: 0.85rem;
+        }
+
+        .utility-left, .utility-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .kpt-top-utility-bar a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.2s ease, transform 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .kpt-top-utility-bar a:hover {
+            color: #ef7c00;
+            transform: scale(1.1);
+        }
+
+        .utility-divider {
+            width: 1px;
+            height: 14px;
+            background-color: rgba(255, 255, 255, 0.25);
+            margin: 0 2px;
+        }
+
+        .lang-flag {
+            width: 20px;
+            height: 14px;
+            object-fit: cover;
+            border-radius: 2px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* =========================================================
+           GAYA NAVBAR (SAMA SEPERTI INDEX.HTML)
+           ========================================================= */
+        .navbar-header-container {
+            background-color: #ffffff !important;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 50px;
+            border-bottom: 1px solid #f1f5f9;
+            background-color: #08082c;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 44px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .header-title-group {
+            display: flex;
+            flex-direction: column;
+            text-transform: uppercase;
+            color: #ffffff;
+            line-height: 1.15;
+            border-left: 1px solid #cbd5e1;
+            padding-left: 12px;
+        }
+
+        .header-subtitle {
+            font-size: 0.65rem;
+            letter-spacing: 0.5px;
+            font-weight: 300;
+            color: #fcfeff;
+        }
+
+        .header-english-title {
+            font-size: 0.72rem;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+            color: #ffffff;
+        }
+
+        .header-tagline {
+            font-size: 0.58rem;
+            letter-spacing: 0.8px;
+            margin-top: 1px;
+            font-weight: 300;
+            color: #ef7c00;
+        }
+
+        .header-top-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.85rem;
+        }
+
+        .top-auth-link {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.08);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .top-auth-link:hover {
+            background: #ef7c00;
+            border-color: #ef7c00;
+            color: #ffffff;
+        }
+
+        .mobile-hamburger-btn {
+            display: none;
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            color: #003d7c;
+            width: 38px;
+            height: 38px;
+            border-radius: 6px;
+            font-size: 1.15rem;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .mobile-hamburger-btn:hover {
+            background: #ef7c00;
+            border-color: #ef7c00;
+            color: #ffffff;
+        }
+
+        .header-bottom-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 50px;
+            background-color: #ffffff;
+        }
+
+        .nav-links-sub {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links-sub a {
+            color: #334155;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            padding: 12px 0;
+            display: inline-block;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .nav-links-sub a:hover, .nav-links-sub a.active {
+            color: #003d7c;
+            font-weight: 600;
+        }
+
+        .nav-links-sub a.active::after, .nav-links-sub a:hover::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #ef7c00;
+        }
+
+        .nav-search-box {
+            display: flex;
+            align-items: center;
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 20px;
+            padding: 4px 12px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-search-box:focus-within {
+            background: #ffffff;
+            border-color: #003d7c;
+            box-shadow: 0 0 0 3px rgba(0, 61, 124, 0.1);
+        }
+
+        .nav-search-box input {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 0.82rem;
+            color: #334155;
+            width: 150px;
+        }
+
+        .nav-search-box button {
+            background: transparent;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+            padding: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-search-box button:hover {
+            color: #003d7c;
+        }
+
+        /* User Dropdown Gaya Index */
+        .user-dropdown-container {
+            position: relative;
+            display: inline-block;
+        }
+        .user-dropdown-btn {
+            background: #09042f;
+            color: #ffffff;
+            border: 1px solid #24426a;
+            font-size: 0.88rem;
+            font-weight: 400;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            transition: background 0.2s ease;
+        }
+        .user-dropdown-btn:hover {
+            background: rgba(255, 255, 255, 0.18) !important;
+        }
+        .user-avatar-small {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid #cbd5e1;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            margin-top: 8px;
+            background-color: #ffffff;
+            min-width: 200px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            overflow: hidden;
+            z-index: 1001;
+            border: 1px solid #e2e8f0;
+        }
+        .dropdown-menu.show {
+            display: block;
+        }
+        .dropdown-menu a, .dropdown-menu button {
+            color: #1e293b;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            width: 100%;
+            box-sizing: border-box;
+            border: none;
+            background: none;
+            text-align: left;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .dropdown-menu a:hover, .dropdown-menu button:hover {
+            background-color: #f1f5f9;
+        }
+        .dropdown-menu .logout-item {
+            color: #ef4444;
+            border-top: 1px solid #e2e8f0;
+        }
+        .dropdown-menu .logout-item:hover {
+            background-color: #fef2f2;
+        }
+
+        /* =========================================================
+           HERO BANNER TENTANG KAMI
+           ========================================================= */
+        .about-hero-banner {
+            background: linear-gradient(135deg, #08082c 0%, #0b1633 50%, #1e3a8a 100%);
+            color: #ffffff;
+            padding: 80px 24px 100px 24px;
+            text-align: center;
+        }
+
+        .about-hero-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .about-hero-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            background-color: rgba(239, 124, 0, 0.18);
+            border: 1px solid rgba(239, 124, 0, 0.45);
+            color: #fdba74;
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            font-size: 0.78rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        .about-hero-banner h1 {
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            font-size: 2.6rem;
+            font-weight: 300;
+            letter-spacing: -0.5px;
+            margin: 0 0 18px 0;
+            line-height: 1.25;
+        }
+
+        .about-hero-banner p {
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            font-size: 1.08rem;
+            font-weight: 300;
+            color: #cbd5e1;
+            max-width: 720px;
+            margin: 0 auto;
+            line-height: 1.65;
+        }
+
+        /* =========================================================
+           KAD STATISTIK (DENGAN TRANSITION SEPERTI INDEX.HTML)
+           ========================================================= */
+        .about-stats-wrapper {
+            max-width: 1120px;
+            margin: -48px auto 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .about-stats-box {
+            background-color: #ffffff;
+            border-radius: 14px;
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+            border: 1px solid #e2e8f0;
+            padding: 32px 24px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .about-stats-box:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 36px rgba(15, 23, 42, 0.12);
+        }
+
+        .stat-item {
+            padding: 10px 8px;
+            border-radius: 10px;
+            transition: transform 0.25s ease, background-color 0.25s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-3px);
+            background-color: #f8fafc;
+        }
+
+        .stat-num-blue {
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            font-size: 2.2rem;
+            font-weight: 400;
+            color: #003d7c;
+            transition: transform 0.25s ease;
+            display: inline-block;
+        }
+
+        .stat-num-orange {
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            font-size: 2.2rem;
+            font-weight: 400;
+            color: #ef7c00;
+            transition: transform 0.25s ease;
+            display: inline-block;
+        }
+
+        .stat-item:hover .stat-num-blue,
+        .stat-item:hover .stat-num-orange {
+            transform: scale(1.06);
+        }
+
+        .stat-label {
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            font-size: 0.9rem;
+            font-weight: 300;
+            color: #555555;
+            margin-top: 4px;
+        }
+
+        /* =========================================================
+           SEKSYEN LATAR BELAKANG MOSTI (KEMAS & SELARI KIRI-KANAN)
+           ========================================================= */
+        .mosti-history-wrapper {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 75px 50px;
+            background-color: #f8fafc;
+        }
+
+        .mosti-history-grid {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid !important;
+            grid-template-columns: 42% 1fr !important;
+            gap: 48px !important;
+            align-items: stretch !important;
+        }
+
+        .mosti-history-media {
+            position: relative;
+            width: 100%;
+            min-height: 480px;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+        }
+
+        .mosti-history-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .mosti-history-quote {
+            position: absolute;
+            bottom: 22px;
+            left: 22px;
+            right: 22px;
+            background-color: rgba(8, 8, 44, 0.92);
+            backdrop-filter: blur(6px);
+            border-left: 4px solid #ef7c00;
+            color: #ffffff;
+            padding: 16px 20px;
+            border-radius: 10px;
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            font-size: 0.9rem;
+            font-weight: 300;
+            line-height: 1.55;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .mosti-history-content {
+            min-width: 0;
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .about-kicker {
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            color: #ef7c00;
+            font-size: 0.85rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0 0 8px 0;
+        }
+
+        .mosti-history-content h2 {
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            font-size: 2.25rem;
+            font-weight: 300;
+            letter-spacing: -0.5px;
+            color: #222222;
+            margin: 0 0 22px 0;
+            line-height: 1.25;
+        }
+
+        .mosti-history-list {
+            margin: 0;
+            padding: 0 0 0 20px;
+            color: #444444;
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            font-size: 0.96rem;
+            font-weight: 300;
+            line-height: 1.7;
+            text-align: justify;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .mosti-history-list li {
+            margin-bottom: 14px;
+            padding-left: 4px;
+        }
+
+        .mosti-history-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .mosti-history-list li strong {
+            font-weight: 500;
+            color: #003d7c;
+        }
+
+        /* =========================================================
+           SEKSYEN MISI & VISI
+           ========================================================= */
+        .about-mv-section {
+            background-color: #f1f5f9;
+            border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 70px 50px;
+        }
+
+        .about-mv-container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .about-mv-header {
+            text-align: center;
+            max-width: 680px;
+            margin: 0 auto 45px auto;
+        }
+
+        .about-mv-header h2 {
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            font-size: 2.2rem;
+            font-weight: 300;
+            letter-spacing: -0.5px;
+            color: #333333;
+            margin: 0 0 12px 0;
+        }
+
+        .about-mv-header p {
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            color: #555555;
+            font-size: 1.05rem;
+            font-weight: 300;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .about-mv-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+
+        .mv-card {
+            background-color: #ffffff;
+            padding: 32px 28px;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .mv-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.07);
+        }
+
+        .mv-icon-box {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .mv-icon-blue { background-color: #dbeafe; color: #003d7c; }
+        .mv-icon-orange { background-color: #ffedd5; color: #ef7c00; }
+        .mv-icon-green { background-color: #d1fae5; color: #047857; }
+
+        .mv-card h3 {
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: #222222;
+            margin: 0 0 12px 0;
+        }
+
+        .mv-card p {
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            color: #555555;
+            font-size: 0.95rem;
+            font-weight: 300;
+            line-height: 1.65;
+            margin: 0;
+        }
+
+        /* =========================================================
+           SEKSYEN CTA
+           ========================================================= */
+        .about-cta-wrapper {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 70px 50px;
+        }
+
+        .about-cta-card {
+            background: linear-gradient(90deg, #0b1633 0%, #1e3a8a 100%);
+            border-radius: 20px;
+            padding: 55px 32px;
+            text-align: center;
+            color: #ffffff;
+            box-shadow: 0 12px 30px rgba(11, 22, 51, 0.18);
+        }
+
+        .about-cta-card h2 {
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            font-size: 2.15rem;
+            font-weight: 300;
+            letter-spacing: -0.4px;
+            margin: 0 0 14px 0;
+        }
+
+        .about-cta-card p {
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            color: #e2e8f0;
+            font-size: 1.05rem;
+            font-weight: 300;
+            max-width: 620px;
+            margin: 0 auto 28px auto;
+            line-height: 1.65;
+        }
+
+        .about-cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-cta-orange {
+            background-color: #ef7c00;
+            color: #ffffff;
+            text-decoration: none;
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            font-weight: 400;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+            padding: 13px 30px;
+            border-radius: 2px;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-cta-orange:hover {
+            background-color: #d96b00;
+        }
+
+        .btn-cta-outline {
+            background-color: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            color: #ffffff;
+            text-decoration: none;
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            font-weight: 400;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+            padding: 13px 30px;
+            border-radius: 2px;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-cta-outline:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* =========================================================
+           FOOTER GAYA INDEX.HTML (NUS STYLE FOOTER - ROBOTO 300)
+           ========================================================= */
+        .nus-style-footer {
+            background-color: #f4f4f6;
+            color: #333333;
+            padding: 65px 20px 45px 20px;
+            text-align: center;
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            font-weight: 300 !important;
+            position: relative;
+        }
+
+        .nus-footer-title {
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            font-size: 2.3rem !important;
+            font-weight: 300 !important;
+            color: #333333 !important;
+            margin: 0 0 20px 0 !important;
+            letter-spacing: -0.5px !important;
+        }
+
+        .nus-footer-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            font-size: 0.98rem;
+            font-weight: 300;
+            color: #444444;
+            margin-bottom: 35px;
+            line-height: 1.65;
+        }
+
+        .nus-footer-info-item {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 10px;
+            max-width: 600px;
+        }
+
+        .nus-footer-info-item i {
+            color: #09042f;
+            font-size: 1.05rem;
+            margin-top: 4px;
+        }
+
+        .nus-social-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
+        }
+
+        .nus-social-btn {
+            width: 40px;
+            height: 40px;
+            background-color: #ffffff;
+            color: #003366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .nus-social-btn:hover {
+            background-color: #ef7c00;
+            color: #ffffff;
+            transform: translateY(-3px);
+        }
+
+        .nus-footer-bottom {
+            background-color: #002244;
+            padding: 22px 20px;
+            text-align: center;
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            font-size: 0.85rem;
+            font-weight: 300;
+            color: #cbd5e1;
+            position: relative;
+        }
+
+        .nus-footer-bottom p {
+            margin: 0;
+        }
+
+        .nus-footer-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+
+        .nus-footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-weight: 300;
+            transition: color 0.2s;
+        }
+
+        .nus-footer-links a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        .scroll-top-btn {
+            position: absolute;
+            right: 25px;
+            bottom: 18px;
+            background-color: #004080;
+            color: #ffffff;
+            width: 36px;
+            height: 36px;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .scroll-top-btn:hover {
+            background-color: #ef7c00;
+        }
+
+        /* =========================================================
+           SUSUNAN RESPONSIF TABLET & MOBILE
+           ========================================================= */
+        @media screen and (max-width: 992px) {
+            .mosti-history-wrapper,
+            .about-mv-section,
+            .about-cta-wrapper {
+                padding: 50px 24px;
+            }
+            .mosti-history-grid {
+                grid-template-columns: 1fr !important;
+                gap: 32px !important;
+            }
+            .mosti-history-media {
+                min-height: 320px;
+                height: 320px;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .kpt-top-utility-bar {
+                padding: 6px 12px;
+                font-size: 0.78rem;
+            }
+            .utility-left, .utility-right {
+                gap: 10px;
+            }
+            .header-top-row {
+                padding: 7px 12px !important;
+                gap: 6px;
+            }
+            .logo {
+                gap: 7px !important;
+                max-width: 68%;
+            }
+            .logo-img {
+                height: 26px !important;
+                flex-shrink: 0;
+            }
+            .header-title-group {
+                padding-left: 7px !important;
+                line-height: 1.1 !important;
+                overflow: hidden;
+            }
+            .header-subtitle {
+                font-size: 0.45rem !important;
+            }
+            .header-english-title {
+                font-size: 0.48rem !important;
+                line-height: 1.15;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            .header-tagline {
+                font-size: 0.42rem !important;
+            }
+            .header-top-right {
+                gap: 8px !important;
+            }
+            .top-auth-link {
+                padding: 4px 10px;
+                font-size: 0.75rem;
+            }
+            .mobile-hamburger-btn {
+                display: flex !important;
+                width: 30px !important;
+                height: 30px !important;
+                font-size: 0.95rem !important;
+                border-radius: 5px !important;
+            }
+            .user-avatar-small {
+                width: 24px !important;
+                height: 24px !important;
+            }
+            .user-dropdown-btn span {
+                display: none;
+            }
+            .user-dropdown-btn {
+                padding: 2px !important;
+                gap: 4px !important;
+            }
+            .header-bottom-nav {
+                display: none;
+                flex-direction: column !important;
+                align-items: stretch !important;
+                padding: 10px 14px 14px 14px !important;
+                background-color: #ffffff;
+                border-top: 1px solid #e2e8f0;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+                gap: 10px;
+            }
+            .header-bottom-nav.mobile-open {
+                display: flex !important;
+            }
+            .nav-links-sub {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 2px !important;
+                width: 100%;
+            }
+            .nav-links-sub li {
+                width: 100%;
+                border-bottom: 1px solid #f1f5f9;
+            }
+            .nav-links-sub li:last-child {
+                border-bottom: none;
+            }
+            .nav-links-sub a {
+                display: flex !important;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+                font-size: 0.84rem !important;
+                padding: 8px 4px !important;
+                box-sizing: border-box;
+            }
+            .nav-links-sub a.active::after, .nav-links-sub a:hover::after {
+                display: none;
+            }
+            .nav-links-sub a.active {
+                background-color: #f8fafc;
+                border-left: 3px solid #ef7c00;
+                padding-left: 10px !important;
+            }
+            .nav-search-box {
+                width: 100% !important;
+                box-sizing: border-box;
+                padding: 5px 10px !important;
+                border-radius: 6px !important;
+            }
+            .nav-search-box input {
+                width: 100% !important;
+                font-size: 0.82rem !important;
+            }
+            .about-hero-banner h1 {
+                font-size: 1.75rem;
+            }
+            .about-stats-box {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .mosti-history-wrapper {
+                padding: 40px 16px;
+            }
+            .mosti-history-content h2 {
+                font-size: 1.65rem;
+            }
+            .mosti-history-media {
+                min-height: 250px;
+                height: 250px;
+            }
+            .mosti-history-quote {
+                bottom: 12px;
+                left: 12px;
+                right: 12px;
+                padding: 12px 14px;
+                font-size: 0.82rem;
+            }
+            .mosti-history-list {
+                font-size: 0.9rem;
+                text-align: left;
+            }
+            .about-mv-header h2 {
+                font-size: 1.65rem;
+            }
+            .about-mv-grid {
+                grid-template-columns: 1fr;
+            }
+            .about-cta-card h2 {
+                font-size: 1.65rem;
+            }
+            .nus-style-footer {
+                padding: 38px 14px 28px 14px !important;
+            }
+            .nus-footer-title {
+                font-size: 1.65rem !important;
+                margin-bottom: 12px !important;
+            }
+            .nus-footer-info {
+                font-size: 0.86rem !important;
+                margin-bottom: 20px !important;
+            }
+            .nus-footer-bottom {
+                font-size: 0.78rem !important;
+                padding: 15px 12px !important;
+            }
+            .scroll-top-btn {
+                position: static;
+                margin: 12px auto 0 auto;
+                width: 30px !important;
+                height: 30px !important;
+            }
+        }
+    </style>
+</head>
+<body id="top-page">
+
+    <!-- =========================================================
+         NAVBAR SAMA SEPERTI INDEX.HTML
+         ========================================================= -->
+    <header class="navbar-header-container">
+        
+        <!-- BAR UTILITI GELAP PALING ATAS -->
+        <div class="kpt-top-utility-bar">
+            <div class="utility-left">
+                <a href="https://www.facebook.com/officialmosti/?locale=ms_MY" target="_blank" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://x.com" target="_blank" title="X"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="https://www.instagram.com/officialmosti/?hl=en" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.youtube.com" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+
+            <div class="utility-right">
+                <a href="#contact-section" title="Soalan Lazim (FAQ)"><i class="fa-regular fa-comment-dots"></i></a>
+                <a href="tel:+60388858000" title="Hubungi Kami"><i class="fa-solid fa-phone"></i></a>
+                <a href="#contact-section" title="Aduan & Maklum Balas"><i class="fa-solid fa-headset"></i></a>
+                <a href="#kisah-kami" title="Peta Laman / Direktori"><i class="fa-solid fa-sitemap"></i></a>
+                
+                <span class="utility-divider"></span>
+                
+                <a href="?lang=ms" title="Bahasa Melayu">
+                    <img src="https://flagcdn.com/w40/my.png" alt="Bahasa Melayu" class="lang-flag">
+                </a>
+                <a href="?lang=en" title="English">
+                    <img src="https://flagcdn.com/w40/gb.png" alt="English" class="lang-flag">
+                </a>
+            </div>
+        </div>
+
+        <div class="header-top-row">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Logo Portal Kursus MOSTI" class="logo-img">
+                <div class="header-title-group">
+                    <span class="header-subtitle">PORTAL KURSUS RASMI</span>
+                    <span class="header-english-title">MINISTRY OF SCIENCE, TECHNOLOGY AND INNOVATION</span>
+                    <span class="header-tagline">SAINS.TEKNOLOGI.INOVASI.BERSAMA</span>
+                </div>
+            </a>
+
+            <div class="header-top-right">
+                <span id="user-nav-container">
+                    <a href="login.html" class="top-auth-link"><i class="fa-solid fa-user"></i> Sign In</a>
+                </span>
+                <button type="button" id="mobile-menu-btn" class="mobile-hamburger-btn" onclick="toggleMobileNav()" aria-label="Buka Menu Navigasi" aria-expanded="false">
+                    <i class="fa-solid fa-bars" id="hamburger-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="header-bottom-nav" id="mobile-nav-drawer">
+            <nav>
+                <ul class="nav-links-sub" id="nav-links">
+                    <li><a href="index.html" onclick="closeMobileNav()">Utama</a></li>
+                    <li><a href="iklan.html" onclick="closeMobileNav()">Jenis &amp; Iklan Kursus</a></li>
+                    <li><a href="takwim.html" onclick="closeMobileNav()">Takwim Kursus</a></li>
+                    <li><a href="mohon.html" onclick="closeMobileNav()">Mohon Kursus</a></li>
+                    <li><a href="#contact-section" onclick="closeMobileNav()">Hubungi Kami</a></li>
+                    <li><a href="about.html" class="active" onclick="closeMobileNav()">Tentang Kami</a></li>
+                </ul>
+            </nav>
+            
+            <div class="nav-search-box">
+                <input type="text" id="top-nav-search-input" placeholder="Cari kursus di sini..." onkeypress="if(event.key === 'Enter') handleNavSearch()">
+                <button type="button" onclick="handleNavSearch()" title="Cari">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Bahagian Hero -->
+    <section class="about-hero-banner">
+        <div class="about-hero-inner">
+            <span class="about-hero-badge">Kementerian Sains, Teknologi dan Inovasi (MOSTI)</span>
+            <h1>Menerajui Masa Depan Digital Melalui Sains, Teknologi &amp; Inovasi</h1>
+            <p>
+                Portal Kursus Rasmi MOSTI komited dalam memperkasa modal insan dan bakat negara melalui program latihan, bengkel kemahiran, dan pembangunan profesional STIE.
+            </p>
+        </div>
+    </section>
+
+    <!-- Bahagian Statistik Live & Transition (Sama seperti Index) -->
+    <section class="about-stats-wrapper">
+        <div class="about-stats-box">
+            <div class="stat-item">
+                <div class="stat-num-blue" id="stat-bidang">0</div>
+                <div class="stat-label">Bidang</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num-orange" id="stat-kursus">0</div>
+                <div class="stat-label">Jumlah Kursus</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num-blue" id="stat-peserta">0</div>
+                <div class="stat-label">Peserta</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num-orange" id="stat-pusat">0</div>
+                <div class="stat-label">Pusat Latihan</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bahagian Latar Belakang MOSTI (Susunan Kemas & Align) -->
+    <section id="kisah-kami" class="mosti-history-wrapper">
+        <div class="mosti-history-grid">
+            <div class="mosti-history-media">
+                <img src="blue.jpg" alt="Bangunan Kementerian Sains, Teknologi dan Inovasi (MOSTI)">
+                <div class="mosti-history-quote">
+                    "Sains, Teknologi dan Inovasi pemacu utama pembangunan negara berteknologi tinggi."
+                </div>
+            </div>
+
+            <div class="mosti-history-content">
+                <p class="about-kicker">Sejarah &amp; Penubuhan</p>
+                <h2>Latar Belakang MOSTI</h2>
+                <ul class="mosti-history-list">
+                    <li><strong>1973</strong> – Kementerian Teknologi, Penyelidikan dan Kerajaan Tempatan.</li>
+                    <li><strong>1976</strong> – Selaras dengan fungsi dan tanggungjawab baru yang berkaitan dengan isu-isu alam sekitar, nama Kementerian telah ditukar kepada Kementerian Sains, Teknologi dan Alam Sekitar (MOSTE).</li>
+                    <li><strong>2004</strong> – Jemaah Menteri pada 27 Mac 2004 telah bersetuju dengan penstrukturan semula MOSTE dan nama Kementerian ditukar kepada Kementerian Sains, Teknologi dan Inovasi (MOSTI) bagi menerajui fungsi pembangunan ICT Negara, Multimedia dan Inovasi.</li>
+                    <li><strong>2007</strong> – Fungsi sains dan teknologi dipecahkan mengikut cluster Bioteknologi, ICT, Industri, Angkasa, Laut dan Atmosfera dan Teras Sains dan Teknologi.</li>
+                    <li><strong>2016</strong> – Pada 3 Oktober 2016, MOSTI distrukturkan semula dengan fokus untuk merancakkan program pengkomersialan hasil R&amp;D dan inovasi negara.</li>
+                    <li><strong>2018</strong> – Selepas Pilihanraya Umum ke 14 (PRU-14), keseluruhan komponen Kementerian Sains, Teknologi dan Inovasi (MOSTI), komponen tenaga dan teknologi hijau daripada Kementerian Tenaga, Teknologi Hijau dan Air (KeTTHA) dan komponen berkaitan perubahan iklim dan alam sekitar daripada Kementerian Sumber Asli dan Alam Sekitar (NRE) telah disusun semula dan membentuk Kementerian Tenaga, Sains, Teknologi, Alam Sekitar &amp; Perubahan Iklim (MESTECC).</li>
+                    <li><strong>2020</strong> – MESTECC telah distrukturkan semula dan namanya telah ditukar kepada Kementerian Sains, Teknologi dan Inovasi (MOSTI) berikutan Pembentukan Kabinet Kerajaan Baru yang diumumkan pada 9 Mac 2020.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Misi & Visi -->
+    <section class="about-mv-section">
+        <div class="about-mv-container">
+            <div class="about-mv-header">
+                <h2>Misi, Visi &amp; Teras Strategik</h2>
+                <p>Prinsip yang memandu pelaksanaan program latihan dan pembangunan modal insan MOSTI.</p>
+            </div>
+
+            <div class="about-mv-grid">
+                <div class="mv-card">
+                    <div class="mv-icon-box mv-icon-orange">
+                    </div>
+                    <h3>Visi Kami</h3>
+                    <p>
+                        Negara Berteknologi Tinggi Melalui STIE.
+                    </p>
+                </div>
+
+                <div class="mv-card">
+                    <div class="mv-icon-box mv-icon-blue">
+                    </div>
+                    <h3>Misi Kami</h3>
+                    <p>
+                        Menerajui STIE untuk cabaran negara, kesejahteraan masyarakat, dan pembangunan mampan.
+                    </p>
+                </div>
+
+                <div class="mv-card">
+                    <div class="mv-icon-box mv-icon-green">
+                    </div>
+                    <h3>Fokus Latihan &amp; Ekosistem</h3>
+                    <p>
+                        Memperkasa ekosistem syarikat pemula (startup), bioteknologi, keselamatan siber, nanoteknologi, dan teknologi angkasa.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bahagian CTA -->
+    <section class="about-cta-wrapper">
+        <div class="about-cta-card">
+            <h2>Sedia Untuk Menyertai Kursus Latihan MOSTI?</h2>
+            <p>
+                Terokai senarai kursus terkini atau semak takwim latihan rasmi kami untuk meningkatkan kompetensi profesional anda.
+            </p>
+            <div class="about-cta-buttons">
+                <a href="iklan.html" class="btn-cta-outline">Lihat Iklan Kursus</a>
+                <a href="takwim.html" class="btn-cta-outline">Semak Takwim</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         FOOTER SAMA SEPERTI INDEX.HTML
+         ========================================================= -->
+    <footer id="contact-section">
+        <div class="nus-style-footer">
+            <h2 class="nus-footer-title">Hubungi Kami</h2>
+            
+            <div class="nus-footer-info">
+                <div class="nus-footer-info-item">
+                    <i class="fa-solid fa-location-arrow"></i>
+                    <span>Aras 5, Blok C4, Kompleks C, Pusat Pentadbiran Kerajaan Persekutuan,<br>62662 Putrajaya, Malaysia.</span>
+                </div>
+                <div class="nus-footer-info-item">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>+603-8885 8000</span>
+                </div>
+                <div class="nus-footer-info-item">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>hr_traning@mosti.gov.my</span>
+                </div>
+            </div>
+
+            <div class="nus-social-icons">
+                <a href="https://www.facebook.com/officialmosti/?locale=ms_MY" target="_blank" class="nus-social-btn" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/officialmosti/?hl=en" target="_blank" class="nus-social-btn" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+
+        <div class="nus-footer-bottom">
+            <p>&copy; 2026 Kementerian Sains, Teknologi dan Inovasi (MOSTI). Hak Cipta Terpelihara.</p>
+            <div class="nus-footer-links">
+                <a href="#">Dasar Privasi</a> &bull; 
+                <a href="#">Penafian</a> &bull; 
+                <a href="#">Bantuan &amp; FAQ</a> &bull; 
+                <a href="#">Hubungi Kami</a>
+            </div>
+            <a href="#top-page" class="scroll-top-btn" title="Ke Atas">
+                <i class="fa-solid fa-chevron-up"></i>
+            </a>
+        </div>
+    </footer>
+
+    <!-- =========================================================
+         SKRIP GLOBAL & ANIMASI STATISTIK LIVE (SAMA SEPERTI INDEX)
+         ========================================================= -->
+    <script src="script.js"></script>
+    <script>
+        let currentUser = null;
+
+        // Fungsi Animasi Kiraan Nombor (Count-up Transition)
+        function animateCounter(id, targetValue) {
+            const el = document.getElementById(id);
+            if (!el) return;
+
+            const numericTarget = parseInt(String(targetValue).replace(/,/g, ''), 10) || 0;
+            const duration = 1200; // 1.2 saat
+            const frameRate = 30;
+            const totalFrames = Math.round(duration / (1000 / frameRate));
+            let currentFrame = 0;
+
+            const counter = setInterval(() => {
+                currentFrame++;
+                const progress = currentFrame / totalFrames;
+                // Ease-out effect
+                const easeOutProgress = 1 - Math.pow(1 - progress, 3);
+                const currentVal = Math.round(numericTarget * easeOutProgress);
+
+                el.innerText = currentVal.toLocaleString();
+
+                if (currentFrame >= totalFrames) {
+                    clearInterval(counter);
+                    el.innerText = numericTarget.toLocaleString();
+                }
+            }, 1000 / frameRate);
+        }
+
+        // Override updateElementText dari script.js supaya guna animasi kiraan
+        window.updateElementText = function(id, value) {
+            animateCounter(id, value);
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const storedUser = sessionStorage.getItem('user') || localStorage.getItem('user');
+            if (storedUser) {
+                try {
+                    currentUser = JSON.parse(storedUser);
+                } catch(e) { console.error(e); }
+            }
+
+            setupNavbar();
+
+            document.addEventListener('click', (e) => {
+                const dropdown = document.getElementById('userMenuDropdown');
+                const btn = document.getElementById('userMenuBtn');
+                if (dropdown && btn && !btn.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.classList.remove('show');
+                }
+
+                const navDrawer = document.getElementById('mobile-nav-drawer');
+                const hamburgerBtn = document.getElementById('mobile-menu-btn');
+                if (navDrawer && hamburgerBtn && navDrawer.classList.contains('mobile-open')) {
+                    if (!navDrawer.contains(e.target) && !hamburgerBtn.contains(e.target)) {
+                        closeMobileNav();
+                    }
+                }
+            });
+        });
+
+        function toggleMobileNav() {
+            const navDrawer = document.getElementById('mobile-nav-drawer');
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+            const hamburgerBtn = document.getElementById('mobile-menu-btn');
+            if (!navDrawer) return;
+
+            const isOpen = navDrawer.classList.toggle('mobile-open');
+            hamburgerBtn.setAttribute('aria-expanded', isOpen);
+            if (isOpen) {
+                hamburgerIcon.classList.remove('fa-bars');
+                hamburgerIcon.classList.add('fa-xmark');
+            } else {
+                hamburgerIcon.classList.remove('fa-xmark');
+                hamburgerIcon.classList.add('fa-bars');
+            }
+        }
+
+        function closeMobileNav() {
+            const navDrawer = document.getElementById('mobile-nav-drawer');
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+            const hamburgerBtn = document.getElementById('mobile-menu-btn');
+            if (navDrawer && navDrawer.classList.contains('mobile-open')) {
+                navDrawer.classList.remove('mobile-open');
+                hamburgerBtn.setAttribute('aria-expanded', 'false');
+                hamburgerIcon.classList.remove('fa-xmark');
+                hamburgerIcon.classList.add('fa-bars');
+            }
+        }
+
+        function handleNavSearch() {
+            const inputVal = document.getElementById('top-nav-search-input').value.trim();
+            if (inputVal) {
+                window.location.href = `iklan.html?keyword=${encodeURIComponent(inputVal)}`;
+            }
+        }
+
+        function setupNavbar() {
+            const navContainer = document.getElementById('user-nav-container');
+            if (currentUser && navContainer) {
+                const userPhoto = currentUser.gambar || 'https://via.placeholder.com/150';
+                const userName = currentUser.nama || 'Pengguna';
+
+                const adminMenuOption = currentUser.role === 'admin' 
+                    ? `<a href="admin_dashboard.html"><i class="fa-solid fa-user-shield"></i> Peranan Admin</a>` 
+                    : '';
+
+                navContainer.innerHTML = `
+                    <div class="user-dropdown-container">
+                        <button id="userMenuBtn" onclick="toggleUserDropdown()" class="user-dropdown-btn">
+                            <img src="${userPhoto}" alt="Avatar" class="user-avatar-small" id="navUserAvatar">
+                            <span>${userName}</span>
+                            <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem;"></i>
+                        </button>
+                        <div id="userMenuDropdown" class="dropdown-menu">
+                            <a href="user_dashboard.html"><i class="fa-solid fa-id-card"></i> User Dashboard</a>
+                            ${adminMenuOption}
+                            <a href="tukar_kata_laluan.html"><i class="fa-solid fa-key"></i> Tukar Kata Laluan</a>
+                            <button onclick="handleLogout()" class="logout-item"><i class="fa-solid fa-right-from-bracket"></i> Log Keluar</button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userMenuDropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('show');
+            }
+        }
+
+        function handleLogout() {
+            sessionStorage.removeItem('user');
+            localStorage.removeItem('user');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

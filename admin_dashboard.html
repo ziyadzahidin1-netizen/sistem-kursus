@@ -1434,8 +1434,10 @@
                                                 </td>
                                                 <td style="width: 35%; border-bottom: none; border-right: none; border-top: none; text-align: center; vertical-align: bottom; padding-bottom: 15px;">
                                                     <div id="doc_penyedia_text" contenteditable="true" oninput="autoSimpanKertasPerakuan()">
-                                                        <b>ROSLEEZAM BIN JAMAUDIN<br>KPSU(PSM)PO</b><br><br>
-                                                        <b>Tarikh: &nbsp;&nbsp;&nbsp; Disember 2025</b>
+                                                        <div id="perolehan-signature-holder" style="height: 45px; text-align: center; margin-bottom: 4px;"></div>
+                                                        <b id="perolehan-doc-nama">ROSLEEZAM BIN JAMAUDIN</b><br>
+                                                        <b id="perolehan-doc-jawatan">KPSU(PSM)PO</b><br><br>
+                                                        <b id="perolehan-doc-tarikh">Tarikh: &nbsp;&nbsp;&nbsp; Disember 2025</b>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -1495,7 +1497,7 @@
                                 </tbody>
                             </table>
 
-                            <!-- HALAMAN 3: ULASAN SUB (W), SEMAKAN PEROLEHAN & KEPUTUSAN PBM -->
+                            <!-- HALAMAN 3: ULASAN SUB (W) & KEPUTUSAN PBM -->
                             <div style="page-break-before: always; margin-top: 30px;"></div>
 
                             <table class="perakuan-top-box">
@@ -1542,29 +1544,6 @@
                                             <div style="flex: 2; border-left: 1px solid #000; padding-left: 15px; min-height: 140px;">
                                                 <u>Ulasan:</u>
                                                 <div id="subw-ulasan-text" style="margin-top: 8px; font-style: italic; color: #334155;"></div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
-
-                            <!-- BLOK 2: PENGESAHAN / SEMAKAN PEROLEHAN -->
-                            <table class="perakuan-table">
-                                <tr>
-                                    <td style="font-weight: bold; background-color: #ffffff;">PENGESAHAN / SEMAKAN PEROLEHAN</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 15px;">
-                                        <div style="display: flex; gap: 20px;">
-                                            <div style="flex: 1;">
-                                                <div id="perolehan-signature-holder" style="height: 45px; text-align: left;"></div>
-                                                <b id="perolehan-doc-nama">(PEGAWAI PEROLEHAN)</b><br>
-                                                <span id="perolehan-doc-jawatan" style="font-size: 8.5pt;">-</span><br>
-                                                <span id="perolehan-doc-tarikh">Tarikh: </span>
-                                            </div>
-                                            <div style="flex: 2; border-left: 1px solid #000; padding-left: 15px; min-height: 110px;">
-                                                <u>Ulasan Perolehan:</u>
-                                                <div id="perolehan-ulasan-text" style="margin-top: 8px; font-style: italic; color: #334155;"></div>
                                             </div>
                                         </div>
                                     </td>
@@ -2214,13 +2193,17 @@
 
             // 2. Papar maklumat PEROLEHAN jika sudah disahkan
             if (wf.pegawaiPerolehanNama) {
-                if (wf.signatureImgPerolehan) {
-                    document.getElementById('perolehan-signature-holder').innerHTML = `<img src="${wf.signatureImgPerolehan}" style="max-height: 40px; max-width: 140px; object-fit: contain;">`;
+                const sigHolder = document.getElementById('perolehan-signature-holder');
+                const namaEl = document.getElementById('perolehan-doc-nama');
+                const jawatanEl = document.getElementById('perolehan-doc-jawatan');
+                const tarikhEl = document.getElementById('perolehan-doc-tarikh');
+
+                if (sigHolder && wf.signatureImgPerolehan) {
+                    sigHolder.innerHTML = `<img src="${wf.signatureImgPerolehan}" style="max-height: 42px; max-width: 140px; object-fit: contain;">`;
                 }
-                document.getElementById('perolehan-doc-nama').innerText = `(${wf.pegawaiPerolehanNama.toUpperCase()})`;
-                document.getElementById('perolehan-doc-jawatan').innerText = wf.pegawaiPerolehanJawatan || '';
-                document.getElementById('perolehan-doc-tarikh').innerText = `Tarikh: ${wf.tarikhPerolehan || ''}`;
-                document.getElementById('perolehan-ulasan-text').innerText = wf.ulasanPerolehan || '-';
+                if (namaEl) namaEl.innerText = wf.pegawaiPerolehanNama.toUpperCase();
+                if (jawatanEl) jawatanEl.innerText = (wf.pegawaiPerolehanJawatan || '').toUpperCase();
+                if (tarikhEl) tarikhEl.innerText = `Tarikh: ${wf.tarikhPerolehan || ''}`;
             }
 
             // 3. Papar maklumat PIHAK BERKUASA (PBM) jika sudah diputuskan

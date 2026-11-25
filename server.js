@@ -24,6 +24,7 @@ app.use(express.static(path.join(__dirname)));
 // Array Simpanan Memori (Fallback jika Supabase tiada/gagal)
 let memoryApplications = [];
 let memoryAdminModules = {};
+let memorySorotan = [];
 
 // Helper untuk dapatkan Supabase Client dengan selamat tanpa crash
 function getSupabase() {
@@ -359,6 +360,153 @@ app.delete('/api/kursus/:id', async (req, res) => {
     }
 });
 
+// =========================================================================
+// 4.1 API PENGURUSAN SOROTAN AKTIVITI (SUPABASE)
+// =========================================================================
+app.get('/api/sorotan', async (req, res) => {
+    try {
+        const supabase = getSupabase();
+        if (supabase) {
+            const { data, error } = await supabase
+                .from('sorotan_aktiviti')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (!error && data) {
+                const formatted = data.map(item => ({
+                    id: item.id,
+                    kursusTajuk: item.kursus_tajuk,
+                    tarikh: item.tarikh,
+                    tempat: item.tempat,
+                    deskripsi: item.deskripsi,
+                    images: item.images || [],
+                    createdAt: item.created_at
+                }));
+                return res.status(200).json(formatted);
+            }
+        }
+        return res.status(200).json(memorySorotan);
+    } catch (error) {
+        return res.status(200).json(memorySorotan);
+    }
+});
+
+app.post('/api/sorotan', async (req, res) => {
+    try {
+        const { id, kursusTajuk, tarikh, tempat, deskripsi, images } = req.body || {};
+
+        if (!kursusTajuk || !deskripsi || !images || images.length === 0) {
+            return res.status(400).json({ error: 'Sila lengkapkan kursus, penerangan, dan sekurang-kurangnya satu gambar!' });
+        }
+
+        const entryId = id || 'sorotan_' + Date.now();
+        const memRecord = {
+            id: entryId,
+            kursusTajuk,
+            tarikh: tarikh || '',
+            tempat: tempat || '',
+            deskripsi,
+            images,
+            createdAt: new Date().toISOString()
+        };
+
+        memorySorotan.unshift(memRecord);
+
+        const supabase = getSupabase();
+        if (supabase) {
+            const { error } = await supabase
+                .from('sorotan_aktiviti')
+                .insert([{
+                    id: entryId,
+                    kursus_tajuk: kursusTajuk,
+                    tarikh: tarikh || '',
+                    tempat: tempat || '',
+                    deskripsi: deskripsi,
+                    images: images
+                }]);
+
+            if (error) {
+                console.error('Supabase Sorotan Insert Error:', error.message);
+                return res.status(500).json({ error: 'Gagal simpan ke database Supabase: ' + error.message });
+            }
+        }
+
+        broadcastEvent({ type: 'SOROTAN_UPDATED' });
+        return res.status(201).json({ message: 'Sorotan aktiviti berjaya disimpan!', data: memRecord });
+    } catch (error) {
+        return res.status(500).json({ error: 'Ralat Server: ' + error.message });
+    }
+});
+
+app.put('/api/sorotan/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { kursusTajuk, tarikh, tempat, deskripsi, images } = req.body || {};
+
+        const idx = memorySorotan.findIndex(item => item.id === id);
+        if (idx !== -1) {
+            memorySorotan[idx] = {
+                ...memorySorotan[idx],
+                kursusTajuk,
+                tarikh: tarikh || '',
+                tempat: tempat || '',
+                deskripsi,
+                images
+            };
+        }
+
+        const supabase = getSupabase();
+        if (supabase) {
+            const { error } = await supabase
+                .from('sorotan_aktiviti')
+                .update({
+                    kursus_tajuk: kursusTajuk,
+                    tarikh: tarikh || '',
+                    tempat: tempat || '',
+                    deskripsi: deskripsi,
+                    images: images,
+                    updated_at: new Date().toISOString()
+                })
+                .eq('id', id);
+
+            if (error) {
+                console.error('Supabase Sorotan Update Error:', error.message);
+                return res.status(500).json({ error: 'Gagal kemas kini database Supabase: ' + error.message });
+            }
+        }
+
+        broadcastEvent({ type: 'SOROTAN_UPDATED' });
+        return res.status(200).json({ message: 'Sorotan aktiviti berjaya dikemas kini!' });
+    } catch (error) {
+        return res.status(500).json({ error: 'Ralat Server: ' + error.message });
+    }
+});
+
+app.delete('/api/sorotan/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        memorySorotan = memorySorotan.filter(item => item.id !== id);
+
+        const supabase = getSupabase();
+        if (supabase) {
+            const { error } = await supabase
+                .from('sorotan_aktiviti')
+                .delete()
+                .eq('id', id);
+
+            if (error) {
+                console.error('Supabase Sorotan Delete Error:', error.message);
+                return res.status(500).json({ error: 'Gagal memadam rekod di Supabase: ' + error.message });
+            }
+        }
+
+        broadcastEvent({ type: 'SOROTAN_UPDATED' });
+        return res.status(200).json({ message: 'Sorotan aktiviti berjaya dipadam!' });
+    } catch (error) {
+        return res.status(500).json({ error: 'Ralat Server: ' + error.message });
+    }
+});
+
 // 5. API MOHON KURSUS (AUTO BLOCK JIKA TARIKH TUTUP / TARIKH KURSUS SUDAH TAMAT)
 app.post('/api/mohon', async function(req, res) {
     try {
@@ -540,7 +688,6 @@ app.post('/api/admin/latihan-modul/:moduleName', async (req, res) => {
         const { moduleName } = req.params;
         const payload = req.body || {};
 
-        // Simpan dalam memori pelayan sebagai sandaran segera
         memoryAdminModules[moduleName] = { ...payload, created_at: new Date().toISOString() };
 
         const supabase = getSupabase();
@@ -595,7 +742,6 @@ app.get('/api/admin/latihan-modul/:moduleName', async (req, res) => {
             }
         }
 
-        // Pulangkan daripada memori pelayan jika tiada dalam Supabase
         return res.status(200).json(memoryAdminModules[moduleName] || {});
     } catch (error) {
         return res.status(500).json({ error: error.message });

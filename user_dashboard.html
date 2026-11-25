@@ -273,7 +273,7 @@
         }
         .stats-container { display: flex; gap: 30px; }
         .stat-item { text-align: center; }
-        .stat-item .number { font-size: 1.8rem; font-weight: 600; color: #ef7c00; }
+        .stat-item .number { font-size: 1.8rem; font-weight: 600; color: #ffffff; }
         .stat-item .label { font-size: 0.82rem; color: #cbd5e1; font-weight: 300; margin-top: 2px; }
 
         .main-tabs-nav {
@@ -303,10 +303,6 @@
         .dashboard-container { max-width: 1280px; margin: 40px auto; padding: 0 40px; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
-
-        .info-box-hrmis {
-            background-color: #e0f2fe; border-left: 4px solid #003d7c; padding: 16px 20px; border-radius: 4px; display: flex; align-items: flex-start; gap: 15px; margin-bottom: 25px; color: #0369a1;
-        }
 
         .sub-tabs { display: flex; gap: 25px; border-bottom: 1px solid #cbd5e1; margin-bottom: 25px; }
         .sub-tab-btn { background: none; border: none; padding: 10px 5px; font-size: 0.92rem; font-weight: 400; color: #64748b; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s ease; }
@@ -480,29 +476,32 @@
 
         /* KAWALAN CETAKAN (PRINT CSS) UNTUK SIJIL.JPG & SURAT TAWARAN */
         @page {
-            margin: 0; 
+            size: A4 portrait;
+            margin: 0;
         }
 
         @media print {
-            body * { 
-                visibility: hidden !important; 
+            html, body {
+                background: #ffffff !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                height: auto !important;
+                overflow: visible !important;
             }
-            
-            .modal-overlay.show, 
-            .modal-overlay.show * { 
-                visibility: visible !important; 
+
+            /* Sembunyikan semua elemen luar modal sepenuhnya */
+            body > *:not(.modal-overlay.show) {
+                display: none !important;
             }
 
             .modal-overlay.show {
-                position: absolute !important;
-                left: 0 !important;
-                top: 0 !important;
-                width: 100% !important;
-                height: auto !important;
+                position: static !important;
+                display: block !important;
                 background: transparent !important;
                 padding: 0 !important;
                 margin: 0 !important;
-                display: block !important;
+                width: 100% !important;
+                height: auto !important;
             }
 
             .cert-modal-body {
@@ -517,14 +516,49 @@
                 background: transparent !important;
             }
 
-            #certPrintArea, #offerPrintArea { 
-                position: relative !important;
-                left: 0 !important; 
-                top: 0 !important; 
-                width: 100% !important; 
-                margin: 0 auto !important; 
-                background: #ffffff !important;
-                padding: 0 !important;
+            /* Susun atur Surat Tawaran supaya muat 1 muka surat A4 tanpa header/footer browser */
+            #offerPrintArea.official-letter-paper {
+                padding: 14mm 18mm !important;
+                margin: 0 !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+                font-size: 11.5px !important;
+                line-height: 1.35 !important;
+            }
+
+            #offerPrintArea .letterhead-top {
+                padding-bottom: 8px !important;
+                margin-bottom: 10px !important;
+            }
+
+            #offerPrintArea .letterhead-crest {
+                width: 60px !important;
+            }
+
+            #offerPrintArea .letter-ref-box {
+                margin-bottom: 10px !important;
+                font-size: 11.5px !important;
+            }
+
+            #offerPrintArea .letter-details-table {
+                margin: 8px 0 10px 20px !important;
+                font-size: 11.5px !important;
+            }
+
+            #offerPrintArea .letter-details-table td {
+                padding: 2px 6px !important;
+            }
+
+            #offerPrintArea p {
+                margin-bottom: 8px !important;
+            }
+
+            /* Susun atur Sijil */
+            #certPrintArea {
+                padding: 10mm !important;
+                margin: 0 !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
             }
 
             #certCanvas {
@@ -534,8 +568,8 @@
                 border: none !important;
             }
 
-            .cert-actions { 
-                display: none !important; 
+            .cert-actions {
+                display: none !important;
             }
         }
 
@@ -618,14 +652,6 @@
     <div class="dashboard-container">
         <!-- BAHAGIAN 1: PROFIL -->
         <div id="tab-profil" class="tab-content active">
-            <div class="info-box-hrmis">
-                <i class="fa-solid fa-circle-info" style="font-size: 1.2rem; margin-top: 2px;"></i>
-                <div>
-                    <h4 style="margin: 0 0 4px 0; font-weight: 600;">MAKLUMAN!</h4>
-                    <p style="margin:0; font-size:0.88rem; line-height: 1.5;">Maklumat yang dipaparkan adalah daripada Sistem HRMIS. Sekiranya ada perubahan maklumat, sila kemaskini maklumat tersebut di Sistem HRMIS.</p>
-                </div>
-            </div>
-
             <div class="sub-tabs">
                 <button class="sub-tab-btn active" onclick="switchSubTab('sub-peribadi', this)">Peribadi</button>
                 <button class="sub-tab-btn" onclick="switchSubTab('sub-pendidikan', this)">Pendidikan</button>
@@ -1831,3 +1857,4 @@
     </script>
 </body>
 </html>
+```[cite: 2]
