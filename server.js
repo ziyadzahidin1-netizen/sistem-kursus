@@ -24,6 +24,7 @@ app.use(express.static(path.join(__dirname)));
 // Array Simpanan Memori (Fallback jika Supabase tiada/gagal)
 let memoryApplications = [];
 let memoryAdminModules = {};
+let memoryKertasPerakuanList = [];
 let memorySorotan = [];
 
 // Helper untuk dapatkan Supabase Client dengan selamat tanpa crash
@@ -507,7 +508,7 @@ app.delete('/api/sorotan/:id', async (req, res) => {
     }
 });
 
-// 5. API MOHON KURSUS (AUTO BLOCK JIKA TARIKH TUTUP / TARIKH KURSUS SUDAH TAMAT)
+// 5. API MOHON KURSUS
 app.post('/api/mohon', async function(req, res) {
     try {
         const { nama, ic, email, emel_penyelia, jawatan, gred, jabatan, penyakit, pengangkutan, kursus } = req.body || {};
@@ -682,63 +683,154 @@ app.delete('/api/admin/applications/:id', async (req, res) => {
     }
 });
 
-// 6.1 API ADMIN DASHBOARD: SIMPAN & DAPATKAN REKOD MODUL LATIHAN (DTIMS)
+// =========================================================================
+// 6.1 API ADMIN DASHBOARD: SIMPAN & DAPATKAN REKOD MODUL + KERTAS PERAKUAN (SUPABASE)
+// =========================================================================
 app.post('/api/admin/latihan-modul/:moduleName', async (req, res) => {
     try {
         const { moduleName } = req.params;
         const payload = req.body || {};
 
-        memoryAdminModules[moduleName] = { ...payload, created_at: new Date().toISOString() };
+        memoryAdminModules[moduleName] = { ...payload, updated_at: new Date().toISOString() };
 
         const supabase = getSupabase();
-        if (supabase) {
+
+        if (moduleName === 'kertas_perakuan') {
+            const dbRecord = {
+                rekod_id: payload.rekod_id || 'kp_default',
+                admin_email: payload.adminEmail || '',
+                admin_nama: payload.adminNama || '',
+                tajuk: payload.tajuk || 'Kertas Perakuan Tanpa Tajuk',
+                tarikh_ppk: payload.tarikh || '-',
+                lokasi: payload.lokasi || '-',
+                jumlah_kos: payload.jumlahKos || '0.00',
+                status_workflow: payload.status_workflow || 'draft',
+                rujukan: payload.rujukan || '',
+                tarikh_atas: payload.tarikhAtas || '',
+                rujukan2: payload.rujukan2 || '',
+                tarikh_atas2: payload.tarikhAtas2 || '',
+                bahagian_agensi: payload.bahagianAgensi || '',
+                objektif_html: payload.objektifHtml || '',
+                jumlah_peserta: payload.jumlahPeserta || '',
+                tbody_kos_html: payload.tbodyKosHtml || '',
+                penceramah_html: payload.penceramahHtml || '',
+                sumber_peruntukan: payload.sumberPeruntukan || '',
+                baki_peruntukan: payload.bakiPeruntukan || '',
+                syor_html: payload.syorHtml || '',
+                penyedia_html: payload.penyediaHtml || '',
+                senarai_semak: payload.senaraiSemak || [],
+                workflow: payload.workflowObj || {},
+                modul_data: payload.modul_data || {},
+                masa_simpan: payload.masaSimpan || new Date().toLocaleString('ms-MY'),
+                updated_at: new Date().toISOString()
+            };
+
+            // Simpan dalam memori pelayan sebagai fallback
+            const memIdx = memoryKertasPerakuanList.findIndex(x => x.rekod_id === dbRecord.rekod_id);
+            if (memIdx >= 0) memoryKertasPerakuanList[memIdx] = dbRecord;
+            else memoryKertasPerakuanList.unshift(dbRecord);
+
+            if (supabase) {
+                const { error } = await supabase
+                    .from('admin_kertas_perakuan')
+                    .upsert([dbRecord], { onConflict: 'rekod_id' });
+
+                if (error) {
+                    console.error('Supabase Kertas Perakuan Upsert Error:', error.message);
+                    return res.status(500).json({ error: 'Gagal simpan ke database Supabase: ' + error.message });
+                }
+            }
+        } else if (supabase) {
             const tableName = `admin_${moduleName}`;
             const safePayload = await filterExistingColumns(supabase, tableName, payload);
-            
-            let { error: insertErr } = await supabase
-                .from(tableName)
-                .insert([safePayload]);
+            let { error: insertErr } = await supabase.from(tableName).insert([safePayload]);
 
             if (insertErr) {
                 let updatedPayload = { ...safePayload };
                 if (insertErr.message.includes("'fail_syarikat'")) delete updatedPayload.fail_syarikat;
                 if (insertErr.message.includes("'updated_at'")) delete updatedPayload.updated_at;
-
-                const retry = await supabase.from(tableName).insert([updatedPayload]);
-                insertErr = retry.error;
-            }
-
-            if (insertErr) {
-                console.error(`Ralat Supabase (${tableName}):`, insertErr.message);
+                await supabase.from(tableName).insert([updatedPayload]);
             }
         }
 
-        broadcastEvent({ type: 'ADMIN_MODULE_UPDATED', module: moduleName, data: payload });
+        broadcastEvent({ type: 'ADMIN_MODULE_UPDATED', module: moduleName, rekod_id: payload.rekod_id });
 
         return res.status(200).json({ 
             status: 'success', 
-            message: `Data ${moduleName.replace(/_/g, ' ')} berjaya disimpan!` 
+            message: `Data ${moduleName.replace(/_/g, ' ')} berjaya disimpan ke Supabase!` 
         });
     } catch (error) {
         return res.status(500).json({ error: 'Ralat Server: ' + error.message });
     }
 });
 
-app.get('/api/admin/latihan-modul/:moduleName', async (req, res) => {
+// Dapatkan senarai SEMUA Kertas Perakuan dari Supabase (untuk Folder & Senarai Semakan)
+app.get('/api/admin/kertas-perakuan/all', async (req, res) => {
     try {
-        const { moduleName } = req.params;
         const supabase = getSupabase();
-
         if (supabase) {
             const { data, error } = await supabase
-                .from(`admin_${moduleName}`)
+                .from('admin_kertas_perakuan')
                 .select('*')
-                .order('created_at', { ascending: false })
-                .limit(1)
-                .maybeSingle();
+                .order('updated_at', { ascending: false });
 
             if (!error && data) {
                 return res.status(200).json(data);
+            }
+        }
+        return res.status(200).json(memoryKertasPerakuanList);
+    } catch (error) {
+        return res.status(200).json(memoryKertasPerakuanList);
+    }
+});
+
+// Padam rekod Kertas Perakuan dari Supabase
+app.delete('/api/admin/kertas-perakuan/:rekodId', async (req, res) => {
+    try {
+        const { rekodId } = req.params;
+        memoryKertasPerakuanList = memoryKertasPerakuanList.filter(x => x.rekod_id !== rekodId);
+
+        const supabase = getSupabase();
+        if (supabase) {
+            const { error } = await supabase
+                .from('admin_kertas_perakuan')
+                .delete()
+                .eq('rekod_id', rekodId);
+
+            if (error) return res.status(500).json({ error: error.message });
+        }
+        broadcastEvent({ type: 'ADMIN_MODULE_UPDATED', module: 'kertas_perakuan' });
+        return res.status(200).json({ message: 'Kertas Perakuan berjaya dipadam dari pangkalan data!' });
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/api/admin/latihan-modul/:moduleName', async (req, res) => {
+    try {
+        const { moduleName } = req.params;
+        const { rekod_id } = req.query;
+        const supabase = getSupabase();
+
+        if (supabase) {
+            if (moduleName === 'kertas_perakuan') {
+                let query = supabase.from('admin_kertas_perakuan').select('*');
+                if (rekod_id) {
+                    query = query.eq('rekod_id', rekod_id);
+                } else {
+                    query = query.order('updated_at', { ascending: false }).limit(1);
+                }
+                const { data, error } = await query.maybeSingle();
+                if (!error && data) return res.status(200).json(data);
+            } else {
+                const { data, error } = await supabase
+                    .from(`admin_${moduleName}`)
+                    .select('*')
+                    .order('created_at', { ascending: false })
+                    .limit(1)
+                    .maybeSingle();
+
+                if (!error && data) return res.status(200).json(data);
             }
         }
 

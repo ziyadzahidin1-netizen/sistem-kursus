@@ -4,159 +4,1242 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sejarah Permohonan Pelbagai User - Admin MOSTI</title>
+    
+    <!-- Pautan ke Fail CSS Asing -->
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Google Fonts: Open Sans, Plus Jakarta Sans & Roboto (Sama seperti index.html & gambar rujukan) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome untuk Ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        .container-admin {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 20px;
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        /* =========================================================
+           TIPOGRAFI UTAMA (GAYA GAMBAR RUJUKAN & INDEX.HTML)
+           ========================================================= */
+        body, button, input, select, textarea {
+            font-family: 'Roboto', 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif !important;
+            -webkit-font-smoothing: antialiased;
         }
-        .admin-header {
+
+        body {
+            background-color: #f3f5f8;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* =========================================================
+           BAR UTILITI GELAP PALING ATAS (SAMA SEPERTI INDEX.HTML)
+           ========================================================= */
+        .kpt-top-utility-bar {
+            background-color: #0b1633;
+            color: #ffffff;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
+            padding: 7px 50px;
+            font-size: 0.85rem;
         }
+
+        .utility-left, .utility-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .kpt-top-utility-bar a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.2s ease, transform 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .kpt-top-utility-bar a:hover {
+            color: #ef7c00;
+            transform: scale(1.1);
+        }
+
+        .utility-divider {
+            width: 1px;
+            height: 14px;
+            background-color: rgba(255, 255, 255, 0.25);
+            margin: 0 2px;
+        }
+
+        .lang-flag {
+            width: 20px;
+            height: 14px;
+            object-fit: cover;
+            border-radius: 2px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* =========================================================
+           GAYA NAVBAR (SAMA SEPERTI INDEX.HTML)
+           ========================================================= */
+        .navbar-header-container {
+            background-color: #ffffff !important;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 50px;
+            border-bottom: 1px solid #f1f5f9;
+            background-color: #08082c;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 44px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .header-title-group {
+            display: flex;
+            flex-direction: column;
+            text-transform: uppercase;
+            color: #ffffff;
+            line-height: 1.15;
+            border-left: 1px solid #cbd5e1;
+            padding-left: 12px;
+        }
+
+        .header-subtitle {
+            font-size: 0.65rem;
+            letter-spacing: 0.5px;
+            font-weight: 300;
+            color: #fcfeff;
+        }
+
+        .header-english-title {
+            font-size: 0.72rem;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+            color: #ffffff;
+        }
+
+        .header-tagline {
+            font-size: 0.58rem;
+            letter-spacing: 0.8px;
+            margin-top: 1px;
+            font-weight: 300;
+            color: #ef7c00;
+        }
+
+        .header-top-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.85rem;
+        }
+
+        .top-auth-link {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.08);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .top-auth-link:hover {
+            background: #ef7c00;
+            border-color: #ef7c00;
+            color: #ffffff;
+        }
+
+        .mobile-hamburger-btn {
+            display: none;
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            color: #003d7c;
+            width: 38px;
+            height: 38px;
+            border-radius: 6px;
+            font-size: 1.15rem;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .mobile-hamburger-btn:hover {
+            background: #ef7c00;
+            border-color: #ef7c00;
+            color: #ffffff;
+        }
+
+        .header-bottom-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 50px;
+            background-color: #ffffff;
+        }
+
+        .nav-links-sub {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links-sub a {
+            color: #334155;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            padding: 12px 0;
+            display: inline-block;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .nav-links-sub a:hover, .nav-links-sub a.active {
+            color: #003d7c;
+            font-weight: 600;
+        }
+
+        .nav-links-sub a.active::after, .nav-links-sub a:hover::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #ef7c00;
+        }
+
+        .nav-search-box {
+            display: flex;
+            align-items: center;
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 20px;
+            padding: 4px 12px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-search-box:focus-within {
+            background: #ffffff;
+            border-color: #003d7c;
+            box-shadow: 0 0 0 3px rgba(0, 61, 124, 0.1);
+        }
+
+        .nav-search-box input {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 0.82rem;
+            color: #334155;
+            width: 150px;
+        }
+
+        .nav-search-box button {
+            background: transparent;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+            padding: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-search-box button:hover {
+            color: #003d7c;
+        }
+
+        /* User Dropdown */
+        .user-dropdown-container {
+            position: relative;
+            display: inline-block;
+        }
+        .user-dropdown-btn {
+            background: #09042f;
+            color: #ffffff;
+            border: 1px solid #24426a;
+            font-size: 0.88rem;
+            font-weight: 400;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            transition: background 0.2s ease;
+        }
+        .user-dropdown-btn:hover {
+            background: rgba(255, 255, 255, 0.18) !important;
+        }
+        .user-avatar-small {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid #cbd5e1;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            margin-top: 8px;
+            background-color: #ffffff;
+            min-width: 200px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            overflow: hidden;
+            z-index: 1001;
+            border: 1px solid #e2e8f0;
+        }
+        .dropdown-menu.show {
+            display: block;
+        }
+        .dropdown-menu a, .dropdown-menu button {
+            color: #1e293b;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            width: 100%;
+            box-sizing: border-box;
+            border: none;
+            background: none;
+            text-align: left;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .dropdown-menu a:hover, .dropdown-menu button:hover {
+            background-color: #f1f5f9;
+        }
+        .dropdown-menu .logout-item {
+            color: #ef4444;
+            border-top: 1px solid #e2e8f0;
+        }
+        .dropdown-menu .logout-item:hover {
+            background-color: #fef2f2;
+        }
+
+        /* =========================================================
+           BANNER HALUS DI ATAS (GAYA HEADER GAMBAR RUJUKAN)
+           ========================================================= */
+        .nus-top-banner-strip {
+            width: 100%;
+            height: 54px;
+            background: linear-gradient(90deg, rgba(6, 20, 46, 0.88) 0%, rgba(12, 45, 95, 0.80) 55%, rgba(6, 20, 46, 0.92) 100%),
+                        url('blue.jpg') center center / cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0 50px;
+            box-sizing: border-box;
+            color: #ffffff;
+            font-size: 0.82rem;
+            font-weight: 300;
+            letter-spacing: 0.2px;
+        }
+
+        /* =========================================================
+           SUSUNAN SEJARAH PERMOHONAN (GAYA MINIMALIS GAMBAR RUJUKAN)
+           ========================================================= */
+        .nus-page-wrapper {
+            max-width: 1220px;
+            margin: 0 auto;
+            padding: 55px 35px 75px 35px;
+            box-sizing: border-box;
+        }
+
+        /* Bahagian Atas: 2 Kolum (Kiri: Tajuk & Penerangan | Kanan: Kad Ringkasan & Tapisan) */
+        .nus-intro-split {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 45px;
+            margin-bottom: 45px;
+        }
+
+        .nus-intro-left {
+            flex: 1 1 420px;
+        }
+
+        .nus-main-heading {
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            font-size: 2.5rem !important;
+            font-weight: 300 !important;
+            color: #333333 !important;
+            margin: 0 0 18px 0 !important;
+            letter-spacing: -0.5px !important;
+            line-height: 1.2 !important;
+        }
+
+        .nus-main-desc {
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            font-size: 1.06rem !important;
+            font-weight: 300 !important;
+            color: #555555 !important;
+            line-height: 1.65 !important;
+            margin: 0 0 22px 0 !important;
+            max-width: 520px;
+        }
+
+        .nus-orange-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nus-orange-link {
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            color: #ef7c00;
+            font-size: 1.04rem;
+            font-weight: 300;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s ease, transform 0.2s ease;
+            width: fit-content;
+        }
+
+        .nus-orange-link:hover {
+            color: #003d7c;
+            text-decoration: underline;
+        }
+
+        /* Kotak Putih Bersegi Tajam di Sebelah Kanan (Sama seperti kotak sebelah kanan dalam gambar) */
+        .nus-intro-right {
+            flex: 1 1 460px;
+        }
+
+        .nus-checklist-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 0px;
+            padding: 12px 32px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
+        }
+
+        .nus-checklist-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .nus-checklist-row:last-child {
+            border-bottom: none;
+        }
+
+        .nus-checklist-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .nus-checklist-left i {
+            color: #0b3c5d;
+            font-size: 1.25rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .nus-checklist-label {
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            font-size: 1.08rem;
+            font-weight: 300;
+            color: #444444;
+        }
+
+        .nus-checklist-count {
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            font-size: 1.15rem;
+            font-weight: 400;
+            color: #0b3c5d;
+        }
+
+        /* =========================================================
+           KAD JADUAL SEJARAH PERMOHONAN (GAYA PUTIH BERSIH & RINGAN)
+           ========================================================= */
+        .nus-table-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 0px;
+            padding: 32px;
+            box-shadow: 0 2px 14px rgba(0, 0, 0, 0.02);
+        }
+
+        .nus-filter-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding-bottom: 22px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .nus-filter-controls {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .nus-input-clean, .nus-select-clean {
+            padding: 10px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 0px;
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            font-size: 0.92rem;
+            font-weight: 300;
+            color: #333333;
+            background-color: #ffffff;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .nus-input-clean {
+            min-width: 260px;
+            flex: 1;
+            max-width: 360px;
+        }
+
+        .nus-input-clean:focus, .nus-select-clean:focus {
+            border-color: #0b3c5d;
+        }
+
         .admin-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.9rem;
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            font-size: 0.92rem;
+            font-weight: 300;
+            color: #444444;
         }
+
         .admin-table th {
-            background-color: #0d2838;
-            color: white;
-            padding: 12px;
-            text-align: left;
-        }
-        .admin-table td {
-            padding: 12px;
-            border-bottom: 1px solid #e2e8f0;
-            vertical-align: middle;
-        }
-        .btn-approve {
-            background-color: #22c55e;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        .btn-reject {
-            background-color: #f59e0b;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        .btn-delete-app {
-            background-color: #ef4444;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .btn-back {
-            background-color: #64748b;
-            color: white;
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 6px;
+            background-color: #f8fafc;
+            color: #222222;
+            font-weight: 400;
             font-size: 0.9rem;
+            padding: 14px 12px;
+            text-align: left;
+            border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #cbd5e1;
+            letter-spacing: 0.2px;
         }
+
+        .admin-table td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #f1f5f9;
+            vertical-align: middle;
+            line-height: 1.5;
+        }
+
+        .admin-table tbody tr:hover {
+            background-color: #fafbfc;
+        }
+
+        .status-pill {
+            display: inline-block;
+            padding: 4px 12px;
+            font-size: 0.8rem;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+            border-radius: 0px;
+        }
+
+        .status-lulus {
+            background-color: #ecfdf5;
+            color: #059669;
+            border: 1px solid #a7f3d0;
+        }
+
+        .status-tidak-lulus {
+            background-color: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+
+        .status-proses {
+            background-color: #fffbeb;
+            color: #d97706;
+            border: 1px solid #fde68a;
+        }
+
         .ulasan-box {
             display: flex;
             flex-direction: column;
             gap: 6px;
-            min-width: 190px;
+            min-width: 195px;
         }
+
         .input-ulasan {
             width: 100%;
-            padding: 6px 8px;
+            padding: 7px 10px;
             border: 1px solid #cbd5e1;
-            border-radius: 4px;
+            border-radius: 0px;
             font-size: 0.85rem;
+            font-weight: 300;
             font-family: inherit;
+            color: #333333;
             resize: vertical;
             box-sizing: border-box;
+            outline: none;
         }
+
+        .input-ulasan:focus {
+            border-color: #0b3c5d;
+        }
+
         .btn-save-ulasan {
-            background-color: #0284c7;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
+            background-color: transparent;
+            color: #0b3c5d;
+            border: 1px solid #0b3c5d;
+            padding: 5px 12px;
+            border-radius: 0px;
             cursor: pointer;
             font-size: 0.8rem;
-            font-weight: 600;
+            font-weight: 400;
             align-self: flex-start;
+            transition: all 0.2s ease;
         }
+
         .btn-save-ulasan:hover {
-            background-color: #0369a1;
+            background-color: #0b3c5d;
+            color: #ffffff;
+        }
+
+        .action-btn-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-approve, .btn-reject, .btn-delete-app {
+            border: 1px solid transparent;
+            padding: 6px 10px;
+            border-radius: 0px;
+            cursor: pointer;
+            font-size: 0.82rem;
+            font-weight: 400;
+            transition: all 0.2s ease;
+        }
+
+        .btn-approve {
+            background-color: #ffffff;
+            color: #16a34a;
+            border-color: #16a34a;
+        }
+        .btn-approve:hover {
+            background-color: #16a34a;
+            color: #ffffff;
+        }
+
+        .btn-reject {
+            background-color: #ffffff;
+            color: #d97706;
+            border-color: #d97706;
+        }
+        .btn-reject:hover {
+            background-color: #d97706;
+            color: #ffffff;
+        }
+
+        .btn-delete-app {
+            background-color: #ffffff;
+            color: #dc2626;
+            border-color: #dc2626;
+        }
+        .btn-delete-app:hover {
+            background-color: #dc2626;
+            color: #ffffff;
+        }
+
+        /* =========================================================
+           FOOTER (SAMA SEPERTI INDEX.HTML)
+           ========================================================= */
+        .nus-style-footer {
+            background-color: #f4f4f6;
+            color: #333333;
+            padding: 60px 20px 40px 20px;
+            text-align: center;
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            font-weight: 300 !important;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .nus-footer-title {
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            font-size: 2.1rem !important;
+            font-weight: 300 !important;
+            color: #333333 !important;
+            margin: 0 0 22px 0 !important;
+            letter-spacing: -0.5px !important;
+        }
+
+        .nus-footer-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.96rem;
+            font-weight: 300;
+            color: #444444;
+            margin-bottom: 30px;
+            line-height: 1.65;
+        }
+
+        .nus-footer-info-item {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 10px;
+            max-width: 600px;
+        }
+
+        .nus-footer-info-item i {
+            color: #09042f;
+            font-size: 1.05rem;
+            margin-top: 4px;
+        }
+
+        .nus-social-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .nus-social-btn {
+            width: 40px;
+            height: 40px;
+            background-color: #ffffff;
+            color: #003366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .nus-social-btn:hover {
+            background-color: #ef7c00;
+            color: #ffffff;
+            transform: translateY(-3px);
+        }
+
+        .nus-footer-bottom {
+            background-color: #002244;
+            padding: 22px 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 300;
+            color: #cbd5e1;
+            position: relative;
+        }
+
+        .nus-footer-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+
+        .nus-footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-weight: 300;
+        }
+
+        .nus-footer-links a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        .scroll-top-btn {
+            position: absolute;
+            right: 25px;
+            bottom: 18px;
+            background-color: #004080;
+            color: #ffffff;
+            width: 36px;
+            height: 36px;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .scroll-top-btn:hover {
+            background-color: #ef7c00;
+        }
+
+        /* =========================================================
+           RESPONSIF MOBILE (<= 768px)
+           ========================================================= */
+        @media screen and (max-width: 768px) {
+            .kpt-top-utility-bar {
+                padding: 6px 12px;
+                font-size: 0.78rem;
+            }
+            .header-top-row {
+                padding: 7px 12px !important;
+            }
+            .logo {
+                gap: 7px !important;
+                max-width: 68%;
+            }
+            .logo-img {
+                height: 26px !important;
+            }
+            .header-title-group {
+                padding-left: 7px !important;
+            }
+            .header-subtitle { font-size: 0.45rem !important; }
+            .header-english-title { font-size: 0.48rem !important; }
+            .header-tagline { font-size: 0.42rem !important; }
+            .mobile-hamburger-btn {
+                display: flex !important;
+                width: 30px !important;
+                height: 30px !important;
+                font-size: 0.95rem !important;
+            }
+            .user-dropdown-btn span {
+                display: none;
+            }
+            .header-bottom-nav {
+                display: none;
+                flex-direction: column !important;
+                align-items: stretch !important;
+                padding: 10px 14px 14px 14px !important;
+                border-top: 1px solid #e2e8f0;
+                gap: 10px;
+            }
+            .header-bottom-nav.mobile-open {
+                display: flex !important;
+            }
+            .nav-links-sub {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 2px !important;
+            }
+            .nav-links-sub a {
+                padding: 8px 4px !important;
+            }
+            .nav-search-box, .nav-search-box input {
+                width: 100% !important;
+            }
+            .nus-top-banner-strip {
+                padding: 0 16px;
+                font-size: 0.72rem;
+                height: 44px;
+            }
+            .nus-page-wrapper {
+                padding: 32px 16px 50px 16px;
+            }
+            .nus-main-heading {
+                font-size: 1.85rem !important;
+            }
+            .nus-checklist-card, .nus-table-card {
+                padding: 16px;
+            }
+            .nus-input-clean {
+                min-width: 100%;
+            }
+            .scroll-top-btn {
+                position: static;
+                margin: 12px auto 0 auto;
+            }
         }
     </style>
 </head>
-<body style="background-color: #f8fafc;">
+<body id="top-page">
 
-    <div class="container-admin">
-        <div class="admin-header">
-            <div>
-                <h2><i class="fa-solid fa-users-gear"></i> Sejarah Permohonan Dari Pelbagai User</h2>
-                <p style="color: #64748b; font-size: 0.9rem;">Senarai semua kursus yang dipohon oleh pengguna secara terkini.</p>
+    <!-- =========================================================
+         NAVBAR PENUH (SAMA SEPERTI INDEX.HTML)
+         ========================================================= -->
+    <header class="navbar-header-container">
+        
+        <!-- BAR UTILITI GELAP PALING ATAS -->
+        <div class="kpt-top-utility-bar">
+            <div class="utility-left">
+                <a href="https://www.facebook.com/officialmosti/?locale=ms_MY" target="_blank" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://x.com" target="_blank" title="X"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="https://www.instagram.com/officialmosti/?hl=en" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.youtube.com" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
             </div>
-            <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Kembali ke Utama</a>
+
+            <div class="utility-right">
+                <a href="index.html#contact-section" title="Soalan Lazim (FAQ)"><i class="fa-regular fa-comment-dots"></i></a>
+                <a href="tel:+60388858000" title="Hubungi Kami"><i class="fa-solid fa-phone"></i></a>
+                <a href="index.html#contact-section" title="Aduan & Maklum Balas"><i class="fa-solid fa-headset"></i></a>
+                <a href="index.html#about-section" title="Peta Laman / Direktori"><i class="fa-solid fa-sitemap"></i></a>
+                
+                <span class="utility-divider"></span>
+                
+                <a href="?lang=ms" title="Bahasa Melayu">
+                    <img src="https://flagcdn.com/w40/my.png" alt="Bahasa Melayu" class="lang-flag">
+                </a>
+                <a href="?lang=en" title="English">
+                    <img src="https://flagcdn.com/w40/gb.png" alt="English" class="lang-flag">
+                </a>
+            </div>
         </div>
 
-        <div style="overflow-x: auto;">
-            <table class="admin-table">
-                <thead>
-                    <tr>
-                        <th>Bil</th>
-                        <th>Nama Pemohon & IC</th>
-                        <th>Jawatan & Jabatan</th>
-                        <th>Nama Kursus</th>
-                        <th>Tarikh Mohon</th>
-                        <th>Status</th>
-                        <th>Ulasan Admin</th>
-                        <th>Tindakan Admin</th>
-                    </tr>
-                </thead>
-                <tbody id="fullAdminApplicationsTableBody">
-                    <!-- Data Dimuatkan Secara Dinamik -->
-                </tbody>
-            </table>
+        <!-- BARIS LOGO & AKAUN -->
+        <div class="header-top-row">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Logo Portal Kursus MOSTI" class="logo-img">
+                <div class="header-title-group">
+                    <span class="header-subtitle">PORTAL KURSUS RASMI</span>
+                    <span class="header-english-title">MINISTRY OF SCIENCE, TECHNOLOGY AND INNOVATION</span>
+                    <span class="header-tagline">SAINS.TEKNOLOGI.INOVASI.BERSAMA</span>
+                </div>
+            </a>
+
+            <div class="header-top-right">
+                <span id="user-nav-container">
+                    <a href="login.html" class="top-auth-link"><i class="fa-solid fa-user"></i> Sign In</a>
+                </span>
+                <button type="button" id="mobile-menu-btn" class="mobile-hamburger-btn" onclick="toggleMobileNav()" aria-label="Buka Menu Navigasi" aria-expanded="false">
+                    <i class="fa-solid fa-bars" id="hamburger-icon"></i>
+                </button>
+            </div>
         </div>
+
+        <!-- BARIS MENU NAVIGASI BAWAH -->
+        <div class="header-bottom-nav" id="mobile-nav-drawer">
+            <nav>
+                <ul class="nav-links-sub" id="nav-links">
+                    <li><a href="index.html" onclick="closeMobileNav()">Utama</a></li>
+                    <li><a href="iklan.html" onclick="closeMobileNav()">Jenis &amp; Iklan Kursus</a></li>
+                    <li><a href="takwim.html" onclick="closeMobileNav()">Takwim Kursus</a></li>
+                    <li><a href="mohon.html" onclick="closeMobileNav()">Mohon Kursus</a></li>
+                    <li><a href="index.html#contact-section" onclick="closeMobileNav()">Hubungi Kami</a></li>
+                    <li><a href="about.html" onclick="closeMobileNav()">Tentang Kami</a></li>
+                </ul>
+            </nav>
+            
+            <div class="nav-search-box">
+                <input type="text" id="top-nav-search-input" placeholder="Cari kursus di sini..." onkeypress="if(event.key === 'Enter') handleNavSearch()">
+                <button type="button" onclick="handleNavSearch()" title="Cari">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- BANNER HALUS DI BAWAH NAVBAR (GAYA HEADER GAMBAR RUJUKAN) -->
+    <div class="nus-top-banner-strip">
+        <span>Pengurusan Rekod Permohonan Latihan &amp; Pembangunan Bakat STIE MOSTI</span>
     </div>
+
+    <!-- =========================================================
+         KANDUNGAN UTAMA (GAYA MINIMALIS GAMBAR RUJUKAN)
+         ========================================================= -->
+    <main class="nus-page-wrapper">
+        
+        <!-- Bahagian Atas: 2 Kolum (Kiri: Tajuk & Pautan Oren | Kanan: Kotak Putih Ringkasan) -->
+        <section class="nus-intro-split">
+            <div class="nus-intro-left">
+                <h1 class="nus-main-heading">Sejarah Permohonan</h1>
+                <p class="nus-main-desc">
+                    Senarai lengkap permohonan kursus dan program latihan yang dihantar oleh pengguna secara terkini untuk semakan, ulasan dan pengesahan pentadbir sistem MOSTI.
+                </p>
+
+                <div class="nus-orange-links">
+                    <a href="admin_dashboard.html" class="nus-orange-link">
+                        Papan Pemuka Admin <i class="fa-solid fa-chevron-right" style="font-size: 0.75rem;"></i>
+                    </a>
+                    <a href="index.html" class="nus-orange-link">
+                        Kembali ke Halaman Utama <i class="fa-solid fa-chevron-right" style="font-size: 0.75rem;"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="nus-intro-right">
+                <div class="nus-checklist-card">
+                    <div class="nus-checklist-row">
+                        <div class="nus-checklist-left">
+                            <i class="fa-solid fa-check"></i>
+                            <span class="nus-checklist-label">Jumlah Keseluruhan Permohonan</span>
+                        </div>
+                        <span class="nus-checklist-count" id="summary-total">0</span>
+                    </div>
+
+                    <div class="nus-checklist-row">
+                        <div class="nus-checklist-left">
+                            <i class="fa-solid fa-check"></i>
+                            <span class="nus-checklist-label">Permohonan Diluluskan</span>
+                        </div>
+                        <span class="nus-checklist-count" id="summary-lulus">0</span>
+                    </div>
+
+                    <div class="nus-checklist-row">
+                        <div class="nus-checklist-left">
+                            <i class="fa-solid fa-check"></i>
+                            <span class="nus-checklist-label">Menunggu Tindakan / Dalam Proses</span>
+                        </div>
+                        <span class="nus-checklist-count" id="summary-proses">0</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bahagian Jadual Permohonan -->
+        <section class="nus-table-card">
+            <div class="nus-filter-toolbar">
+                <div class="nus-filter-controls">
+                    <input type="text" id="filter-search-app" class="nus-input-clean" placeholder="Cari nama pemohon, No. IC atau nama kursus..." onkeyup="filterApplicationsTable()">
+                    
+                    <select id="filter-status-app" class="nus-select-clean" onchange="filterApplicationsTable()">
+                        <option value="">-- Semua Status --</option>
+                        <option value="Dalam Proses">Dalam Proses</option>
+                        <option value="Berjaya">Lulus</option>
+                        <option value="Tidak Berjaya">Tidak Lulus</option>
+                    </select>
+                </div>
+
+                <a href="javascript:void(0)" onclick="loadAllApplications()" class="nus-orange-link" style="font-size: 0.92rem;">
+                    Muat Semula Data <i class="fa-solid fa-chevron-right" style="font-size: 0.72rem;"></i>
+                </a>
+            </div>
+
+            <div style="overflow-x: auto;">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Bil</th>
+                            <th>Nama Pemohon &amp; IC</th>
+                            <th>Jawatan &amp; Jabatan</th>
+                            <th>Nama Kursus</th>
+                            <th>Tarikh Mohon</th>
+                            <th>Status</th>
+                            <th>Ulasan Admin</th>
+                            <th>Tindakan Admin</th>
+                        </tr>
+                    </thead>
+                    <tbody id="fullAdminApplicationsTableBody">
+                        <!-- Data Dimuatkan Secara Dinamik -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- =========================================================
+         FOOTER (SAMA SEPERTI INDEX.HTML)
+         ========================================================= -->
+    <footer id="contact-section">
+        <div class="nus-style-footer">
+            <h2 class="nus-footer-title">Hubungi Kami</h2>
+            
+            <div class="nus-footer-info">
+                <div class="nus-footer-info-item">
+                    <i class="fa-solid fa-location-arrow"></i>
+                    <span>Aras 5, Blok C4, Kompleks C, Pusat Pentadbiran Kerajaan Persekutuan,<br>62662 Putrajaya, Malaysia.</span>
+                </div>
+                <div class="nus-footer-info-item">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>+603-8885 8000</span>
+                </div>
+                <div class="nus-footer-info-item">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>hr_traning@mosti.gov.my</span>
+                </div>
+            </div>
+
+            <div class="nus-social-icons">
+                <a href="https://www.facebook.com/officialmosti/?locale=ms_MY" class="nus-social-btn" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/officialmosti/?hl=en" class="nus-social-btn" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+
+        <div class="nus-footer-bottom">
+            <p>&copy; 2026 Kementerian Sains, Teknologi dan Inovasi (MOSTI). Hak Cipta Terpelihara.</p>
+            <div class="nus-footer-links">
+                <a href="#">Dasar Privasi</a> &bull; 
+                <a href="#">Penafian</a> &bull; 
+                <a href="#">Bantuan &amp; FAQ</a> &bull; 
+                <a href="#">Hubungi Kami</a>
+            </div>
+            <a href="#top-page" class="scroll-top-btn" title="Ke Atas">
+                <i class="fa-solid fa-chevron-up"></i>
+            </a>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
     <script>
+        let currentUser = null;
+        let cachedAppList = [];
+
         document.addEventListener('DOMContentLoaded', () => {
             const storedUser = sessionStorage.getItem('user') || localStorage.getItem('user');
             if (storedUser) {
-                const user = JSON.parse(storedUser);
-                if (user.role !== 'admin') {
-                    alert('Akses terhad untuk Admin sahaja.');
-                    window.location.href = 'index.html';
-                    return;
+                try {
+                    currentUser = JSON.parse(storedUser);
+                    if (currentUser.role !== 'admin') {
+                        alert('Akses terhad untuk Admin sahaja.');
+                        window.location.href = 'index.html';
+                        return;
+                    }
+                } catch (e) {
+                    console.error(e);
                 }
             } else {
                 window.location.href = 'login.html';
                 return;
             }
 
+            setupNavbar();
             loadAllApplications();
             initAdminApplicationsRealtime();
+
+            // Tutup dropdown/mobile menu apabila klik di luar
+            document.addEventListener('click', (e) => {
+                const dropdown = document.getElementById('userMenuDropdown');
+                const btn = document.getElementById('userMenuBtn');
+                if (dropdown && btn && !btn.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.classList.remove('show');
+                }
+
+                const navDrawer = document.getElementById('mobile-nav-drawer');
+                const hamburgerBtn = document.getElementById('mobile-menu-btn');
+                if (navDrawer && hamburgerBtn && navDrawer.classList.contains('mobile-open')) {
+                    if (!navDrawer.contains(e.target) && !hamburgerBtn.contains(e.target)) {
+                        closeMobileNav();
+                    }
+                }
+            });
         });
 
+        /* =========================================================
+           FUNGSI NAVBAR (SAMA SEPERTI INDEX.HTML)
+           ========================================================= */
+        function toggleMobileNav() {
+            const navDrawer = document.getElementById('mobile-nav-drawer');
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+            const hamburgerBtn = document.getElementById('mobile-menu-btn');
+            if (!navDrawer) return;
+
+            const isOpen = navDrawer.classList.toggle('mobile-open');
+            hamburgerBtn.setAttribute('aria-expanded', isOpen);
+            if (isOpen) {
+                hamburgerIcon.classList.remove('fa-bars');
+                hamburgerIcon.classList.add('fa-xmark');
+            } else {
+                hamburgerIcon.classList.remove('fa-xmark');
+                hamburgerIcon.classList.add('fa-bars');
+            }
+        }
+
+        function closeMobileNav() {
+            const navDrawer = document.getElementById('mobile-nav-drawer');
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+            const hamburgerBtn = document.getElementById('mobile-menu-btn');
+            if (navDrawer && navDrawer.classList.contains('mobile-open')) {
+                navDrawer.classList.remove('mobile-open');
+                hamburgerBtn.setAttribute('aria-expanded', 'false');
+                hamburgerIcon.classList.remove('fa-xmark');
+                hamburgerIcon.classList.add('fa-bars');
+            }
+        }
+
+        function handleNavSearch() {
+            const inputVal = document.getElementById('top-nav-search-input').value.trim();
+            if (inputVal) {
+                window.location.href = `iklan.html?keyword=${encodeURIComponent(inputVal)}`;
+            }
+        }
+
+        function setupNavbar() {
+            const navContainer = document.getElementById('user-nav-container');
+            if (currentUser && navContainer) {
+                const userPhoto = currentUser.gambar || 'https://via.placeholder.com/150';
+                const userName = currentUser.nama || 'Admin';
+
+                const adminMenuOption = currentUser.role === 'admin' 
+                    ? `<a href="admin_dashboard.html"><i class="fa-solid fa-user-shield"></i> Peranan Admin</a>` 
+                    : '';
+
+                navContainer.innerHTML = `
+                    <div class="user-dropdown-container">
+                        <button id="userMenuBtn" onclick="toggleUserDropdown()" class="user-dropdown-btn">
+                            <img src="${userPhoto}" alt="Avatar" class="user-avatar-small" id="navUserAvatar">
+                            <span>${userName}</span>
+                            <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem;"></i>
+                        </button>
+                        <div id="userMenuDropdown" class="dropdown-menu">
+                            <a href="user_dashboard.html"><i class="fa-solid fa-id-card"></i> User Dashboard</a>
+                            ${adminMenuOption}
+                            <a href="tukar_kata_laluan.html"><i class="fa-solid fa-key"></i> Tukar Kata Laluan</a>
+                            <button onclick="handleLogout()" class="logout-item"><i class="fa-solid fa-right-from-bracket"></i> Log Keluar</button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userMenuDropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('show');
+            }
+        }
+
+        function handleLogout() {
+            sessionStorage.removeItem('user');
+            localStorage.removeItem('user');
+            window.location.href = 'login.html';
+        }
+
+        /* =========================================================
+           FUNGSI REALTIME & PENGURUSAN PERMOHONAN
+           ========================================================= */
         function initAdminApplicationsRealtime() {
             if (!!window.EventSource) {
                 const eventSource = new EventSource('/api/events');
@@ -178,6 +1261,106 @@
             }
         }
 
+        function updateSummaryCounters(appList) {
+            const total = appList.length;
+            const lulus = appList.filter(item => item.status === 'Berjaya' || item.status === 'Lulus').length;
+            const proses = appList.filter(item => item.status !== 'Berjaya' && item.status !== 'Lulus' && item.status !== 'Tidak Berjaya').length;
+
+            const elTotal = document.getElementById('summary-total');
+            const elLulus = document.getElementById('summary-lulus');
+            const elProses = document.getElementById('summary-proses');
+
+            if (elTotal) elTotal.innerText = total;
+            if (elLulus) elLulus.innerText = lulus;
+            if (elProses) elProses.innerText = proses;
+        }
+
+        function renderApplicationsRows(listToRender) {
+            const tbody = document.getElementById('fullAdminApplicationsTableBody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            if (!listToRender || listToRender.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:30px; color:#64748b;">Tiada rekod permohonan ditemui.</td></tr>';
+                return;
+            }
+
+            listToRender.forEach((item, index) => {
+                let statusBadge = '';
+                if (item.status === 'Berjaya' || item.status === 'Lulus') {
+                    statusBadge = '<span class="status-pill status-lulus">Lulus</span>';
+                } else if (item.status === 'Tidak Berjaya') {
+                    statusBadge = '<span class="status-pill status-tidak-lulus">Tidak Lulus</span>';
+                } else {
+                    statusBadge = '<span class="status-pill status-proses">Dalam Proses</span>';
+                }
+
+                let formattedDate = item.created_at ? new Date(item.created_at).toLocaleDateString('ms-MY') : '-';
+                let ulasanSemasa = item.ulasan_admin || item.ulasan || '';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>
+                        <span style="color:#222222; font-weight:400;">${item.nama_pemohon || item.nama || '-'}</span><br>
+                        <small style="color:#64748b;">IC: ${item.ic || item.user_ic || '-'}</small>
+                    </td>
+                    <td>
+                        ${item.jawatan || '-'}<br>
+                        <small style="color:#64748b;">${item.jabatan || '-'}</small>
+                    </td>
+                    <td>
+                        <span style="color:#0b3c5d; font-weight:400;">${item.kod_kursus || ''}</span> ${item.nama_kursus || item.kursus || '-'}
+                    </td>
+                    <td>${formattedDate}</td>
+                    <td>${statusBadge}</td>
+                    <td>
+                        <div class="ulasan-box">
+                            <textarea id="ulasan_${item.id}" class="input-ulasan" rows="2" placeholder="Tulis ulasan admin...">${ulasanSemasa}</textarea>
+                            <button class="btn-save-ulasan" onclick="saveAdminUlasan('${item.id}')" title="Simpan Ulasan">
+                                <i class="fa-solid fa-floppy-disk"></i> Simpan
+                            </button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="action-btn-group">
+                            <button class="btn-approve" onclick="updateAppStatus('${item.id}', 'Berjaya')" title="Luluskan"><i class="fa-solid fa-check"></i></button>
+                            <button class="btn-reject" onclick="updateAppStatus('${item.id}', 'Tidak Berjaya')" title="Tolak"><i class="fa-solid fa-xmark"></i></button>
+                            <button class="btn-delete-app" onclick="deleteUserApp('${item.id}')" title="Padam"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function filterApplicationsTable() {
+            const searchKeyword = (document.getElementById('filter-search-app')?.value || '').toLowerCase().trim();
+            const statusFilter = document.getElementById('filter-status-app')?.value || '';
+
+            const filtered = cachedAppList.filter(item => {
+                const nama = (item.nama_pemohon || item.nama || '').toLowerCase();
+                const ic = (item.ic || item.user_ic || '').toLowerCase();
+                const kursus = (item.nama_kursus || item.kursus || '').toLowerCase();
+                const kod = (item.kod_kursus || '').toLowerCase();
+
+                const matchKeyword = !searchKeyword || nama.includes(searchKeyword) || ic.includes(searchKeyword) || kursus.includes(searchKeyword) || kod.includes(searchKeyword);
+
+                let matchStatus = true;
+                if (statusFilter === 'Berjaya') {
+                    matchStatus = (item.status === 'Berjaya' || item.status === 'Lulus');
+                } else if (statusFilter === 'Tidak Berjaya') {
+                    matchStatus = (item.status === 'Tidak Berjaya');
+                } else if (statusFilter === 'Dalam Proses') {
+                    matchStatus = (item.status !== 'Berjaya' && item.status !== 'Lulus' && item.status !== 'Tidak Berjaya');
+                }
+
+                return matchKeyword && matchStatus;
+            });
+
+            renderApplicationsRows(filtered);
+        }
+
         async function loadAllApplications() {
             const tbody = document.getElementById('fullAdminApplicationsTableBody');
 
@@ -189,55 +1372,19 @@
                     appList = await res.json();
                 }
 
-                // Selaraskan localStorage dengan data sebenar daripada server jika wujud
                 if (appList && appList.length > 0) {
                     localStorage.setItem('all_global_applications', JSON.stringify(appList));
                 } else {
                     appList = JSON.parse(localStorage.getItem('all_global_applications')) || [];
                 }
 
-                tbody.innerHTML = '';
-
-                if (appList.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:20px;">Tiada permohonan daripada pengguna setakat ini.</td></tr>';
-                    return;
-                }
-
-                appList.forEach((item, index) => {
-                    let statusBadge = item.status === 'Berjaya' || item.status === 'Lulus' ? 
-                        '<span style="background-color:#22c55e; color:white; padding:4px 8px; border-radius:4px; font-weight:700;">Lulus</span>' : 
-                        (item.status === 'Tidak Berjaya' ? '<span style="background-color:#ef4444; color:white; padding:4px 8px; border-radius:4px; font-weight:700;">Tidak Lulus</span>' : 
-                        '<span style="background-color:#f59e0b; color:white; padding:4px 8px; border-radius:4px; font-weight:700;">Dalam Proses</span>');
-
-                    let formattedDate = item.created_at ? new Date(item.created_at).toLocaleDateString('ms-MY') : '-';
-                    let ulasanSemasa = item.ulasan_admin || item.ulasan || '';
-
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td>${index + 1}</td>
-                        <td><strong>${item.nama_pemohon || item.nama || '-'}</strong><br><small style="color:#64748b;">IC: ${item.ic || item.user_ic || '-'}</small></td>
-                        <td>${item.jawatan || '-'}<br><small style="color:#64748b;">${item.jabatan || '-'}</small></td>
-                        <td><strong style="color:#0284c7;">${item.kod_kursus || ''}</strong> ${item.nama_kursus || item.kursus || ''}</td>
-                        <td>${formattedDate}</td>
-                        <td>${statusBadge}</td>
-                        <td>
-                            <div class="ulasan-box">
-                                <textarea id="ulasan_${item.id}" class="input-ulasan" rows="2" placeholder="Tulis ulasan admin...">${ulasanSemasa}</textarea>
-                                <button class="btn-save-ulasan" onclick="saveAdminUlasan('${item.id}')" title="Simpan Ulasan">
-                                    <i class="fa-solid fa-floppy-disk"></i> Simpan
-                                </button>
-                            </div>
-                        </td>
-                        <td>
-                            <button class="btn-approve" onclick="updateAppStatus('${item.id}', 'Berjaya')" title="Luluskan"><i class="fa-solid fa-check"></i></button>
-                            <button class="btn-reject" onclick="updateAppStatus('${item.id}', 'Tidak Berjaya')" title="Tolak"><i class="fa-solid fa-xmark"></i></button>
-                            <button class="btn-delete-app" onclick="deleteUserApp('${item.id}')" title="Padam"><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                    `;
-                    tbody.appendChild(tr);
-                });
+                cachedAppList = appList;
+                updateSummaryCounters(cachedAppList);
+                filterApplicationsTable();
             } catch (err) {
-                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; color:red;">Ralat memuatkan data.</td></tr>';
+                if (tbody) {
+                    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; color:#dc2626; padding:25px;">Ralat memuatkan data daripada pelayan.</td></tr>';
+                }
             }
         }
 
@@ -257,7 +1404,6 @@
                     throw new Error(errData.error || 'Gagal menyimpan ulasan ke pelayan.');
                 }
 
-                // Kemaskini ulasan dalam localStorage global jika wujud
                 let allGlobalApps = JSON.parse(localStorage.getItem('all_global_applications')) || [];
                 const appIndex = allGlobalApps.findIndex(a => String(a.id) === String(id));
                 if (appIndex !== -1) {
@@ -301,7 +1447,6 @@
                     throw new Error(errData.error || 'Gagal mengemaskini status di pelayan.');
                 }
 
-                // Kemaskini dalam localStorage global jika wujud
                 let allGlobalApps = JSON.parse(localStorage.getItem('all_global_applications')) || [];
                 const appIndex = allGlobalApps.findIndex(a => String(a.id) === String(id));
                 if (appIndex !== -1) {
